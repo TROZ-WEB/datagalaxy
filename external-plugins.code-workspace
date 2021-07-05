@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"path": ".",
+			"name": "Root"
+		},
+		{
+			"path": "./common",
+			"name": "Rush common"
+		},
+		{
+			"path": "./packages/chrome",
+			"name": "Chrome"
+		},
+		{
+			"path": "./packages/slack",
+			"name": "Slack"
+		},
+		{
+			"path": "./packages/shared",
+			"name": "Shared"
+		}
+	],
+	"settings": {}
+}

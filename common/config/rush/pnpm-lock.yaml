@@ -1,0 +1,31 @@
+lockfileVersion: 5.3
+
+specifiers:
+  '@rush-temp/chrome': file:./projects/chrome.tgz
+  '@rush-temp/shared': file:./projects/shared.tgz
+  '@rush-temp/slack': file:./projects/slack.tgz
+
+dependencies:
+  '@rush-temp/chrome': file:projects/chrome.tgz
+  '@rush-temp/shared': file:projects/shared.tgz
+  '@rush-temp/slack': file:projects/slack.tgz
+
+packages:
+
+  file:projects/chrome.tgz:
+    resolution: {integrity: sha512-0aMvRfTs1BRlF/pXcVPmy0kqltXfXVFM8TmM2zRD0qkYvDIAcKib/qnHDz/zNUtE6IjqNXSIvjt76rQJEHVGIg==, tarball: file:projects/chrome.tgz}
+    name: '@rush-temp/chrome'
+    version: 0.0.0
+    dev: false
+
+  file:projects/shared.tgz:
+    resolution: {integrity: sha512-C9sPy3mwfDeDnHzkF5E8z5t4xYDSbJngDi+ewt0YgpsBW2STx2h65PLn01x2S/asusReNb3UN42ty/GVYLYLyw==, tarball: file:projects/shared.tgz}
+    name: '@rush-temp/shared'
+    version: 0.0.0
+    dev: false
+
+  file:projects/slack.tgz:
+    resolution: {integrity: sha512-bJSDG5t6GO7k5hGVK+2+wLKuabODKJzlNFEt65Yjia4I/ZtmuJ7mQRvLXvkxGUX5ZavKzX2acNqxfmz+2TBWcg==, tarball: file:projects/slack.tgz}
+    name: '@rush-temp/slack'
+    version: 0.0.0
+    dev: false

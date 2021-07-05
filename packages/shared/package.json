@@ -1,0 +1,9 @@
+{
+  "name": "shared",
+  "version": "1.0.0",
+  "description": "Shared library for Datagalaxy extensions",
+  "main": "index.js",
+  "repository": "git@ssh.dev.azure.com:v3/datagalaxy/Plugins%20Externes/Plugins%20Externes",
+  "author": "simon.galet@thetribe.io",
+  "private": true
+}
