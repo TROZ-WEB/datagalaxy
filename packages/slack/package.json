@@ -1,9 +1,0 @@
-{
-  "name": "slack",
-  "version": "1.0.0",
-  "description": "Slack extension for Datagalaxy",
-  "main": "index.js",
-  "repository": "git@ssh.dev.azure.com:v3/datagalaxy/Plugins%20Externes/Plugins%20Externes",
-  "author": "simon.galet@thetribe.io",
-  "private": true
-}

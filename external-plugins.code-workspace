@@ -9,12 +9,12 @@
 			"name": "Rush common"
 		},
 		{
-			"path": "./packages/chrome",
-			"name": "Chrome"
+			"path": "./packages/chromium-extension",
+			"name": "Chromium extension"
 		},
 		{
-			"path": "./packages/slack",
-			"name": "Slack"
+			"path": "./packages/slack-extension",
+			"name": "Slack extension"
 		},
 		{
 			"path": "./packages/shared",

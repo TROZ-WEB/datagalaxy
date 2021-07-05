@@ -358,16 +358,16 @@
    */
   "projects": [
     {
-      "packageName": "chrome",
-      "projectFolder": "packages/chrome"
+      "packageName": "chromium-extension",
+      "projectFolder": "packages/chromium-extension"
     },
     {
       "packageName": "shared",
       "projectFolder": "packages/shared"
     },
     {
-      "packageName": "slack",
-      "projectFolder": "packages/slack"
+      "packageName": "slack-extension",
+      "projectFolder": "packages/slack-extension"
     }
     // {
     //   /**

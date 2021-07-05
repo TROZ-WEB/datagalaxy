@@ -26,6 +26,6 @@ This means that multiple project are inside this repository.
 
 - [common](./common/) : Rush configuration and temporary files
 - [packages](./packages/) : The folder containing every projets of the repository
-- [chrome](./packages/chrome) : The chrome extension project
-- [slack](./packages/slack) : The slack extension project
+- [chromium-extension](./packages/chromium-extension) : The chromium extension project
+- [slack-extension](./packages/slack-extension) : The slack extension project
 - [shared](./packages/shared) : The shared library between all the extensions
