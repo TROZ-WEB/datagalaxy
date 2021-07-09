@@ -30,7 +30,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "klap build",
+    "build": "klap build 2>&0",
     "prepublishOnly": "klap build",
     "start": "klap start",
     "watch": "klap watch",
@@ -44,7 +44,10 @@
     "ts-jest": "~27.0.3"
   },
   "klap": {
-    "example": "public/index.ts"
+    "example": "public/index.ts",
+    "globals": {
+      "jwt-decode": "jwtDecode"
+    }
   },
   "dependencies": {
     "jwt-decode": "~3.1.2"
