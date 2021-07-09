@@ -1,12 +1,52 @@
 {
   "name": "shared",
   "version": "1.0.0",
+  "private": true,
   "description": "Shared library for Datagalaxy extensions",
-  "main": "index.js",
+  "keywords": [
+    "shared"
+  ],
   "repository": "git@ssh.dev.azure.com:v3/datagalaxy/Plugins%20Externes/Plugins%20Externes",
   "author": "simon.galet@thetribe.io",
-  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "browser": "./dist/shared.js",
+      "import": "./dist/shared.js",
+      "require": "./dist/shared.cjs.js",
+      "umd": "./dist/shared.umd.js"
+    },
+    "./": "./",
+    "./package.json": "./package.json"
+  },
+  "main": "dist/shared.cjs.js",
+  "unpkg": "dist/shared.js",
+  "module": "dist/shared.js",
+  "source": "src/shared.ts",
+  "browser": "dist/shared.umd.js",
+  "types": "dist/shared.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "echo 'TODO'"
+    "build": "klap build",
+    "prepublishOnly": "klap build",
+    "start": "klap start",
+    "watch": "klap watch",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "klap": "^7.0.4",
+    "typescript": "^4.3.2",
+    "jest": "~27.0.6",
+    "@types/jest": "~26.0.24",
+    "ts-jest": "~27.0.3"
+  },
+  "klap": {
+    "example": "public/index.ts"
+  },
+  "dependencies": {
+    "jwt-decode": "~3.1.2"
   }
 }
