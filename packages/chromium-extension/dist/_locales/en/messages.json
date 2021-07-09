@@ -1,0 +1,11 @@
+{
+  "appName": {
+    "message": "DataGalaxy"
+  },
+  "appDesc": {
+    "message": "Chromium extension of DataGalaxy"
+  },
+  "welcomeMessage": {
+    "message": "Welcome to the DataGalaxy Extension !"
+  }
+}
