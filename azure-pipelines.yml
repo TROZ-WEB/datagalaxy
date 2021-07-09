@@ -1,0 +1,27 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+pool:
+  vmImage: ubuntu-latest
+
+variables: 
+  NodeVersion: '14.17.1'
+
+
+stages:
+- stage: Build
+  jobs:
+  - job: InstallRushAndBuildProjects
+    steps:
+    - task: NodeTool@0
+      displayName: 'Use Node $(NodeVersion)'
+      inputs:
+        versionSpec: '$(NodeVersion)'
+    - script: 'node common/scripts/install-run-rush.js change --verify'
+      displayName: 'Verify Change Logs'
+    - script: 'node common/scripts/install-run-rush.js install'
+      displayName: 'Rush Install'
+    - script: 'node common/scripts/install-run-rush.js rebuild --verbose'
+      displayName: 'Rush Rebuild'
