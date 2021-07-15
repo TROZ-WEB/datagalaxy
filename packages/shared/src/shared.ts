@@ -1,1 +1,1 @@
-export * as Auth from "./Auth";
+export * as Auth from './Auth';

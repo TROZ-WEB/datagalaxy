@@ -2,11 +2,33 @@
   "name": "slack-extension",
   "version": "1.0.0",
   "description": "Slack extension for Datagalaxy",
-  "main": "index.js",
+  "main": "index.ts",
   "repository": "git@ssh.dev.azure.com:v3/datagalaxy/Plugins%20Externes/Plugins%20Externes",
   "author": "simon.galet@thetribe.io",
   "private": true,
   "scripts": {
-    "build": "echo 'TODO'"
+    "build": "tsc",
+    "start": "tsc && node dist/index.js",
+    "watch": "nodemon --config nodemon.json src/index.ts",
+    "watch:debug": "nodemon --config nodemon.json --inspect-brk src/index.ts",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color",
+    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx src --color --fix",
+    "format": "pnpm lint:fix --config .prettierrc && prettier --write \"src/**/*.{js,jsx,ts,tsx,scss,css,json}\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@slack/web-api": "~6.2.4",
+    "dotenv": "~10.0.0"
+  },
+  "devDependencies": {
+    "typescript": "~4.3.5",
+    "@types/node": "~16.3.0",
+    "@thetribe/eslint-config-typescript": "~0.3.0",
+    "eslint-plugin-import": "~2.23.4",
+    "eslint-plugin-prettier": "~3.4.0",
+    "@typescript-eslint/eslint-plugin": "~4.28.2",
+    "eslint": "~7.30.0",
+    "ts-node": "~10.0.0",
+    "nodemon": "~2.0.10"
   }
 }

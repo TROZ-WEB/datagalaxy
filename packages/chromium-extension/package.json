@@ -12,7 +12,8 @@
         "watch": "webpack -w --config webpack.dev.js",
         "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color",
         "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx src --color --fix",
-        "format": "pnpm lint:fix --config .prettierrc && prettier --write \"src/**/*.{js,jsx,ts,tsx,scss,css,json}\""
+        "format": "pnpm lint:fix --config .prettierrc && prettier --write \"src/**/*.{js,jsx,ts,tsx,scss,css,json}\"",
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "devDependencies": {
         "@types/chrome": "^0.0.145",

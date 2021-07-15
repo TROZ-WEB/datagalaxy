@@ -1,0 +1,14 @@
+{
+    "root": true,
+    "extends": [
+        "@thetribe/eslint-config-typescript",
+        "plugin:jest/recommended",
+        "plugin:prettier/recommended"
+    ],
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "env": {
+        "node": true
+    }
+}
