@@ -25,6 +25,14 @@
             "description": "Format code using prettier.",
             "enableParallelism": true,
             "ignoreMissingScript": true
+        },
+        {
+            "commandKind": "bulk",
+            "name": "test",
+            "summary": "Test.",
+            "description": "Start tests on every projects.",
+            "enableParallelism": true,
+            "ignoreMissingScript": true
         }
         // {
         //   /**

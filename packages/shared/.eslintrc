@@ -9,6 +9,7 @@
         "project": "./tsconfig.json"
     },
     "env": {
-        "node": true
+        "node": true,
+        "browser": true
     }
 }

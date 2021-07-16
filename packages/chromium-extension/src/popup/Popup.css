@@ -1,9 +1,24 @@
 .root {
-    width: 350px;
-    height: 500px;
+    width: 320px;
+    height: 480px;
+    padding: 16px;
     background: #3498db;
     color: #fff;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.form {
+    width: 100%;
+    margin-top: 8px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    margin-top: 8px;
+    margin-bottom: 4px;
 }
