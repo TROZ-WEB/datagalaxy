@@ -12,3 +12,7 @@ export interface DecodedPAT extends JwtPayload {
     cid?: string;
     uid?: string;
 }
+
+export interface CredentialsResponse {
+    accessToken: string;
+}

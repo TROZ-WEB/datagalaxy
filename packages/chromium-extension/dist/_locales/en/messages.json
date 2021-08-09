@@ -7,5 +7,14 @@
   },
   "welcomeMessage": {
     "message": "Welcome to the DataGalaxy Extension !"
+  },
+  "pat": {
+    "message": "Personnal Access Token"
+  },
+  "searchQuery": {
+    "message": "Word to search"
+  },
+  "search": {
+    "message": "Search"
   }
 }
