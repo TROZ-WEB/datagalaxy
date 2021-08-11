@@ -1,0 +1,41 @@
+.Root {
+    padding: 16px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.StepWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.StepNumber {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #084EFF;
+    border: 1px solid #0B61FF;
+    border-radius: 50%;
+    line-height: 13px;
+    font-size: 10px;
+    
+}
+
+.ActiveNumber {
+    color: #FFFFFF;
+    font-weight: bold;
+    background: linear-gradient(93.27deg, #001AFF 5.03%, #084EFF 40.68%, #17AEFF 89.13%);
+}
+
+.StepTrait {
+    height: 1px;
+    width: 23px;
+    background-color: #0B5FFF;
+}
+
+.ActiveTrait {
+    background-color: #5A5E86;
+
+}

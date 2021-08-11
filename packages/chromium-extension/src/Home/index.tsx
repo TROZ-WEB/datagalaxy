@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { decodePAT, getAccessToken, search } from 'shared';
-import styles from './Popup.css';
+import Layout from '../components/Layout';
+import styles from './index.css';
 
-const Popup = () => {
+const Home = () => {
     const [PAT, setPAT] = useState<string>('');
     const [query, setQuery] = useState<string>('');
     const [total, setTotal] = useState<number>(0);
@@ -16,7 +17,7 @@ const Popup = () => {
     };
 
     return (
-        <div className={styles.root}>
+        <Layout>
             {chrome.i18n.getMessage('welcomeMessage')}
             <div className={styles.form}>
                 <label className={styles.label} htmlFor="pat">
@@ -53,8 +54,8 @@ const Popup = () => {
                 </button>
             </div>
             <div>Nombre de résultats : {total}</div>
-        </div>
+        </Layout>
     );
 };
 
-export default Popup;
+export default Home;
