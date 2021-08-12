@@ -13,6 +13,7 @@ specifiers:
   '@types/react-dom': ^17.0.8
   '@typescript-eslint/eslint-plugin': ~4.28.2
   '@typescript-eslint/parser': ~4.28.2
+  clsx: ~1.1.1
   css-loader: ^5.2.6
   dotenv: ~10.0.0
   eslint-config-prettier: ^8.3.0
@@ -53,6 +54,7 @@ dependencies:
   '@types/react-dom': 17.0.8
   '@typescript-eslint/eslint-plugin': 4.28.2_@typescript-eslint+parser@4.28.2
   '@typescript-eslint/parser': 4.28.2
+  clsx: 1.1.1
   css-loader: 5.2.6_webpack@5.42.1
   dotenv: 10.0.0
   eslint-config-prettier: 8.3.0
@@ -1909,6 +1911,11 @@ packages:
     resolution: {integrity: sha1-0dyXOSAxTfZ/vrlCI7TuNQI56Ws=}
     dependencies:
       mimic-response: 1.0.1
+    dev: false
+
+  /clsx/1.1.1:
+    resolution: {integrity: sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==}
+    engines: {node: '>=6'}
     dev: false
 
   /co/4.6.0:
@@ -5783,6 +5790,22 @@ packages:
       punycode: 2.1.1
     dev: false
 
+  /url-loader/4.1.1_webpack@5.42.1:
+    resolution: {integrity: sha512-3BTV812+AVHHOJQO8O5MkWgZ5aosP7GnROJwvzLS9hWDj00lZ6Z0wNak423Lp9PBZN05N+Jk/N5Si8jRAlGyWA==}
+    engines: {node: '>= 10.13.0'}
+    peerDependencies:
+      file-loader: '*'
+      webpack: ^4.0.0 || ^5.0.0
+    peerDependenciesMeta:
+      file-loader:
+        optional: true
+    dependencies:
+      loader-utils: 2.0.0
+      mime-types: 2.1.31
+      schema-utils: 3.1.0
+      webpack: 5.42.1_webpack-cli@4.7.2
+    dev: false
+
   /url-parse-lax/3.0.0:
     resolution: {integrity: sha1-FrXK/Afb42dsGxmZF3gj1lA6yww=}
     engines: {node: '>=4'}
@@ -6086,7 +6109,7 @@ packages:
     dev: false
 
   file:projects/chromium-extension.tgz:
-    resolution: {integrity: sha512-q7bkp56xiD6tEw1dN8vKtxRLScvWpMVeAczs1oafyYvnzxhVsUTSUL3ejBYVd5yRAWk+MybDhj+kdUxMuIbkzQ==, tarball: file:projects/chromium-extension.tgz}
+    resolution: {integrity: sha512-4pT7mxC/P/XyikYHHtthEJWMthpnS6B/Lfy2f4QeJV6lC1U1lUvWYgxf5YoRJ87X2awg/Upu2PZ95NQgrfY1bg==, tarball: file:projects/chromium-extension.tgz}
     name: '@rush-temp/chromium-extension'
     version: 0.0.0
     dependencies:
@@ -6100,6 +6123,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 4.28.2_5031fffb45dfb7117e61c1d8ea1ef3ff
       '@typescript-eslint/parser': 4.28.2_eslint@7.30.0+typescript@4.3.5
       classnames: 2.3.1
+      clsx: 1.1.1
       css-loader: 5.2.6_webpack@5.42.1
       eslint: 7.30.0
       eslint-config-prettier: 8.3.0_eslint@7.30.0
@@ -6117,12 +6141,14 @@ packages:
       ts-loader: 9.2.3_typescript@4.3.5+webpack@5.42.1
       typescript: 4.3.5
       typings-for-css-modules-loader: 1.7.0_css-loader@5.2.6
+      url-loader: 4.1.1_webpack@5.42.1
       webpack: 5.42.1_webpack-cli@4.7.2
       webpack-cli: 4.7.2_webpack@5.42.1
       webpack-merge: 5.8.0
     transitivePeerDependencies:
       - '@webpack-cli/generators'
       - '@webpack-cli/migrate'
+      - file-loader
       - supports-color
       - webpack-bundle-analyzer
       - webpack-dev-server

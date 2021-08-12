@@ -1,0 +1,26 @@
+.XX {
+    margin-top: 25px;
+    margin-bottom: 21px;
+    font-weight: 700;
+    font-size: 14px;
+    text-align: center;
+}
+
+.FindPatHelper {
+    color: #000000;
+    text-decoration: underline;
+    font-size: 10px;
+    line-height: 13px;
+    display: block;
+    text-align: right;
+    margin-top: 1px;
+}
+
+.FindPatHelper :hover {
+    color: #000000;
+}
+
+.ButtonWrapper {
+    margin-top: 42px;
+    text-align: center;
+}

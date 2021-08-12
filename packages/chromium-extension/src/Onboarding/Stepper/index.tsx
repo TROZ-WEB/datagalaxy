@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
+import OnboardingLayout from '../Layout';
 import StepperProgress from './StepperProgress';
+import styles from './index.css';
 
 interface StepperProps {
     steps: React.FC[];
 }
-
-// interface Step {
-//     element: (stepProps: StepProps) => React.ReactElement;
-// }
 
 export interface StepProps {
     goNextStep: () => void;
@@ -35,11 +33,9 @@ export const Stepper: React.FC<StepperProps> = ({ steps }) => {
     };
 
     return (
-        <div className="stepper">
-            <span>Logo</span>
-            <h2>Bienvenue dans DataGalaxy</h2>
+        <OnboardingLayout>
+            <h1 className={styles.Title}>Bienvenue</h1>
             <StepperProgress currentStep={currentStep} nbSteps={steps.length} />
-            <br />
             <div className="stepper-selector">
                 {steps.map((Step: React.FC<StepProps>, index) => (
                     // eslint-disable-next-line react/no-array-index-key
@@ -55,6 +51,6 @@ export const Stepper: React.FC<StepperProps> = ({ steps }) => {
                     </div>
                 ))}
             </div>
-        </div>
+        </OnboardingLayout>
     );
 };

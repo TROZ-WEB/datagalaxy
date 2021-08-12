@@ -1,7 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useRouteMatch } from 'react-router-dom';
+import Button from '../../components/ui/Button';
+import Input from '../../components/ui/Input';
 import { StepProps } from '../Stepper';
+import styles from './index.css';
 
 type FormData = {
     email: string;
@@ -21,14 +24,17 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
     } = useForm<FormData>();
 
     const onSubmit = handleSubmit(() => {
+        // console.log('values : ', values);
         // TODO: Handle backend login with 'data'
 
         // Handle PAT error
-        // if (PAT error) {
+        // if (true) {
         //     setError('pat', {
         //         message:
         //             "Clé d'accès non reconnues, vérifiez les chiffres entrés ou envoyez un message à votre administrateur",
         //     });
+
+        //     return;
         // }
 
         // eslint-disable-next-line no-constant-condition
@@ -43,19 +49,15 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
 
     return (
         <form onSubmit={onSubmit}>
-            <span>Pour commencer, connectez-vous</span>
-            <div>
-                <label htmlFor="email">Identifiant</label>
-                {errors && errors.email && <span>{errors.email.message}</span>}
-                <input {...register('email')} placeholder="ex: julie@thetribe.io" />
+            <p className={styles.XX}>Pour commencer l&apos;expérience, connectez-vous</p>
+            <Input errors={errors} label="Identifiant" {...register('email')} />
+            <Input errors={errors} label="Clé d'accès" {...register('pat')} />
+            <Link className={styles.FindPatHelper} to={`${url}/find-pat-helper`}>
+                Où trouver ma clé d&apos;accès
+            </Link>
+            <div className={styles.ButtonWrapper}>
+                <Button type="submit">Se connecter</Button>
             </div>
-            <div>
-                <label htmlFor="pat">Clé d&apos;accès</label>
-                {errors && errors.pat && <span>{errors.pat.message}</span>}
-                <input {...register('pat')} placeholder="ex: 7819281920111" />
-            </div>
-            <Link to={`${url}/find-pat-helper`}>Où trouver ma clé d&apos;accès</Link>
-            <button type="submit">Se connecter</button>
         </form>
     );
 };
