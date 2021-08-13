@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { decodePAT, getAccessToken, search } from 'shared';
-import Layout from '../components/Layout';
 import styles from './index.css';
 
-const Home = () => {
+const Search = () => {
     const [PAT, setPAT] = useState<string>('');
     const [query, setQuery] = useState<string>('');
     const [total, setTotal] = useState<number>(0);
@@ -17,7 +16,7 @@ const Home = () => {
     };
 
     return (
-        <Layout>
+        <>
             {chrome.i18n.getMessage('welcomeMessage')}
             <div className={styles.form}>
                 <label className={styles.label} htmlFor="pat">
@@ -54,8 +53,8 @@ const Home = () => {
                 </button>
             </div>
             <div>Nombre de résultats : {total}</div>
-        </Layout>
+        </>
     );
 };
 
-export default Home;
+export default Search;
