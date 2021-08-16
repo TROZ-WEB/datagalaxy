@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { MemoryRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import App from '../App';
 import Layout from '../components/Layout';
-import Home from '../Home';
 import Onboarding from '../Onboarding';
 
 enum AppInitialLoadingStatus {
     Loading,
     // eslint-disable-next-line @typescript-eslint/no-shadow
     Onboarding,
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     App,
 }
 
@@ -49,7 +50,7 @@ const Popup = () => {
                         <Onboarding />
                     </Route>
                     <Route path="/app">
-                        <Home />
+                        <App />
                     </Route>
                     <Route path="/global-error" exact>
                         <p>Une erreur s&apos;est produite, relancez l&apos;extension...</p>
