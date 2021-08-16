@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        popup: path.join(__dirname, 'src/popup/index.tsx'),
+        popup: path.join(__dirname, 'src/index.tsx'),
     },
     output: {
         path: path.join(__dirname, 'dist/js'),
@@ -27,6 +27,12 @@ module.exports = {
                         },
                     },
                 ],
+            },
+            {
+                test: /\.(jpg|png)$/,
+                use: {
+                    loader: 'url-loader',
+                },
             },
         ],
     },

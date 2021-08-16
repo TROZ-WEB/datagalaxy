@@ -1,0 +1,13 @@
+.Root {
+    padding: 11px 30px;
+    background: linear-gradient(71.97deg, #001aff 11.94%, #084eff 37.82%, #17aeff 85.88%);
+    border-radius: 3px;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 18px;
+    border: none;
+}
+
+.Root:hover {
+    cursor: pointer;
+}

@@ -1,0 +1,28 @@
+.Root {
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+}
+
+.Label {
+    font-size: 14px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.Input {
+    background: #ffffff;
+    border: 1px solid rgba(2, 42, 142, 0.1);
+    box-sizing: border-box;
+    height: 42px;
+    border-radius: 3px;
+    padding: 16px;
+}
+
+.HelperTextError {
+    color: red;
+    font-size: 0.75rem;
+    margin-bottom: 3px;
+}
