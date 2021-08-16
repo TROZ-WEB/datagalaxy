@@ -17,7 +17,6 @@ const Popup = () => {
     );
 
     useEffect(() => {
-        chrome.storage.local.set({ onboardingDone: false });
         chrome.storage.local.get(['onboardingDone'], (items: { [key: string]: any }) => {
             if (items.onboardingDone) {
                 setInitialLoadingState(AppInitialLoadingStatus.App);

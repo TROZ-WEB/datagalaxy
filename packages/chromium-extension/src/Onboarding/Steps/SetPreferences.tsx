@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { StepProps } from '../Stepper';
+import styles from './index.css';
 
 type FormData = {
     sharedHistory: boolean;
@@ -27,16 +28,20 @@ const StepSetPreferences: React.FC<StepProps> = ({ goNextStep, currentStep, step
 
     return (
         <form onSubmit={onSubmit}>
-            <h2>Autorisation & partage</h2>
+            <p className={styles.StepTitle}>{chrome.i18n.getMessage('onboarding_preferences_stepTitle')}</p>
             <div>
-                <label htmlFor="sharedHistory">Connecter Chrome à mes historiques de recherches DataGalaxy</label>
+                <label htmlFor="sharedHistory">
+                    {chrome.i18n.getMessage('onboarding_preferences_inputSharedHistory')}
+                </label>
                 <input id="sharedHistory" type="checkbox" {...register('sharedHistory')} />
             </div>
             <div>
-                <label htmlFor="showNotifications">Afficher les notifications sur le plugin</label>
+                <label htmlFor="showNotifications">
+                    {chrome.i18n.getMessage('onboarding_preferences_inputShowNotifications')}
+                </label>
                 <input id="showNotifications" type="checkbox" {...register('showNotifications')} />
             </div>
-            <button type="submit">Continuer</button>
+            <button type="submit">{chrome.i18n.getMessage('onboarding_nextButton')}</button>
         </form>
     );
 };

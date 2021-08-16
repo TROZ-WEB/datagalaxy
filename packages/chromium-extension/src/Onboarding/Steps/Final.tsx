@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { StepProps } from '../Stepper';
+import styles from './index.css';
 
 /**
  * Final step
@@ -20,13 +21,11 @@ const StepFinal: React.FC<StepProps> = ({ currentStep, step }) => {
 
     return (
         <div>
-            <h2>
-                <strong>Bravo !</strong>
-            </h2>
-            <p>Vous êtes désormais connecté.</p>
-            <button type="button">VOIR LE DIDACTITIEL</button>
+            <p className={styles.StepTitle}>{chrome.i18n.getMessage('onboarding_final_stepTitle1')}</p>
+            <p className={styles.StepTitle}>{chrome.i18n.getMessage('onboarding_final_stepTitle2')}</p>
+            <button type="button">{chrome.i18n.getMessage('onboarding_final_discoverFeaturesButton')}</button>
             <button onClick={onClick} type="button">
-                {'Passer >'}
+                {chrome.i18n.getMessage('onboarding_final_skipButton')}
             </button>
         </div>
     );

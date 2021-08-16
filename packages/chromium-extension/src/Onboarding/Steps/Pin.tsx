@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { StepProps } from '../Stepper';
+import styles from './index.css';
 
 type FormData = {
     pin: string;
@@ -31,25 +32,23 @@ const StepPIN: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
 
     return (
         <form onSubmit={onSubmit}>
-            <h2>Code PIN</h2>
-            <p>
-                Pour sécuriser votre compte, créez votre code PIN qui vous permettra de vous reconnecter simplement et
-                efficacement
-            </p>
+            <p className={styles.StepTitle}>{chrome.i18n.getMessage('onboarding_pin_stepTitle')}</p>
+            <p>{chrome.i18n.getMessage('onboarding_pin_stepSubTitle')}</p>
             <div>
-                <label htmlFor="email">Code PIN</label>
+                <label htmlFor="pin">{chrome.i18n.getMessage('onboarding_pin_inputPinLabel')}</label>
                 {errors && errors.pin && <span>{errors.pin.message}</span>}
                 <input
-                    placeholder="ex: 1575"
+                    placeholder={chrome.i18n.getMessage('onboarding_pin_inputPinPlaceholder')}
                     type="number"
                     {...register('pin', { minLength: 4, maxLength: 4, pattern: /\d{4}/, valueAsNumber: true })}
                 />
             </div>
+            {/* En faire un composant 'callout' avec icone customizable */}
             <div>
                 <span>ligth bulb</span>
-                <p>Pour plus de sécurité ne mettez pas votre année de naissance</p>
+                <p>{chrome.i18n.getMessage('onboarding_pin_callout')}</p>
             </div>
-            <button type="submit">Continuer</button>
+            <button type="submit">{chrome.i18n.getMessage('onboarding_nextButton')}</button>
         </form>
     );
 };

@@ -49,14 +49,22 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
 
     return (
         <form onSubmit={onSubmit}>
-            <p className={styles.XX}>Pour commencer l&apos;expérience, connectez-vous</p>
-            <Input errors={errors} label="Identifiant" {...register('email')} />
-            <Input errors={errors} label="Clé d'accès" {...register('pat')} />
-            <Link className={styles.FindPatHelper} to={`${url}/find-pat-helper`}>
-                Où trouver ma clé d&apos;accès
-            </Link>
+            <p className={styles.StepTitle}>{chrome.i18n.getMessage('onboarding_login_stepTitle')}</p>
+            <Input
+                errors={errors}
+                label={chrome.i18n.getMessage('onboarding_login_inputEmailLabel')}
+                {...register('email')}
+            />
+            <Input
+                errors={errors}
+                label={chrome.i18n.getMessage('onboarding_login_inputPatLabel')}
+                {...register('pat')}
+            />
+            <div className={styles.FindPatHelper}>
+                <Link to={`${url}/find-pat-helper`}>{chrome.i18n.getMessage('onboarding_login_findMyPat')}</Link>
+            </div>
             <div className={styles.ButtonWrapper}>
-                <Button type="submit">Se connecter</Button>
+                <Button type="submit">{chrome.i18n.getMessage('onboarding_login_submitForm')}</Button>
             </div>
         </form>
     );

@@ -4,7 +4,7 @@ import StepperProgress from './StepperProgress';
 import styles from './index.css';
 
 interface StepperProps {
-    steps: React.FC[];
+    steps: React.FC<StepProps>[];
 }
 
 export interface StepProps {
@@ -34,7 +34,7 @@ export const Stepper: React.FC<StepperProps> = ({ steps }) => {
 
     return (
         <OnboardingLayout>
-            <h1 className={styles.Title}>Bienvenue</h1>
+            <h1 className={styles.Title}>{chrome.i18n.getMessage('onboarding_title')}</h1>
             <StepperProgress currentStep={currentStep} nbSteps={steps.length} />
             <div className="stepper-selector">
                 {steps.map((Step: React.FC<StepProps>, index) => (

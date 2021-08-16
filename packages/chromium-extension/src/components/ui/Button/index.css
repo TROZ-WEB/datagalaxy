@@ -7,3 +7,7 @@
     line-height: 18px;
     border: none;
 }
+
+.Root:hover {
+    cursor: pointer;
+}

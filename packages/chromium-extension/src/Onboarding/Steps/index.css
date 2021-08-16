@@ -1,4 +1,4 @@
-.XX {
+.StepTitle {
     margin-top: 25px;
     margin-bottom: 21px;
     font-weight: 700;
@@ -7,16 +7,18 @@
 }
 
 .FindPatHelper {
-    color: #000000;
-    text-decoration: underline;
-    font-size: 10px;
-    line-height: 13px;
-    display: block;
     text-align: right;
     margin-top: 1px;
 }
 
-.FindPatHelper :hover {
+.FindPatHelper > a {
+    color: #000000;
+    text-decoration: underline;
+    font-size: 10px;
+    line-height: 13px;
+}
+
+.FindPatHelper > a:hover, .FindPatHelper > a:visited {
     color: #000000;
 }
 

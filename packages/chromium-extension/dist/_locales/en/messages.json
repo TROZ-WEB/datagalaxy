@@ -16,5 +16,74 @@
   },
   "search": {
     "message": "Search"
+  },
+  "onboarding_title": {
+    "message": "Bienvenue"
+  },
+  "onboarding_nextButton": {
+    "message": "Suivant"
+  },
+  "onboarding_login_stepTitle": {
+    "message": "Pour commencer l'expérience, connectez-vous"
+  },
+  "onboarding_login_inputEmailLabel": {
+    "message": "Identifiant"
+  },
+  "onboarding_login_inputPatLabel": {
+    "message": "Clé d'accès"
+  },
+  "onboarding_login_findMyPat": {
+    "message": "Où trouver ma clé d'accès"
+  },
+  "onboarding_login_submitForm": {
+    "message": "Se connecter"
+  },
+  "onboarding_pin_stepTitle": {
+    "message": "Pour sécuriser votre compte, créez votre code PIN"
+  },
+  "onboarding_pin_stepSubTitle": {
+    "message": "Il vous permettra de vous reconnecter simplement et efficacement."
+  },
+  "onboarding_pin_inputPinLabel": {
+    "message": "Votre code PIN"
+  },
+  "onboarding_pin_inputPinPlaceholder": {
+    "message": "ex: 7619"
+  },
+  "onboarding_pin_callout": {
+    "message": "Pour plus de sécurité ne mettez pas de mot de passe simple (1234, votre date d’anniversaire...)"
+  },
+  "onboarding_preferences_stepTitle": {
+    "message": "Sélectionnez les options de partage et d’autorisation"
+  },
+  "onboarding_preferences_inputSharedHistory": {
+    "message": "Connecter Chrome à mes historiques de recherches DataGalaxy"
+  },
+  "onboarding_preferences_inputShowNotifications": {
+    "message": "Afficher les notifications sur le plugin"
+  },
+  "onboarding_final_stepTitle1": {
+    "message": "Bravo !"
+  },
+  "onboarding_final_stepTitle2": {
+    "message": "Vous êtes désormais connecté"
+  },
+  "onboarding_final_discoverFeaturesButton": {
+    "message": "Découvrir les fonctionnalités clés"
+  },
+  "onboarding_final_skipButton": {
+    "message": "Passer"
+  },
+  "onboarding_patFinder_title": {
+    "message": "Où trouver ma clé ?"
+  },
+  "onboarding_patFinder_description": {
+    "message": "Accédez-y directement en cliquant sur le bouton ci-dessous"
+  },
+  "onboarding_patFinder_linkButton": {
+    "message": "Trouver ma clé d'accès"
+  },
+  "onboarding_patFinder_closeButton": {
+    "message": "Ok, fermer"
   }
 }

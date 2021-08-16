@@ -6,13 +6,13 @@ const PatFinder = () => {
     const history = useHistory();
 
     return (
-        <div className={styles.FindPatWrapper}>
-            <h2>Où trouver ma clé ?</h2>
+        <div className={styles.Root}>
+            <h2>{chrome.i18n.getMessage('onboarding_login_stepTitle')}</h2>
             <span>gif animé</span>
-            <p>Accédez-y directement en cliquant sur le bouton ci-dessous</p>
-            <button type="button">TROUVER MA CLÉ</button>
+            <p>{chrome.i18n.getMessage('onboarding_patFinder_description')}</p>
+            <button type="button">{chrome.i18n.getMessage('onboarding_patFinder_linkButton')}</button>
             <button onClick={() => history.goBack()} type="button">
-                Ok, fermer
+                {chrome.i18n.getMessage('onboarding_patFinder_closeButton')}
             </button>
         </div>
     );
