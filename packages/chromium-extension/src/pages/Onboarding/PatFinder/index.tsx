@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import Button from '../../../components/ui/Button';
 import styles from './index.css';
 
 const PatFinder = () => {
@@ -10,10 +11,10 @@ const PatFinder = () => {
             <h2>{chrome.i18n.getMessage('onboarding_login_stepTitle')}</h2>
             <span>gif animé</span>
             <p>{chrome.i18n.getMessage('onboarding_patFinder_description')}</p>
-            <button type="button">{chrome.i18n.getMessage('onboarding_patFinder_linkButton')}</button>
-            <button onClick={() => history.goBack()} type="button">
+            <Button>{chrome.i18n.getMessage('onboarding_patFinder_linkButton')}</Button>
+            <Button onClick={() => history.goBack()}>
                 {chrome.i18n.getMessage('onboarding_patFinder_closeButton')}
-            </button>
+            </Button>
         </div>
     );
 };

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { MemoryRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import App from '../App';
 import Layout from '../components/Layout';
-import Onboarding from '../Onboarding';
+import AsyncStorageService from '../services/AsyncStorageService';
+import Onboarding from './Onboarding';
 
 enum AppInitialLoadingStatus {
     Loading,
@@ -18,13 +19,16 @@ const Popup = () => {
     );
 
     useEffect(() => {
-        chrome.storage.local.get(['onboardingDone'], (items: { [key: string]: any }) => {
+        const loadStorage = async () => {
+            const items = await AsyncStorageService.getData('onboardingDone');
+
             if (items.onboardingDone) {
                 setInitialLoadingState(AppInitialLoadingStatus.App);
             } else {
                 setInitialLoadingState(AppInitialLoadingStatus.Onboarding);
             }
-        });
+        };
+        loadStorage();
     }, []);
 
     const renderBootingExtension = () => {

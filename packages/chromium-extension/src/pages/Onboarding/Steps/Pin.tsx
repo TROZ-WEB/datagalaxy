@@ -1,6 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import Button from '../../../components/ui/Button';
+import Callout from '../../../components/ui/Callout';
+import Input from '../../../components/ui/Input';
+import AsyncStorageService from '../../../services/AsyncStorageService';
 import { StepProps } from '../Stepper';
+import Insight from '../../../../assets/icons/insight.svg';
 import styles from './index.css';
 
 type FormData = {
@@ -15,15 +20,12 @@ const StepPIN: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
         register,
         handleSubmit,
         formState: { errors },
-        // setError,
     } = useForm<FormData>();
 
-    const onSubmit = handleSubmit(() => {
-        // TODO: Save the pin on local storage ()
+    const onSubmit = handleSubmit(async (values) => {
+        await AsyncStorageService.setData(values);
 
-        if (true) {
-            goNextStep();
-        }
+        goNextStep();
     });
 
     if (currentStep !== step) {
@@ -33,22 +35,19 @@ const StepPIN: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
     return (
         <form onSubmit={onSubmit}>
             <p className={styles.StepTitle}>{chrome.i18n.getMessage('onboarding_pin_stepTitle')}</p>
-            <p>{chrome.i18n.getMessage('onboarding_pin_stepSubTitle')}</p>
+            <p className={styles.StepSubTitle}>{chrome.i18n.getMessage('onboarding_pin_stepSubTitle')}</p>
             <div>
-                <label htmlFor="pin">{chrome.i18n.getMessage('onboarding_pin_inputPinLabel')}</label>
-                {errors && errors.pin && <span>{errors.pin.message}</span>}
-                <input
+                <Input
+                    errors={errors}
+                    label={chrome.i18n.getMessage('onboarding_pin_inputPinLabel')}
                     placeholder={chrome.i18n.getMessage('onboarding_pin_inputPinPlaceholder')}
-                    type="number"
                     {...register('pin', { minLength: 4, maxLength: 4, pattern: /\d{4}/, valueAsNumber: true })}
                 />
             </div>
-            {/* En faire un composant 'callout' avec icone customizable */}
-            <div>
-                <span>ligth bulb</span>
-                <p>{chrome.i18n.getMessage('onboarding_pin_callout')}</p>
+            <Callout icon={Insight}>{chrome.i18n.getMessage('onboarding_pin_callout')}</Callout>
+            <div className={styles.ButtonWrapper}>
+                <Button type="submit">{chrome.i18n.getMessage('onboarding_nextButton')}</Button>
             </div>
-            <button type="submit">{chrome.i18n.getMessage('onboarding_nextButton')}</button>
         </form>
     );
 };

@@ -1,0 +1,60 @@
+.Root {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 25px;
+}
+
+.Switch {
+    background: rgba(11, 97, 255, 0.5);
+    border-radius: 16px;
+    width: 42px;
+    height: 24px;
+    position: relative;
+    margin-right: 13px;
+}
+
+.Checked {
+    background: #0b61ff;
+}
+
+.SwitchSlider {
+    transition: 0.2s ease-in-out;
+    -webkit-transition: 0.2s ease-in-out;
+    background: #fcfcfc;
+    font-size: 12px;
+    line-height: 15px;
+    border-radius: 16px;
+    width: 20px;
+    height: 20px;
+    display: block;
+    position: absolute;
+    left: 2px;
+    top: 2px;
+}
+
+.SwitchSliderChecked {
+    left: 20px;
+}
+
+.LabelWrapper {
+    font-size: 14px;
+    line-height: 18px;
+    flex: 1;
+}
+
+.Checkbox {
+    display: none;
+    /* background: #ffffff;
+    border: 1px solid rgba(2, 42, 142, 0.1);
+    box-sizing: border-box;
+    height: 42px;
+    border-radius: 3px;
+    padding: 16px; */
+}
+
+.HelperTextError {
+    color: red;
+    font-size: 0.75rem;
+    margin-bottom: 3px;
+}

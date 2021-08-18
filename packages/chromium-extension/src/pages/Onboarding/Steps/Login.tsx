@@ -1,8 +1,9 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useRouteMatch } from 'react-router-dom';
-import Button from '../../components/ui/Button';
-import Input from '../../components/ui/Input';
+import Button from '../../../components/ui/Button';
+import Input from '../../../components/ui/Input';
+import AuthenticationServices from '../../../services/AuthenticationService';
 import { StepProps } from '../Stepper';
 import styles from './index.css';
 
@@ -12,7 +13,7 @@ type FormData = {
 };
 
 /**
- * Ask for a email and PAT
+ * Ask for an Email and PAT
  */
 const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
     const { url } = useRouteMatch();
@@ -20,27 +21,21 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
         register,
         handleSubmit,
         formState: { errors },
-        // setError,
+        setError,
     } = useForm<FormData>();
 
-    const onSubmit = handleSubmit(() => {
-        // console.log('values : ', values);
-        // TODO: Handle backend login with 'data'
+    const onSubmit = handleSubmit(async (values) => {
+        try {
+            await AuthenticationServices.loginWithPAT(values.pat);
+        } catch (error) {
+            setError('pat', {
+                message: error.message,
+            });
 
-        // Handle PAT error
-        // if (true) {
-        //     setError('pat', {
-        //         message:
-        //             "Clé d'accès non reconnues, vérifiez les chiffres entrés ou envoyez un message à votre administrateur",
-        //     });
-
-        //     return;
-        // }
-
-        // eslint-disable-next-line no-constant-condition
-        if (true) {
-            goNextStep();
+            return;
         }
+
+        goNextStep();
     });
 
     if (currentStep !== step) {
@@ -53,12 +48,12 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
             <Input
                 errors={errors}
                 label={chrome.i18n.getMessage('onboarding_login_inputEmailLabel')}
-                {...register('email')}
+                {...register('email', { required: true })}
             />
             <Input
                 errors={errors}
                 label={chrome.i18n.getMessage('onboarding_login_inputPatLabel')}
-                {...register('pat')}
+                {...register('pat', { required: true })}
             />
             <div className={styles.FindPatHelper}>
                 <Link to={`${url}/find-pat-helper`}>{chrome.i18n.getMessage('onboarding_login_findMyPat')}</Link>

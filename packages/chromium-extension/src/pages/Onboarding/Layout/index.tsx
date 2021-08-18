@@ -1,5 +1,5 @@
 import React from 'react';
-import LogoWithText from '../../../assets/logo-with-text.png';
+import LogoWithText from '../../../../assets/logo-with-text.png';
 import styles from './index.css';
 
 const OnboardingLayout = ({ children }: { children: React.ReactNode }) => {

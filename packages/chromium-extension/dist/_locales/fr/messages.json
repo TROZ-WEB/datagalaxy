@@ -17,6 +17,9 @@
   "search": {
     "message": "Rechercher"
   },
+  "error_pat": {
+    "message": "Clé d'accès non reconnues, vérifiez les chiffres entrés ou envoyez un message à votre administrateur"
+  },
   "onboarding_title": {
     "message": "Bienvenue"
   },
@@ -48,7 +51,7 @@
     "message": "Votre code PIN"
   },
   "onboarding_pin_inputPinPlaceholder": {
-    "message": "ex: 7619"
+    "message": "exemple: 7619"
   },
   "onboarding_pin_callout": {
     "message": "Pour plus de sécurité ne mettez pas de mot de passe simple (1234, votre date d’anniversaire...)"

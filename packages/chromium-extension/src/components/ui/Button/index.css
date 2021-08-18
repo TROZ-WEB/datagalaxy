@@ -1,11 +1,20 @@
 .Root {
     padding: 11px 30px;
-    background: linear-gradient(71.97deg, #001aff 11.94%, #084eff 37.82%, #17aeff 85.88%);
     border-radius: 3px;
-    color: #ffffff;
     font-size: 14px;
     line-height: 18px;
+}
+
+.Contained {
+    background: linear-gradient(71.97deg, #001aff 11.94%, #084eff 37.82%, #17aeff 85.88%);
+    color: #ffffff;
     border: none;
+}
+
+.Outlined {
+    background-color: #F7F8F9;
+    color: #001030;
+    border: 1px solid rgba(2, 42, 142, 0.1);
 }
 
 .Root:hover {

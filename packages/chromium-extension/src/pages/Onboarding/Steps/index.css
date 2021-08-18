@@ -1,7 +1,19 @@
+.Root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .StepTitle {
     margin-top: 25px;
     margin-bottom: 21px;
     font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+}
+
+.StepSubTitle {
     font-size: 14px;
     text-align: center;
 }
@@ -25,4 +37,14 @@
 .ButtonWrapper {
     margin-top: 42px;
     text-align: center;
+}
+
+.CheckIcon {
+    margin-top: 30px;
+    height: 26px;
+    width: 26px;
+}
+
+.SkipButtonWrapper {
+    margin-top: 19px;
 }
