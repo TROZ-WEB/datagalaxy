@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-interface SearchEntity {
+export interface SearchEntity {
     id: string;
     name: string;
     technicalName: string;

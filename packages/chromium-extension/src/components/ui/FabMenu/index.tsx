@@ -1,5 +1,6 @@
 import cx from 'clsx';
 import React, { useState } from 'react';
+import Close from '../../../icons/Close';
 import styles from './index.css';
 
 const FabMenu = () => {
@@ -16,7 +17,7 @@ const FabMenu = () => {
     return (
         <div className={cx(styles.Root, { [styles.Expanded]: isExpanded })}>
             <button className={cx(styles.CircleButton, styles.ToggleButton)} onClick={handlePressToggle} type="button">
-                TMP
+                <Close />
             </button>
 
             <div className={cx(styles.ActionButtonsContainer, { [styles.ActionButtonsContainerExpanded]: isExpanded })}>

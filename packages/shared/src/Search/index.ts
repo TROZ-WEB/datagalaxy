@@ -1,6 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import { post } from '../Http';
-import { SearchResponse } from './types';
+import { SearchEntity, SearchResponse } from './types';
+
+export { SearchEntity, SearchResponse };
 
 export const search = async (apiUrl: string, accessToken: string, query: string): Promise<SearchResponse> => {
     try {
