@@ -32,15 +32,6 @@ const StepSetPreferences: React.FC<StepProps> = ({ goNextStep, currentStep, step
             <p className={styles.StepTitle}>{chrome.i18n.getMessage('onboarding_preferences_stepTitle')}</p>
             <Controller
                 control={control}
-                defaultValue={false}
-                name="sharedHistory"
-                render={({ field }) => (
-                    <Switch label={chrome.i18n.getMessage('onboarding_preferences_inputSharedHistory')} {...field} />
-                )}
-            />
-            <Controller
-                control={control}
-                defaultValue={false}
                 name="showNotifications"
                 render={({ field }) => (
                     <Switch
@@ -48,6 +39,7 @@ const StepSetPreferences: React.FC<StepProps> = ({ goNextStep, currentStep, step
                         {...field}
                     />
                 )}
+                defaultValue
             />
             <div className={styles.ButtonWrapper}>
                 <Button type="submit">{chrome.i18n.getMessage('onboarding_nextButton')}</Button>

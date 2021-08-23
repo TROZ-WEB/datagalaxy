@@ -41,7 +41,11 @@ const StepPIN: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
                     errors={errors}
                     label={chrome.i18n.getMessage('onboarding_pin_inputPinLabel')}
                     placeholder={chrome.i18n.getMessage('onboarding_pin_inputPinPlaceholder')}
-                    {...register('pin', { minLength: 4, maxLength: 4, pattern: /\d{4}/, valueAsNumber: true })}
+                    {...register('pin', {
+                        required: { value: true, message: chrome.i18n.getMessage('error_required_field') },
+                        pattern: { value: /^[0-9]{4}$/, message: chrome.i18n.getMessage('error_pin_code_size') },
+                        valueAsNumber: true,
+                    })}
                 />
             </div>
             <Callout icon={Insight}>{chrome.i18n.getMessage('onboarding_pin_callout')}</Callout>

@@ -20,6 +20,12 @@
   "error_pat": {
     "message": "Clé d'accès non reconnues, vérifiez les chiffres entrés ou envoyez un message à votre administrateur"
   },
+  "error_required_field": {
+    "message": "Ce champ est requis"
+  },
+  "error_pin_code_size": {
+    "message": "Le code pin doit faire quatre caractères."
+  },
   "onboarding_title": {
     "message": "Bienvenue"
   },
@@ -58,9 +64,6 @@
   },
   "onboarding_preferences_stepTitle": {
     "message": "Sélectionnez les options de partage et d’autorisation"
-  },
-  "onboarding_preferences_inputSharedHistory": {
-    "message": "Connecter Chrome à mes historiques de recherches DataGalaxy"
   },
   "onboarding_preferences_inputShowNotifications": {
     "message": "Afficher les notifications sur le plugin"
