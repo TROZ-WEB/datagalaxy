@@ -2,7 +2,7 @@
 import { post } from '../Http';
 import { SearchEntity, SearchResponse } from './types';
 
-export { SearchEntity, SearchResponse };
+export type { SearchEntity, SearchResponse };
 
 export const search = async (apiUrl: string, accessToken: string, query: string): Promise<SearchResponse> => {
     try {
