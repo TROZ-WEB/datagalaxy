@@ -4,7 +4,6 @@ import PatFinder from './PatFinder';
 import { Stepper } from './Stepper';
 import Final from './Steps/Final';
 import Login from './Steps/Login';
-import SetPIN from './Steps/Pin';
 import SetPreferences from './Steps/SetPreferences';
 
 const Onboarding = () => {
@@ -16,7 +15,7 @@ const Onboarding = () => {
                 <PatFinder />
             </Route>
             <Route>
-                <Stepper steps={[Login, SetPIN, SetPreferences, Final]} />
+                <Stepper steps={[Login, SetPreferences, Final]} />
             </Route>
         </Switch>
     );

@@ -2,12 +2,12 @@ import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Button from '../../../components/ui/Button';
 import Switch from '../../../components/ui/Switch';
-import AsyncStorageService from '../../../services/AsyncStorageService';
+import chromeExtensionStorageEngine from '../../../store/chromeExtensionStorageEngine';
+import { useStoreActions } from '../../../store/hooks';
 import { StepProps } from '../Stepper';
 import styles from './index.css';
 
 type FormData = {
-    sharedHistory: boolean;
     showNotifications: boolean;
 };
 
@@ -17,8 +17,11 @@ type FormData = {
 const StepSetPreferences: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
     const { control, handleSubmit } = useForm<FormData>();
 
+    const setLocalPreferencesState = useStoreActions((actions) => actions.localPreferences.setState);
+
     const onSubmit = handleSubmit(async (values) => {
-        await AsyncStorageService.setData(values);
+        setLocalPreferencesState({ showNotifications: values.showNotifications });
+        await chromeExtensionStorageEngine.setItem('showNotifications', values.showNotifications);
 
         goNextStep();
     });
