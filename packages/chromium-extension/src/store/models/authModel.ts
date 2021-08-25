@@ -66,6 +66,10 @@ const authModel = async (): Promise<AuthModel> => {
         pat: await chromeExtensionStorageEngine.getItem('pat'),
         accessToken: await chromeExtensionStorageEngine.getItem('accessToken'),
         pubapi: await chromeExtensionStorageEngine.getItem('pubapi'),
+        // onboardingDone: null,
+        // pat: null,
+        // accessToken: null,
+        // pubapi: null,
         /* Actions */
         setState,
         /* Thunks */
