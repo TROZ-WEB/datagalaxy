@@ -15,7 +15,7 @@
     "message": "Word to search"
   },
   "search": {
-    "message": "Search"
+    "message": "Search..."
   },
   "error_pat": {
     "message": "Clé d'accès non reconnues, vérifiez les chiffres entrés ou envoyez un message à votre administrateur"
