@@ -1,0 +1,8 @@
+.Root {
+    color: #6D6F88;
+    font-size: 12px;
+    line-height: 14.5px;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
