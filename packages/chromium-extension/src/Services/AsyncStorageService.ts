@@ -1,9 +1,8 @@
 import { PersistStorage } from 'easy-peasy';
 
 /**
- * Custom Persist for chrome.storage.local API.
+ * Async Storage Service
  *
- * (https://easy-peasy.vercel.app/docs/api/persist.html#custom-storage-engines)
  */
 
 const getItem = async (item: string): Promise<any> => {

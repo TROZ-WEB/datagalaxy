@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { action, Action, Actions, Thunk, thunk } from 'easy-peasy';
 import { decodePAT, getAccessToken } from '../../../../shared/dist/shared';
-import chromeExtensionStorageEngine from '../chromeExtensionStorageEngine';
+import AsyncStorageService from '../../Services/AsyncStorageService';
 import { setState } from './helper';
 
 export interface AuthModel {
@@ -35,18 +35,18 @@ const loginWithPAT = thunk(async (actions: Actions<AuthModel>, pat) => {
     }
 
     // Then save it for future use
-    await chromeExtensionStorageEngine.setItem('pat', btoa(pat));
+    await AsyncStorageService.setItem('pat', btoa(pat));
     actions.setState({ pat: btoa(pat) });
 
     // And save only useful JWT attributes to the localStorage
-    await chromeExtensionStorageEngine.setItem('pubapi', decodedPAT.pubapi);
+    await AsyncStorageService.setItem('pubapi', decodedPAT.pubapi);
     actions.setState({ pubapi: decodedPAT.pubapi });
 
     // Finally save the access token aswell
     const accessToken = await getAccessToken(decodedPAT.pubapi, pat);
 
     if (accessToken) {
-        await chromeExtensionStorageEngine.setItem('accessToken', btoa(accessToken));
+        await AsyncStorageService.setItem('accessToken', btoa(accessToken));
         actions.setState({ accessToken: btoa(accessToken) });
 
         return;
@@ -62,14 +62,10 @@ const loginWithPAT = thunk(async (actions: Actions<AuthModel>, pat) => {
 const authModel = async (): Promise<AuthModel> => {
     return {
         /* State */
-        onboardingDone: await chromeExtensionStorageEngine.getItem('onboardingDone'),
-        pat: await chromeExtensionStorageEngine.getItem('pat'),
-        accessToken: await chromeExtensionStorageEngine.getItem('accessToken'),
-        pubapi: await chromeExtensionStorageEngine.getItem('pubapi'),
-        // onboardingDone: null,
-        // pat: null,
-        // accessToken: null,
-        // pubapi: null,
+        onboardingDone: await AsyncStorageService.getItem('onboardingDone'),
+        pat: await AsyncStorageService.getItem('pat'),
+        accessToken: await AsyncStorageService.getItem('accessToken'),
+        pubapi: await AsyncStorageService.getItem('pubapi'),
         /* Actions */
         setState,
         /* Thunks */
