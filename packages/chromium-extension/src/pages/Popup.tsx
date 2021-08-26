@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MemoryRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import App from '../App';
 import Layout from '../components/Layout';
-import AsyncStorageService from '../services/AsyncStorageService';
+import { useStoreState } from '../store/hooks';
 import Onboarding from './Onboarding';
 
 enum AppInitialLoadingStatus {
@@ -17,12 +17,11 @@ const Popup = () => {
     const [initialLoadingState, setInitialLoadingState] = useState<AppInitialLoadingStatus>(
         AppInitialLoadingStatus.Loading,
     );
+    const { onboardingDone } = useStoreState((state) => state.auth);
 
     useEffect(() => {
         const loadStorage = async () => {
-            const items = await AsyncStorageService.getData('onboardingDone');
-
-            if (items.onboardingDone) {
+            if (onboardingDone) {
                 setInitialLoadingState(AppInitialLoadingStatus.App);
             } else {
                 setInitialLoadingState(AppInitialLoadingStatus.Onboarding);

@@ -37,6 +37,7 @@ specifiers:
   ts-loader: ^9.2.3
   ts-node: ~10.0.0
   typings-for-css-modules-loader: ^1.7.0
+  url-loader: ~4.1.1
   webpack: ^5.42.0
   webpack-cli: ^4.7.2
   webpack-merge: ^5.8.0
@@ -78,6 +79,7 @@ dependencies:
   ts-loader: 9.2.3_webpack@5.42.1
   ts-node: 10.0.0
   typings-for-css-modules-loader: 1.7.0_css-loader@5.2.6
+  url-loader: 4.1.1_webpack@5.42.1
   webpack: 5.42.1_webpack-cli@4.7.2
   webpack-cli: 4.7.2_webpack@5.42.1
   webpack-merge: 5.8.0
@@ -2212,6 +2214,19 @@ packages:
     resolution: {integrity: sha1-7gHdHKwO08vH/b6jfcCo8c4ALOI=}
     dev: false
 
+  /easy-peasy/5.0.3_react@17.0.2:
+    resolution: {integrity: sha512-FRO1ClPWIhgfui7bSEOFqA/b1GuSlf98+5DuW1r1W1DC85nrJcke3rYemyKj/1B2kSzH90Ze6FM5uakUgqkzcQ==}
+    peerDependencies:
+      react: '>= 16.8.0'
+    dependencies:
+      '@babel/runtime': 7.14.6
+      immer: 8.0.4
+      react: 17.0.2
+      redux: 4.1.1
+      redux-thunk: 2.3.0
+      ts-toolbelt: 9.6.0
+    dev: false
+
   /electron-to-chromium/1.3.766:
     resolution: {integrity: sha512-u2quJ862q9reRKh/je3GXis3w38+RoXH1J9N3XjtsS6NzmUAosNsyZgUVFZPN/ZlJ3v6T0rTyZR3q/J5c6Sy5w==}
     dev: false
@@ -3196,6 +3211,10 @@ packages:
   /ignore/5.1.8:
     resolution: {integrity: sha512-BMpfD7PpiETpBl/A6S498BaIJ6Y/ABT93ETbby2fP00v4EbvPBXWEoaR1UBPKs3iR53pJY7EtZk5KACI57i1Uw==}
     engines: {node: '>= 4'}
+    dev: false
+
+  /immer/8.0.4:
+    resolution: {integrity: sha512-jMfL18P+/6P6epANRvRk6q8t+3gGhqsJ9EuJ25AXE+9bNTYtssvzeYbEd0mXRYWCmmXSIbnlpz6vd6iJlmGGGQ==}
     dev: false
 
   /import-fresh/3.3.0:
@@ -4979,6 +4998,16 @@ packages:
       resolve: 1.20.0
     dev: false
 
+  /redux-thunk/2.3.0:
+    resolution: {integrity: sha512-km6dclyFnmcvxhAcrQV2AkZmPQjzPDjgVlQtR0EQjxZPyJ0BnMf3in1ryuR8A2qU0HldVRfxYXbFSKlI3N7Slw==}
+    dev: false
+
+  /redux/4.1.1:
+    resolution: {integrity: sha512-hZQZdDEM25UY2P493kPYuKqviVwZ58lEmGQNeQ+gXa+U0gYPUBf7NKYazbe3m+bs/DzM/ahN12DbF+NG8i0CWw==}
+    dependencies:
+      '@babel/runtime': 7.14.6
+    dev: false
+
   /regenerator-runtime/0.13.7:
     resolution: {integrity: sha512-a54FxoJDIr27pgf7IgeQGxmqUNYrcV338lf/6gH456HZ/PhX+5BcwHXG9ajESmwe6WRO0tAzRUrRmNONWgkrew==}
     dev: false
@@ -5649,6 +5678,10 @@ packages:
       yn: 3.1.1
     dev: false
 
+  /ts-toolbelt/9.6.0:
+    resolution: {integrity: sha512-nsZd8ZeNUzukXPlJmTBwUAuABDe/9qtVDelJeT/qW0ow3ZS3BsQJtNkan1802aM9Uf68/Y8ljw86Hu0h5IUW3w==}
+    dev: false
+
   /tsconfig-paths/3.9.0:
     resolution: {integrity: sha512-dRcuzokWhajtZWkQsDVKbWyY+jgcLC5sqJhg2PSgf4ZkH2aHPvaOY8YWGhmjb68b5qqTfasSsDO9k7RUiEmZAw==}
     dependencies:
@@ -6109,7 +6142,7 @@ packages:
     dev: false
 
   file:projects/chromium-extension.tgz:
-    resolution: {integrity: sha512-4pT7mxC/P/XyikYHHtthEJWMthpnS6B/Lfy2f4QeJV6lC1U1lUvWYgxf5YoRJ87X2awg/Upu2PZ95NQgrfY1bg==, tarball: file:projects/chromium-extension.tgz}
+    resolution: {integrity: sha512-VslZFgoRm/KtJ5Z4LNxg7MoCmoLm6+nKNi28eliPOazbrnSERLVpnAM5dveXtgW/vq71WgWNqH6Q4CkoncBCbg==, tarball: file:projects/chromium-extension.tgz}
     name: '@rush-temp/chromium-extension'
     version: 0.0.0
     dependencies:
@@ -6125,6 +6158,7 @@ packages:
       classnames: 2.3.1
       clsx: 1.1.1
       css-loader: 5.2.6_webpack@5.42.1
+      easy-peasy: 5.0.3_react@17.0.2
       eslint: 7.30.0
       eslint-config-prettier: 8.3.0_eslint@7.30.0
       eslint-plugin-import: 2.23.4_eslint@7.30.0

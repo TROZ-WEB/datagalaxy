@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useRouteMatch } from 'react-router-dom';
 import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/Input';
-import AuthenticationServices from '../../../services/AuthenticationService';
+import { useStoreActions } from '../../../store/hooks';
 import { StepProps } from '../Stepper';
 import styles from './index.css';
 
@@ -24,9 +24,11 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
         setError,
     } = useForm<FormData>();
 
+    const loginWithPAT = useStoreActions((actions) => actions.auth.loginWithPAT);
+
     const onSubmit = handleSubmit(async (values) => {
         try {
-            await AuthenticationServices.loginWithPAT(values.pat);
+            await loginWithPAT(values.pat);
         } catch (error) {
             setError('pat', {
                 message: error.message,

@@ -47,6 +47,7 @@
         "shared": "~1.0.0",
         "react-hook-form": "~7.12.2",
         "react-router-dom": "~5.2.0",
-        "clsx": "~1.1.1"
+        "clsx": "~1.1.1",
+        "easy-peasy": "~5.0.3"
     }
 }
