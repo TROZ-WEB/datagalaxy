@@ -1,9 +1,9 @@
 .Root {
-    background-color: #eee8e8;
-    border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 3px;
+    border: 1px solid rgba(2, 42, 142, 0.1);
     transition: 150ms;
 }
 
@@ -11,18 +11,32 @@
     width: 100%;
     min-width: 0;
     margin: 0;
+    padding: 13px;
     border: none;
+    font-family: 'SourceSansPro';
     font-size: 14px;
-    line-height: 17px;
-    padding: 16px;
+    line-height: 18px;
+    color: #6d6f88;
     outline: 0;
     background-color: transparent;
     transition: 150ms;
 }
 
+.Left {
+    margin-left: 12px;
+    white-space: nowrap;
+}
+
+.Left svg {
+    font-size: 16px;
+    line-height: 10px;
+    position: relative;
+    top: 1px;
+    color: #6d6f88;
+}
+
 .Right {
     margin-right: 8px;
-    font-size: 10px;
     white-space: nowrap;
 }
 
@@ -31,6 +45,7 @@
     line-height: 10px;
     position: relative;
     top: 1px;
+    color: #6d6f88;
 }
 
 @keyframes Rotate {
