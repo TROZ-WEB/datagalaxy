@@ -2,24 +2,19 @@
     margin-top: 16px;
 }
 
-.InputContainer {
-    margin: 0 16px;
-}
-
 .Results {
     margin-top: 8px;
 }
 
-.ResultCard {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 5px 20px 5px 40px;
-    min-height: 40px;
-    cursor: pointer;
-    color: #001030;
+.ResultsTitle {
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 18px;
+    margin-top: 14px;
+    margin-bottom: 10px;
 }
 
-.ResultCard:hover {
-    background: rgba(0, 0, 255, 0.05);
+.Separator {
+    border-bottom: 1px solid #f3f6ff;
+    display: block;
 }

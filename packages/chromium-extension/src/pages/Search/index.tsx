@@ -1,12 +1,12 @@
 import React from 'react';
 import SearchForm from '../../components/SearchForm';
+import styles from './index.css';
 
 const Search = () => {
     return (
-        <>
-            {chrome.i18n.getMessage('welcomeMessage')}
+        <div className={styles.Root}>
             <SearchForm />
-        </>
+        </div>
     );
 };
 

@@ -17,3 +17,13 @@
 html {
     font-family: "SourceSansPro";
 }
+
+/**
+ * Theming variables
+ */
+:root {
+    --black: #001030;
+    --medium-gray-color: #5a5e86;
+    --functional-color: #50c516;
+    --technical-color: #28aae2;
+  }

@@ -1,5 +1,9 @@
 .Root {
+    position: fixed;
+    z-index: 2;
+    top: 0;
     height: 63px;
+    width: 100%;
     background-color: #001030;
     display: flex;
     flex-direction: row;

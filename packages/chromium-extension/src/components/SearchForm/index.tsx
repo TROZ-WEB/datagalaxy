@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { decodePAT, getAccessToken, search, SearchEntity } from 'shared';
+import SearchCardResult from './SearchCardResult';
 import SearchInput from './SearchInput';
 import { useSearchInput } from './SearchInput/useSearchInput';
 import styles from './index.css';
@@ -28,7 +29,7 @@ const SearchForm = () => {
 
     return (
         <div className={styles.Root}>
-            <div className={styles.InputContainer}>
+            <div>
                 <SearchInput
                     {...searchInputProps}
                     loading={loading}
@@ -37,10 +38,11 @@ const SearchForm = () => {
                 />
             </div>
             <div className={styles.Results}>
-                {searchEntities.map((entity) => (
-                    <div key={entity.id} className={styles.ResultCard}>
-                        <span>{entity.type}</span>
-                        <span>{entity.name}</span>
+                <p className={styles.ResultsTitle}>Recent search</p>
+                {searchEntities.map((entity, idx) => (
+                    <div key={entity.id}>
+                        <SearchCardResult field={entity} />
+                        {idx < searchEntities.length - 1 && <span className={styles.Separator} />}
                     </div>
                 ))}
             </div>
