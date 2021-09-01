@@ -1,0 +1,33 @@
+.Root {
+    width: 54px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f3f6ff;
+}
+
+.MenuItem {
+    width: 54px;
+    height: 54px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #444444;
+    border: none;
+}
+
+.MenuItemIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.BackButton {
+    background-color: #5a5e86;
+    color: white;
+}
+
+.BackButtonIcon {
+    width: 24px;
+    height: 24px;
+}
