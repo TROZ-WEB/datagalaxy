@@ -2,6 +2,16 @@
     display: flex;
     flex-direction: row;
     margin: 9px auto;
+    color: var(--black);
+    overflow: hidden;
+}
+
+.Root:hover .RightSide {
+    height: 100px;
+}
+
+.Root:hover {
+    cursor: pointer;
 }
 
 .LeftSide {
@@ -24,6 +34,8 @@
 .RightSide {
     display: flex;
     flex-direction: column;
+    height: 48px;
+    transition: height 0.15s linear;
 }
 
 .LeftSideBackground {
@@ -70,4 +82,27 @@
     line-height: 18px;
     color: var(--black);
     margin-top: 4px;
+    text-decoration: none;
+}
+
+.FieldName:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.FieldName:hover::after {
+    content: url('../../../../assets/icons/out.svg');
+    width: 12px;
+    height: 12px;
+    margin-left: 5px;
+}
+
+.ExpandedWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.AssociatedUsersWrapper {
+    display: flex;
+    flex-direction: row;
 }

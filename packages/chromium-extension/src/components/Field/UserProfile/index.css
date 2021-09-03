@@ -1,0 +1,30 @@
+.Root {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.Avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 8px;
+    border: 1px solid #FFFFFF;
+}
+
+.TextInfoWrapper {
+    display: flex;
+    flex-direction: column;
+    padding-right: 8px;
+    margin-right: 3px;
+}
+
+.Role {
+    font-weight: 700;
+    font-size: 10px;
+    color: var(--reflex);
+}
+
+.UserName {
+    font-size: 14px;
+}

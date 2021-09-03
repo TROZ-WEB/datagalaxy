@@ -1,14 +1,14 @@
 /* eslint-disable import/prefer-default-export */
 import { post } from '../Http';
-import { SearchEntity, SearchResponse } from './types';
+import { SearchResponse } from './types';
 
-export type { SearchEntity, SearchResponse };
+export type { SearchResponse } from './types';
 
 export const search = async (apiUrl: string, accessToken: string, query: string): Promise<SearchResponse> => {
     try {
         const response = await post<SearchResponse>(
             `${apiUrl}/search`,
-            { query },
+            { query, includedAttributes: ['DataOwners', 'DataStewards', 'EntityStatus'] },
             {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,

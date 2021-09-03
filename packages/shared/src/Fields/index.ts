@@ -1,4 +1,5 @@
 /* eslint-disable import/prefer-default-export */
+export type { FieldEntity, FieldStatus } from './types';
 
 /**
  * Format the breadcrumd in the form 'Database > Modèle'

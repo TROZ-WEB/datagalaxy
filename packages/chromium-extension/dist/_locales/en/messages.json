@@ -91,5 +91,26 @@
   },
   "onboarding_patFinder_closeButton": {
     "message": "Ok, fermer"
+  },
+  "field_status_Proposed": {
+    "message": "Proposed"
+  },
+  "field_status_InRevision": {
+    "message": "In revision"
+  },
+  "field_status_InValidation": {
+    "message": "In validation"
+  },
+  "field_status_Validated": {
+    "message": "Validated"
+  },
+  "field_status_Obsolete": {
+    "message": "Obsolete"
+  },
+  "field_owner": {
+    "message": "Owner"
+  },
+  "field_steward": {
+    "message": "Steward"
   }
 }

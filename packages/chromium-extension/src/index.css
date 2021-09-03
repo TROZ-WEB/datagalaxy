@@ -15,7 +15,7 @@
 }
 
 html {
-    font-family: "SourceSansPro";
+    font-family: 'SourceSansPro';
 }
 
 /**
@@ -23,7 +23,13 @@ html {
  */
 :root {
     --black: #001030;
+    --reflex: #1035b1;
+
     --medium-gray-color: #5a5e86;
+    --orange-color: #ff811a;
+    --blue-color: #28aae2;
+    --green-color: #50c516;
+    --magenta-color: #ca004a;
     --functional-color: #50c516;
     --technical-color: #28aae2;
-  }
+}
