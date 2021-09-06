@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { decodePAT, getAccessToken, search, FieldEntity, getUsersByEmailsAndRole } from 'shared';
+import VerticalMenu from '../VerticalMenu';
 import SearchCardResult from './SearchCardResult';
 import SearchInput from './SearchInput';
 import { useSearchInput } from './SearchInput/useSearchInput';
@@ -52,25 +53,28 @@ const SearchForm = () => {
     const searchInputProps = useSearchInput({ debounceDuration: 1000, debounceOnChange });
 
     return (
-        <div className={styles.Root}>
-            <div>
-                <SearchInput
-                    {...searchInputProps}
-                    loading={loading}
-                    placeholder={chrome.i18n.getMessage('search')}
-                    success={success}
-                />
+        <>
+            <VerticalMenu />
+            <div className={styles.Root}>
+                <div>
+                    <SearchInput
+                        {...searchInputProps}
+                        loading={loading}
+                        placeholder={chrome.i18n.getMessage('search')}
+                        success={success}
+                    />
+                </div>
+                <div className={styles.Results}>
+                    <p className={styles.ResultsTitle}>Recent search</p>
+                    {searchEntities.map((entity, idx) => (
+                        <div key={entity.id}>
+                            <SearchCardResult field={entity} />
+                            {idx < searchEntities.length - 1 && <span className={styles.Separator} />}
+                        </div>
+                    ))}
+                </div>
             </div>
-            <div className={styles.Results}>
-                <p className={styles.ResultsTitle}>Recent search</p>
-                {searchEntities.map((entity, idx) => (
-                    <div key={entity.id}>
-                        <SearchCardResult field={entity} />
-                        {idx < searchEntities.length - 1 && <span className={styles.Separator} />}
-                    </div>
-                ))}
-            </div>
-        </div>
+        </>
     );
 };
 
