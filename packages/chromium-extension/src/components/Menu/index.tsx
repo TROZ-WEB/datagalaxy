@@ -53,7 +53,6 @@ const Menu = () => {
                         type="button"
                     >
                         {icon}
-                        {/* <img alt={description} className={styles.MenuItemImage} src={icon} /> */}
                     </button>
                 ))}
             </div>
