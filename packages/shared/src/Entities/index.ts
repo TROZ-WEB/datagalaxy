@@ -1,5 +1,8 @@
+import { get } from '../Http';
+import { EntityType } from './types';
+
 /* eslint-disable import/prefer-default-export */
-export type { FieldEntity, FieldStatus } from './types';
+export type { EntityType, FieldStatus } from './types';
 
 /**
  * Format the breadcrumd in the form 'Database > Modèle'
@@ -25,7 +28,7 @@ export interface customFieldAttr {
 /**
  * Mapping between field type and associated glyph and kind (Technical or Functional)
  */
-export const fieldsTypeRelatedInfos: customFieldAttr = {
+export const entitiesTypeRelatedInfos: customFieldAttr = {
     /* Glossaire (fonctionnel) */
     Universe: { glyph: 'Universe', kind: 'Functional' },
     Concept: { glyph: 'Concept', kind: 'Functional' },
@@ -71,4 +74,16 @@ export const fieldsTypeRelatedInfos: customFieldAttr = {
     OpenDataSet: { glyph: 'Opendataset', kind: 'Functional' },
     Algorithm: { glyph: 'Algorithm', kind: 'Functional' },
     UsageField: { glyph: 'UsageComponent', kind: 'Functional' },
+};
+
+export const fetchEntity = async (apiUrl: string, location: string): Promise<any> => {
+    try {
+        const response = await get<EntityType>(`${apiUrl}/${location}`);
+
+        return response.parsedBody;
+    } catch (error) {
+        console.error(error);
+    }
+
+    return null;
 };

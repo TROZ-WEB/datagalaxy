@@ -6,6 +6,7 @@ import Comments from '../pages/Comments';
 import Notifications from '../pages/Notifications';
 import Search from '../pages/Search';
 import Tasks from '../pages/Tasks';
+import EntityDetails from '../pages/EntityDetails';
 
 const App = () => {
     const { path } = useRouteMatch();
@@ -15,6 +16,9 @@ const App = () => {
             <Switch>
                 <Route path={`${path}/search`}>
                     <Search />
+                </Route>
+                <Route path={`${path}/entities/:id`}>
+                    <EntityDetails />
                 </Route>
                 <Route path={`${path}/comments`}>
                     <Comments />

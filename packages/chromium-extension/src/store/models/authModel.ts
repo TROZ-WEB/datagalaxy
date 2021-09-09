@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
-import { action, Action, Actions, Thunk, thunk } from 'easy-peasy';
-import { decodePAT, getAccessToken } from '../../../../shared/dist/shared';
+import { Action, Actions, Thunk, thunk } from 'easy-peasy';
+import { decodeJWT } from '../../../../shared/dist/shared';
 import AsyncStorageService from '../../Services/AsyncStorageService';
 import { setState } from './helper';
 
@@ -8,13 +8,11 @@ export interface AuthModel {
     /* State */
     onboardingDone?: boolean;
     pat?: string;
-    accessToken?: string;
     pubapi?: string;
     /* Actions */
     setState: Action<AuthModel, Partial<AuthModel>>;
     /* Thunks */
     loginWithPAT: Thunk<AuthModel, string>;
-    refreshAccessToken: Action<AuthModel>;
 }
 
 /**
@@ -25,7 +23,7 @@ const loginWithPAT = thunk(async (actions: Actions<AuthModel>, pat) => {
     let decodedPAT;
     // First decode the PAT
     try {
-        decodedPAT = decodePAT(pat);
+        decodedPAT = decodeJWT(pat);
     } catch (error) {
         throw new Error(chrome.i18n.getMessage('error_pat'));
     }
@@ -42,16 +40,6 @@ const loginWithPAT = thunk(async (actions: Actions<AuthModel>, pat) => {
     await AsyncStorageService.setItem('pubapi', decodedPAT.pubapi);
     actions.setState({ pubapi: decodedPAT.pubapi });
 
-    // Finally save the access token aswell
-    const accessToken = await getAccessToken(decodedPAT.pubapi, pat);
-
-    if (accessToken) {
-        await AsyncStorageService.setItem('accessToken', btoa(accessToken));
-        actions.setState({ accessToken: btoa(accessToken) });
-
-        return;
-    }
-
     throw new Error(chrome.i18n.getMessage('error_pat'));
 });
 
@@ -64,13 +52,11 @@ const authModel = async (): Promise<AuthModel> => {
         /* State */
         onboardingDone: await AsyncStorageService.getItem('onboardingDone'),
         pat: await AsyncStorageService.getItem('pat'),
-        accessToken: await AsyncStorageService.getItem('accessToken'),
         pubapi: await AsyncStorageService.getItem('pubapi'),
         /* Actions */
         setState,
         /* Thunks */
         loginWithPAT,
-        refreshAccessToken: action((state) => state), // TODO: to implement
     };
 };
 

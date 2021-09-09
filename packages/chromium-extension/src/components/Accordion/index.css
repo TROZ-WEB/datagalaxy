@@ -1,0 +1,43 @@
+.Root {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: var(--black);
+}
+
+.Header {
+    width: 100%;
+    height: 18px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.Header:hover {
+    cursor: pointer;
+}
+
+.ArrowDrop {
+    width: 20px;
+    height: 20px;
+    transition-duration: 0.4s;
+}
+
+.ArrowDropUp {
+    transform: rotate(-180deg);
+}
+
+.Content {
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(1, 0, 1, 0);
+    height: auto;
+    margin-top: 19px;
+    max-height: 9999px;
+}
+
+.Collapsed {
+    max-height: 0;
+    transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
+}

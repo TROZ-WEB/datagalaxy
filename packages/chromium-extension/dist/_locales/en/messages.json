@@ -92,25 +92,25 @@
   "onboarding_patFinder_closeButton": {
     "message": "Ok, fermer"
   },
-  "field_status_Proposed": {
+  "entity_status_Proposed": {
     "message": "Proposed"
   },
-  "field_status_InRevision": {
+  "entity_status_InRevision": {
     "message": "In revision"
   },
-  "field_status_InValidation": {
+  "entity_status_InValidation": {
     "message": "In validation"
   },
-  "field_status_Validated": {
+  "entity_status_Validated": {
     "message": "Validated"
   },
-  "field_status_Obsolete": {
+  "entity_status_Obsolete": {
     "message": "Obsolete"
   },
-  "field_owner": {
+  "entity_owner": {
     "message": "Owner"
   },
-  "field_steward": {
+  "entity_steward": {
     "message": "Steward"
   }
 }

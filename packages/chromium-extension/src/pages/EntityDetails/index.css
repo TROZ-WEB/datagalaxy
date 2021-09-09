@@ -1,0 +1,10 @@
+.Root {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin:0;
+}
+
+.Content {
+    margin: 11px;
+}

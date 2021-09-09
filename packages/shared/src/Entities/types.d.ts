@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 export type FieldStatus = 'Proposed' | 'InRevision' | 'InValidation' | 'Validated' | 'Obsolete';
 
-export interface FieldEntity {
+export interface EntityType {
     id: string;
     name: string;
     technicalName: string;

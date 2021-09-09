@@ -23,7 +23,7 @@ const Status = ({ status }: { status: string }) => {
     return (
         <div className={styles.Root}>
             <span className={styles.IconWrapper}>{iconForStatus}</span>
-            {chrome.i18n.getMessage(`field_status_${status}`)}
+            {chrome.i18n.getMessage(`entity_status_${status}`)}
         </div>
     );
 };

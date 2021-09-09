@@ -1,20 +1,25 @@
 import jwtDecode from 'jwt-decode';
-import { get } from '../Http';
-import { CredentialsResponse, DecodedPAT } from './types';
+import 'isomorphic-fetch';
+import { HttpResponse } from '../Http/types';
+import { CredentialsResponse, DecodedJWT } from './types';
 
-export const decodePAT = (integrationToken: string): DecodedPAT => {
-    return jwtDecode<DecodedPAT>(integrationToken);
+export const decodeJWT = (jwt: string): DecodedJWT => {
+    return jwtDecode<DecodedJWT>(jwt);
 };
 
 export const getAccessToken = async (apiUrl: string, integrationToken: string): Promise<string> => {
     try {
-        const response = await get<CredentialsResponse>(`${apiUrl}/credentials`, {
+        const request = new Request(`${apiUrl}/credentials`, {
+            method: 'get',
             headers: {
+                'Content-Type': 'application/json',
                 Authorization: `Bearer ${integrationToken}`,
             },
         });
 
-        return response.parsedBody.accessToken;
+        const response: HttpResponse<CredentialsResponse> = await fetch(request);
+
+        return (await response.json()).accessToken;
     } catch (error) {
         console.error(error);
     }

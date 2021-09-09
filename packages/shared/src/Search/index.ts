@@ -4,17 +4,12 @@ import { SearchResponse } from './types';
 
 export type { SearchResponse } from './types';
 
-export const search = async (apiUrl: string, accessToken: string, query: string): Promise<SearchResponse> => {
+export const search = async (apiUrl: string, query: string): Promise<SearchResponse> => {
     try {
-        const response = await post<SearchResponse>(
-            `${apiUrl}/search`,
-            { query, includedAttributes: ['DataOwners', 'DataStewards', 'EntityStatus'] },
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            },
-        );
+        const response = await post<SearchResponse>(`${apiUrl}/search`, {
+            query,
+            includedAttributes: ['DataOwners', 'DataStewards', 'EntityStatus'],
+        });
 
         return response.parsedBody;
     } catch (error) {
