@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 import { Action, Thunk, Actions, thunk, action } from 'easy-peasy';
-import { decodePAT, getAccessToken, search as searchAPI, EntityType, getUsersByEmailsAndRole } from 'shared';
+import { search as searchAPI, EntityType } from 'shared';
 import { enhancedEntitiesWithUserInfo } from './helper';
 
 interface SearchedArgs {
@@ -35,14 +35,12 @@ const search = thunk(async (actions: Actions<SearchModel>, searchedArgs: Searche
         // Save the new searched args to the global state
         actions.updateSearchedArgs(searchedArgs);
 
-        const clearPAT = atob((getStoreState() as any).auth.pat);
+        const url = (getStoreState() as any).auth.pubapi;
 
-        const decodedPat = decodePAT(clearPAT);
-        const accessToken = await getAccessToken(decodedPat.pubapi, clearPAT);
         // First search for results
-        const searchResult = await searchAPI(decodedPat.pubapi, accessToken, searchedArgs.term);
-        // // Load additional user information about entities
-        enhancedResults = await enhancedEntitiesWithUserInfo(searchResult.result.entities, decodedPat, accessToken);
+        const searchResult = await searchAPI(url, searchedArgs.term);
+        // Load additional user information about entities
+        enhancedResults = await enhancedEntitiesWithUserInfo(searchResult.result.entities, url);
     } catch (err) {
         console.log('error : ', err);
     }

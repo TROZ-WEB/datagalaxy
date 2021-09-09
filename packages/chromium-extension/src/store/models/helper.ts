@@ -9,11 +9,7 @@ const setState: any = action((state, payload) => {
 /**
  * From array of entities it will enhanced each one with owner/steward information
  */
-const enhancedEntitiesWithUserInfo = async (
-    rawEntities: EntityType[],
-    decodedPat,
-    accessToken: string,
-): Promise<EntityType[]> => {
+const enhancedEntitiesWithUserInfo = async (rawEntities: EntityType[], url): Promise<EntityType[]> => {
     const emails: { owners: string[]; stewards: string[] } = rawEntities.reduce(
         (acc, { attributes: { owners, stewards } }) => ({
             owners: Array.from(new Set([...acc.owners, ...owners])),
@@ -23,8 +19,8 @@ const enhancedEntitiesWithUserInfo = async (
     );
 
     const usersInfos = {
-        owners: (await getUsersByEmailsAndRole(decodedPat.pubapi, accessToken, emails.owners, 'owner')).owners,
-        stewards: (await getUsersByEmailsAndRole(decodedPat.pubapi, accessToken, emails.stewards, 'steward')).stewards,
+        owners: (await getUsersByEmailsAndRole(url, emails.owners, 'owner')).owners,
+        stewards: (await getUsersByEmailsAndRole(url, emails.stewards, 'steward')).stewards,
     };
 
     return rawEntities.map((result) => {
