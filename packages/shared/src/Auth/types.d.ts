@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { JwtPayload } from 'jwt-decode';
 
-export interface DecodedPAT extends JwtPayload {
+export interface DecodedJWT extends JwtPayload {
     $id?: string;
     $type?: string;
     dgapi?: string;

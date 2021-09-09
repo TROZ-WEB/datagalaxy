@@ -28,7 +28,7 @@ const SearchForm = () => {
     const searchInputProps = useSearchInput({
         debounceDuration: 1000,
         debounceOnChange,
-        initialState: { value: searchedArgs.term || 'data' },
+        initialState: { value: searchedArgs.term },
     });
 
     return (

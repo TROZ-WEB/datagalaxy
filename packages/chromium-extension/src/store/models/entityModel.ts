@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 import { Action, Thunk, Actions, thunk, action } from 'easy-peasy';
-import { decodePAT, getAccessToken, fetchEntity as fetchEntityAPI, EntityType } from 'shared';
+import { fetchEntity as fetchEntityAPI, EntityType } from 'shared';
 import { enhancedEntitiesWithUserInfo } from './helper';
 
 /**
@@ -22,15 +22,12 @@ export interface EntityModel {
 
 const fetchEntity = thunk(async (actions: Actions<EntityModel>, location: string, { getStoreState }) => {
     try {
-        const clearPAT = atob((getStoreState() as any).auth.pat);
-
-        const decodedPat = decodePAT(clearPAT);
-        const accessToken = await getAccessToken(decodedPat.pubapi, clearPAT);
+        const url = (getStoreState() as any).auth.pubapi;
         // First search for results
-        const entity = await fetchEntityAPI(decodedPat.pubapi, accessToken, location);
+        const entity = await fetchEntityAPI(url, location);
 
         // Then enrich the entity object with required user info
-        const [enhancedEntity] = await enhancedEntitiesWithUserInfo([entity], decodedPat, accessToken);
+        const [enhancedEntity] = await enhancedEntitiesWithUserInfo([entity], url);
 
         actions.updateDisplayedEntity(enhancedEntity);
     } catch (err) {

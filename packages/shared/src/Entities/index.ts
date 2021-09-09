@@ -76,13 +76,9 @@ export const entitiesTypeRelatedInfos: customFieldAttr = {
     UsageField: { glyph: 'UsageComponent', kind: 'Functional' },
 };
 
-export const fetchEntity = async (apiUrl: string, accessToken: string, location: string): Promise<any> => {
+export const fetchEntity = async (apiUrl: string, location: string): Promise<any> => {
     try {
-        const response = await get<EntityType>(`${apiUrl}/${location}`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        });
+        const response = await get<EntityType>(`${apiUrl}/${location}`);
 
         return response.parsedBody;
     } catch (error) {

@@ -1,16 +1,11 @@
-/* eslint-disable import/prefer-default-export */
 import { get } from '../Http';
 import { UserEntity, UsersResponse, UsersByRoleResponse, governanceRole } from './types';
 
 export type { UserEntity, UsersResponse, UsersByRoleResponse } from './types';
 
-export const getUserByEmail = async (apiUrl: string, accessToken: string, email: string): Promise<UserEntity> => {
+export const getUserByEmail = async (apiUrl: string, email: string): Promise<UserEntity> => {
     try {
-        const response = await get<UsersResponse>(`${apiUrl}/users?email=${email}`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        });
+        const response = await get<UsersResponse>(`${apiUrl}/users?email=${email}`);
 
         if (response.parsedBody.result.length === 1) {
             return response.parsedBody.result[0];
@@ -26,16 +21,11 @@ export const getUserByEmail = async (apiUrl: string, accessToken: string, email:
 
 export const getUsersByEmailsAndRole = async (
     apiUrl: string,
-    accessToken: string,
     emails: string[],
     role: governanceRole,
 ): Promise<UsersByRoleResponse> => {
     try {
-        const response = await get<UsersByRoleResponse>(`${apiUrl}/users/roles?role=${role}&email=${emails}`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        });
+        const response = await get<UsersByRoleResponse>(`${apiUrl}/users/roles?role=${role}&email=${emails}`);
 
         return response.parsedBody;
     } catch (error) {
