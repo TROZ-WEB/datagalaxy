@@ -1,6 +1,6 @@
+import { AccessToken } from '../Services';
 import { HttpResponse } from './types';
 import 'isomorphic-fetch';
-import { AccessToken } from '../Services';
 
 /**
  * This http method only work with accessToken in the authorization header
@@ -8,7 +8,7 @@ import { AccessToken } from '../Services';
  * If the first attempt fails due to 401 error,
  * it will regenerate an accessToken and re-fetch the recourse with the new accessToken
  */
-export async function http<T>(request: Request, stop?: boolean): Promise<HttpResponse<T>> {
+export async function http<T>(request: Request): Promise<HttpResponse<T>> {
     // Backup request (cannot be cloned after being used)
     const clonedRequest: Request = request.clone();
 
@@ -24,15 +24,16 @@ export async function http<T>(request: Request, stop?: boolean): Promise<HttpRes
                 'authorization',
                 `Bearer ${await AccessToken.getInstance().refreshAccessToken()}`,
             );
-            const response: HttpResponse<T> = await fetch(request);
+            const clonedResponse: HttpResponse<T> = await fetch(request);
 
-            response.parsedBody = await response.json();
+            clonedResponse.parsedBody = await clonedResponse.json();
 
-            if (!response.ok) {
-                throw new Error(response.statusText);
+            if (!clonedResponse.ok) {
+                throw new Error(clonedResponse.statusText);
             }
+        } else {
+            throw new Error(response.statusText);
         }
-        throw new Error(response.statusText);
     }
 
     return response;

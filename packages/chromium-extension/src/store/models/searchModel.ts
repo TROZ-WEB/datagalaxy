@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable import/no-cycle */
 import { Action, Thunk, Actions, thunk, action } from 'easy-peasy';
 import { search as searchAPI, EntityType } from 'shared';
@@ -5,7 +6,7 @@ import { enhancedEntitiesWithUserInfo } from './helper';
 
 interface SearchedArgs {
     term?: string;
-    //Will allow to handle more complex search categories...
+    // Will allow to handle more complex search categories...
 }
 
 export interface SearchModel {
@@ -42,7 +43,7 @@ const search = thunk(async (actions: Actions<SearchModel>, searchedArgs: Searche
         // Load additional user information about entities
         enhancedResults = await enhancedEntitiesWithUserInfo(searchResult.result.entities, url);
     } catch (err) {
-        console.log('error : ', err);
+        console.error('error : ', err);
     }
 
     actions.updateResults(enhancedResults);

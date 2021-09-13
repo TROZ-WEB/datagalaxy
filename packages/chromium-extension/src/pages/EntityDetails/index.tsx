@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import VerticalMenu from '../../components/Entity/VerticalMenu';
+import { useStoreDispatch, useStoreActions, useStoreState } from '../../store/hooks';
 import Details from './pages/Details';
 import styles from './index.css';
-import { useStoreDispatch, useStoreActions, useStoreState } from '../../store/hooks';
 
 const EntityDetails = () => {
     const { path } = useRouteMatch();
@@ -32,10 +32,10 @@ const EntityDetails = () => {
             <VerticalMenu />
             <div className={styles.Content}>
                 <Switch>
-                    <Route exact path={`${path}/insights`}>
+                    <Route path={`${path}/insights`} exact>
                         To implements
                     </Route>
-                    <Route exact path={`${path}/`}>
+                    <Route path={`${path}/`} exact>
                         <Details />
                     </Route>
                 </Switch>

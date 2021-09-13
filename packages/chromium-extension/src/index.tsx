@@ -1,10 +1,10 @@
 import { createStore, StoreProvider } from 'easy-peasy';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { AccessToken } from 'shared';
 import Popup from './pages/Popup';
 import './index.css';
 import storeModel from './store/store';
-import { AccessToken } from 'shared';
 
 chrome.tabs.query({ active: true, currentWindow: true }, async () => {
     const models = await storeModel();

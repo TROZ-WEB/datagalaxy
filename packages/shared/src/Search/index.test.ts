@@ -1,4 +1,4 @@
-import { decodeJWT, getAccessToken } from '../Auth';
+import { decodeJWT } from '../Auth';
 import { search } from '.';
 
 const pat =
@@ -6,7 +6,6 @@ const pat =
 
 test('Search with query string "test" from API', async () => {
     const decodedPat = decodeJWT(pat);
-    const accessToken = await getAccessToken(decodedPat.pubapi, pat);
     const searchResult = await search(decodedPat.pubapi, 'test');
     expect(searchResult.total).toBeGreaterThan(0);
 });

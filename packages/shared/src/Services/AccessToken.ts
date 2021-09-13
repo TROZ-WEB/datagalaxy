@@ -2,12 +2,14 @@ import { decodeJWT, getAccessToken } from '../Auth';
 
 class AccessToken {
     private static instance: AccessToken;
-    private pat: string;
-    private pubapi: string;
-    private accessToken: string;
-    private expDate: number;
 
-    private constructor() {}
+    private pat: string;
+
+    private pubapi: string;
+
+    private accessToken: string;
+
+    private expDate: number;
 
     public static getInstance(): AccessToken {
         if (!AccessToken.instance) {

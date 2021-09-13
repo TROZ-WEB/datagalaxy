@@ -1,4 +1,5 @@
 /* eslint-disable import/prefer-default-export */
+/* eslint-disable no-param-reassign */
 import { action } from 'easy-peasy';
 import { EntityType, getUsersByEmailsAndRole } from 'shared';
 

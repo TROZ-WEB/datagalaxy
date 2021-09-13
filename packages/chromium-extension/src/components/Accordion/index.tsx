@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
 import cx from 'clsx';
-import styles from './index.css';
+import React, { useState } from 'react';
 import ArrowDrop from '../../../assets/icons/arrow-drop-up.svg';
+import styles from './index.css';
 
 const Accordion = ({
     initialOpen = false,
@@ -13,12 +13,17 @@ const Accordion = ({
     children: React.ReactNode;
 }) => {
     const [isOpen, setOpen] = useState(initialOpen);
+
     return (
         <div className={styles.Root}>
-            <div className={styles.Header} onClick={() => setOpen(!isOpen)}>
+            <button className={styles.Header} onClick={() => setOpen(!isOpen)} type="button">
                 <span>{title}</span>
-                <img className={cx(styles.ArrowDrop, { [styles.ArrowDropUp]: !isOpen })} src={ArrowDrop} />
-            </div>
+                <img
+                    alt="Arrow icon"
+                    className={cx(styles.ArrowDrop, { [styles.ArrowDropUp]: !isOpen })}
+                    src={ArrowDrop}
+                />
+            </button>
             <div
                 className={cx(styles.Content, {
                     [styles.Collapsed]: !isOpen,

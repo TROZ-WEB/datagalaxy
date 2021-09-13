@@ -3,10 +3,10 @@ import { Switch, Redirect, Route, useRouteMatch } from 'react-router-dom';
 import ConnectedLayout from '../components/ConnectedLayout';
 import Account from '../pages/Account';
 import Comments from '../pages/Comments';
+import EntityDetails from '../pages/EntityDetails';
 import Notifications from '../pages/Notifications';
 import Search from '../pages/Search';
 import Tasks from '../pages/Tasks';
-import EntityDetails from '../pages/EntityDetails';
 
 const App = () => {
     const { path } = useRouteMatch();

@@ -1,4 +1,5 @@
 /* eslint-disable import/no-cycle */
+/* eslint-disable no-param-reassign */
 import { Action, Thunk, Actions, thunk, action } from 'easy-peasy';
 import { fetchEntity as fetchEntityAPI, EntityType } from 'shared';
 import { enhancedEntitiesWithUserInfo } from './helper';
@@ -31,7 +32,7 @@ const fetchEntity = thunk(async (actions: Actions<EntityModel>, location: string
 
         actions.updateDisplayedEntity(enhancedEntity);
     } catch (err) {
-        console.log('error : ', err);
+        console.error('error : ', err);
     }
 });
 

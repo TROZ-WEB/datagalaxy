@@ -1,7 +1,7 @@
 import authModel from './models/authModel';
+import entityModel from './models/entityModel';
 import localPreferencesModel from './models/localPreferencesModel';
 import searchModel from './models/searchModel';
-import entityModel from './models/entityModel';
 import { StoreModel } from './types';
 
 const storeModel = async (): Promise<StoreModel> => {

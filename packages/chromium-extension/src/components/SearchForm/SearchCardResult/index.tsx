@@ -1,13 +1,13 @@
-import React from 'react';
 import cx from 'clsx';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { entitiesTypeRelatedInfos } from 'shared';
+import { useStoreActions } from '../../../store/hooks';
 import Breadcrumb from '../../Breadcrumb';
 import Status from '../../Entity/Status';
 import UserProfile from '../../Entity/UserProfile';
 import Glyph from '../../ui/Glyph';
 import styles from './index.css';
-import { useStoreActions } from '../../../store/hooks';
 
 const isTechnical = (entity): boolean => entitiesTypeRelatedInfos[entity.type].kind === 'Technical';
 

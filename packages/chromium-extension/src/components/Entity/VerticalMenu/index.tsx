@@ -15,13 +15,13 @@ const VerticalMenu = () => {
 
     return (
         <div className={styles.Root}>
-            <button className={cx(styles.MenuItem, styles.BackButton)} type="button" onClick={() => history.goBack()}>
+            <button className={cx(styles.MenuItem, styles.BackButton)} onClick={() => history.goBack()} type="button">
                 <ArrowLeft className={styles.BackButtonIcon} />
             </button>
-            <button className={styles.MenuItem} type="button" onClick={() => history.replace(`${path}/`)}>
+            <button className={styles.MenuItem} onClick={() => history.replace(`${path}/`)} type="button">
                 <Info className={styles.MenuItemIcon} />
             </button>
-            <button className={styles.MenuItem} type="button" onClick={() => history.replace(`${path}/insights`)}>
+            <button className={styles.MenuItem} onClick={() => history.replace(`${path}/insights`)} type="button">
                 <Insight className={styles.MenuItemIcon} />
             </button>
             <button className={styles.MenuItem} type="button">

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import styles from './index.css';
-import SearchCardResult from '../../../../components/SearchForm/SearchCardResult';
-import Accordion from '../../../../components/Accordion';
-import { useStoreState } from '../../../../store/hooks';
-import Status from '../../../../components/Entity/Status';
 import { EntityType } from '../../../../../../shared/dist/shared';
+import Accordion from '../../../../components/Accordion';
+import Status from '../../../../components/Entity/Status';
+import SearchCardResult from '../../../../components/SearchForm/SearchCardResult';
+import { useStoreState } from '../../../../store/hooks';
+import styles from './index.css';
 
 const Details = () => {
     const initialEntity = useStoreState((state) => state.search.selectedEntity);
