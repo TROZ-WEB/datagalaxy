@@ -12,17 +12,10 @@ trigger:
     - packages/chromium-extension
     - packages/shared
 
-variables: 
-  NODE_VERSION: '14.17.1'
-  PNPM_CACHE_FOLDER: common/temp/pnpm-store
-
 steps:
-- task: NodeTool@0
+- task: DownloadBuildArtifacts@0
   inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
-
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+    buildType: 'current'
+    downloadType: 'single'
+    artifactName: 'chromium-build'
+    downloadPath: '$(System.ArtifactsDirectory)'
