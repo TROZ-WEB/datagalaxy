@@ -7,18 +7,26 @@ pool:
   vmImage: ubuntu-latest
 
 variables: 
-  NodeVersion: '14.17.1'
+  NODE_VERSION: '14.17.1'
+  PNPM_CACHE_FOLDER: ~/.pnpm-store
 
 
 stages:
 - stage: Build
   jobs:
-  - job: InstallRushAndBuildProjects
+  - job: InstallDependencies
     steps:
     - task: NodeTool@0
-      displayName: 'Use Node $(NodeVersion)'
+      displayName: 'Use Node $(NODE_VERSION)'
       inputs:
-        versionSpec: '$(NodeVersion)'
+        versionSpec: '$(NODE_VERSION)'
+    - task: Cache@2
+      displayName: Cache PNPM packages
+      inputs:
+        key: '"node common/scripts/install-run-rush.js install" | "$(Agent.OS)" | common/config/rush/pnpm-lock.yaml'
+        restoreKeys: |
+          node common/scripts/install-run-rush.js install | "$(Agent.OS)"
+        path: $(PNPM_CACHE_FOLDER)
     - script: 'node common/scripts/install-run-rush.js change --verify'
       displayName: 'Verify Change Logs'
     - script: 'node common/scripts/install-run-rush.js install'
