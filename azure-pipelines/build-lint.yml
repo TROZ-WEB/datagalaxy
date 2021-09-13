@@ -3,12 +3,18 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+trigger:
+  paths:
+    include:
+    - packages
+
 pool:
   vmImage: ubuntu-latest
 
 variables: 
   NODE_VERSION: '14.17.1'
   PNPM_CACHE_FOLDER: common/temp/pnpm-store
+  CHROMIUM_BUILD_FOLDER: packages/chromium-extension/dist
 
 stages:
 - stage: Build
@@ -35,3 +41,7 @@ stages:
       displayName: 'Rush Rebuild'
     - script: 'node common/scripts/install-run-rush.js lint'
       displayName: 'Rush Lint'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: '$(CHROMIUM_BUILD_FOLDER)'
+        artifactName: chromium-build-folder
