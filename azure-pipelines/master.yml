@@ -1,0 +1,46 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - packages
+
+pool:
+  vmImage: ubuntu-latest
+
+variables: 
+  NODE_VERSION: '14.17.1'
+  PNPM_CACHE_FOLDER: common/temp/pnpm-store
+  CHROMIUM_BUILD_FOLDER: packages/chromium-extension/dist
+
+stages:
+- stage: Build
+  jobs:
+  - job: BuildLint
+    displayName: Build and Lint all projects
+    steps:
+    - task: NodeTool@0
+      displayName: 'Use Node $(NODE_VERSION)'
+      inputs:
+        versionSpec: '$(NODE_VERSION)'
+    - task: Cache@2
+      displayName: Cache PNPM store
+      inputs:
+        key: '"pnpm" | "$(Agent.OS)" | common/config/rush/pnpm-lock.yaml'
+        restoreKeys: |
+          pnpm | "$(Agent.OS)"
+        path: $(PNPM_CACHE_FOLDER)
+    - script: 'node common/scripts/install-run-rush.js change --verify'
+      displayName: 'Verify Change Logs'
+    - script: 'node common/scripts/install-run-rush.js install'
+      displayName: 'Rush Install'
+    - script: 'node common/scripts/install-run-rush.js rebuild --verbose'
+      displayName: 'Rush Rebuild'
+    - script: 'node common/scripts/install-run-rush.js lint'
+      displayName: 'Rush Lint'
