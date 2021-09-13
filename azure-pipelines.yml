@@ -22,7 +22,7 @@ stages:
       inputs:
         versionSpec: '$(NODE_VERSION)'
     - task: Cache@2
-      displayName: Cache PNPM packages
+      displayName: Cache PNPM store
       inputs:
         key: '"pnpm" | "$(Agent.OS)" | common/config/rush/pnpm-lock.yaml'
         restoreKeys: |
