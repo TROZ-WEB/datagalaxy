@@ -44,4 +44,4 @@ stages:
     - task: PublishBuildArtifacts@1
       inputs:
         pathToPublish: '$(CHROMIUM_BUILD_FOLDER)'
-        artifactName: chromium-build-folder
+        artifactName: chromium-build
