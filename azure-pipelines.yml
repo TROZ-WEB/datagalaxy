@@ -8,7 +8,7 @@ pool:
 
 variables: 
   NODE_VERSION: '14.17.1'
-  PNPM_CACHE_FOLDER: $(Pipeline.Workspace)/.pnpm-store
+  PNPM_CACHE_FOLDER: common/temp/pnpm-store
 
 
 stages:
@@ -32,7 +32,7 @@ stages:
       displayName: 'Verify Change Logs'
     - script: 'node common/scripts/install-run-rush.js install'
       displayName: 'Rush Install'
-    - script: 'node common/scripts/install-run-rush.js rebuild --verbose'
-      displayName: 'Rush Rebuild'
     - script: 'node common/scripts/install-run-rush.js lint'
       displayName: 'Rush Lint'
+    - script: 'node common/scripts/install-run-rush.js rebuild --verbose'
+      displayName: 'Rush Rebuild'
