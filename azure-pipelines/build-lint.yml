@@ -42,6 +42,7 @@ stages:
     - script: 'node common/scripts/install-run-rush.js lint'
       displayName: 'Rush Lint'
     - task: PublishBuildArtifacts@1
+      displayName: 'Store Chromium extension build folder artifact'
       inputs:
         pathToPublish: '$(CHROMIUM_BUILD_FOLDER)'
         artifactName: chromium-build
