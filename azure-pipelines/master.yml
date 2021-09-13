@@ -44,6 +44,9 @@ stages:
       displayName: 'Rush Rebuild'
     - script: 'node common/scripts/install-run-rush.js lint'
       displayName: 'Rush Lint'
+    - script: |
+        jq '.name = "DataGalaxy_staging"' manifest.json | sponge manifest.json
+      displayName: "Rename extension for staging"
     - script: 'zip -r chromium-extension.zip packages/chromium-extension/dist'
       displayName: 'Zip Chromium extension'
     - script: |
