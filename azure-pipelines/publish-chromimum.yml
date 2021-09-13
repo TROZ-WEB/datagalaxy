@@ -10,6 +10,14 @@ variables:
   NODE_VERSION: '14.17.1'
   PNPM_CACHE_FOLDER: common/temp/pnpm-store
 
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - packages/chromium-extension
+    - shared
 
 stages:
 - stage: Build
