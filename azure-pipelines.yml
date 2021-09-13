@@ -14,7 +14,8 @@ variables:
 stages:
 - stage: Build
   jobs:
-  - job: InstallDependencies
+  - job: BuildLint
+    displayName: Build and Lint all project
     steps:
     - task: NodeTool@0
       displayName: 'Use Node $(NODE_VERSION)'
@@ -23,9 +24,9 @@ stages:
     - task: Cache@2
       displayName: Cache PNPM packages
       inputs:
-        key: '"node common/scripts/install-run-rush.js install" | "$(Agent.OS)" | common/config/rush/pnpm-lock.yaml'
+        key: '"pnpm" | "$(Agent.OS)" | common/config/rush/pnpm-lock.yaml'
         restoreKeys: |
-          node common/scripts/install-run-rush.js install | "$(Agent.OS)"
+          pnpm | "$(Agent.OS)"
         path: $(PNPM_CACHE_FOLDER)
     - script: 'node common/scripts/install-run-rush.js change --verify'
       displayName: 'Verify Change Logs'
