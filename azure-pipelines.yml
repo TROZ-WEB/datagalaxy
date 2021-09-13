@@ -8,7 +8,7 @@ pool:
 
 variables: 
   NODE_VERSION: '14.17.1'
-  PNPM_CACHE_FOLDER: ${Agent. HomeDirectory}.pnpm-store
+  PNPM_CACHE_FOLDER: $(Pipeline.Workspace)/.pnpm-store
 
 
 stages:
