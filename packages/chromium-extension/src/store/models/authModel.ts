@@ -39,8 +39,6 @@ const loginWithPAT = thunk(async (actions: Actions<AuthModel>, pat) => {
     // And save only useful JWT attributes to the localStorage
     await AsyncStorageService.setItem('pubapi', decodedPAT.pubapi);
     actions.setState({ pubapi: decodedPAT.pubapi });
-
-    throw new Error(chrome.i18n.getMessage('error_pat'));
 });
 
 /**
