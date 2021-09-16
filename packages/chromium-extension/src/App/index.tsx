@@ -1,5 +1,5 @@
-import React from 'react';
-import { Switch, Redirect, Route, useRouteMatch } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Switch, Redirect, Route, useRouteMatch, useHistory } from 'react-router-dom';
 import ConnectedLayout from '../components/ConnectedLayout';
 import Account from '../pages/Account';
 import Comments from '../pages/Comments';
@@ -7,9 +7,32 @@ import EntityDetails from '../pages/EntityDetails';
 import Notifications from '../pages/Notifications';
 import Search from '../pages/Search';
 import Tasks from '../pages/Tasks';
+import { useStoreActions, useStoreState } from '../store/hooks';
 
 const App = () => {
     const { path } = useRouteMatch();
+    const history = useHistory();
+
+    const { historyLocation } = useStoreState((state) => state.auth);
+    const updateHistoryLocation = useStoreActions((state) => state.auth.updateHistoryLocation);
+
+    /**
+     * Save history changes to allow reopening the extension where we left it
+     */
+    useEffect(() => {
+        return history.listen((location) => {
+            updateHistoryLocation(location.pathname);
+        });
+    }, [history]);
+
+    /**
+     * Reopen the extension where we left it
+     */
+    useEffect(() => {
+        if (historyLocation) {
+            history.push(historyLocation);
+        }
+    }, []);
 
     return (
         <ConnectedLayout>

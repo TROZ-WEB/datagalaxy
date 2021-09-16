@@ -1,16 +1,19 @@
 /* eslint-disable import/no-cycle */
-import { Action, Actions, Thunk, thunk } from 'easy-peasy';
-import { decodeJWT } from '../../../../shared/dist/shared';
-import AsyncStorageService from '../../Services/AsyncStorageService';
-import { setState } from './helper';
+/* eslint-disable no-param-reassign */
+import { Action, Actions, Thunk, thunk, action } from 'easy-peasy';
+import { AccessToken, decodeJWT } from '../../../../shared/dist/shared';
 
 export interface AuthModel {
     /* State */
     onboardingDone?: boolean;
     pat?: string;
     pubapi?: string;
+    historyLocation?: string;
     /* Actions */
-    setState: Action<AuthModel, Partial<AuthModel>>;
+    updateOnboardingDone: Action<AuthModel, boolean>;
+    updatePat: Action<AuthModel, string>;
+    updatePubapi: Action<AuthModel, string>;
+    updateHistoryLocation: Action<AuthModel, string>;
     /* Thunks */
     loginWithPAT: Thunk<AuthModel, string>;
 }
@@ -33,12 +36,14 @@ const loginWithPAT = thunk(async (actions: Actions<AuthModel>, pat) => {
     }
 
     // Then save it for future use
-    await AsyncStorageService.setItem('pat', btoa(pat));
-    actions.setState({ pat: btoa(pat) });
+    actions.updatePat(btoa(pat));
 
     // And save only useful JWT attributes to the localStorage
-    await AsyncStorageService.setItem('pubapi', decodedPAT.pubapi);
-    actions.setState({ pubapi: decodedPAT.pubapi });
+    actions.updatePubapi(decodedPAT.pubapi);
+
+    // Init accessToken singleton
+    const accessTokenHandler = AccessToken.getInstance();
+    await accessTokenHandler.init(btoa(pat));
 });
 
 /**
@@ -48,11 +53,23 @@ const loginWithPAT = thunk(async (actions: Actions<AuthModel>, pat) => {
 const authModel = async (): Promise<AuthModel> => {
     return {
         /* State */
-        onboardingDone: await AsyncStorageService.getItem('onboardingDone'),
-        pat: await AsyncStorageService.getItem('pat'),
-        pubapi: await AsyncStorageService.getItem('pubapi'),
+        onboardingDone: false,
+        pat: null,
+        pubapi: '',
+        historyLocation: null,
         /* Actions */
-        setState,
+        updateOnboardingDone: action((state, payload: boolean) => {
+            state.onboardingDone = payload;
+        }),
+        updatePat: action((state, payload: string) => {
+            state.pat = payload;
+        }),
+        updatePubapi: action((state, payload: string) => {
+            state.pubapi = payload;
+        }),
+        updateHistoryLocation: action((state, payload: string) => {
+            state.historyLocation = payload;
+        }),
         /* Thunks */
         loginWithPAT,
     };

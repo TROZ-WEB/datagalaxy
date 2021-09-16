@@ -1,22 +1,30 @@
-import { createStore, StoreProvider } from 'easy-peasy';
-import * as React from 'react';
+import { createStore, StoreProvider, useStoreRehydrated, persist } from 'easy-peasy';
+import React from 'react';
 import * as ReactDOM from 'react-dom';
-import { AccessToken } from 'shared';
+import LoadingScreen from './components/LoadingScreen';
 import Popup from './pages/Popup';
-import './index.css';
+import AsyncStorageService from './Services/AsyncStorageService';
 import storeModel from './store/store';
+import './index.css';
+
+/**
+ * Before displaying the app, we
+ *  - re-hydrate our easy-peasy state from chrome.local.storage
+ *  - get a fresh new accessToken.
+ */
+const App = () => {
+    const isRehydrated = useStoreRehydrated();
+
+    return isRehydrated ? <Popup /> : <LoadingScreen />;
+};
 
 chrome.tabs.query({ active: true, currentWindow: true }, async () => {
     const models = await storeModel();
-    const store = createStore(models);
-
-    // Refresh accessToken at the extension launch
-    const accessTokenHandler = AccessToken.getInstance();
-    accessTokenHandler.init(store.getState().auth.pat);
+    const store = createStore(persist(models, { storage: AsyncStorageService }));
 
     ReactDOM.render(
         <StoreProvider store={store}>
-            <Popup />
+            <App />
         </StoreProvider>,
         document.getElementById('popup'),
     );

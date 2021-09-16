@@ -1,7 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from '../../../components/ui/Button';
-import AsyncStorageService from '../../../Services/AsyncStorageService';
 import { useStoreActions } from '../../../store/hooks';
 import { StepProps } from '../Stepper';
 import CheckIcon from '../../../../assets/icons/check-circle-filled.svg';
@@ -13,10 +12,9 @@ import styles from './index.css';
 const StepFinal: React.FC<StepProps> = ({ currentStep, step }) => {
     const history = useHistory();
 
-    const setAuthState = useStoreActions((actions) => actions.auth.setState);
+    const updateOnboardingDone = useStoreActions((actions) => actions.auth.updateOnboardingDone);
     const onClick = async () => {
-        setAuthState({ onboardingDone: true });
-        await AsyncStorageService.setItem('onboardingDone', true);
+        updateOnboardingDone(true);
 
         history.push('/app');
     };

@@ -17,6 +17,9 @@
   "search": {
     "message": "Rechercher..."
   },
+  "global_error": {
+    "message": "Une erreur s'est produite, veuillez actualiser l'extension."
+  },
   "error_pat": {
     "message": "Clé d'accès non reconnues, vérifiez les chiffres entrés ou envoyez un message à votre administrateur"
   },

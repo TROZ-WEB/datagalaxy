@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { MemoryRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { AccessToken } from '../../../shared/dist/shared';
 import App from '../App';
+import GlobalError from '../components/GlobalError';
 import Layout from '../components/Layout';
+import LoadingScreen from '../components/LoadingScreen';
 import { useStoreState } from '../store/hooks';
 import Onboarding from './Onboarding';
 
@@ -17,7 +20,8 @@ const Popup = () => {
     const [initialLoadingState, setInitialLoadingState] = useState<AppInitialLoadingStatus>(
         AppInitialLoadingStatus.Loading,
     );
-    const { onboardingDone } = useStoreState((state) => state.auth);
+    const store = useStoreState((state) => state);
+    const { onboardingDone, pat } = store.auth;
 
     useEffect(() => {
         const loadStorage = async () => {
@@ -30,20 +34,45 @@ const Popup = () => {
         loadStorage();
     }, []);
 
+    const [isAccessTokenReady, setIsAccessTokenReady] = useState<boolean>(false);
+    const [globalError, setGlobalError] = useState<boolean>(null);
+
+    useEffect(() => {
+        const initAccessToken = async () => {
+            // Refresh accessToken at the extension launch
+            const accessTokenSingleton = AccessToken.getInstance();
+            try {
+                await accessTokenSingleton.init(pat);
+                setIsAccessTokenReady(true);
+            } catch (error) {
+                setGlobalError(true);
+            }
+        };
+
+        if (onboardingDone) {
+            initAccessToken();
+        }
+    }, []);
+
     const renderBootingExtension = () => {
-        // Empty layout while the app is booting
         if (initialLoadingState === AppInitialLoadingStatus.Loading) {
-            return null;
+            return <LoadingScreen />;
         }
-        if (initialLoadingState === AppInitialLoadingStatus.Onboarding) {
-            return <Redirect to="/onboarding" />;
-        }
-        if (initialLoadingState === AppInitialLoadingStatus.App) {
+
+        if (isAccessTokenReady && initialLoadingState === AppInitialLoadingStatus.App) {
             return <Redirect to="/app" />;
         }
 
-        return <Redirect to="/global-error" />;
+        if (initialLoadingState === AppInitialLoadingStatus.Onboarding) {
+            return <Redirect to="/onboarding" />;
+        }
+
+        return null;
     };
+
+    if (globalError) {
+        return <GlobalError />;
+    }
 
     return (
         <Layout>
@@ -54,9 +83,6 @@ const Popup = () => {
                     </Route>
                     <Route path="/app">
                         <App />
-                    </Route>
-                    <Route path="/global-error" exact>
-                        <p>Une erreur s&apos;est produite, relancez l&apos;extension...</p>
                     </Route>
                     <Route render={renderBootingExtension} exact />
                 </Switch>

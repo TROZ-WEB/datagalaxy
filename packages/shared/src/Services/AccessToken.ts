@@ -1,5 +1,11 @@
 import { decodeJWT, getAccessToken } from '../Auth';
 
+/**
+ * Singleton that handle AccessToken
+ * @example
+ *  const accessTokenHandler = AccessToken.getInstance();
+ *  await accessTokenHandler.init(pat);
+ */
 class AccessToken {
     private static instance: AccessToken;
 

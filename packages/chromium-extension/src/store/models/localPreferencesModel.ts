@@ -1,12 +1,12 @@
 /* eslint-disable import/no-cycle */
-import { Action } from 'easy-peasy';
-import { setState } from './helper';
+/* eslint-disable no-param-reassign */
+import { Action, action } from 'easy-peasy';
 
 export interface LocalPreferencesModel {
     /* State */
     showNotifications?: boolean;
     /* Actions */
-    setState: Action<LocalPreferencesModel, Partial<LocalPreferencesModel>>;
+    updateShowNotifications: Action<LocalPreferencesModel, boolean>;
 }
 
 /**
@@ -16,7 +16,9 @@ export interface LocalPreferencesModel {
 const localPreferencesModel = async (): Promise<LocalPreferencesModel> => {
     return {
         showNotifications: null,
-        setState,
+        updateShowNotifications: action((state, payload: boolean) => {
+            state.showNotifications = payload;
+        }),
     };
 };
 

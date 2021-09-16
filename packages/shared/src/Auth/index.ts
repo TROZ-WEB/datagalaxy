@@ -19,7 +19,13 @@ export const getAccessToken = async (apiUrl: string, integrationToken: string): 
 
         const response: HttpResponse<CredentialsResponse> = await fetch(request);
 
-        return (await response.json()).accessToken;
+        const parsedResponse = await response.json();
+
+        if (parsedResponse.error) {
+            throw new Error(parsedResponse.error);
+        }
+
+        return parsedResponse.accessToken;
     } catch (error) {
         console.error(error);
     }

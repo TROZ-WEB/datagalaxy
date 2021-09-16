@@ -1,11 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-/* eslint-disable no-param-reassign */
-import { action } from 'easy-peasy';
 import { EntityType, getUsersByEmailsAndRole } from 'shared';
-
-const setState: any = action((state, payload) => {
-    state = { ...state, ...payload };
-});
 
 /**
  * From array of entities it will enhanced each one with owner/steward information
@@ -33,4 +27,4 @@ const enhancedEntitiesWithUserInfo = async (rawEntities: EntityType[], url): Pro
     });
 };
 
-export { setState, enhancedEntitiesWithUserInfo };
+export { enhancedEntitiesWithUserInfo };

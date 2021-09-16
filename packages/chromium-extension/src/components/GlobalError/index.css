@@ -1,0 +1,7 @@
+.Root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30% 20px 0px 20px;
+}
