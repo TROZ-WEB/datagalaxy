@@ -45,7 +45,7 @@ stages:
     - script: 'node common/scripts/install-run-rush.js lint'
       displayName: 'Rush Lint'
     - script: |
-        sudo apt install -qq -y sponge 
+        sudo apt install -qq -y moreutils 
         jq '.name = "DataGalaxy_staging"' ${CHROMIUM_BUILD_FOLDER}/manifest.json | sponge ${CHROMIUM_BUILD_FOLDER}/manifest.json
       displayName: "Rename extension for staging"
     - script: 'zip -r chromium-extension.zip packages/chromium-extension/dist'
