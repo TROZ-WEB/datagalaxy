@@ -9,6 +9,10 @@
     overflow: hidden;
 }
 
+.CursorPointer:hover {
+    cursor: pointer;
+}
+
 .RootExpanded:hover .RightSide {
     height: var(--search-card-result-height);
 }
@@ -17,9 +21,6 @@
     height: var(--search-card-result-height);
 }
 
-.Root:hover {
-    cursor: pointer;
-}
 
 .LeftSide {
     position: relative;
@@ -86,6 +87,7 @@
     color: var(--black);
     margin-top: 4px;
     text-decoration: none;
+    width: fit-content;
 }
 
 .EntityName:hover {

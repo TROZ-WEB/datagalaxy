@@ -26,9 +26,6 @@
   "error_required_field": {
     "message": "Ce champ est requis"
   },
-  "error_pin_code_size": {
-    "message": "Le code pin doit faire quatre caractères."
-  },
   "onboarding_title": {
     "message": "Bienvenue"
   },
@@ -49,21 +46,6 @@
   },
   "onboarding_login_submitForm": {
     "message": "Se connecter"
-  },
-  "onboarding_pin_stepTitle": {
-    "message": "Pour sécuriser votre compte, créez votre code PIN"
-  },
-  "onboarding_pin_stepSubTitle": {
-    "message": "Il vous permettra de vous reconnecter simplement et efficacement."
-  },
-  "onboarding_pin_inputPinLabel": {
-    "message": "Votre code PIN"
-  },
-  "onboarding_pin_inputPinPlaceholder": {
-    "message": "exemple: 7619"
-  },
-  "onboarding_pin_callout": {
-    "message": "Pour plus de sécurité ne mettez pas de mot de passe simple (1234, votre date d’anniversaire...)"
   },
   "onboarding_preferences_stepTitle": {
     "message": "Sélectionnez les options de partage et d’autorisation"
@@ -115,5 +97,40 @@
   },
   "entity_steward": {
     "message": "Steward"
+  },
+  "entity_steward_multiple": {
+    "message": "$COUNT$ utilisateurs",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "entity_details_sections_general": {
+    "message": "Général"
+  },
+  "entity_details_sections_general_status": {
+    "message": "Statut"
+  },
+  "entity_details_sections_general_tags": {
+    "message": "Étiquettes"
+  },
+  "entity_details_sections_general_tags_finance": {
+    "message": "FINANCE"
+  },
+  "entity_details_sections_general_tags_rgpd": {
+    "message": "GDPR"
+  },
+  "entity_details_sections_general_tags_bi": {
+    "message": "BI"
+  },
+  "entity_details_sections_general_tags_rh": {
+    "message": "RH"
+  },
+  "entity_details_sections_general_summary": {
+    "message": "Résumé"
+  },
+  "entity_details_sections_general_description": {
+    "message": "Description"
   }
 }

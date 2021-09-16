@@ -2,7 +2,7 @@
     width: 54px;
     display: flex;
     flex-direction: column;
-    background-color: #f3f6ff;
+    background-color: var(--pale-reflex);
 }
 
 .MenuItem {

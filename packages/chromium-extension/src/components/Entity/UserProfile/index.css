@@ -4,18 +4,15 @@
     align-items: center;
 }
 
-.Avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin-right: 8px;
-    border: 1px solid #FFFFFF;
+.AvatarWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .TextInfoWrapper {
     display: flex;
     flex-direction: column;
-    padding-right: 8px;
     margin-right: 3px;
 }
 

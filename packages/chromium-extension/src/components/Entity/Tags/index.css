@@ -1,0 +1,35 @@
+.Root {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.RootItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.ColorPoint {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.FINANCE {
+    background-color: #f7931e;
+}
+
+.BI {
+    background-color: #d4145a;
+}
+
+.RGPD {
+    background-color: #00a99d;
+}
+
+.RH {
+    background-color: #8cc63f;
+}

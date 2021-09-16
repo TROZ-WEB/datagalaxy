@@ -10,7 +10,7 @@ const Accordion = ({
 }: {
     initialOpen?: boolean;
     title: string;
-    children: React.ReactNode;
+    children?: React.ReactNode;
 }) => {
     const [isOpen, setOpen] = useState(initialOpen);
 

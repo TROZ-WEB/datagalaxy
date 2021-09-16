@@ -1,8 +1,6 @@
 import cx from 'clsx';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { entitiesTypeRelatedInfos } from 'shared';
-import { useStoreActions } from '../../../store/hooks';
 import Breadcrumb from '../../Breadcrumb';
 import Status from '../../Entity/Status';
 import UserProfile from '../../Entity/UserProfile';
@@ -11,21 +9,24 @@ import styles from './index.css';
 
 const isTechnical = (entity): boolean => entitiesTypeRelatedInfos[entity.type].kind === 'Technical';
 
-const SearchCardResult = ({ entity, alwaysExpanded = false }: { entity: any; alwaysExpanded?: boolean }) => {
-    const history = useHistory();
-
-    const { updateSelectedEntity } = useStoreActions((actions) => actions.search);
-
-    const onCardResultClick = () => {
-        updateSelectedEntity(entity);
-        history.push(`/app/entities/${entity.id}`);
-    };
-
+const SearchCardResult = ({
+    alwaysExpanded = false,
+    entity,
+    onClick,
+    showOwnership = true,
+}: {
+    alwaysExpanded?: boolean;
+    entity: any;
+    onClick?: () => void;
+    showOwnership?: boolean;
+}) => {
     return (
         <div
-            className={cx(styles.Root, alwaysExpanded ? styles.RootAlwaysExpanded : styles.RootExpanded)}
-            onClick={onCardResultClick}
-            onKeyPress={onCardResultClick}
+            className={cx(styles.Root, alwaysExpanded ? styles.RootAlwaysExpanded : styles.RootExpanded, {
+                [styles.CursorPointer]: !!onClick,
+            })}
+            onClick={onClick}
+            onKeyPress={onClick}
             role="button"
             tabIndex={0}
         >
@@ -47,20 +48,12 @@ const SearchCardResult = ({ entity, alwaysExpanded = false }: { entity: any; alw
                 </a>
                 <div className={styles.ExpandedWrapper}>
                     <Status status={entity.attributes.status} />
-                    <div className={styles.AssociatedUsersWrapper}>
-                        <UserProfile
-                            firstName={entity.owner.firstName}
-                            governanceRole="owner"
-                            lastName={entity.owner.lastName}
-                            profileThumbnailUrl={entity.owner.profileThumbnailUrl}
-                        />
-                        <UserProfile
-                            firstName={entity.steward.firstName}
-                            governanceRole="steward"
-                            lastName={entity.steward.lastName}
-                            profileThumbnailUrl={entity.steward.profileThumbnailUrl}
-                        />
-                    </div>
+                    {showOwnership && (
+                        <div className={styles.AssociatedUsersWrapper}>
+                            <UserProfile governanceRole="owner" users={entity.owners} />
+                            <UserProfile governanceRole="steward" users={entity.stewards} />
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

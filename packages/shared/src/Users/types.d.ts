@@ -2,7 +2,7 @@
 
 export type governanceRole = 'owner' | 'steward' | 'dpo' | 'cdo' | 'ciso' | 'expert';
 
-export interface UserEntity {
+export interface UserType {
     userId: string;
     licenseLevel: string;
     firstName: string;
@@ -16,9 +16,9 @@ export interface UserEntity {
 export interface UsersResponse {
     total: number;
     total_sum: number;
-    result: UserEntity[];
+    result: UserType[];
 }
 
 export interface UsersByRoleResponse {
-    [key: string]: UserEntity[];
+    [key: string]: UserType[];
 }

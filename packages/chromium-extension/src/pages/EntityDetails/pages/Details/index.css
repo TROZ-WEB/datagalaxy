@@ -4,6 +4,19 @@
     align-items: flex-start;
 }
 
+.UsersInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.OwnersStewardsSeparator{
+    height: 16px;
+    width: 1px;
+    background-color: rgba(2, 42, 142, 0.1);
+    margin: 0 8px;
+} 
+
 .AccordionWrapper {
     display: flex;
     flex-direction: column;
@@ -15,11 +28,23 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-bottom: 16px;
 }
 
 .SubInfoTitle {
     font-size: 10px;
     font-weight: 600;
-    color: #000000;
+    color: var(--reflex);
+    margin-top: 12px;
+    margin-bottom: 4px;
+}
+
+.SubInfoContent {
+    font-size: 12px;
+    color: var(--black);
+    margin-bottom: 12px;
+}
+
+.Separator {
+    height: 1px ;
+    background-color: var(--pale-reflex);
 }

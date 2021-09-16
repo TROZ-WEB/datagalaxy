@@ -19,6 +19,6 @@
 }
 
 .Separator {
-    border-bottom: 1px solid #f3f6ff;
+    border-bottom: 1px solid var(--pale-reflex);
     display: block;
 }

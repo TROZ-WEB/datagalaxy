@@ -24,76 +24,58 @@
     "message": "Clé d'accès non reconnues, vérifiez les chiffres entrés ou envoyez un message à votre administrateur"
   },
   "error_required_field": {
-    "message": "Ce champ est requis"
-  },
-  "error_pin_code_size": {
-    "message": "Le code pin doit faire quatre caractères."
+    "message": "This field is required"
   },
   "onboarding_title": {
-    "message": "Bienvenue"
+    "message": "Welcome"
   },
   "onboarding_nextButton": {
-    "message": "Suivant"
+    "message": "Next"
   },
   "onboarding_login_stepTitle": {
-    "message": "Pour commencer l'expérience, connectez-vous"
+    "message": "To start, please log in"
   },
   "onboarding_login_inputEmailLabel": {
-    "message": "Identifiant"
+    "message": "Identifier"
   },
   "onboarding_login_inputPatLabel": {
-    "message": "Clé d'accès"
+    "message": "Access key"
   },
   "onboarding_login_findMyPat": {
-    "message": "Où trouver ma clé d'accès"
+    "message": "Where to find my access key"
   },
   "onboarding_login_submitForm": {
-    "message": "Se connecter"
-  },
-  "onboarding_pin_stepTitle": {
-    "message": "Pour sécuriser votre compte, créez votre code PIN"
-  },
-  "onboarding_pin_stepSubTitle": {
-    "message": "Il vous permettra de vous reconnecter simplement et efficacement."
-  },
-  "onboarding_pin_inputPinLabel": {
-    "message": "Votre code PIN"
-  },
-  "onboarding_pin_inputPinPlaceholder": {
-    "message": "exemple: 7619"
-  },
-  "onboarding_pin_callout": {
-    "message": "Pour plus de sécurité ne mettez pas de mot de passe simple (1234, votre date d’anniversaire...)"
+    "message": "Login"
   },
   "onboarding_preferences_stepTitle": {
     "message": "Sélectionnez les options de partage et d’autorisation"
   },
   "onboarding_preferences_inputShowNotifications": {
-    "message": "Afficher les notifications sur le plugin"
+    "message": "Display the notifications on the extension"
   },
   "onboarding_final_stepTitle1": {
-    "message": "Bravo !"
+    "message": "Congratulations !"
   },
   "onboarding_final_stepTitle2": {
-    "message": "Vous êtes désormais connecté"
+    "message": "You are now connected"
   },
   "onboarding_final_discoverFeaturesButton": {
-    "message": "Découvrir les fonctionnalités clés"
+    "message": "Discover key features"
   },
   "onboarding_final_skipButton": {
-    "message": "Passer"
+    "message": "Skip"
   },
   "onboarding_patFinder_title": {
-    "message": "Où trouver ma clé ?"
+    "message": "Where to find my key ?"
   },
   "onboarding_patFinder_description": {
     "message": "Accédez-y directement en cliquant sur le bouton ci-dessous"
   },
   "onboarding_patFinder_linkButton": {
-    "message": "Trouver ma clé d'accès"
+    "message": "Find my access key"
   },
   "onboarding_patFinder_closeButton": {
-    "message": "Ok, fermer"
+    "message": "Ok, close"
   },
   "entity_status_Proposed": {
     "message": "Proposed"
@@ -115,5 +97,40 @@
   },
   "entity_steward": {
     "message": "Steward"
+  },
+  "entity_steward_multiple": {
+    "message": "$COUNT$ users",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "entity_details_sections_general": {
+    "message": "General"
+  },
+  "entity_details_sections_general_status": {
+    "message": "Status"
+  },
+  "entity_details_sections_general_tags": {
+    "message": "Tags"
+  },
+  "entity_details_sections_general_tags_finance": {
+    "message": "FINANCE"
+  },
+  "entity_details_sections_general_tags_rgpd": {
+    "message": "RGPD"
+  },
+  "entity_details_sections_general_tags_bi": {
+    "message": "BI"
+  },
+  "entity_details_sections_general_tags_rh": {
+    "message": "HR"
+  },
+  "entity_details_sections_general_summary": {
+    "message": "Summary"
+  },
+  "entity_details_sections_general_description": {
+    "message": "Description"
   }
 }

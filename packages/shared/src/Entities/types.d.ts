@@ -12,5 +12,8 @@ export interface EntityType {
         owners: string[];
         stewards: string[];
         status: string;
+        summary: string;
+        tags: string[];
+        description: string;
     };
 }

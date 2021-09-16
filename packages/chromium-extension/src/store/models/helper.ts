@@ -21,8 +21,12 @@ const enhancedEntitiesWithUserInfo = async (rawEntities: EntityType[], url): Pro
     return rawEntities.map((result) => {
         return {
             ...result,
-            owner: usersInfos.owners.find(({ email }) => email === result.attributes.owners[0]),
-            steward: usersInfos.stewards.find(({ email }) => email === result.attributes.stewards[0]),
+            owners: result.attributes.owners.map((email) => {
+                return usersInfos.owners.find(({ email: emailToFind }) => emailToFind === email);
+            }),
+            stewards: result.attributes.stewards.map((email) => {
+                return usersInfos.stewards.find(({ email: emailToFind }) => emailToFind === email);
+            }),
         };
     });
 };

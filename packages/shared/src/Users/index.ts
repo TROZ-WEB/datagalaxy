@@ -1,9 +1,9 @@
 import { get } from '../Http';
-import { UserEntity, UsersResponse, UsersByRoleResponse, governanceRole } from './types';
+import { UserType, UsersResponse, UsersByRoleResponse, governanceRole } from './types';
 
-export type { UserEntity, UsersResponse, UsersByRoleResponse } from './types';
+export type { UserType, UsersResponse, UsersByRoleResponse } from './types';
 
-export const getUserByEmail = async (apiUrl: string, email: string): Promise<UserEntity> => {
+export const getUserByEmail = async (apiUrl: string, email: string): Promise<UserType> => {
     try {
         const response = await get<UsersResponse>(`${apiUrl}/users?email=${email}`);
 

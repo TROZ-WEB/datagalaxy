@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useStoreState, useStoreDispatch } from '../../store/hooks';
+import { useHistory } from 'react-router-dom';
+import { useStoreState, useStoreDispatch, useStoreActions } from '../../store/hooks';
 import SearchCardResult from './SearchCardResult';
 import SearchInput from './SearchInput';
 import { useSearchInput } from './SearchInput/useSearchInput';
@@ -9,8 +10,11 @@ const SearchForm = () => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
 
-    const dispatch = useStoreDispatch();
+    const history = useHistory();
+
     const { searchedArgs, searchResults } = useStoreState((state) => state.search);
+    const { updateSelectedEntity } = useStoreActions((actions) => actions.search);
+    const dispatch = useStoreDispatch();
 
     const debounceOnChange = async ({ value }) => {
         if (value) {
@@ -46,7 +50,13 @@ const SearchForm = () => {
                 {searchResults.map((entity, idx) => (
                     <div key={entity.id}>
                         <div className={styles.SearchCardResultWrapper}>
-                            <SearchCardResult entity={entity} />
+                            <SearchCardResult
+                                entity={entity}
+                                onClick={() => {
+                                    updateSelectedEntity(entity);
+                                    history.push(`/app/entities/${entity.id}`);
+                                }}
+                            />
                         </div>
                         {idx < searchResults.length - 1 && <span className={styles.Separator} />}
                     </div>
