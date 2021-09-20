@@ -4,7 +4,6 @@ import PatFinder from './PatFinder';
 import { Stepper } from './Stepper';
 import Final from './Steps/Final';
 import Login from './Steps/Login';
-import SetPreferences from './Steps/SetPreferences';
 
 const Onboarding = () => {
     const { path } = useRouteMatch();
@@ -15,7 +14,7 @@ const Onboarding = () => {
                 <PatFinder />
             </Route>
             <Route>
-                <Stepper steps={[Login, SetPreferences, Final]} />
+                <Stepper steps={[Login, Final]} />
             </Route>
         </Switch>
     );

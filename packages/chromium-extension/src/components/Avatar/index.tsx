@@ -126,7 +126,7 @@ const Avatar = ({ grouped = false, user }: { grouped: boolean; user: UserType })
 
     return (
         <img
-            alt={`${user.firstName}. ${user.lastName} avatar`}
+            alt={`${user.firstName}. ${user.lastName}`}
             className={cx(styles.Root, { [styles.GroupedAvatar]: grouped })}
             src={user.profileThumbnailUrl}
         />

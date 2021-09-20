@@ -8,7 +8,7 @@ export const search = async (apiUrl: string, query: string): Promise<SearchRespo
     try {
         const response = await post<SearchResponse>(`${apiUrl}/search`, {
             query,
-            includedAttributes: ['DataOwners', 'DataStewards', 'EntityStatus'],
+            includedAttributes: ['DataOwners', 'DataStewards', 'EntityStatus', 'Domains'],
         });
 
         return response.parsedBody;

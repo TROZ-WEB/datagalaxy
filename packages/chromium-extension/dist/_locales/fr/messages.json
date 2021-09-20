@@ -17,8 +17,11 @@
   "search": {
     "message": "Rechercher..."
   },
+  "search_results": {
+    "message": "Résultats de la recherche"
+  },
   "global_error": {
-    "message": "Une erreur s'est produite, veuillez actualiser l'extension."
+    "message": "Une erreur s'est produite. Veuillez actualiser l'extension."
   },
   "error_pat": {
     "message": "Clé d'accès non reconnues, vérifiez les chiffres entrés ou envoyez un message à votre administrateur"
@@ -46,12 +49,6 @@
   },
   "onboarding_login_submitForm": {
     "message": "Se connecter"
-  },
-  "onboarding_preferences_stepTitle": {
-    "message": "Sélectionnez les options de partage et d’autorisation"
-  },
-  "onboarding_preferences_inputShowNotifications": {
-    "message": "Afficher les notifications sur le plugin"
   },
   "onboarding_final_stepTitle1": {
     "message": "Bravo !"
@@ -114,18 +111,6 @@
   },
   "entity_details_sections_general_tags": {
     "message": "Étiquettes"
-  },
-  "entity_details_sections_general_tags_finance": {
-    "message": "FINANCE"
-  },
-  "entity_details_sections_general_tags_rgpd": {
-    "message": "GDPR"
-  },
-  "entity_details_sections_general_tags_bi": {
-    "message": "BI"
-  },
-  "entity_details_sections_general_tags_rh": {
-    "message": "RH"
   },
   "entity_details_sections_general_summary": {
     "message": "Résumé"

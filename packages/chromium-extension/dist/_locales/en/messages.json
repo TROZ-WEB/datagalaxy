@@ -17,11 +17,17 @@
   "search": {
     "message": "Search..."
   },
+  "search_results": {
+    "message": "Search results"
+  },
   "global_error": {
-    "message": "An error has occurred, Please refresh the extension."
+    "message": "An error has occurred. Please refresh the extension."
   },
   "error_pat": {
-    "message": "Clé d'accès non reconnues, vérifiez les chiffres entrés ou envoyez un message à votre administrateur"
+    "message": "Unrecognized access key, Check the digits entered or send a message to your administrator"
+  },
+  "error_pat_email": {
+    "message": "Identifier don't match the access key. Please ensure the pat correspond to the identifier provided."
   },
   "error_required_field": {
     "message": "This field is required"
@@ -46,12 +52,6 @@
   },
   "onboarding_login_submitForm": {
     "message": "Login"
-  },
-  "onboarding_preferences_stepTitle": {
-    "message": "Sélectionnez les options de partage et d’autorisation"
-  },
-  "onboarding_preferences_inputShowNotifications": {
-    "message": "Display the notifications on the extension"
   },
   "onboarding_final_stepTitle1": {
     "message": "Congratulations !"
@@ -114,18 +114,6 @@
   },
   "entity_details_sections_general_tags": {
     "message": "Tags"
-  },
-  "entity_details_sections_general_tags_finance": {
-    "message": "FINANCE"
-  },
-  "entity_details_sections_general_tags_rgpd": {
-    "message": "RGPD"
-  },
-  "entity_details_sections_general_tags_bi": {
-    "message": "BI"
-  },
-  "entity_details_sections_general_tags_rh": {
-    "message": "HR"
   },
   "entity_details_sections_general_summary": {
     "message": "Summary"

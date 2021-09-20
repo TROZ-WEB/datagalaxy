@@ -3,8 +3,9 @@ import React from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 // import CommentDuo from '../../icons/CommentDuo';
 // import FileTasksCheck from '../../icons/FileTasksCheck';
-import Notification from '../../icons/Notification';
+// import Notification from '../../icons/Notification';
 import Search from '../../icons/Search';
+import { useStoreState } from '../../store/hooks';
 import EllipsePlaceHolder from '../../../assets/EllipsePlaceHolder.png';
 import WhiteLogo from '../../../assets/white-logo.png';
 import styles from './index.css';
@@ -27,10 +28,10 @@ const menuItems: MenuItem[] = [
     //     icon: <FileTasksCheck className={styles.MenuItemImage} />,
     //     path: '/app/tasks',
     // },
-    {
-        icon: <Notification className={styles.MenuItemImage} />,
-        path: '/app/notifications',
-    },
+    // {
+    //     icon: <Notification className={styles.MenuItemImage} />,
+    //     path: '/app/notifications',
+    // },
     {
         icon: <img alt="Go to account" className={styles.MenuItemImage} src={EllipsePlaceHolder} />,
         path: '/app/account',
@@ -41,9 +42,13 @@ const Menu = () => {
     const { pathname } = useLocation();
     const history = useHistory();
 
+    const url = useStoreState((state) => state.auth.dgapi);
+
     return (
         <div className={styles.Root}>
-            <img alt="Datagalaxy logo" className={styles.Logo} src={WhiteLogo} />
+            <a href={url} rel="noreferrer" target="_blank">
+                <img alt="Datagalaxy logo" className={styles.Logo} src={WhiteLogo} />
+            </a>
             <div className={styles.MenuItemsContainer}>
                 {menuItems.map(({ icon, path }) => (
                     <button
