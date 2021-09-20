@@ -7,26 +7,18 @@
     flex-direction: column;
     color: var(--black);
     overflow: hidden;
-    
+    max-height:58px;
+    transition: max-height .15s ease-out;
 }
 
 .CursorPointer:hover {
     cursor: pointer;
 }
 
-.RootExpanded {
-    height: 48px;
-    transition: height 0.15s linear;
-}
-.RootExpanded:hover {
-    height: var(--search-card-result-height);
-}
-
-.RootExpanded:hover .ExpandedWrapper {
-    display: flex;
-}
-.RootExpanded:hover .TagsWrapper {
-    display: flex;
+.CardExpanded {
+    height: fit-content;
+    max-height: 250px;
+    transition: max-height .5s ease-in;
 }
 
 .WrappedContainer {
@@ -54,11 +46,12 @@
 
 .RightSide {
     display: flex;
+    flex: 2;
     flex-direction: column;
 }
 
 .TagsWrapper {
-    display: none;
+    display: flex;
     margin-top: 6px;
 }
 
@@ -114,7 +107,7 @@
 }
 
 .ExpandedWrapper {
-    display: none;
+    display: flex;
     flex-direction: row;
     align-items: center;
     margin-top: 18px;

@@ -16,7 +16,7 @@ export interface UserType {
 export interface UsersResponse {
     total: number;
     total_sum: number;
-    result: UserType[];
+    results: UserType[];
 }
 
 export interface UsersByRoleResponse {

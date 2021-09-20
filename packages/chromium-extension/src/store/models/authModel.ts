@@ -1,7 +1,15 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-param-reassign */
-import { Action, Actions, Thunk, thunk, action } from 'easy-peasy';
-import { AccessToken, decodeJWT } from '../../../../shared/dist/shared';
+import { Action, Actions, Thunk, thunk, action, computed, Computed } from 'easy-peasy';
+import {
+    AccessToken,
+    decodeJWT,
+    TagType,
+    fetchTags as fetchTagsApi,
+    UserType,
+    getUserByEmail,
+    DecodedJWT,
+} from 'shared';
 
 export interface AuthModel {
     /* State */
@@ -10,14 +18,22 @@ export interface AuthModel {
     pubapi?: string;
     dgapi?: string;
     historyLocation?: string;
+    tags: TagType[];
+    user: UserType;
+    /* Computed properties */
+    getDecodedPat: Computed<AuthModel, DecodedJWT>;
     /* Actions */
     updateOnboardingDone: Action<AuthModel, boolean>;
     updatePat: Action<AuthModel, string>;
     updatePubapi: Action<AuthModel, string>;
     updateDgapi: Action<AuthModel, string>;
     updateHistoryLocation: Action<AuthModel, string>;
+    updateTags: Action<AuthModel, TagType[]>;
+    updateUser: Action<AuthModel, UserType>;
     /* Thunks */
     loginWithPAT: Thunk<AuthModel, { pat: string; email: string }>;
+    fetchTags: Thunk<AuthModel>;
+    fetchUser: Thunk<AuthModel>;
 }
 
 /**
@@ -54,6 +70,21 @@ const loginWithPAT = thunk(async (actions: Actions<AuthModel>, payload: { pat: s
     await accessTokenHandler.init(btoa(payload.pat));
 });
 
+const fetchTags = thunk(async (actions: Actions<AuthModel>, _, { getStoreState }) => {
+    const url = (getStoreState() as any).auth.pubapi;
+    const tags: TagType[] = await fetchTagsApi(url);
+
+    actions.updateTags(tags);
+});
+
+const fetchUser = thunk(async (actions: Actions<AuthModel>, _, { getStoreState }) => {
+    const { pubapi, getDecodedPat } = (getStoreState() as any).auth;
+
+    const user: UserType = await getUserByEmail(pubapi, getDecodedPat.email);
+
+    actions.updateUser(user);
+});
+
 /**
  * Auth Model Instance
  */
@@ -66,6 +97,8 @@ const authModel = async (): Promise<AuthModel> => {
         pubapi: '',
         dgapi: '',
         historyLocation: null,
+        tags: [],
+        user: null,
         /* Actions */
         updateOnboardingDone: action((state, payload: boolean) => {
             state.onboardingDone = payload;
@@ -82,8 +115,20 @@ const authModel = async (): Promise<AuthModel> => {
         updateHistoryLocation: action((state, payload: string) => {
             state.historyLocation = payload;
         }),
+        updateTags: action((state, payload: TagType[]) => {
+            state.tags = payload;
+        }),
+        updateUser: action((state, payload: UserType) => {
+            state.user = payload;
+        }),
+        /* Computed properties */
+        getDecodedPat: computed((state) => {
+            return decodeJWT(atob(state.pat));
+        }),
         /* Thunks */
         loginWithPAT,
+        fetchTags,
+        fetchUser,
     };
 };
 

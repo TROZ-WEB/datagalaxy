@@ -5,7 +5,7 @@ import App from '../App';
 import GlobalError from '../components/GlobalError';
 import Layout from '../components/Layout';
 import LoadingScreen from '../components/LoadingScreen';
-import { useStoreState } from '../store/hooks';
+import { useStoreDispatch, useStoreState } from '../store/hooks';
 import Onboarding from './Onboarding';
 
 enum AppInitialLoadingStatus {
@@ -20,8 +20,10 @@ const Popup = () => {
     const [initialLoadingState, setInitialLoadingState] = useState<AppInitialLoadingStatus>(
         AppInitialLoadingStatus.Loading,
     );
-    const store = useStoreState((state) => state);
-    const { onboardingDone, pat } = store.auth;
+
+    const dispatch = useStoreDispatch();
+    const state = useStoreState((state) => state);
+    const { onboardingDone, pat } = state.auth;
 
     useEffect(() => {
         const loadStorage = async () => {
@@ -34,23 +36,28 @@ const Popup = () => {
         loadStorage();
     }, []);
 
-    const [isAccessTokenReady, setIsAccessTokenReady] = useState<boolean>(false);
+    const [isAppReady, setIsAppReady] = useState<boolean>(false);
     const [globalError, setGlobalError] = useState<boolean>(null);
 
     useEffect(() => {
-        const initAccessToken = async () => {
-            // Refresh accessToken at the extension launch
-            const accessTokenSingleton = AccessToken.getInstance();
+        const initApp = async () => {
             try {
+                // Refresh accessToken at the extension launch
+                const accessTokenSingleton = AccessToken.getInstance();
                 await accessTokenSingleton.init(pat);
-                setIsAccessTokenReady(true);
+
+                // Fetch all available tags
+                await dispatch.auth.fetchTags();
+                await dispatch.auth.fetchUser();
+
+                setIsAppReady(true);
             } catch (error) {
                 setGlobalError(true);
             }
         };
 
         if (onboardingDone) {
-            initAccessToken();
+            initApp();
         }
     }, []);
 
@@ -59,7 +66,7 @@ const Popup = () => {
             return <LoadingScreen />;
         }
 
-        if (isAccessTokenReady && initialLoadingState === AppInitialLoadingStatus.App) {
+        if (isAppReady && initialLoadingState === AppInitialLoadingStatus.App) {
             return <Redirect to="/app" />;
         }
 
