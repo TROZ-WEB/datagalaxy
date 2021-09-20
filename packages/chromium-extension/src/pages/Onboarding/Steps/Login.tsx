@@ -28,7 +28,7 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
 
     const onSubmit = handleSubmit(async (values) => {
         try {
-            await loginWithPAT(values.pat);
+            await loginWithPAT(values);
         } catch (error) {
             setError('pat', {
                 message: error.message,

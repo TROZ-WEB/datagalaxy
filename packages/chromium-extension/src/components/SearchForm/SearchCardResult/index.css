@@ -4,21 +4,34 @@
 
 .Root {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     color: var(--black);
     overflow: hidden;
+    
 }
 
 .CursorPointer:hover {
     cursor: pointer;
 }
 
-.RootExpanded:hover .RightSide {
+.RootExpanded {
+    height: 48px;
+    transition: height 0.15s linear;
+}
+.RootExpanded:hover {
     height: var(--search-card-result-height);
 }
 
-.RootAlwaysExpanded .RightSide {
-    height: var(--search-card-result-height);
+.RootExpanded:hover .ExpandedWrapper {
+    display: flex;
+}
+.RootExpanded:hover .TagsWrapper {
+    display: flex;
+}
+
+.WrappedContainer {
+    display: flex;
+    flex-direction: row;
 }
 
 
@@ -42,8 +55,11 @@
 .RightSide {
     display: flex;
     flex-direction: column;
-    height: 48px;
-    transition: height 0.15s linear;
+}
+
+.TagsWrapper {
+    display: none;
+    margin-top: 6px;
 }
 
 .LeftSideBackground {
@@ -90,12 +106,7 @@
     width: fit-content;
 }
 
-.EntityName:hover {
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-.EntityName:hover::after {
+.EntityNameMoreActionsIcon {
     content: url('../../../../assets/icons/out.svg');
     width: 12px;
     height: 12px;
@@ -103,8 +114,10 @@
 }
 
 .ExpandedWrapper {
-    display: flex;
-    flex-direction: column;
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 18px;
 }
 
 .AssociatedUsersWrapper {

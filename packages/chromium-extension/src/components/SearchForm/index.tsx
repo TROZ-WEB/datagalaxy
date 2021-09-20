@@ -26,6 +26,8 @@ const SearchForm = () => {
 
             setLoading(false);
             setSuccess(true);
+        } else {
+            await dispatch.search.resetSearch();
         }
     };
 
@@ -46,8 +48,11 @@ const SearchForm = () => {
                 />
             </div>
             <div className={styles.Results}>
-                <p className={styles.ResultsTitle}>Recent search</p>
-                {searchResults.map((entity, idx) => (
+                <div className={styles.ResultsTitleWrapper}>
+                    <p className={styles.ResultsTitle}>{chrome.i18n.getMessage('search_results')}</p>
+                    <span className={styles.TagResultCount}>{searchResults.total}</span>
+                </div>
+                {searchResults.result.entities.map((entity, idx) => (
                     <div key={entity.id}>
                         <div className={styles.SearchCardResultWrapper}>
                             <SearchCardResult
@@ -58,7 +63,7 @@ const SearchForm = () => {
                                 }}
                             />
                         </div>
-                        {idx < searchResults.length - 1 && <span className={styles.Separator} />}
+                        {idx < searchResults.result.entities.length - 1 && <span className={styles.Separator} />}
                     </div>
                 ))}
             </div>

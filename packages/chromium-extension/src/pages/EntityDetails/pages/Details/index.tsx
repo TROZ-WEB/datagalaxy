@@ -4,6 +4,7 @@ import Accordion from '../../../../components/Accordion';
 import Status from '../../../../components/Entity/Status';
 import Tags from '../../../../components/Entity/Tags';
 import UserProfile from '../../../../components/Entity/UserProfile';
+import OwnersStewardsSeparator from '../../../../components/OwnersStewardsSeparator';
 import SearchCardResult from '../../../../components/SearchForm/SearchCardResult';
 import { useStoreState } from '../../../../store/hooks';
 import styles from './index.css';
@@ -29,7 +30,7 @@ const Details = () => {
             <SearchCardResult entity={entity} showOwnership={false} alwaysExpanded />
             <div className={styles.UsersInfo}>
                 <UserProfile governanceRole="owner" users={(entity as any).owners} />
-                <span className={styles.OwnersStewardsSeparator} />
+                <OwnersStewardsSeparator />
                 <UserProfile governanceRole="steward" users={(entity as any).stewards} />
             </div>
             {loaded && (
@@ -42,7 +43,7 @@ const Details = () => {
                         <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_tags`)}>
                             <Tags>
                                 {entity.attributes.tags.map((tag) => (
-                                    <Tags.Item key={tag} tag={tag} />
+                                    <Tags.Item key={tag} hideLabel={entity.attributes.tags.length > 1} tag={tag} />
                                 ))}
                             </Tags>
                         </Details.SubInfo>
