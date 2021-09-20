@@ -26,6 +26,9 @@
   "error_pat": {
     "message": "Clé d'accès non reconnues, vérifiez les chiffres entrés ou envoyez un message à votre administrateur"
   },
+  "error_pat_email": {
+    "message": "L'identifiant ne correspond pas à la clé d'accès. Veuillez vérifier que la clé d'accès correspond à l'identifiant renseigné si dessus."
+  },
   "error_required_field": {
     "message": "Ce champ est requis"
   },

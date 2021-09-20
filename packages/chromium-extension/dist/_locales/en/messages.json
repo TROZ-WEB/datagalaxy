@@ -27,7 +27,7 @@
     "message": "Unrecognized access key, Check the digits entered or send a message to your administrator"
   },
   "error_pat_email": {
-    "message": "Identifier don't match the access key. Please ensure the pat correspond to the identifier provided."
+    "message": "Identifier don't match the access key. Please ensure the access key match the identifier provided."
   },
   "error_required_field": {
     "message": "This field is required"

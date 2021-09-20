@@ -8,10 +8,15 @@ import { enhancedEntitiesWithUserInfo } from './helper';
  * This model aims to managed the currently displayed entity in the extension
  */
 
+const initialState = {
+    displayedEntity: null,
+};
+
 export interface EntityModel {
     /* State */
     displayedEntity: EntityType;
     /* Actions */
+    resetModel: Action<EntityModel>;
     updateDisplayedEntity: Action<EntityModel, EntityType>;
     /* Thunks */
     fetchEntity: Thunk<EntityModel, string>;
@@ -43,8 +48,11 @@ const fetchEntity = thunk(async (actions: Actions<EntityModel>, location: string
 const entityModel = async (): Promise<EntityModel> => {
     return {
         /* State */
-        displayedEntity: null,
+        ...initialState,
         /* Actions */
+        resetModel: action((state) => {
+            state = initialState;
+        }),
         updateDisplayedEntity: action((state, payload: EntityType) => {
             state.displayedEntity = payload;
         }),
