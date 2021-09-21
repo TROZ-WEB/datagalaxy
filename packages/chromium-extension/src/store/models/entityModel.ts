@@ -1,5 +1,3 @@
-/* eslint-disable import/no-cycle */
-/* eslint-disable no-param-reassign */
 import { Action, Thunk, Actions, thunk, action } from 'easy-peasy';
 import { fetchEntity as fetchEntityAPI, EntityType } from 'shared';
 import { enhancedEntitiesWithUserInfo } from './helper';

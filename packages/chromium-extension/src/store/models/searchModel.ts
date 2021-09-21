@@ -1,5 +1,3 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable import/no-cycle */
 import { Action, Thunk, Actions, thunk, action } from 'easy-peasy';
 import { search as searchAPI, EntityType, SearchResponse } from 'shared';
 import { enhancedEntitiesWithUserInfo } from './helper';

@@ -1,12 +1,12 @@
+import { useStore } from 'easy-peasy';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 import { decodeJWT } from 'shared';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import { useStoreActions, useStoreState, useStoreDispatch } from '../../store/hooks';
 import styles from './index.css';
-import { useStore } from 'easy-peasy';
 
 type FormData = {
     email: string;
@@ -41,8 +41,6 @@ const Account = () => {
             setError('pat', {
                 message: error.message,
             });
-
-            return;
         }
 
         // What to do ? Show something that indicates success?
@@ -70,17 +68,17 @@ const Account = () => {
                     <Button type="submit">Update your PAT</Button>
                 </div>
 
-                <a
-                    href="#"
+                <button
                     className={styles.LogoutButton}
                     onClick={async () => {
                         await dispatch.auth.logout(store);
 
                         history.replace('/onboarding');
                     }}
+                    type="button"
                 >
                     Logout
-                </a>
+                </button>
             </form>
         </div>
     );
