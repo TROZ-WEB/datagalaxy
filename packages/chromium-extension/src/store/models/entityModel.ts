@@ -49,7 +49,7 @@ const entityModel = async (): Promise<EntityModel> => {
         ...initialState,
         /* Actions */
         resetModel: action((state) => {
-            state = initialState;
+            state.displayedEntity = initialState.displayedEntity;
         }),
         updateDisplayedEntity: action((state, payload: EntityType) => {
             state.displayedEntity = payload;

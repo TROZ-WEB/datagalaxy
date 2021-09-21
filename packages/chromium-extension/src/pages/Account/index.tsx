@@ -1,8 +1,9 @@
 import { useStore } from 'easy-peasy';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { decodeJWT } from 'shared';
+import Alert from '../../components/Alert';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import { useStoreActions, useStoreState, useStoreDispatch } from '../../store/hooks';
@@ -15,35 +16,56 @@ type FormData = {
 
 const Account = () => {
     const history = useHistory();
+    const location = useLocation();
+
+    /**
+     * If we cannot reach the API or if the PAT has been revoked
+     * We get redirected here with the flag 'isError' in order to
+     * ask user check his credentials
+     * [Temporary solution because we are currently not able to differentiate down api from revoked PAT]
+     */
+    const isGlobalError = location?.state?.isError;
+
     const store = useStore();
     const pat = useStoreState((state) => state.auth.pat);
 
-    const decodedPAT = decodeJWT(atob(pat));
+    const decodedPAT = pat ? decodeJWT(atob(pat)) : null;
 
     const { updatePATThunk } = useStoreActions((actions) => actions.auth);
     const dispatch = useStoreDispatch();
+
+    const [isAlertSuccessVisible, setIsAlertSuccessVisible] = useState<boolean>(false);
+    const [isPATError, setIsPATError] = useState<boolean>(isGlobalError);
 
     const {
         register,
         handleSubmit,
         formState: { errors },
         setError,
+        setValue,
     } = useForm<FormData>({
         defaultValues: {
-            email: decodedPAT.email,
+            email: decodedPAT ? decodedPAT.email : '',
         },
     });
 
     const onSubmit = handleSubmit(async (values) => {
+        if (!values.pat) {
+            return;
+        }
+
         try {
+            setIsPATError(false);
             await updatePATThunk(values.pat);
+
+            setValue('pat', '');
+            setIsAlertSuccessVisible(true);
+            setIsPATError(false);
         } catch (error) {
             setError('pat', {
                 message: error.message,
             });
         }
-
-        // What to do ? Show something that indicates success?
     });
 
     return (
@@ -58,11 +80,13 @@ const Account = () => {
                 </fieldset>
                 <br />
                 <h2>Update your access key</h2>
+                {isPATError && <Alert type="warning">{chrome.i18n.getMessage('global_error')}</Alert>}
                 <Input
                     errors={errors}
-                    label={chrome.i18n.getMessage('onboarding_login_inputPatLabel')}
+                    label={chrome.i18n.getMessage('onboarding_login_inputNewPatLabel')}
                     {...register('pat', { required: true })}
                 />
+                {isAlertSuccessVisible && <Alert type="success">Your access key has been updated successfully</Alert>}
                 <br />
                 <div className={styles.ButtonWrapper}>
                     <Button type="submit">Update your PAT</Button>
@@ -73,7 +97,7 @@ const Account = () => {
                     onClick={async () => {
                         await dispatch.auth.logout(store);
 
-                        history.replace('/onboarding');
+                        history.push('/onboarding');
                     }}
                     type="button"
                 >

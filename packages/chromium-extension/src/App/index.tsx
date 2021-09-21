@@ -17,22 +17,24 @@ const App = () => {
     const updateHistoryLocation = useStoreActions((state) => state.auth.updateHistoryLocation);
 
     /**
+     * Reopen the extension where we left it
+     */
+    useEffect(() => {
+        if (historyLocation && historyLocation.startsWith('/app')) {
+            history.push(historyLocation);
+        }
+    }, []);
+
+    /**
      * Save history changes to allow reopening the extension where we left it
      */
     useEffect(() => {
         return history.listen((location) => {
-            updateHistoryLocation(location.pathname);
+            if ((location.pathname as string).startsWith('/app')) {
+                updateHistoryLocation(location.pathname);
+            }
         });
     }, [history]);
-
-    /**
-     * Reopen the extension where we left it
-     */
-    useEffect(() => {
-        if (historyLocation) {
-            history.push(historyLocation);
-        }
-    }, []);
 
     return (
         <ConnectedLayout>

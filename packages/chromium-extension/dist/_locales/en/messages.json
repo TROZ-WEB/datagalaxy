@@ -21,7 +21,7 @@
     "message": "Search results"
   },
   "global_error": {
-    "message": "An error has occurred. Please refresh the extension."
+    "message": "We are having difficulty logging in, please verify your login information."
   },
   "error_pat": {
     "message": "Unrecognized access key, Check the digits entered or send a message to your administrator"
@@ -46,6 +46,9 @@
   },
   "onboarding_login_inputPatLabel": {
     "message": "Access key"
+  },
+  "onboarding_login_inputNewPatLabel": {
+    "message": "New access key"
   },
   "onboarding_login_findMyPat": {
     "message": "Where to find my access key"

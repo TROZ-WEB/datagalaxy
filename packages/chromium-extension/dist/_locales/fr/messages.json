@@ -21,7 +21,7 @@
     "message": "Résultats de la recherche"
   },
   "global_error": {
-    "message": "Une erreur s'est produite. Veuillez actualiser l'extension."
+    "message": "Nous rencontrons des difficultés pour vous connecter, vérifier vos informations de connexion."
   },
   "error_pat": {
     "message": "Clé d'accès non reconnues, vérifiez les chiffres entrés ou envoyez un message à votre administrateur"
@@ -46,6 +46,9 @@
   },
   "onboarding_login_inputPatLabel": {
     "message": "Clé d'accès"
+  },
+  "onboarding_login_inputNewPatLabel": {
+    "message": "Nouvelle clé d'accès"
   },
   "onboarding_login_findMyPat": {
     "message": "Où trouver ma clé d'accès"

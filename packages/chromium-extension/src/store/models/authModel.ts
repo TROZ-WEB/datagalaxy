@@ -100,15 +100,15 @@ const fetchUser = thunk(async (actions: Actions<AuthModel>, _, { getStoreState }
 
 const logout = thunk(async (actions: Actions<AuthModel>, store: Store, helpers) => {
     // Reset all models to initial state
+    const accessTokenHandler = AccessToken.getInstance();
+    accessTokenHandler.reset();
+
     (helpers.getStoreActions() as Actions<StoreModel>).entity.resetModel();
     (helpers.getStoreActions() as Actions<StoreModel>).search.resetModel();
     (helpers.getStoreActions() as Actions<StoreModel>).auth.resetModel();
 
     await store.persist.clear();
     await store.persist.flush();
-
-    const accessTokenHandler = AccessToken.getInstance();
-    accessTokenHandler.reset();
 });
 
 /**
@@ -119,11 +119,18 @@ const logout = thunk(async (actions: Actions<AuthModel>, store: Store, helpers) 
  * It save and regenerate a new AccessToken
  */
 const updatePATThunk = thunk(async (actions: Actions<AuthModel>, pat, helpers) => {
+    const currentPat = atob(helpers.getState().pat);
+
+    if (pat === currentPat) {
+        return;
+    }
     let decodedPAT: DecodedJWT;
     // First decode the PAT
     try {
         decodedPAT = decodeJWT(pat);
     } catch (error) {
+        console.error('error', error);
+
         throw new Error(chrome.i18n.getMessage('error_pat'));
     }
 
@@ -131,7 +138,7 @@ const updatePATThunk = thunk(async (actions: Actions<AuthModel>, pat, helpers) =
         throw new Error(chrome.i18n.getMessage('error_pat'));
     }
 
-    const currentDecodedPAT = decodeJWT(btoa(helpers.getState().pat));
+    const currentDecodedPAT = decodeJWT(currentPat);
 
     // Check that the new email match the old one
     if (decodedPAT.email !== currentDecodedPAT.email) {
@@ -161,7 +168,11 @@ const authModel = async (): Promise<AuthModel> => {
         ...initialState,
         /* Actions */
         resetModel: action((state) => {
-            state = initialState;
+            state.dgapi = initialState.dgapi;
+            state.historyLocation = initialState.historyLocation;
+            state.onboardingDone = initialState.onboardingDone;
+            state.pat = initialState.pat;
+            state.pubapi = initialState.pubapi;
         }),
         updateOnboardingDone: action((state, payload: boolean) => {
             state.onboardingDone = payload;
@@ -176,7 +187,9 @@ const authModel = async (): Promise<AuthModel> => {
             state.dgapi = payload;
         }),
         updateHistoryLocation: action((state, payload: string) => {
-            state.historyLocation = payload;
+            if (state.onboardingDone && payload.startsWith('/app')) {
+                state.historyLocation = payload;
+            }
         }),
         updateTags: action((state, payload: TagType[]) => {
             state.tags = payload;

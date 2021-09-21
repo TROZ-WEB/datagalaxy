@@ -79,7 +79,9 @@ const searchModel = async (): Promise<SearchModel> => {
             state.searchResults = EMPTY_RESPONSE;
         }),
         resetModel: action((state) => {
-            state = initialState;
+            state.searchedArgs = initialState.searchedArgs;
+            state.searchResults = initialState.searchResults;
+            state.selectedEntity = initialState.selectedEntity;
         }),
         updateSearchedArgs: action((state, payload: SearchedArgs) => {
             state.searchedArgs = payload;
