@@ -28,8 +28,9 @@ const SearchCardResult = ({
 
     const ellipsedName = useMemo(() => {
         if (entity.name.length > ELLIPSE_AT) {
-            return entity.name.substring(0, ELLIPSE_AT) + '...';
+            return `${entity.name.substring(0, ELLIPSE_AT)}...`;
         }
+
         return entity.name;
     }, [entity]);
 

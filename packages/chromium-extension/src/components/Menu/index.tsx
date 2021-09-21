@@ -6,10 +6,9 @@ import { useLocation, useHistory } from 'react-router-dom';
 // import Notification from '../../icons/Notification';
 import Search from '../../icons/Search';
 import { useStoreState } from '../../store/hooks';
-import EllipsePlaceHolder from '../../../assets/EllipsePlaceHolder.png';
+import Avatar from '../Avatar';
 import WhiteLogo from '../../../assets/white-logo.png';
 import styles from './index.css';
-import Avatar from '../Avatar';
 
 interface MenuItem {
     icon: React.ReactElement;

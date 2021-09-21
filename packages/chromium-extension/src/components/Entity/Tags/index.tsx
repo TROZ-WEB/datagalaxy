@@ -13,10 +13,10 @@ Tags.Item = ({ tag, hideLabel = false }: { tag: string; hideLabel?: boolean }) =
     return (
         <div className={styles.RootItem}>
             <span
+                className={styles.ColorPoint}
                 style={{
                     backgroundColor: tags.find(({ label }) => label === tag).color,
                 }}
-                className={styles.ColorPoint}
             />
             {!hideLabel && <span>{tag}</span>}
         </div>

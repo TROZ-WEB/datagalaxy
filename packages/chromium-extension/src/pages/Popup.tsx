@@ -22,7 +22,7 @@ const Popup = () => {
     );
 
     const dispatch = useStoreDispatch();
-    const state = useStoreState((state) => state);
+    const state = useStoreState((stt) => stt);
     const { onboardingDone, pat } = state.auth;
 
     useEffect(() => {
