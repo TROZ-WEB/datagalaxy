@@ -7,8 +7,8 @@ export const getUserByEmail = async (apiUrl: string, email: string): Promise<Use
     try {
         const response = await get<UsersResponse>(`${apiUrl}/users?email=${email}`);
 
-        if (response.parsedBody.result.length === 1) {
-            return response.parsedBody.result[0];
+        if (response.parsedBody.total === 1) {
+            return response.parsedBody.results[0];
         }
 
         return null;

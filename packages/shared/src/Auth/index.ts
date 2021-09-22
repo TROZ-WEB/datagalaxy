@@ -3,6 +3,8 @@ import 'isomorphic-fetch';
 import { HttpResponse } from '../Http/types';
 import { CredentialsResponse, DecodedJWT } from './types';
 
+export type { DecodedJWT } from './types';
+
 export const decodeJWT = (jwt: string): DecodedJWT => {
     return jwtDecode<DecodedJWT>(jwt);
 };

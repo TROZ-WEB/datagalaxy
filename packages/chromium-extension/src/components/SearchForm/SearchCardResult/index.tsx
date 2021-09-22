@@ -1,5 +1,5 @@
 import cx from 'clsx';
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { entitiesTypeRelatedInfos } from 'shared';
 import Breadcrumb from '../../Breadcrumb';
 import Status from '../../Entity/Status';
@@ -9,6 +9,7 @@ import OwnersStewardsSeparator from '../../OwnersStewardsSeparator';
 import Glyph from '../../ui/Glyph';
 import styles from './index.css';
 
+const ELLIPSE_AT = 30;
 const isTechnical = (entity): boolean => entitiesTypeRelatedInfos[entity.type].kind === 'Technical';
 
 const SearchCardResult = ({
@@ -22,16 +23,26 @@ const SearchCardResult = ({
     onClick?: () => void;
     showOwnership?: boolean;
 }) => {
+    const [isCardExpanded, setIsCardExpanded] = useState(alwaysExpanded);
     const [isMoreActionShown, setIsMoreActionsShown] = useState(false);
+
+    const ellipsedName = useMemo(() => {
+        if (entity.name.length > ELLIPSE_AT) {
+            return `${entity.name.substring(0, ELLIPSE_AT)}...`;
+        }
+
+        return entity.name;
+    }, [entity]);
 
     return (
         <div
-            className={cx(styles.Root, {
+            className={cx(styles.Root, isCardExpanded ? styles.CardExpanded : null, {
                 [styles.CursorPointer]: !!onClick,
-                [styles.RootExpanded]: !alwaysExpanded,
             })}
             onClick={onClick}
             onKeyPress={onClick}
+            onMouseEnter={() => alwaysExpanded || setIsCardExpanded(true)}
+            onMouseLeave={() => alwaysExpanded || setIsCardExpanded(false)}
             role="button"
             tabIndex={0}
         >
@@ -58,7 +69,7 @@ const SearchCardResult = ({
                         onMouseEnter={() => setIsMoreActionsShown(true)}
                         onMouseLeave={() => setIsMoreActionsShown(false)}
                     >
-                        {entity.name}
+                        {isCardExpanded ? entity.name : ellipsedName}
                         {isMoreActionShown && (
                             /* eslint-disable jsx-a11y/control-has-associated-label, jsx-a11y/anchor-has-content */
                             <a
@@ -77,9 +88,9 @@ const SearchCardResult = ({
                 </div>
             </div>
             <div className={styles.ExpandedWrapper}>
-                <Status status={entity.attributes.status} />
                 {showOwnership && (
                     <>
+                        <Status status={entity.attributes.status} />
                         <OwnersStewardsSeparator />
                         <div className={styles.AssociatedUsersWrapper}>
                             <UserProfile governanceRole="owner" users={entity.owners} />

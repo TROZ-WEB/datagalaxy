@@ -6,7 +6,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 // import Notification from '../../icons/Notification';
 import Search from '../../icons/Search';
 import { useStoreState } from '../../store/hooks';
-import EllipsePlaceHolder from '../../../assets/EllipsePlaceHolder.png';
+import Avatar from '../Avatar';
 import WhiteLogo from '../../../assets/white-logo.png';
 import styles from './index.css';
 
@@ -15,34 +15,34 @@ interface MenuItem {
     path: string;
 }
 
-const menuItems: MenuItem[] = [
-    {
-        icon: <Search className={styles.MenuItemImage} />,
-        path: '/app/search',
-    },
-    // {
-    //     icon: <CommentDuo className={styles.MenuItemImage} />,
-    //     path: '/app/comments',
-    // },
-    // {
-    //     icon: <FileTasksCheck className={styles.MenuItemImage} />,
-    //     path: '/app/tasks',
-    // },
-    // {
-    //     icon: <Notification className={styles.MenuItemImage} />,
-    //     path: '/app/notifications',
-    // },
-    {
-        icon: <img alt="Go to account" className={styles.MenuItemImage} src={EllipsePlaceHolder} />,
-        path: '/app/account',
-    },
-];
-
 const Menu = () => {
     const { pathname } = useLocation();
     const history = useHistory();
 
-    const url = useStoreState((state) => state.auth.dgapi);
+    const { dgapi: url, user } = useStoreState((state) => state.auth);
+
+    const menuItems: MenuItem[] = [
+        {
+            icon: <Search className={styles.MenuItemImage} />,
+            path: '/app/search',
+        },
+        // {
+        //     icon: <CommentDuo className={styles.MenuItemImage} />,
+        //     path: '/app/comments',
+        // },
+        // {
+        //     icon: <FileTasksCheck className={styles.MenuItemImage} />,
+        //     path: '/app/tasks',
+        // },
+        // {
+        //     icon: <Notification className={styles.MenuItemImage} />,
+        //     path: '/app/notifications',
+        // },
+        {
+            icon: <Avatar user={user} />,
+            path: '/app/account',
+        },
+    ];
 
     return (
         <div className={styles.Root}>

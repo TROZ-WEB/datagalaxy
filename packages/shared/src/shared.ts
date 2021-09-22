@@ -4,3 +4,4 @@ export * from './Search';
 export * from './Entities';
 export * from './Users';
 export * from './Services';
+export * from './Tags';
