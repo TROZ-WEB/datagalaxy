@@ -53,7 +53,7 @@ export enum CustomColors {
     GrayL = '#90A4AE',
 }
 
-const Avatar = ({ grouped = false, user }: { grouped?: boolean; user: UserType }) => {
+const Avatar = ({ grouped = false, user }: { grouped?: boolean; user?: UserType }) => {
     const getColor = useCallback(() => {
         switch (user.firstName[0]) {
             case 'a':
@@ -114,6 +114,10 @@ const Avatar = ({ grouped = false, user }: { grouped?: boolean; user: UserType }
                 return CustomColors.OrangeD;
         }
     }, [user]);
+
+    if (!user) {
+        return null;
+    }
 
     if (!user.profileThumbnailUrl) {
         return (

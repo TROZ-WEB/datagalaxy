@@ -24,11 +24,13 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
         setError,
     } = useForm<FormData>();
 
-    const loginWithPAT = useStoreActions((actions) => actions.auth.loginWithPAT);
+    const auth = useStoreActions((actions) => actions.auth);
 
     const onSubmit = handleSubmit(async (values) => {
         try {
-            await loginWithPAT(values);
+            await auth.loginWithPAT(values);
+            await auth.fetchTags();
+            await auth.fetchUser();
         } catch (error) {
             setError('pat', {
                 message: error.message,

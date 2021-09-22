@@ -1,6 +1,6 @@
 import { Action, Thunk, Actions, thunk, action } from 'easy-peasy';
 import { fetchEntity as fetchEntityAPI, EntityType } from 'shared';
-import { enhancedEntitiesWithUserInfo } from './helper';
+import { enhancedEntitiesWithUserInfo, resetModel } from './helper';
 
 /**
  * This model aims to managed the currently displayed entity in the extension
@@ -48,9 +48,7 @@ const entityModel = async (): Promise<EntityModel> => {
         /* State */
         ...initialState,
         /* Actions */
-        resetModel: action((state) => {
-            state.displayedEntity = initialState.displayedEntity;
-        }),
+        resetModel: action(resetModel(initialState)),
         updateDisplayedEntity: action((state, payload: EntityType) => {
             state.displayedEntity = payload;
         }),

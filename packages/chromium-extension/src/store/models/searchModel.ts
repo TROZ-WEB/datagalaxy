@@ -1,6 +1,6 @@
 import { Action, Thunk, Actions, thunk, action } from 'easy-peasy';
 import { search as searchAPI, EntityType, SearchResponse } from 'shared';
-import { enhancedEntitiesWithUserInfo } from './helper';
+import { enhancedEntitiesWithUserInfo, resetModel } from './helper';
 
 const EMPTY_ARGS = {
     term: '',
@@ -78,11 +78,7 @@ const searchModel = async (): Promise<SearchModel> => {
             state.searchedArgs = EMPTY_ARGS;
             state.searchResults = EMPTY_RESPONSE;
         }),
-        resetModel: action((state) => {
-            state.searchedArgs = initialState.searchedArgs;
-            state.searchResults = initialState.searchResults;
-            state.selectedEntity = initialState.selectedEntity;
-        }),
+        resetModel: action(resetModel(initialState)),
         updateSearchedArgs: action((state, payload: SearchedArgs) => {
             state.searchedArgs = payload;
         }),

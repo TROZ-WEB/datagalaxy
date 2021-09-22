@@ -11,6 +11,7 @@ import {
     DecodedJWT,
 } from 'shared';
 import { StoreModel } from '../types';
+import { resetModel } from './helper';
 
 const initialState = {
     onboardingDone: false,
@@ -25,8 +26,8 @@ export interface AuthModel {
     /* State */
     onboardingDone?: boolean;
     pat?: string;
-    pubapi?: string;
-    dgapi?: string;
+    pubapi: string;
+    dgapi: string;
     historyLocation?: string;
     tags: TagType[];
     user: UserType;
@@ -54,7 +55,7 @@ export interface AuthModel {
  */
 
 const loginWithPAT = thunk(async (actions: Actions<AuthModel>, payload: { pat: string; email: string }) => {
-    let decodedPAT;
+    let decodedPAT: DecodedJWT;
     // First decode the PAT
     try {
         decodedPAT = decodeJWT(payload.pat);
@@ -167,13 +168,7 @@ const authModel = async (): Promise<AuthModel> => {
         /* State */
         ...initialState,
         /* Actions */
-        resetModel: action((state) => {
-            state.dgapi = initialState.dgapi;
-            state.historyLocation = initialState.historyLocation;
-            state.onboardingDone = initialState.onboardingDone;
-            state.pat = initialState.pat;
-            state.pubapi = initialState.pubapi;
-        }),
+        resetModel: action(resetModel(initialState)),
         updateOnboardingDone: action((state, payload: boolean) => {
             state.onboardingDone = payload;
         }),
@@ -199,7 +194,11 @@ const authModel = async (): Promise<AuthModel> => {
         }),
         /* Computed properties */
         getDecodedPat: computed((state) => {
-            return decodeJWT(atob(state.pat));
+            if (state.pat) {
+                return decodeJWT(atob(state.pat));
+            }
+
+            return null;
         }),
         /* Thunks */
         loginWithPAT,
