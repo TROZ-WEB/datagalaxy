@@ -1,6 +1,24 @@
 /* eslint-disable import/prefer-default-export */
-import { EntityType, getUsersByEmailsAndRole } from 'shared';
+import { computed } from 'easy-peasy';
+import { decodeJWT, EntityType, getUsersByEmailsAndRole } from 'shared';
 
+const resetModel = (initialState) => (state) => {
+    /* eslint-disable-next-line no-restricted-syntax */
+    for (const attr in initialState) {
+        if (Object.prototype.hasOwnProperty.call(initialState, attr)) {
+            state[attr] = initialState[attr];
+        }
+    }
+};
+
+const getDecodedPAT = (patAttributeName: string) =>
+    computed((state) => {
+        if (state[patAttributeName]) {
+            return decodeJWT(atob(state[patAttributeName]));
+        }
+
+        return null;
+    });
 /**
  * From array of entities it will enhanced each one with owner/steward information
  */
@@ -31,4 +49,4 @@ const enhancedEntitiesWithUserInfo = async (rawEntities: EntityType[], url): Pro
     });
 };
 
-export { enhancedEntitiesWithUserInfo };
+export { enhancedEntitiesWithUserInfo, resetModel, getDecodedPAT };

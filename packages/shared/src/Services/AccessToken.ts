@@ -25,6 +25,13 @@ class AccessToken {
         return AccessToken.instance;
     }
 
+    public async reset(): Promise<void> {
+        this.pat = undefined;
+        this.pubapi = undefined;
+        this.accessToken = undefined;
+        this.expDate = undefined;
+    }
+
     public async init(pat: string): Promise<void> {
         this.pat = pat;
 

@@ -1,0 +1,15 @@
+.Root {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.LogoutButton {
+    display: inline-block;
+    margin-top: 20px;
+    color: var(--black);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+}

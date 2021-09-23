@@ -1,17 +1,20 @@
-/* eslint-disable import/no-cycle */
-/* eslint-disable no-param-reassign */
 import { Action, Thunk, Actions, thunk, action } from 'easy-peasy';
 import { fetchEntity as fetchEntityAPI, EntityType } from 'shared';
-import { enhancedEntitiesWithUserInfo } from './helper';
+import { enhancedEntitiesWithUserInfo, resetModel } from './helper';
 
 /**
  * This model aims to managed the currently displayed entity in the extension
  */
 
+const initialState = {
+    displayedEntity: null,
+};
+
 export interface EntityModel {
     /* State */
     displayedEntity: EntityType;
     /* Actions */
+    resetModel: Action<EntityModel>;
     updateDisplayedEntity: Action<EntityModel, EntityType>;
     /* Thunks */
     fetchEntity: Thunk<EntityModel, string>;
@@ -43,8 +46,9 @@ const fetchEntity = thunk(async (actions: Actions<EntityModel>, location: string
 const entityModel = async (): Promise<EntityModel> => {
     return {
         /* State */
-        displayedEntity: null,
+        ...initialState,
         /* Actions */
+        resetModel: action(resetModel(initialState)),
         updateDisplayedEntity: action((state, payload: EntityType) => {
             state.displayedEntity = payload;
         }),

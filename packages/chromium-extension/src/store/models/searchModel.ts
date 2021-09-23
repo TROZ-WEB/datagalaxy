@@ -1,8 +1,6 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable import/no-cycle */
 import { Action, Thunk, Actions, thunk, action } from 'easy-peasy';
 import { search as searchAPI, EntityType, SearchResponse } from 'shared';
-import { enhancedEntitiesWithUserInfo } from './helper';
+import { enhancedEntitiesWithUserInfo, resetModel } from './helper';
 
 const EMPTY_ARGS = {
     term: '',
@@ -21,6 +19,12 @@ interface SearchedArgs {
     // Will allow to handle more complex search categories...
 }
 
+const initialState = {
+    searchedArgs: EMPTY_ARGS,
+    searchResults: EMPTY_RESPONSE,
+    selectedEntity: null,
+};
+
 export interface SearchModel {
     /* State */
     searchedArgs?: SearchedArgs;
@@ -29,6 +33,7 @@ export interface SearchModel {
     selectedEntity: EntityType;
     /* Actions */
     resetSearch: Action<SearchModel>;
+    resetModel: Action<SearchModel>;
     updateSearchedArgs: Action<SearchModel, Partial<SearchedArgs>>;
     updateResults: Action<SearchModel, SearchResponse>;
     updateSelectedEntity: Action<SearchModel, EntityType>;
@@ -67,14 +72,13 @@ const search = thunk(async (actions: Actions<SearchModel>, searchedArgs: Searche
 const searchModel = async (): Promise<SearchModel> => {
     return {
         /* State */
-        searchedArgs: EMPTY_ARGS,
-        searchResults: EMPTY_RESPONSE,
-        selectedEntity: null,
+        ...initialState,
         /* Actions */
         resetSearch: action((state) => {
             state.searchedArgs = EMPTY_ARGS;
             state.searchResults = EMPTY_RESPONSE;
         }),
+        resetModel: action(resetModel(initialState)),
         updateSearchedArgs: action((state, payload: SearchedArgs) => {
             state.searchedArgs = payload;
         }),

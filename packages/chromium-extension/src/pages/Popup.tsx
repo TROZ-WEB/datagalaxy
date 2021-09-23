@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { MemoryRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { AccessToken } from '../../../shared/dist/shared';
 import App from '../App';
-import GlobalError from '../components/GlobalError';
 import Layout from '../components/Layout';
 import LoadingScreen from '../components/LoadingScreen';
 import { useStoreDispatch, useStoreState } from '../store/hooks';
@@ -26,14 +25,11 @@ const Popup = () => {
     const { onboardingDone, pat } = state.auth;
 
     useEffect(() => {
-        const loadStorage = async () => {
-            if (onboardingDone) {
-                setInitialLoadingState(AppInitialLoadingStatus.App);
-            } else {
-                setInitialLoadingState(AppInitialLoadingStatus.Onboarding);
-            }
-        };
-        loadStorage();
+        if (onboardingDone) {
+            setInitialLoadingState(AppInitialLoadingStatus.App);
+        } else {
+            setInitialLoadingState(AppInitialLoadingStatus.Onboarding);
+        }
     }, []);
 
     const [isAppReady, setIsAppReady] = useState<boolean>(false);
@@ -62,6 +58,16 @@ const Popup = () => {
     }, []);
 
     const renderBootingExtension = () => {
+        if (globalError) {
+            return (
+                <Redirect
+                    to={{
+                        pathname: '/app/account',
+                        state: { isError: true },
+                    }}
+                />
+            );
+        }
         if (initialLoadingState === AppInitialLoadingStatus.Loading) {
             return <LoadingScreen />;
         }
@@ -76,10 +82,6 @@ const Popup = () => {
 
         return null;
     };
-
-    if (globalError) {
-        return <GlobalError />;
-    }
 
     return (
         <Layout>
