@@ -11,7 +11,7 @@ import {
     DecodedJWT,
 } from 'shared';
 import { StoreModel } from '../types';
-import { resetModel } from './helper';
+import { getDecodedPAT, resetModel } from './helper';
 
 const initialState = {
     onboardingDone: false,
@@ -107,6 +107,7 @@ const logout = thunk(async (actions: Actions<AuthModel>, store: Store, helpers) 
     (helpers.getStoreActions() as Actions<StoreModel>).entity.resetModel();
     (helpers.getStoreActions() as Actions<StoreModel>).search.resetModel();
     (helpers.getStoreActions() as Actions<StoreModel>).auth.resetModel();
+    (helpers.getStoreActions() as Actions<StoreModel>).onboarding.resetModel();
 
     await store.persist.clear();
     await store.persist.flush();
@@ -193,13 +194,7 @@ const authModel = async (): Promise<AuthModel> => {
             state.user = payload;
         }),
         /* Computed properties */
-        getDecodedPat: computed((state) => {
-            if (state.pat) {
-                return decodeJWT(atob(state.pat));
-            }
-
-            return null;
-        }),
+        getDecodedPat: getDecodedPAT('pat'),
         /* Thunks */
         loginWithPAT,
         fetchTags,
