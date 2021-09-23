@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useRouteMatch } from 'react-router-dom';
 import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/Input';
-import { useStoreActions } from '../../../store/hooks';
+import { useStoreActions, useStoreState } from '../../../store/hooks';
 import { StepProps } from '../Stepper';
 import styles from './index.css';
 
@@ -17,20 +17,37 @@ type FormData = {
  */
 const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
     const { url } = useRouteMatch();
+    const { auth, onboarding } = useStoreActions((actions) => actions);
+    const { onboarding: onboardingState } = useStoreState((state) => state);
+
     const {
         register,
         handleSubmit,
         formState: { errors },
         setError,
-    } = useForm<FormData>();
+        watch,
+    } = useForm<FormData>({
+        defaultValues: {
+            email: onboardingState.email,
+            pat: atob(onboardingState.pat),
+        },
+    });
 
-    const auth = useStoreActions((actions) => actions.auth);
+    const emailChanges = watch('email');
+    const patChanges = watch('pat');
+
+    useEffect(() => {
+        onboarding.updateEmail(emailChanges);
+        onboarding.updatePat(btoa(patChanges));
+    }, [emailChanges, patChanges]);
 
     const onSubmit = handleSubmit(async (values) => {
         try {
             await auth.loginWithPAT(values);
             await auth.fetchTags();
             await auth.fetchUser();
+
+            onboarding.resetModel();
         } catch (error) {
             setError('pat', {
                 message: error.message,
