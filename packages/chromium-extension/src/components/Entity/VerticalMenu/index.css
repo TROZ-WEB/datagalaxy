@@ -2,10 +2,10 @@
     width: 54px;
     display: flex;
     flex-direction: column;
-    background-color: var(--pale-reflex);
 }
 
 .MenuItem {
+    background-color: var(--pale-reflex);
     width: 54px;
     height: 54px;
     display: flex;
@@ -13,8 +13,12 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    color: #444444;
+    color: #989CD9;
     border: none;
+}
+
+.MenuItemActiv {
+    color: var(--reflex);
 }
 
 .MenuItemIcon {
@@ -23,8 +27,8 @@
 }
 
 .BackButton {
-    background-color: #5a5e86;
-    color: white;
+    background-color: rgba(2, 42, 142, 0.1);
+    color: var(--black);
 }
 
 .BackButtonIcon {

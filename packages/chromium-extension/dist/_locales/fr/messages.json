@@ -20,6 +20,9 @@
   "search_results": {
     "message": "Résultats de la recherche"
   },
+  "search_blank_search": {
+    "message": "Qu’avez-vous envie de trouver aujourd’hui ?"
+  },
   "global_error": {
     "message": "Nous rencontrons des difficultés pour vous connecter, vérifier vos informations de connexion."
   },
@@ -40,6 +43,9 @@
   },
   "onboarding_login_stepTitle": {
     "message": "Pour commencer l'expérience, connectez-vous"
+  },
+  "onboarding_login_helpPAT": {
+    "message": "Rendez-vous sur votre profil personnel sur DataGalaxy"
   },
   "onboarding_login_inputEmailLabel": {
     "message": "Identifiant"
@@ -66,16 +72,10 @@
     "message": "Découvrir les fonctionnalités clés"
   },
   "onboarding_final_skipButton": {
-    "message": "Passer"
+    "message": "Commencer"
   },
   "onboarding_patFinder_title": {
     "message": "Où trouver ma clé ?"
-  },
-  "onboarding_patFinder_description": {
-    "message": "Accédez-y directement en cliquant sur le bouton ci-dessous"
-  },
-  "onboarding_patFinder_linkButton": {
-    "message": "Trouver ma clé d'accès"
   },
   "onboarding_patFinder_closeButton": {
     "message": "Ok, fermer"
@@ -123,5 +123,251 @@
   },
   "entity_details_sections_general_description": {
     "message": "Description"
+  },
+  "entity_label_short_Universe": {
+    "message": "Univers"
+  },
+  "entity_label_short_Concept": {
+    "message": "Concept"
+  },
+  "entity_label_short_ReferenceData": {
+    "message": "RefData"
+  },
+  "entity_label_short_IndicatorGroup": {
+    "message": "IndicGrp"
+  },
+  "entity_label_short_BusinessTerm": {
+    "message": "Terme"
+  },
+  "entity_label_short_Indicator": {
+    "message": "Indic"
+  },
+  "entity_label_short_ReferenceDataValue": {
+    "message": "Valeur"
+  },
+  "entity_label_short_Dimension": {
+    "message": "Dim"
+  },
+  "entity_label_short_BusinessDomain": {
+    "message": "Domain"
+  },
+  "entity_label_short_DimensionGroup": {
+    "message": "DimGrp"
+  },
+  "entity_label_short_BusinessDomainGroup": {
+    "message": "DomGrp"
+  },
+  "entity_label_short_Relational": {
+    "message": "DB"
+  },
+  "entity_label_short_NonRelational": {
+    "message": "FileSt"
+  },
+  "entity_label_short_NoSql": {
+    "message": "NoSql"
+  },
+  "entity_label_short_TagBase": {
+    "message": "TagB"
+  },
+  "entity_label_short_Model": {
+    "message": "Model"
+  },
+  "entity_label_short_Directory": {
+    "message": "Dir"
+  },
+  "entity_label_short_Table": {
+    "message": "Table"
+  },
+  "entity_label_short_View": {
+    "message": "View"
+  },
+  "entity_label_short_Column": {
+    "message": "Column"
+  },
+  "entity_label_short_Field": {
+    "message": "Field"
+  },
+  "entity_label_short_SubStructure": {
+    "message": "SubStr"
+  },
+  "entity_label_short_File": {
+    "message": "File"
+  },
+  "entity_label_short_Document": {
+    "message": "Doc"
+  },
+  "entity_label_short_Equipment": {
+    "message": "Equip"
+  },
+  "entity_label_short_Tag": {
+    "message": "Tag"
+  },
+  "entity_label_short_DataFlow": {
+    "message": "Flow"
+  },
+  "entity_label_short_DataProcessing": {
+    "message": "DP"
+  },
+  "entity_label_short_DataProcessingItem": {
+    "message": "DPI"
+  },
+  "entity_label_short_Application": {
+    "message": "App"
+  },
+  "entity_label_short_Us": {
+    "message": "Usage"
+  },
+  "entity_label_short_Process": {
+    "message": "Process"
+  },
+  "entity_label_short_UsageField": {
+    "message": "ChampUs"
+  },
+  "entity_label_short_Feature": {
+    "message": "Fonct"
+  },
+  "entity_label_short_Screen": {
+    "message": "Ecran"
+  },
+  "entity_label_short_Dashboard": {
+    "message": "TDB"
+  },
+  "entity_label_short_Report": {
+    "message": "Rapport"
+  },
+  "entity_label_short_DataSet": {
+    "message": "DataSet"
+  },
+  "entity_label_short_OpenDataSet": {
+    "message": "OpenDS"
+  },
+  "entity_label_short_Algorithm": {
+    "message": "Algo"
+  },
+  "entity_label_short_UsageComponent": {
+    "message": "CompUs"
+  },
+  "entity_label_full_Universe": {
+    "message": "Univers"
+  },
+  "entity_label_full_Concept": {
+    "message": "Concept "
+  },
+  "entity_label_full_ReferenceData": {
+    "message": "Nomenclature "
+  },
+  "entity_label_full_IndicatorGroup": {
+    "message": "Groupe d'indicateurs "
+  },
+  "entity_label_full_BusinessTerm": {
+    "message": "Terme métier "
+  },
+  "entity_label_full_Indicator": {
+    "message": "Indicateur "
+  },
+  "entity_label_full_ReferenceDataValue": {
+    "message": "Valeur de nomenclature"
+  },
+  "entity_label_full_Dimension": {
+    "message": "Dimension "
+  },
+  "entity_label_full_BusinessDomain": {
+    "message": "Domaine "
+  },
+  "entity_label_full_DimensionGroup": {
+    "message": "Groupe de dimensions "
+  },
+  "entity_label_full_BusinessDomainGroup": {
+    "message": "Groupe de domaines"
+  },
+  "entity_label_full_Relational": {
+    "message": "DataBase"
+  },
+  "entity_label_full_NonRelational": {
+    "message": "FileStore"
+  },
+  "entity_label_full_NoSql": {
+    "message": "Source NoSQL"
+  },
+  "entity_label_full_TagBase": {
+    "message": "Source TagBase"
+  },
+  "entity_label_full_Model": {
+    "message": "Modèle "
+  },
+  "entity_label_full_Directory": {
+    "message": "Répertoire "
+  },
+  "entity_label_full_Table": {
+    "message": "Table "
+  },
+  "entity_label_full_View": {
+    "message": "Vue "
+  },
+  "entity_label_full_Column": {
+    "message": "Colonne "
+  },
+  "entity_label_full_Field": {
+    "message": "Champ "
+  },
+  "entity_label_full_SubStructure": {
+    "message": "Sous-structure "
+  },
+  "entity_label_full_File": {
+    "message": "Fichier"
+  },
+  "entity_label_full_Document": {
+    "message": "Document "
+  },
+  "entity_label_full_Equipment": {
+    "message": "Equipement "
+  },
+  "entity_label_full_Tag": {
+    "message": "Tag"
+  },
+  "entity_label_full_DataFlow": {
+    "message": "Flux de données"
+  },
+  "entity_label_full_DataProcessing": {
+    "message": "Traitement de données"
+  },
+  "entity_label_full_DataProcessingItem": {
+    "message": "Elément de traitement de données"
+  },
+  "entity_label_full_Application": {
+    "message": "Application "
+  },
+  "entity_label_full_Use": {
+    "message": "Usage"
+  },
+  "entity_label_full_Process": {
+    "message": "Processus"
+  },
+  "entity_label_full_UsageField": {
+    "message": "Champ usage"
+  },
+  "entity_label_full_Feature": {
+    "message": "Fonctionnalité "
+  },
+  "entity_label_full_Screen": {
+    "message": "Ecran "
+  },
+  "entity_label_full_Dashboard": {
+    "message": "Tableau de bord "
+  },
+  "entity_label_full_Report": {
+    "message": "Rapport "
+  },
+  "entity_label_full_DataSet": {
+    "message": "DataSet"
+  },
+  "entity_label_full_OpenDataSet": {
+    "message": "OpenDataSet"
+  },
+  "entity_label_full_Algorithm": {
+    "message": "Algorithme"
+  },
+  "entity_label_full_UsageComponent": {
+    "message": "Composant usage"
   }
 }

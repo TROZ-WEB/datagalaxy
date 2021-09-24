@@ -52,7 +52,6 @@
 
 .TagsWrapper {
     display: flex;
-    margin-top: 6px;
 }
 
 .LeftSideBackground {
@@ -63,6 +62,17 @@
     top: 0;
     left: 0;
     opacity: 0.07;
+}
+
+.EntityTypeShortLabel {
+    font-size: 10px;
+    position: absolute;
+    bottom: 3px;
+}
+
+.EntityGlyphWrapper {
+    position: absolute;
+    top: 8.5px;
 }
 
 .FunctionalColorBackground {
@@ -106,14 +116,18 @@
     margin-left: 5px;
 }
 
-.ExpandedWrapper {
+.InfosWrapper {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 18px;
+    margin-top: 10px;
 }
 
 .AssociatedUsersWrapper {
     display: flex;
     flex-direction: row;
+}
+
+.SmallGlyph {
+    font-size: 8px !important;
 }

@@ -1,7 +1,3 @@
-.Root {
-    margin-top: 16px;
-}
-
 .Results {
     margin-top: 8px;
 }
@@ -10,15 +6,16 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    margin-top: 29px;
+    margin-bottom: 10px;
 }
 
 .ResultsTitle {
     font-weight: bold;
-    font-size: 14px;
-    line-height: 18px;
-    margin-top: 14px;
-    margin-bottom: 10px;
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--black);
 }
 
 .TagResultCount {
@@ -33,6 +30,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 4px;
+    margin-left: 8px;
 }
 
 .SearchCardResultWrapper {
@@ -42,4 +40,17 @@
 .Separator {
     border-bottom: 1px solid var(--pale-reflex);
     display: block;
+}
+
+.BlankSearch {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: #6D6F88;
+    font-size: 14px;
+}
+
+.BlankSearchImage {
+    width: 286px;
+    height: 400px;
 }

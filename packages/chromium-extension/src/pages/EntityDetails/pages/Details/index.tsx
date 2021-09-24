@@ -3,8 +3,6 @@ import { EntityType } from 'shared';
 import Accordion from '../../../../components/Accordion';
 import Status from '../../../../components/Entity/Status';
 import Tags from '../../../../components/Entity/Tags';
-import UserProfile from '../../../../components/Entity/UserProfile';
-import OwnersStewardsSeparator from '../../../../components/OwnersStewardsSeparator';
 import SearchCardResult from '../../../../components/SearchForm/SearchCardResult';
 import { useStoreState } from '../../../../store/hooks';
 import styles from './index.css';
@@ -27,12 +25,7 @@ const Details = () => {
 
     return (
         <div className={styles.Root}>
-            <SearchCardResult entity={entity} showOwnership={false} alwaysExpanded />
-            <div className={styles.UsersInfo}>
-                <UserProfile governanceRole="owner" users={(entity as any).owners} />
-                <OwnersStewardsSeparator />
-                <UserProfile governanceRole="steward" users={(entity as any).stewards} />
-            </div>
+            <SearchCardResult entity={entity} alwaysExpanded />
             {loaded && (
                 <div className={styles.AccordionWrapper}>
                     <Accordion title={chrome.i18n.getMessage(`entity_details_sections_general`)} initialOpen>

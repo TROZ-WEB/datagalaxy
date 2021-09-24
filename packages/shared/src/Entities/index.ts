@@ -65,7 +65,7 @@ export const entitiesTypeRelatedInfos: customFieldAttr = {
     Application: { glyph: 'SoftwareApplication', kind: 'Functional' },
     // Use	???
     Process: { glyph: 'Process', kind: 'Functional' },
-    UsageComponent: { glyph: 'UsageField', kind: 'Functional' },
+    UsageField: { glyph: 'UsageField', kind: 'Functional' },
     Feature: { glyph: 'Features', kind: 'Functional' },
     Screen: { glyph: 'SoftwareScreen', kind: 'Functional' },
     Dashboard: { glyph: 'SoftwareDashboard', kind: 'Functional' },
@@ -73,7 +73,7 @@ export const entitiesTypeRelatedInfos: customFieldAttr = {
     DataSet: { glyph: 'Dataset', kind: 'Functional' },
     OpenDataSet: { glyph: 'Opendataset', kind: 'Functional' },
     Algorithm: { glyph: 'Algorithm', kind: 'Functional' },
-    UsageField: { glyph: 'UsageComponent', kind: 'Functional' },
+    UsageComponent: { glyph: 'UsageComponent', kind: 'Functional' },
 };
 
 export const fetchEntity = async (apiUrl: string, location: string): Promise<any> => {

@@ -10,18 +10,17 @@ import Glyph from '../../ui/Glyph';
 import styles from './index.css';
 
 const ELLIPSE_AT = 30;
+const LIMIT_TAGS_ELLIPSE = 3;
 const isTechnical = (entity): boolean => entitiesTypeRelatedInfos[entity.type].kind === 'Technical';
 
 const SearchCardResult = ({
     alwaysExpanded = false,
     entity,
     onClick,
-    showOwnership = true,
 }: {
     alwaysExpanded?: boolean;
     entity: any;
     onClick?: () => void;
-    showOwnership?: boolean;
 }) => {
     const [isCardExpanded, setIsCardExpanded] = useState(alwaysExpanded);
     const [isMoreActionShown, setIsMoreActionsShown] = useState(false);
@@ -52,6 +51,7 @@ const SearchCardResult = ({
                         styles.LeftSide,
                         isTechnical(entity) ? styles.TechnicalColor : styles.FunctionalColor,
                     )}
+                    title={chrome.i18n.getMessage(`entity_label_full_${entity.type}`)}
                 >
                     <div
                         className={cx(
@@ -59,13 +59,24 @@ const SearchCardResult = ({
                             isTechnical(entity) ? styles.TechnicalColorBackground : styles.FunctionalColorBackground,
                         )}
                     />
-                    <Glyph icon={entitiesTypeRelatedInfos[entity.type].glyph} />
+                    <span className={styles.EntityGlyphWrapper}>
+                        <Glyph icon={entitiesTypeRelatedInfos[entity.type].glyph} />
+                    </span>
+                    <span
+                        className={cx(
+                            styles.EntityTypeShortLabel,
+                            isTechnical(entity) ? styles.TechnicalColor : styles.FunctionalColor,
+                        )}
+                    >
+                        {chrome.i18n.getMessage(`entity_label_short_${entity.type}`)}
+                    </span>
                 </div>
                 <div className={styles.RightSide}>
                     <div className={styles.BreadcrumbWrapper}>
                         <Breadcrumb path={entity.path} />
                     </div>
                     <span
+                        className={styles.EntityName}
                         onMouseEnter={() => setIsMoreActionsShown(true)}
                         onMouseLeave={() => setIsMoreActionsShown(false)}
                     >
@@ -80,25 +91,40 @@ const SearchCardResult = ({
                             />
                         )}
                     </span>
-                    <Tags className={styles.TagsWrapper}>
-                        {entity.attributes.tags.map((tag) => (
-                            <Tags.Item key={tag} hideLabel={entity.attributes.tags.length > 1} tag={tag} />
-                        ))}
-                    </Tags>
-                </div>
-            </div>
-            <div className={styles.ExpandedWrapper}>
-                {showOwnership && (
-                    <>
-                        <Status status={entity.attributes.status} />
+                    <div className={styles.InfosWrapper}>
+                        <Status status={entity.attributes.status} hideLabel />
                         <OwnersStewardsSeparator />
+                        {entity.attributes.tags.length > 0 && (
+                            <>
+                                <Tags className={styles.TagsWrapper}>
+                                    {entity.attributes.tags.map((tag, idx) => {
+                                        if (idx > LIMIT_TAGS_ELLIPSE) {
+                                            return null;
+                                        }
+
+                                        return (
+                                            <Tags.Item
+                                                key={tag}
+                                                hideLabel={entity.attributes.tags.length > 1}
+                                                tag={tag}
+                                            />
+                                        );
+                                    })}
+                                    {entity.attributes.tags.length > LIMIT_TAGS_ELLIPSE && (
+                                        <Glyph className={styles.SmallGlyph} icon="Add" />
+                                    )}
+                                </Tags>
+                                <OwnersStewardsSeparator />
+                            </>
+                        )}
+
                         <div className={styles.AssociatedUsersWrapper}>
-                            <UserProfile governanceRole="owner" users={entity.owners} />
+                            <UserProfile governanceRole="owner" users={entity.owners} hideLabel />
                             <OwnersStewardsSeparator />
                             <UserProfile governanceRole="steward" users={entity.stewards} />
                         </div>
-                    </>
-                )}
+                    </div>
+                </div>
             </div>
         </div>
     );

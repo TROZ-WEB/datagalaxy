@@ -53,7 +53,15 @@ export enum CustomColors {
     GrayL = '#90A4AE',
 }
 
-const Avatar = ({ grouped = false, user }: { grouped?: boolean; user?: UserType }) => {
+const Avatar = ({
+    grouped = false,
+    user,
+    size = 'normal',
+}: {
+    grouped?: boolean;
+    user?: UserType;
+    size?: 'normal' | 'mini';
+}) => {
     const getColor = useCallback(() => {
         switch (user.firstName[0]) {
             case 'a':
@@ -122,7 +130,7 @@ const Avatar = ({ grouped = false, user }: { grouped?: boolean; user?: UserType 
     if (!user.profileThumbnailUrl) {
         return (
             <span
-                className={cx(styles.Root, styles.FakeAvatar, { [styles.GroupedAvatar]: grouped })}
+                className={cx(styles.Root, styles[size], styles.FakeAvatar, { [styles.GroupedAvatar]: grouped })}
                 style={{ backgroundColor: getColor() }}
             >{`${user.firstName[0]}${user.lastName[0]}`}</span>
         );
@@ -131,7 +139,7 @@ const Avatar = ({ grouped = false, user }: { grouped?: boolean; user?: UserType 
     return (
         <img
             alt={`${user.firstName}. ${user.lastName}`}
-            className={cx(styles.Root, { [styles.GroupedAvatar]: grouped })}
+            className={cx(styles.Root, styles[size], { [styles.GroupedAvatar]: grouped })}
             src={user.profileThumbnailUrl}
         />
     );

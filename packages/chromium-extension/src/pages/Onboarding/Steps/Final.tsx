@@ -31,11 +31,8 @@ const StepFinal: React.FC<StepProps> = ({ currentStep, step }) => {
                 <br />
                 {chrome.i18n.getMessage('onboarding_final_stepTitle2')}
             </p>
-            <Button>{chrome.i18n.getMessage('onboarding_final_discoverFeaturesButton')}</Button>
             <div className={styles.SkipButtonWrapper}>
-                <Button onClick={onClick} variant="outlined">
-                    {chrome.i18n.getMessage('onboarding_final_skipButton')}
-                </Button>
+                <Button onClick={onClick}>{chrome.i18n.getMessage('onboarding_final_skipButton')}</Button>
             </div>
         </div>
     );

@@ -84,6 +84,7 @@ const Account = () => {
                 <Input
                     errors={errors}
                     label={chrome.i18n.getMessage('onboarding_login_inputNewPatLabel')}
+                    type="password"
                     {...register('pat', { required: true })}
                 />
                 {isAlertSuccessVisible && <Alert type="success">Your access key has been updated successfully</Alert>}
@@ -91,19 +92,23 @@ const Account = () => {
                 <div className={styles.ButtonWrapper}>
                     <Button type="submit">Update your PAT</Button>
                 </div>
-
-                <button
-                    className={styles.LogoutButton}
-                    onClick={async () => {
-                        await dispatch.auth.logout(store);
-
-                        history.push('/onboarding');
-                    }}
-                    type="button"
-                >
-                    Logout
-                </button>
             </form>
+            <div>
+                <div className={styles.VersionWrapper}>v{chrome.runtime.getManifest().version} - beta</div>
+                <div className={styles.LogoutButton}>
+                    <Button
+                        onClick={async () => {
+                            await dispatch.auth.logout(store);
+
+                            history.push('/onboarding');
+                        }}
+                        type="button"
+                        variant="outlined"
+                    >
+                        Logout
+                    </Button>
+                </div>
+            </div>
         </div>
     );
 };

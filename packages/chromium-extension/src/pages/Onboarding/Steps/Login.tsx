@@ -74,6 +74,7 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
             <Input
                 errors={errors}
                 label={chrome.i18n.getMessage('onboarding_login_inputPatLabel')}
+                type="password"
                 {...register('pat', { required: true })}
             />
             <div className={styles.FindPatHelper}>

@@ -18,7 +18,7 @@ Tags.Item = ({ tag, hideLabel = false }: { tag: string; hideLabel?: boolean }) =
                     backgroundColor: tags.find(({ label }) => label === tag).color,
                 }}
             />
-            {!hideLabel && <span>{tag}</span>}
+            {!hideLabel && <span className={styles.TagLabel}>{tag}</span>}
         </div>
     );
 };

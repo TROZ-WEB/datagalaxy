@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import Glyph from '../../ui/Glyph';
 import styles from './index.css';
 
-const Status = ({ status }: { status: string }) => {
+const Status = ({ status, hideLabel = false }: { status: string; hideLabel?: boolean }) => {
     const iconForStatus = useMemo(() => {
         switch (status) {
             case 'Proposed':
@@ -22,8 +22,10 @@ const Status = ({ status }: { status: string }) => {
 
     return (
         <div className={styles.Root}>
-            <span className={styles.IconWrapper}>{iconForStatus}</span>
-            {chrome.i18n.getMessage(`entity_status_${status}`)}
+            <span className={styles.IconWrapper} title={chrome.i18n.getMessage(`entity_status_${status}`)}>
+                {iconForStatus}
+            </span>
+            {!hideLabel && chrome.i18n.getMessage(`entity_status_${status}`)}
         </div>
     );
 };

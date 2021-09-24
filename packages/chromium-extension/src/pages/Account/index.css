@@ -1,15 +1,18 @@
 .Root {
+    height: 100%;
     padding: 18px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 .LogoutButton {
-    display: inline-block;
+    display: flex;
     margin-top: 20px;
+    justify-content: center;
+}
+
+.VersionWrapper {
+    text-align: center;
     color: var(--black);
-    background: none;
-    border: none;
-    cursor: pointer;
-    text-decoration: underline;
 }

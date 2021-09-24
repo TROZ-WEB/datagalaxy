@@ -4,13 +4,6 @@
     align-items: flex-start;
 }
 
-.UsersInfo {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-top: 15px;
-} 
-
 .AccordionWrapper {
     display: flex;
     flex-direction: column;

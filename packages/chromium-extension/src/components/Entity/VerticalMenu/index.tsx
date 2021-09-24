@@ -18,7 +18,11 @@ const VerticalMenu = () => {
             <button className={cx(styles.MenuItem, styles.BackButton)} onClick={() => history.goBack()} type="button">
                 <ArrowLeft className={styles.BackButtonIcon} />
             </button>
-            <button className={styles.MenuItem} onClick={() => history.replace(`${path}/`)} type="button">
+            <button
+                className={cx(styles.MenuItem, styles.MenuItemActiv)}
+                onClick={() => history.replace(`${path}/`)}
+                type="button"
+            >
                 <Info className={styles.MenuItemIcon} />
             </button>
             {/* <button className={styles.MenuItem} onClick={() => history.replace(`${path}/insights`)} type="button">
