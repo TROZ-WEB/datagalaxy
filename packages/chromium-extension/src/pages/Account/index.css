@@ -6,6 +6,13 @@
     justify-content: space-between;
 }
 
+.Title {
+    font-family: 'SourceSansPro';
+    font-weight: 700;
+    font-size: 16px;
+    color: #001030;
+}
+
 .LogoutButton {
     display: flex;
     margin-top: 20px;
@@ -15,4 +22,11 @@
 .VersionWrapper {
     text-align: center;
     color: var(--black);
+}
+
+.LogoutIcon {
+    margin-right: 8px;
+    font-family: 'datagalaxy', sans-serif;
+    color: #6d6f88;
+    font-size: 16px;
 }

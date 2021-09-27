@@ -5,5 +5,9 @@
     align-items: center;
     height: 100%;
     text-align: center;
-    padding: 24px 38px;
+    padding: 16px;
+}
+
+.FindPatGif {
+    width: 100%;
 }

@@ -3,6 +3,8 @@
     border-radius: 3px;
     font-size: 14px;
     line-height: 18px;
+    display: flex;
+    align-items: center;
 }
 
 .Contained {
@@ -12,7 +14,7 @@
 }
 
 .Outlined {
-    background-color: #F7F8F9;
+    background: none;
     color: #001030;
     border: 1px solid rgba(2, 42, 142, 0.1);
 }

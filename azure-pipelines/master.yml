@@ -41,6 +41,8 @@ stages:
     - script: 'node common/scripts/install-run-rush.js install'
       displayName: 'Rush Install'
     - script: 'node common/scripts/install-run-rush.js rebuild --verbose'
+      env:
+        NODE_OPTIONS: --max_old_space_size=16384
       displayName: 'Rush Rebuild'
     - script: 'node common/scripts/install-run-rush.js lint'
       displayName: 'Rush Lint'

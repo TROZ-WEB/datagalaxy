@@ -6,13 +6,13 @@
     "message": "Chromium extension of DataGalaxy"
   },
   "welcomeMessage": {
-    "message": "Welcome to the DataGalaxy Extension !"
+    "message": "Welcome to DataGalaxy Extension !"
   },
   "pat": {
     "message": "Personnal Access Token"
   },
   "searchQuery": {
-    "message": "Word to search"
+    "message": "Object to search"
   },
   "search": {
     "message": "Search..."
@@ -30,7 +30,7 @@
     "message": "Unrecognized access key, Check the digits entered or send a message to your administrator"
   },
   "error_pat_email": {
-    "message": "Identifier don't match the access key. Please ensure the access key match the identifier provided."
+    "message": "Identifier doesn't match the access key. Please ensure that the access key match the identifier provided."
   },
   "error_required_field": {
     "message": "This field is required"
@@ -75,7 +75,7 @@
     "message": "Start"
   },
   "onboarding_patFinder_title": {
-    "message": "Where to find my key ?"
+    "message": "Where to find my access key ?"
   },
   "onboarding_patFinder_closeButton": {
     "message": "Ok, close"
@@ -369,87 +369,11 @@
   },
   "entity_label_full_UsageComponent": {
     "message": "Usage Component"
+  },
+  "account_title": {
+    "message": "My profile"
+  },
+  "account_logout": {
+    "message": "Log out"
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

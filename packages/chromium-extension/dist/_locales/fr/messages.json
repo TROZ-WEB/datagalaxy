@@ -1,6 +1,6 @@
 {
   "appName": {
-    "message": "DataGalaxy_staging"
+    "message": "DataGalaxy"
   },
   "appDesc": {
     "message": "Extension Chromium de DataGalaxy"
@@ -12,7 +12,7 @@
     "message": "Token d'accès personnel"
   },
   "searchQuery": {
-    "message": "Mot à rechercher"
+    "message": "Objet à rechercher"
   },
   "search": {
     "message": "Rechercher..."
@@ -24,13 +24,13 @@
     "message": "Qu’avez-vous envie de trouver aujourd’hui ?"
   },
   "global_error": {
-    "message": "Nous rencontrons des difficultés pour vous connecter, vérifier vos informations de connexion."
+    "message": "Nous rencontrons des difficultés pour vous connecter, vérifiez vos informations de connexion."
   },
   "error_pat": {
-    "message": "Clé d'accès non reconnues, vérifiez les chiffres entrés ou envoyez un message à votre administrateur"
+    "message": "Clé d'accès non reconnue, vérifiez les chiffres entrés ou envoyez un message à votre administrateur"
   },
   "error_pat_email": {
-    "message": "L'identifiant ne correspond pas à la clé d'accès. Veuillez vérifier que la clé d'accès correspond à l'identifiant renseigné si dessus."
+    "message": "L'identifiant ne correspond pas à la clé d'accès. Veuillez vérifier que la clé d'accès correspond à l'identifiant renseigné ci-dessus."
   },
   "error_required_field": {
     "message": "Ce champ est requis"
@@ -45,7 +45,7 @@
     "message": "Pour commencer l'expérience, connectez-vous"
   },
   "onboarding_login_helpPAT": {
-    "message": "Rendez-vous sur votre profil personnel sur DataGalaxy"
+    "message": "Rendez-vous sur votre profil personnel dans DataGalaxy"
   },
   "onboarding_login_inputEmailLabel": {
     "message": "Identifiant"
@@ -369,5 +369,11 @@
   },
   "entity_label_full_UsageComponent": {
     "message": "Composant usage"
+  },
+  "account_title": {
+    "message": "Mon profil"
+  },
+  "account_logout": {
+    "message": "Déconnexion"
   }
 }

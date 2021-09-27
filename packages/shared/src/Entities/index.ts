@@ -11,14 +11,14 @@ export type { EntityType, FieldStatus } from './types';
  * @param {number} threshold - Threshold from which path is ellipsed
  * @return {string} Path as a breadcrumb
  */
-export const formatBreadcrumb = (path: string, threshold: number = 3): string => {
+export const formatBreadcrumb = (path: string, threshold: number = 3): string[] => {
     let base = path.trim().split('\\').slice(0, -1).filter(Boolean);
 
     if (base.length > threshold) {
         base = [base[0], '...', ...base.slice(base.length - 2, base.length)];
     }
 
-    return base.join(' > ');
+    return base;
 };
 
 export interface customFieldAttr {

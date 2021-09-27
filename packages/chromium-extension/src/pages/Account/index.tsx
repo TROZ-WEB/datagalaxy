@@ -71,7 +71,7 @@ const Account = () => {
     return (
         <div className={styles.Root}>
             <form onSubmit={onSubmit}>
-                <h2>Your parameters</h2>
+                <h2 className={styles.Title}>{chrome.i18n.getMessage('account_title')}</h2>
                 <fieldset disabled>
                     <Input
                         label={chrome.i18n.getMessage('onboarding_login_inputEmailLabel')}
@@ -105,7 +105,8 @@ const Account = () => {
                         type="button"
                         variant="outlined"
                     >
-                        Logout
+                        <span className={styles.LogoutIcon}></span>
+                        <span>{chrome.i18n.getMessage('account_logout')}</span>
                     </Button>
                 </div>
             </div>
