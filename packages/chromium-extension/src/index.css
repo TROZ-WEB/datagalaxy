@@ -23,6 +23,7 @@ html {
  */
 :root {
     --black: #001030;
+    --grey: #6D6F88;
     --reflex: #1035b1;
     --pale-reflex: #F3F6FF;
 
@@ -33,4 +34,24 @@ html {
     --magenta-color: #ca004a;
     --functional-color: #50c516;
     --technical-color: #28aae2;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #fff;
+    box-shadow: none;
+    border-radius: 0
+}
+
+::-webkit-scrollbar-thumb {
+    background-image: linear-gradient(100deg,#ecf2ff,#ecf2ff)!important;
+    border-radius: 7px;
+    border: 4px solid #fff
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-image: linear-gradient(100deg,#001aff,#17aeff)!important
+}
+
+::-webkit-scrollbar {
+    width: 14px
 }

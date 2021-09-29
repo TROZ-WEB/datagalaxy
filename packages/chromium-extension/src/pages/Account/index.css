@@ -20,13 +20,14 @@
 }
 
 .VersionWrapper {
+    font-size: 14px;
     text-align: center;
-    color: var(--black);
+    color: var(--grey);
 }
 
 .LogoutIcon {
     margin-right: 8px;
-    font-family: 'datagalaxy', sans-serif;
-    color: #6d6f88;
-    font-size: 16px;
+    color: var(--black);
+    width: 16px;
+    height: 16px;
 }

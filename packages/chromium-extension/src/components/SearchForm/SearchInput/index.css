@@ -16,7 +16,7 @@
     font-family: 'SourceSansPro';
     font-size: 14px;
     line-height: 18px;
-    color: #6d6f88;
+    color: var(--grey);
     outline: 0;
     background-color: transparent;
     transition: 150ms;
@@ -32,7 +32,9 @@
     line-height: 10px;
     position: relative;
     top: 1px;
-    color: #6d6f88;
+    color: var(--grey);
+    width: 13px;
+    height: 13px;
 }
 
 .Right {
@@ -45,7 +47,9 @@
     line-height: 10px;
     position: relative;
     top: 1px;
-    color: #6d6f88;
+    color: var(--grey);
+    width: 13px;
+    height: 13px;
 }
 
 @keyframes Rotate {

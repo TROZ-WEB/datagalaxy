@@ -1,5 +1,5 @@
 .Root {
-    padding: 11px 30px;
+    padding: 11px 15px;
     border-radius: 3px;
     font-size: 14px;
     line-height: 18px;
@@ -13,10 +13,18 @@
     border: none;
 }
 
+.Contained:hover {
+    background: linear-gradient(90deg, #0016d7, #0297e6);
+}
+
 .Outlined {
     background: none;
     color: #001030;
     border: 1px solid rgba(2, 42, 142, 0.1);
+}
+
+.Outlined:hover {
+    background: linear-gradient(180deg, rgba(0, 26, 255, 0.08), rgba(0, 26, 255, 0.08));
 }
 
 .Root:hover {

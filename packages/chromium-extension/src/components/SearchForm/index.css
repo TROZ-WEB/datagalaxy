@@ -33,24 +33,23 @@
     margin-left: 8px;
 }
 
-.SearchCardResultWrapper {
-    margin: 9px auto;
+.SearchCardsResultWrapper {
+    overflow-y: scroll;
+    height: 392px;
 }
 
-.Separator {
-    border-bottom: 1px solid var(--pale-reflex);
-    display: block;
+.SearchCardResultWrapper {
+    margin: 9px auto;
 }
 
 .BlankSearch {
     display: flex;
     align-items: center;
     flex-direction: column;
-    color: #6D6F88;
+    color: var(--grey);
     font-size: 14px;
 }
 
 .BlankSearchImage {
-    width: 286px;
-    height: 400px;
+    width: 250px;
 }

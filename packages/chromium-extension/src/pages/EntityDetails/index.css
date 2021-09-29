@@ -6,6 +6,6 @@
 }
 
 .Content {
-    margin: 11px;
-    flex: 2;
+    padding: 11px;
+    width: 289px;
 }

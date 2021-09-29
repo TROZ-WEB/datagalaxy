@@ -131,94 +131,94 @@
     "message": "Concept"
   },
   "entity_label_short_ReferenceData": {
-    "message": "RefData"
+    "message": "Nomenc."
   },
   "entity_label_short_IndicatorGroup": {
-    "message": "IndicGrp"
+    "message": "Gp.Indic"
   },
   "entity_label_short_BusinessTerm": {
     "message": "Terme"
   },
   "entity_label_short_Indicator": {
-    "message": "Indic"
+    "message": "Indicat."
   },
   "entity_label_short_ReferenceDataValue": {
     "message": "Valeur"
   },
   "entity_label_short_Dimension": {
-    "message": "Dim"
+    "message": "Dimens."
   },
   "entity_label_short_BusinessDomain": {
-    "message": "Domain"
+    "message": "Domaine"
   },
   "entity_label_short_DimensionGroup": {
-    "message": "DimGrp"
+    "message": "Gp.Dim"
   },
   "entity_label_short_BusinessDomainGroup": {
-    "message": "DomGrp"
+    "message": "Gp.Dom"
   },
   "entity_label_short_Relational": {
-    "message": "DB"
+    "message": "BDD"
   },
   "entity_label_short_NonRelational": {
-    "message": "FileSt"
+    "message": "FileStore"
   },
   "entity_label_short_NoSql": {
     "message": "NoSql"
   },
   "entity_label_short_TagBase": {
-    "message": "TagB"
+    "message": "TagBase"
   },
   "entity_label_short_Model": {
-    "message": "Model"
+    "message": "Modèle"
   },
   "entity_label_short_Directory": {
-    "message": "Dir"
+    "message": "Répert"
   },
   "entity_label_short_Table": {
     "message": "Table"
   },
   "entity_label_short_View": {
-    "message": "View"
+    "message": "Vue"
   },
   "entity_label_short_Column": {
-    "message": "Column"
+    "message": "Colonne"
   },
   "entity_label_short_Field": {
-    "message": "Field"
+    "message": "Champ"
   },
   "entity_label_short_SubStructure": {
-    "message": "SubStr"
+    "message": "Ss.Struct."
   },
   "entity_label_short_File": {
-    "message": "File"
+    "message": "Fichier"
   },
   "entity_label_short_Document": {
     "message": "Doc"
   },
   "entity_label_short_Equipment": {
-    "message": "Equip"
+    "message": "Equipmt"
   },
   "entity_label_short_Tag": {
     "message": "Tag"
   },
   "entity_label_short_DataFlow": {
-    "message": "Flow"
+    "message": "Flux"
   },
   "entity_label_short_DataProcessing": {
-    "message": "DP"
+    "message": "Traitmnt"
   },
   "entity_label_short_DataProcessingItem": {
-    "message": "DPI"
+    "message": "Elt.Traitm"
   },
   "entity_label_short_Application": {
-    "message": "App"
+    "message": "Applic."
   },
   "entity_label_short_Us": {
     "message": "Usage"
   },
   "entity_label_short_Process": {
-    "message": "Process"
+    "message": "Process."
   },
   "entity_label_short_UsageField": {
     "message": "ChampUs"
@@ -242,7 +242,7 @@
     "message": "OpenDS"
   },
   "entity_label_short_Algorithm": {
-    "message": "Algo"
+    "message": "Algorith."
   },
   "entity_label_short_UsageComponent": {
     "message": "CompUs"
@@ -375,5 +375,14 @@
   },
   "account_logout": {
     "message": "Déconnexion"
+  },
+  "account_update_pat": {
+    "message": "Mettre à jour votre clé d'accès"
+  },
+  "account_update_pat_button": {
+    "message": "Mettre à jour votre PAT"
+  },
+  "account_update_pat_successful": {
+    "message": "Votre clé d'accès a été mise à jour correctement"
   }
 }

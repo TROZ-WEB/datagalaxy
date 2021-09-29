@@ -15,10 +15,12 @@ const isTechnical = (entity): boolean => entitiesTypeRelatedInfos[entity.type].k
 
 const SearchCardResult = ({
     alwaysExpanded = false,
+    ellipseBreadCrumb,
     entity,
     onClick,
 }: {
     alwaysExpanded?: boolean;
+    ellipseBreadCrumb?: number;
     entity: any;
     onClick?: () => void;
 }) => {
@@ -46,34 +48,40 @@ const SearchCardResult = ({
             tabIndex={0}
         >
             <div className={styles.WrappedContainer}>
-                <div
-                    className={cx(
-                        styles.LeftSide,
-                        isTechnical(entity) ? styles.TechnicalColor : styles.FunctionalColor,
-                    )}
-                    title={chrome.i18n.getMessage(`entity_label_full_${entity.type}`)}
-                >
+                {entitiesTypeRelatedInfos[entity.type] ? (
                     <div
                         className={cx(
-                            styles.LeftSideBackground,
-                            isTechnical(entity) ? styles.TechnicalColorBackground : styles.FunctionalColorBackground,
-                        )}
-                    />
-                    <span className={styles.EntityGlyphWrapper}>
-                        <Glyph icon={entitiesTypeRelatedInfos[entity.type].glyph} />
-                    </span>
-                    <span
-                        className={cx(
-                            styles.EntityTypeShortLabel,
+                            styles.LeftSide,
                             isTechnical(entity) ? styles.TechnicalColor : styles.FunctionalColor,
                         )}
+                        title={chrome.i18n.getMessage(`entity_label_full_${entity.type}`)}
                     >
-                        {chrome.i18n.getMessage(`entity_label_short_${entity.type}`)}
-                    </span>
-                </div>
+                        <div
+                            className={cx(
+                                styles.LeftSideBackground,
+                                isTechnical(entity)
+                                    ? styles.TechnicalColorBackground
+                                    : styles.FunctionalColorBackground,
+                            )}
+                        />
+                        <span className={styles.EntityGlyphWrapper}>
+                            <Glyph icon={entitiesTypeRelatedInfos[entity.type].glyph} />
+                        </span>
+                        <span
+                            className={cx(
+                                styles.EntityTypeShortLabel,
+                                isTechnical(entity) ? styles.TechnicalColor : styles.FunctionalColor,
+                            )}
+                        >
+                            {chrome.i18n.getMessage(`entity_label_short_${entity.type}`)}
+                        </span>
+                    </div>
+                ) : (
+                    <div className={cx(styles.LeftSide)} />
+                )}
                 <div className={styles.RightSide}>
                     <div className={styles.BreadcrumbWrapper}>
-                        <Breadcrumb path={entity.path} />
+                        <Breadcrumb ellipse={ellipseBreadCrumb} path={entity.path} />
                     </div>
                     <span
                         className={styles.EntityName}

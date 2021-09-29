@@ -4,6 +4,7 @@
     margin-top: 25px;
 }
 
+
 .Label {
     font-size: 14px;
     line-height: 18px;
@@ -12,6 +13,7 @@
     text-align: center;
 }
 
+
 .Input {
     background: #ffffff;
     border: 1px solid rgba(2, 42, 142, 0.1);
@@ -19,6 +21,10 @@
     height: 42px;
     border-radius: 3px;
     padding: 16px;
+}
+
+.Disabled {
+    color: var(--grey);
 }
 
 .HelperTextError {

@@ -38,7 +38,8 @@
 }
 
 .SelectedMenuItem {
-    background: url('../../../assets/anchor-selected-menu.png') center bottom no-repeat;
+    background: url('../../../assets/anchor-selected-menu.svg') center bottom no-repeat;
+    background-size: 34px;
 }
 
 .MenuItemImage {

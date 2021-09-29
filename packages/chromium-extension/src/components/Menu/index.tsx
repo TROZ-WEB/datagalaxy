@@ -7,7 +7,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import Search from '../../icons/Search';
 import { useStoreState } from '../../store/hooks';
 import Avatar from '../Avatar';
-import WhiteLogo from '../../../assets/white-logo.png';
+import WhiteLogo from '../../../assets/logo-icon.svg';
 import styles from './index.css';
 
 interface MenuItem {
@@ -39,7 +39,7 @@ const Menu = () => {
         //     path: '/app/notifications',
         // },
         {
-            icon: <Avatar user={user} />,
+            icon: <Avatar size="mini" user={user} />,
             path: '/app/account',
         },
     ];

@@ -7,7 +7,7 @@ const ConnectedLayout = ({ children }: { children?: ReactNode }) => {
     return (
         <div className={styles.Root}>
             <Menu />
-            {children}
+            <div className={styles.Content}>{children}</div>
             {/* <FabMenu /> */}
         </div>
     );

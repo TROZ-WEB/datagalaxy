@@ -1,6 +1,7 @@
 .Root {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
 }
 
@@ -9,6 +10,7 @@
     flex-direction: row;
     align-items: center;
     margin-right: 2px;
+    margin-top: 4px;
 }
 
 .ColorPoint {
@@ -20,4 +22,8 @@
 
 .TagLabel {
     font-size: 12px;
+}
+
+.WithBorder {
+    border: 1px solid var(--black);
 }

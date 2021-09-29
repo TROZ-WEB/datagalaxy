@@ -4,14 +4,14 @@
 }
 
 .normal {
-    width: 26px;
-    height: 26px;
+    width: 30px;
+    height: 30px;
     border-width: 2px;
 }
 
 .mini {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     border-width: 1px;
     font-size: 10px !important;
 }

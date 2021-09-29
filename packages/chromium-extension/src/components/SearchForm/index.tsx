@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../store/hooks';
+import HorizontalSeparator from '../HorizontalSeparator';
 import SearchCardResult from './SearchCardResult';
 import SearchInput from './SearchInput';
 import { useSearchInput } from './SearchInput/useSearchInput';
@@ -62,21 +63,23 @@ const SearchForm = () => {
                         <p>{chrome.i18n.getMessage('search_blank_search')}</p>
                     </div>
                 ) : (
-                    searchResults.result.entities.map((entity, idx) => (
-                        <div key={entity.id}>
-                            <div className={styles.SearchCardResultWrapper}>
-                                <SearchCardResult
-                                    entity={entity}
-                                    onClick={() => {
-                                        updateSelectedEntity(entity);
-                                        history.push(`/app/entities/${entity.id}`);
-                                    }}
-                                    alwaysExpanded
-                                />
-                            </div>
-                            {idx < searchResults.result.entities.length - 1 && <span className={styles.Separator} />}
-                        </div>
-                    ))
+                    <div className={styles.SearchCardsResultWrapper}>
+                        {searchResults.result.entities.map((entity, idx) => (
+                            <>
+                                <div key={entity.id} className={styles.SearchCardResultWrapper}>
+                                    <SearchCardResult
+                                        entity={entity}
+                                        onClick={() => {
+                                            updateSelectedEntity(entity);
+                                            history.push(`/app/entities/${entity.id}`);
+                                        }}
+                                        alwaysExpanded
+                                    />
+                                </div>
+                                {idx < searchResults.result.entities.length - 1 && <HorizontalSeparator />}
+                            </>
+                        ))}
+                    </div>
                 )}
             </div>
         </div>

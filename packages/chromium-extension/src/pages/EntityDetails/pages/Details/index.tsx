@@ -25,7 +25,7 @@ const Details = () => {
 
     return (
         <div className={styles.Root}>
-            <SearchCardResult entity={entity} alwaysExpanded />
+            <SearchCardResult ellipseBreadCrumb={9} entity={entity} alwaysExpanded />
             {loaded && (
                 <div className={styles.AccordionWrapper}>
                     <Accordion title={chrome.i18n.getMessage(`entity_details_sections_general`)} initialOpen>

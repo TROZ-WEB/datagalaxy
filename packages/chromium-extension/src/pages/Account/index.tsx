@@ -4,9 +4,12 @@ import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router-dom';
 import { decodeJWT } from 'shared';
 import Alert from '../../components/Alert';
+import HorizontalSeparator from '../../components/HorizontalSeparator';
 import Button from '../../components/ui/Button';
+import FormLabel from '../../components/ui/FormLabel';
 import Input from '../../components/ui/Input';
 import { useStoreActions, useStoreState, useStoreDispatch } from '../../store/hooks';
+import LogoutIcon from '../../../assets/icons/logout.svg';
 import styles from './index.css';
 
 type FormData = {
@@ -74,23 +77,29 @@ const Account = () => {
                 <h2 className={styles.Title}>{chrome.i18n.getMessage('account_title')}</h2>
                 <fieldset disabled>
                     <Input
-                        label={chrome.i18n.getMessage('onboarding_login_inputEmailLabel')}
+                        label={<FormLabel>{chrome.i18n.getMessage('onboarding_login_inputEmailLabel')}</FormLabel>}
+                        disabled
+                        readOnly
                         {...register('email', { required: false })}
                     />
                 </fieldset>
                 <br />
-                <h2>Update your access key</h2>
+                <HorizontalSeparator />
+                <br />
+                <h2 className={styles.Title}>{chrome.i18n.getMessage('account_update_pat')}</h2>
                 {isPATError && <Alert type="warning">{chrome.i18n.getMessage('global_error')}</Alert>}
                 <Input
                     errors={errors}
-                    label={chrome.i18n.getMessage('onboarding_login_inputNewPatLabel')}
+                    label={<FormLabel>{chrome.i18n.getMessage('onboarding_login_inputNewPatLabel')}</FormLabel>}
                     type="password"
                     {...register('pat', { required: true })}
                 />
-                {isAlertSuccessVisible && <Alert type="success">Your access key has been updated successfully</Alert>}
+                {isAlertSuccessVisible && (
+                    <Alert type="success">{chrome.i18n.getMessage('account_update_pat_successful')}</Alert>
+                )}
                 <br />
                 <div className={styles.ButtonWrapper}>
-                    <Button type="submit">Update your PAT</Button>
+                    <Button type="submit">{chrome.i18n.getMessage('account_update_pat_button')}</Button>
                 </div>
             </form>
             <div>
@@ -105,7 +114,7 @@ const Account = () => {
                         type="button"
                         variant="outlined"
                     >
-                        <span className={styles.LogoutIcon}></span>
+                        <img alt="Logout icon" className={styles.LogoutIcon} src={LogoutIcon} />
                         <span>{chrome.i18n.getMessage('account_logout')}</span>
                     </Button>
                 </div>

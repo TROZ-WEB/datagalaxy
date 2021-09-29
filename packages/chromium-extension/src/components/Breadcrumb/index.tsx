@@ -1,18 +1,18 @@
-import React, { useMemo } from 'react';
+import React, { Fragment, useMemo } from 'react';
 import { formatBreadcrumb } from 'shared';
 import styles from './index.css';
 
-const Breadcrumb = ({ path }: { path: string }) => {
-    const formattedPath = useMemo(() => formatBreadcrumb(path), [path]);
+const Breadcrumb = ({ path, threshold = 3, ellipse = 10 }: { path: string; threshold?: number; ellipse?: number }) => {
+    const formattedPath = useMemo(() => formatBreadcrumb(path, threshold, ellipse), [path]);
 
     return (
-        <div className={styles.Root}>
-            {formattedPath && formattedPath.length ? (
-                formattedPath.map((elem, i) => (
-                    <>
+        <div className={styles.Root} title={formattedPath.default.join(' > ')}>
+            {formattedPath && formattedPath.shorten.length ? (
+                formattedPath.shorten.map((elem, i) => (
+                    <Fragment key={elem}>
                         <span>{elem}</span>
-                        <span className={styles.Chevron}>{i < formattedPath.length - 1 && ''}</span>
-                    </>
+                        <span className={styles.Chevron}>{i < formattedPath.shorten.length - 1 && ''}</span>
+                    </Fragment>
                 ))
             ) : (
                 <br />

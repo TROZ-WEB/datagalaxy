@@ -4,21 +4,32 @@ import { EntityType } from './types';
 /* eslint-disable import/prefer-default-export */
 export type { EntityType, FieldStatus } from './types';
 
+const ellipseAt = (at: number) => (item) => item.slice(0, at);
+
 /**
  * Format the breadcrumd in the form 'Database > Modèle'
  *
  * @param {string} path - Represents the raw path as '\\Database\\Modèle\\Table'
  * @param {number} threshold - Threshold from which path is ellipsed
+ * @param {number} ellipse - Ellipsed each level text
  * @return {string} Path as a breadcrumb
  */
-export const formatBreadcrumb = (path: string, threshold: number = 3): string[] => {
-    let base = path.trim().split('\\').slice(0, -1).filter(Boolean);
+export const formatBreadcrumb = (
+    path: string,
+    threshold: number = 3,
+    ellipse?: number,
+): { shorten: string[]; default: string[] } => {
+    const base = path.trim().split('\\').slice(0, -1).filter(Boolean);
+    let shorten = ellipse ? base.map(ellipseAt(ellipse)) : base;
 
-    if (base.length > threshold) {
-        base = [base[0], '...', ...base.slice(base.length - 2, base.length)];
+    if (shorten.length > threshold) {
+        shorten = [shorten[0], '...', ...shorten.slice(shorten.length - 2, shorten.length)];
     }
 
-    return base;
+    return {
+        default: base,
+        shorten,
+    };
 };
 
 export interface customFieldAttr {
@@ -63,7 +74,7 @@ export const entitiesTypeRelatedInfos: customFieldAttr = {
     DataProcessingItem: { glyph: 'Processitem', kind: 'Technical' },
     /* Usage (fonctionnel) */
     Application: { glyph: 'SoftwareApplication', kind: 'Functional' },
-    // Use	???
+    Use: { glyph: 'Software', kind: 'Functional' },
     Process: { glyph: 'Process', kind: 'Functional' },
     UsageField: { glyph: 'UsageField', kind: 'Functional' },
     Feature: { glyph: 'Features', kind: 'Functional' },

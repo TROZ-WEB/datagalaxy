@@ -10,13 +10,18 @@ const Tags = ({ children, className }: { children: React.ReactNode; className?: 
 Tags.Item = ({ tag, hideLabel = false }: { tag: string; hideLabel?: boolean }) => {
     const tags = useStoreState((state) => state.auth.tags);
 
+    const { color } = tags.find(({ label }) => label === tag);
+
     return (
         <div className={styles.RootItem}>
             <span
-                className={styles.ColorPoint}
+                className={cx(styles.ColorPoint, {
+                    [styles.WithBorder]: color === 'white',
+                })}
                 style={{
-                    backgroundColor: tags.find(({ label }) => label === tag).color,
+                    backgroundColor: color,
                 }}
+                title={tag}
             />
             {!hideLabel && <span className={styles.TagLabel}>{tag}</span>}
         </div>

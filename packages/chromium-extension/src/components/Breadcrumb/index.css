@@ -1,5 +1,5 @@
 .Root {
-    color: #6d6f88;
+    color: var(--grey);
     font-size: 12px;
     line-height: 14.5px;
     display: flex;

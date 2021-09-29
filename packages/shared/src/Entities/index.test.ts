@@ -14,13 +14,15 @@ describe('Breadcrumb generation', () => {
     const LBreadcrumdExpect = ['Database', 'Modèle', 'Table'];
 
     const XLBreadcrumd = '\\Database\\Modèle\\Table\\Colonne\\Row\\Cell';
-    const XLBreadcrumdExpect = ['Database', '...', 'Colonne', 'Row'];
+    const XLBreadcrumdExpectShorten = ['Database', '...', 'Colonne', 'Row'];
+    const XLBreadcrumdExpectDefault = ['Database', 'Modèle', 'Table', 'Colonne', 'Row'];
 
     test('it should return the formatted breadcrumb', async () => {
-        expect(formatBreadcrumb(XSBreadcrumd)).toEqual(XSBreadcrumdExpect);
-        expect(formatBreadcrumb(SBreadcrumd)).toEqual(SBreadcrumdExpect);
-        expect(formatBreadcrumb(MBreadcrumd)).toEqual(MBreadcrumdExpect);
-        expect(formatBreadcrumb(LBreadcrumd)).toEqual(LBreadcrumdExpect);
-        expect(formatBreadcrumb(XLBreadcrumd)).toEqual(XLBreadcrumdExpect);
+        expect(formatBreadcrumb(XSBreadcrumd).shorten).toEqual(XSBreadcrumdExpect);
+        expect(formatBreadcrumb(SBreadcrumd).shorten).toEqual(SBreadcrumdExpect);
+        expect(formatBreadcrumb(MBreadcrumd).shorten).toEqual(MBreadcrumdExpect);
+        expect(formatBreadcrumb(LBreadcrumd).shorten).toEqual(LBreadcrumdExpect);
+        expect(formatBreadcrumb(XLBreadcrumd).shorten).toEqual(XLBreadcrumdExpectShorten);
+        expect(formatBreadcrumb(XLBreadcrumd).default).toEqual(XLBreadcrumdExpectDefault);
     });
 });

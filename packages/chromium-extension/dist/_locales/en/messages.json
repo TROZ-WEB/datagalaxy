@@ -161,13 +161,13 @@
     "message": "DB"
   },
   "entity_label_short_NonRelational": {
-    "message": "FileSt"
+    "message": "FileStore"
   },
   "entity_label_short_NoSql": {
     "message": "NoSql"
   },
   "entity_label_short_TagBase": {
-    "message": "TagB"
+    "message": "TagBase"
   },
   "entity_label_short_Model": {
     "message": "Model"
@@ -374,6 +374,15 @@
     "message": "My profile"
   },
   "account_logout": {
-    "message": "Log out"
+    "message": "Logout"
+  },
+  "account_update_pat": {
+    "message": "Update your access key"
+  },
+  "account_update_pat_button": {
+    "message": "Update your PAT"
+  },
+  "account_update_pat_successful": {
+    "message": "Your access key has been updated successfully"
   }
 }
