@@ -1,7 +1,7 @@
 import { useStore } from 'easy-peasy';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, Link } from 'react-router-dom';
 import { decodeJWT } from 'shared';
 import Alert from '../../components/Alert';
 import HorizontalSeparator from '../../components/HorizontalSeparator';
@@ -94,6 +94,9 @@ const Account = () => {
                     type="password"
                     {...register('pat', { required: true })}
                 />
+                <div className={styles.FindPatHelper}>
+                    <Link to="/onboarding/find-pat-helper">{chrome.i18n.getMessage('onboarding_login_findMyPat')}</Link>
+                </div>
                 {isAlertSuccessVisible && (
                     <Alert type="success">{chrome.i18n.getMessage('account_update_pat_successful')}</Alert>
                 )}

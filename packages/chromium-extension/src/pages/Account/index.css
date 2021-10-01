@@ -31,3 +31,21 @@
     width: 16px;
     height: 16px;
 }
+
+
+.FindPatHelper {
+    text-align: left;
+    margin-top: 1px;
+}
+
+.FindPatHelper > a {
+    color: #000000;
+    text-decoration: underline;
+    font-size: 10px;
+    line-height: 13px;
+}
+
+.FindPatHelper > a:hover,
+.FindPatHelper > a:visited {
+    color: #000000;
+}

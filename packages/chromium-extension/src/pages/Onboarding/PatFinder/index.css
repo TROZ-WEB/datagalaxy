@@ -8,6 +8,13 @@
     padding: 16px;
 }
 
+.Header {
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
 .FindPatGif {
-    width: 100%;
+    margin-bottom: 35px;
+    width: 303px;
+    height: 323px;
 }

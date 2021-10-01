@@ -33,8 +33,8 @@
     position: relative;
     top: 1px;
     color: var(--grey);
-    width: 13px;
-    height: 13px;
+    width: 16px;
+    height: 16px;
 }
 
 .Right {
@@ -48,8 +48,8 @@
     position: relative;
     top: 1px;
     color: var(--grey);
-    width: 13px;
-    height: 13px;
+    width: 16px;
+    height: 16px;
 }
 
 @keyframes Rotate {

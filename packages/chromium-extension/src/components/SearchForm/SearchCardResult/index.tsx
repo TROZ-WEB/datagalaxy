@@ -9,7 +9,6 @@ import OwnersStewardsSeparator from '../../OwnersStewardsSeparator';
 import Glyph from '../../ui/Glyph';
 import styles from './index.css';
 
-const ELLIPSE_AT = 30;
 const LIMIT_TAGS_ELLIPSE = 3;
 const isTechnical = (entity): boolean => entitiesTypeRelatedInfos[entity.type].kind === 'Technical';
 
@@ -27,13 +26,7 @@ const SearchCardResult = ({
     const [isCardExpanded, setIsCardExpanded] = useState(alwaysExpanded);
     const [isMoreActionShown, setIsMoreActionsShown] = useState(false);
 
-    const ellipsedName = useMemo(() => {
-        if (entity.name.length > ELLIPSE_AT) {
-            return `${entity.name.substring(0, ELLIPSE_AT)}...`;
-        }
-
-        return entity.name;
-    }, [entity]);
+    const isRootEntity = useMemo<boolean>(() => entity.path === `\\${entity.name}`, [entity]);
 
     return (
         <div
@@ -80,15 +73,17 @@ const SearchCardResult = ({
                     <div className={cx(styles.LeftSide)} />
                 )}
                 <div className={styles.RightSide}>
-                    <div className={styles.BreadcrumbWrapper}>
-                        <Breadcrumb ellipse={ellipseBreadCrumb} path={entity.path} />
-                    </div>
+                    {!isRootEntity && (
+                        <div className={styles.BreadcrumbWrapper}>
+                            <Breadcrumb ellipse={ellipseBreadCrumb} path={entity.path} />
+                        </div>
+                    )}
                     <span
                         className={styles.EntityName}
                         onMouseEnter={() => setIsMoreActionsShown(true)}
                         onMouseLeave={() => setIsMoreActionsShown(false)}
                     >
-                        {isCardExpanded ? entity.name : ellipsedName}
+                        {entity.name}
                         {isMoreActionShown && (
                             /* eslint-disable jsx-a11y/control-has-associated-label, jsx-a11y/anchor-has-content */
                             <a

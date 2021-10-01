@@ -1,0 +1,61 @@
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.Root {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+    flex: 0 0 auto;
+}
+
+.Root::before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  border: 2px solid #0000ff22;
+  border-top-color: #0000FF;
+  animation: spinner .6s linear infinite;
+}
+
+.NormalSpinner {
+    width: 20px;
+    height: 20px;
+}
+
+.NormalSpinner::before {
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+}
+
+.XLSpinner {
+  width: 40px;
+  height: 40px;
+}
+
+.XLSpinner::before {
+  width: 40px;
+  height: 40px;
+  margin-top: -20px;
+  margin-left: -20px;
+}
+
+.XSSpinner {
+  width: 16px;
+  height: 16px;
+}
+
+.XSSpinner::before {
+  width: 16px;
+  height: 16px;
+  margin-top: -8px;
+  margin-left: -8px;
+}

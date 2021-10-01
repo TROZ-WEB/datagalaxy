@@ -36,6 +36,8 @@
 .SearchCardsResultWrapper {
     overflow-y: scroll;
     height: 392px;
+    margin-right: -17px;
+    padding-right: 3px;
 }
 
 .SearchCardResultWrapper {
