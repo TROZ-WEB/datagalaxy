@@ -1,8 +1,22 @@
 # DataGalaxy extensions
 
+## Repository infrastructure
+
+This repository is a monorepo.
+This means that multiple project are inside this repository.
+
+### Infrastucture
+
+- [common](./common/) : Rush configuration and temporary files
+- [packages](./packages/) : The folder containing every projets of the repository
+- [chromium-extension](./packages/chromium-extension) : The chromium extension project
+- [slack-extension](./packages/slack-extension) : The slack extension project
+- [shared](./packages/shared) : The shared library between all the extensions
+
 ## Prerequisite
 
 - [Rush](https://rushjs.io/)
+- [PNPM](https://pnpm.io/)
 
 ## Installation
 
@@ -17,15 +31,15 @@ cd packages/<package-name>
 rush add <dependency>
 ```
 
-## Repository infrastructure
+## Build all projects
 
-This repository is a monorepo.
-This means that multiple project are inside this repository.
+```
+rush build
+```
 
-### Infrastucture
+## Watch for changes of one project
 
-- [common](./common/) : Rush configuration and temporary files
-- [packages](./packages/) : The folder containing every projets of the repository
-- [chromium-extension](./packages/chromium-extension) : The chromium extension project
-- [slack-extension](./packages/slack-extension) : The slack extension project
-- [shared](./packages/shared) : The shared library between all the extensions
+```
+cd packages/<package-name>
+pnpm watch
+```
