@@ -9,7 +9,7 @@
 .Title {
     font-family: 'SourceSansPro';
     font-weight: 700;
-    font-size: 16px;
+    font-size: 20px;
     color: #001030;
 }
 
@@ -32,14 +32,13 @@
     height: 16px;
 }
 
-
 .FindPatHelper {
     text-align: left;
     margin-top: 1px;
 }
 
 .FindPatHelper > a {
-    color: #000000;
+    color: #1035b1;
     text-decoration: underline;
     font-size: 10px;
     line-height: 13px;
