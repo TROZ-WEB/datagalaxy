@@ -19,7 +19,7 @@ const StepperProgress: React.FC<StepperProgressProps> = ({ nbSteps, currentStep 
                             {i + 1}
                         </span>
                         {i + 1 < nbSteps && (
-                            <span className={cx(styles.StepTrait, { [styles.ActiveTrait]: i + 1 <= currentStep })} />
+                            <span className={cx(styles.StepTrait, { [styles.ActiveTrait]: i + 1 < currentStep })} />
                         )}
                     </div>
                 ))}

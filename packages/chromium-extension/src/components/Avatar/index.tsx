@@ -137,11 +137,13 @@ const Avatar = ({
     }
 
     return (
-        <img
-            alt={`${user.firstName}. ${user.lastName}`}
-            className={cx(styles.Root, styles[size], { [styles.GroupedAvatar]: grouped })}
-            src={user.profileThumbnailUrl}
-        />
+        <div title={`${user.firstName}. ${user.lastName}`}>
+            <img
+                alt={`${user.firstName}. ${user.lastName}`}
+                className={cx(styles.Root, styles[size], { [styles.GroupedAvatar]: grouped })}
+                src={user.profileThumbnailUrl}
+            />
+        </div>
     );
 };
 
