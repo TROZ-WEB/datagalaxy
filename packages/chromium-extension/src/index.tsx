@@ -18,14 +18,19 @@ const App = () => {
     return isRehydrated ? <Popup /> : <LoadingScreen />;
 };
 
-chrome.tabs.query({ active: true, currentWindow: true }, async () => {
+const initializeApp = async () => {
+    const app = document.createElement('div');
+    app.id = 'datagalaxy_root';
+    document.body.appendChild(app);
+
     const models = await storeModel();
     const store = createStore(persist(models, { storage: AsyncStorageService }));
-
     ReactDOM.render(
         <StoreProvider store={store}>
             <App />
         </StoreProvider>,
-        document.getElementById('popup'),
+        app,
     );
-});
+};
+
+initializeApp();

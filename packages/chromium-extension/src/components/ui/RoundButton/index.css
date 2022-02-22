@@ -1,0 +1,37 @@
+.Root {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    border-radius: 30px;
+    border: none;
+    color: #001030;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+}
+
+.Root:not(:last-child) {
+    margin-right: 5px;
+}
+
+.Root:hover {
+    background: #edf1ff;
+    border: none;
+    cursor: pointer;
+}
+
+.Mini {
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+}
+
+.Primary {
+    background: linear-gradient(71.97deg, #001aff 11.94%, #084eff 37.82%, #17aeff 85.88%);
+    color: #ffffff;
+}
+
+.Primary:hover {
+    background: linear-gradient(90deg, #0016d7, #0297e6);
+}
