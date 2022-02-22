@@ -4,6 +4,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 // import CommentDuo from '../../icons/CommentDuo';
 // import FileTasksCheck from '../../icons/FileTasksCheck';
 // import Notification from '../../icons/Notification';
+import ArrowLeft from '../../icons/ArrowLeft';
 import Search from '../../icons/Search';
 import { useStoreState } from '../../store/hooks';
 import Avatar from '../Avatar';
@@ -15,11 +16,25 @@ interface MenuItem {
     path: string;
 }
 
+function isHistoryRoot(h: any) {
+    if (!h) {
+        return false;
+    }
+
+    if (h.length === 1) {
+        return true;
+    }
+
+    return h.location.pathname === h.entries[0].pathname;
+}
+
 const Menu = () => {
     const { pathname } = useLocation();
     const history = useHistory();
 
     const { dgapi: url, user } = useStoreState((state) => state.auth);
+
+    const canGoBack = !isHistoryRoot(history);
 
     const menuItems: MenuItem[] = [
         {
@@ -46,9 +61,22 @@ const Menu = () => {
 
     return (
         <div className={styles.Root}>
-            <a href={url} rel="noreferrer" target="_blank">
-                <img alt="Datagalaxy logo" className={styles.Logo} src={WhiteLogo} />
-            </a>
+            <div className={styles.flex}>
+                {canGoBack && (
+                    <button
+                        className={cx(styles.TopMenuItem, styles.BackButton)}
+                        onClick={() => {
+                            history.goBack();
+                        }}
+                        type="button"
+                    >
+                        <ArrowLeft className={styles.BackButtonIcon} />
+                    </button>
+                )}
+                <a href={url} rel="noreferrer" target="_blank">
+                    <img alt="Datagalaxy logo" className={styles.Logo} src={WhiteLogo} />
+                </a>
+            </div>
             <div className={styles.MenuItemsContainer}>
                 {menuItems.map(({ icon, path }) => (
                     <button
