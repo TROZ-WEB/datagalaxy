@@ -20,24 +20,24 @@ const UserProfile = ({
     return (
         <div className={styles.Root}>
             <div className={styles.AvatarWrapper}>
-                {users.map((user, index) => (
+                {users?.map((user, index) => (
                     <Avatar
-                        key={user.userId}
-                        grouped={users.length > 1 && index !== users.length - 1}
+                        key={user?.userId}
+                        grouped={users?.length > 1 && index !== users?.length - 1}
                         size="mini"
                         user={user}
                     />
                 ))}
             </div>
-            {users.length > LIMIT_AVATAR_ELLIPSE && <Glyph className={styles.SmallGlyph} icon="Add" />}
-            {(users.length <= LIMIT_AVATAR_ELLIPSE && ellipsed) ||
+            {users?.length > LIMIT_AVATAR_ELLIPSE && <Glyph className={styles.SmallGlyph} icon="Add" />}
+            {(users?.length <= LIMIT_AVATAR_ELLIPSE && ellipsed) ||
                 (!hideLabel && (
                     <div className={styles.TextInfoWrapper}>
                         <span className={styles.Role}>{chrome.i18n.getMessage(`entity_${governanceRole}`)}</span>
                         <span className={styles.UserName}>
-                            {users.length > 1
-                                ? chrome.i18n.getMessage('entity_steward_multiple', [users.length])
-                                : `${users[0].firstName}. ${users[0].lastName[0]}`}
+                            {users?.length > 1
+                                ? chrome.i18n.getMessage('entity_steward_multiple', [users?.length])
+                                : `${users ? users[0].firstName : ''}. ${users ? users[0].lastName[0] : ''}`}
                         </span>
                     </div>
                 ))}

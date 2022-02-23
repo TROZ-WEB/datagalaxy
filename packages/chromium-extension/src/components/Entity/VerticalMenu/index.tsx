@@ -1,7 +1,6 @@
 import cx from 'clsx';
 import React from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import ArrowLeft from '../../../icons/ArrowLeft';
 // import CommentDuo from '../../../icons/CommentDuo';
 // import FileTasksCheck from '../../../icons/FileTasksCheck';
 import Info from '../../../icons/Info';
@@ -15,9 +14,6 @@ const VerticalMenu = () => {
 
     return (
         <div className={styles.Root}>
-            <button className={cx(styles.MenuItem, styles.BackButton)} onClick={() => history.goBack()} type="button">
-                <ArrowLeft className={styles.BackButtonIcon} />
-            </button>
             <button
                 className={cx(styles.MenuItem, styles.MenuItemActiv)}
                 onClick={() => history.replace(`${path}/`)}

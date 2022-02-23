@@ -1,0 +1,14 @@
+#datagalaxy_root {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 400px;
+    display: none;
+    box-shadow: 0px 0px 12px rgba(0, 16, 48, 0.14);
+    z-index: 9999999999999999;
+}
+
+.datagalaxy_root--show {
+    display: block !important;
+}

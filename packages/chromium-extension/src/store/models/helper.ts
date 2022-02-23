@@ -24,13 +24,18 @@ const getDecodedPAT = (patAttributeName: string) =>
  */
 const enhancedEntitiesWithUserInfo = async (rawEntities: EntityType[], url): Promise<EntityType[]> => {
     const emails: { owners: string[]; stewards: string[] } = rawEntities.reduce(
-        (acc, { attributes: { owners, stewards } }) => ({
-            owners: Array.from(new Set([...acc.owners, ...owners])),
-            stewards: Array.from(new Set([...acc.stewards, ...stewards])),
-        }),
+        (acc, { attributes: { owners, stewards } }) => {
+            // TODO: if owners or stewards undefined, that crash
+
+            return {
+                owners: owners ? Array.from(new Set([...acc.owners, ...owners])) : Array.from(new Set([...acc.owners])),
+                stewards: stewards
+                    ? Array.from(new Set([...acc.stewards, ...stewards]))
+                    : Array.from(new Set([...acc.stewards])),
+            };
+        },
         { owners: [], stewards: [] },
     );
-
     const usersInfos = {
         owners: (await getUsersByEmailsAndRole(url, emails.owners, 'owner')).owners,
         stewards: (await getUsersByEmailsAndRole(url, emails.stewards, 'steward')).stewards,
@@ -39,10 +44,10 @@ const enhancedEntitiesWithUserInfo = async (rawEntities: EntityType[], url): Pro
     return rawEntities.map((result) => {
         return {
             ...result,
-            owners: result.attributes.owners.map((email) => {
+            owners: result.attributes.owners?.map((email) => {
                 return usersInfos.owners.find(({ email: emailToFind }) => emailToFind === email);
             }),
-            stewards: result.attributes.stewards.map((email) => {
+            stewards: result.attributes.stewards?.map((email) => {
                 return usersInfos.stewards.find(({ email: emailToFind }) => emailToFind === email);
             }),
         };
