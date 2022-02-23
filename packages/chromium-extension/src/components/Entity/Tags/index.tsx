@@ -10,7 +10,7 @@ const Tags = ({ children, className }: { children: React.ReactNode; className?: 
 Tags.Item = ({ tag, hideLabel = false }: { tag: string; hideLabel?: boolean }) => {
     const tags = useStoreState((state) => state.auth.tags);
 
-    const { color } = tags.find(({ label }) => label === tag);
+    const { color } = tags?.find(({ label }) => label === tag);
 
     return (
         <div className={styles.RootItem}>

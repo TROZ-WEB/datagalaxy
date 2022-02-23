@@ -97,9 +97,14 @@ const SearchCardResult = ({
                                 )}
                             </span>
                             <div className={styles.InfosWrapper}>
-                                <Status status={entity.attributes.status} hideLabel />
-                                <OwnersStewardsSeparator />
-                                {entity.attributes.tags?.length > 0 && (
+                                {entity.attributes?.status && (
+                                    <>
+                                        <Status status={entity.attributes?.status} hideLabel />
+                                        <OwnersStewardsSeparator />
+                                    </>
+                                )}
+
+                                {entity.attributes?.tags?.length > 0 && (
                                     <>
                                         <Tags className={styles.TagsWrapper}>
                                             {entity?.attributes?.tags?.map((tag, idx) => {
@@ -124,9 +129,13 @@ const SearchCardResult = ({
                                 )}
 
                                 <div className={styles.AssociatedUsersWrapper}>
-                                    <UserProfile governanceRole="owner" users={entity.owners} hideLabel />
-                                    <OwnersStewardsSeparator />
-                                    <UserProfile governanceRole="steward" users={entity.stewards} />
+                                    {entity.owners && (
+                                        <UserProfile governanceRole="owner" users={entity.owners} hideLabel />
+                                    )}
+                                    {entity.owners && <OwnersStewardsSeparator />}
+                                    {entity.stewards && (
+                                        <UserProfile governanceRole="steward" users={entity.stewards} />
+                                    )}
                                 </div>
                             </div>
                         </div>

@@ -4,12 +4,12 @@ import useDebounce from '../../../hooks/useDebounce';
 
 interface IState {
     value: string;
-    focused: boolean;
+    focused: string;
 }
 
 export const initialState = {
     value: '',
-    focused: false,
+    focused: 'false',
 };
 
 export type TActionsEnum = { type: 'CHANGE'; value: string } | { type: 'FOCUS' } | { type: 'BLUR' };
@@ -25,13 +25,13 @@ export const reducer = (state: IState = initialState, action: TActionsEnum) => {
         case 'BLUR': {
             return {
                 ...state,
-                focused: false,
+                focused: 'false',
             };
         }
         case 'FOCUS': {
             return {
                 ...state,
-                focused: true,
+                focused: 'true',
             };
         }
         default:
@@ -55,7 +55,7 @@ export const useSearchInput = ({
         ...partialInitialState,
     });
 
-    const debouncedValue = useDebounce(value, debounceDuration);
+    const debouncedvalue = useDebounce(value, debounceDuration);
 
     const onBlur = useCallback(() => {
         dispatch({ type: 'BLUR' });
@@ -82,9 +82,9 @@ export const useSearchInput = ({
 
     useEffect(() => {
         if (debounceOnChange) {
-            debounceOnChange({ value: debouncedValue });
+            debounceOnChange({ value: debouncedvalue });
         }
-    }, [debouncedValue]);
+    }, [debouncedvalue]);
 
     return {
         focused,
@@ -93,6 +93,6 @@ export const useSearchInput = ({
         onFocus,
         onChange,
         onClearSearch,
-        debouncedValue,
+        debouncedvalue,
     };
 };

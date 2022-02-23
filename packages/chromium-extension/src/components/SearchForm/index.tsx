@@ -42,46 +42,50 @@ const SearchForm = () => {
 
     return (
         <div>
-            <div>
-                <SearchInput
-                    {...searchInputProps}
-                    loading={loading}
-                    placeholder={chrome.i18n.getMessage('search')}
-                    success={success}
-                />
-            </div>
-            <div className={styles.Results}>
-                {searchedArgs.term !== '' && (
-                    <div className={styles.ResultsTitleWrapper}>
-                        <p className={styles.ResultsTitle}>{chrome.i18n.getMessage('search_results')}</p>
-                        <span className={styles.TagResultCount}>{searchResults.total}</span>
+            {searchResults && (
+                <>
+                    <div>
+                        <SearchInput
+                            {...searchInputProps}
+                            loading={loading}
+                            placeholder={chrome.i18n.getMessage('search')}
+                            success={success}
+                        />
                     </div>
-                )}
-                {searchResults.result.entities.length === 0 ? (
-                    <div className={styles.BlankSearch}>
-                        <img alt="empty result" className={styles.BlankSearchImage} src={BlankSearch} />
-                        <p>{chrome.i18n.getMessage('search_blank_search')}</p>
+                    <div className={styles.Results}>
+                        {searchedArgs.term !== '' && (
+                            <div className={styles.ResultsTitleWrapper}>
+                                <p className={styles.ResultsTitle}>{chrome.i18n.getMessage('search_results')}</p>
+                                <span className={styles.TagResultCount}>{searchResults.total}</span>
+                            </div>
+                        )}
+                        {searchResults.result.entities.length === 0 ? (
+                            <div className={styles.BlankSearch}>
+                                <img alt="empty result" className={styles.BlankSearchImage} src={BlankSearch} />
+                                <p>{chrome.i18n.getMessage('search_blank_search')}</p>
+                            </div>
+                        ) : (
+                            <div className={styles.SearchCardsResultWrapper}>
+                                {searchResults.result.entities.map((entity, idx) => (
+                                    <div key={entity.id}>
+                                        <div className={styles.SearchCardResultWrapper}>
+                                            <SearchCardResult
+                                                entity={entity}
+                                                onClick={() => {
+                                                    updateSelectedEntity(entity);
+                                                    history.push(`/app/entities/${entity.id}`);
+                                                }}
+                                                alwaysExpanded
+                                            />
+                                        </div>
+                                        {idx < searchResults.result.entities.length - 1 && <HorizontalSeparator />}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
-                ) : (
-                    <div className={styles.SearchCardsResultWrapper}>
-                        {searchResults.result.entities.map((entity, idx) => (
-                            <>
-                                <div key={entity.id} className={styles.SearchCardResultWrapper}>
-                                    <SearchCardResult
-                                        entity={entity}
-                                        onClick={() => {
-                                            updateSelectedEntity(entity);
-                                            history.push(`/app/entities/${entity.id}`);
-                                        }}
-                                        alwaysExpanded
-                                    />
-                                </div>
-                                {idx < searchResults.result.entities.length - 1 && <HorizontalSeparator />}
-                            </>
-                        ))}
-                    </div>
-                )}
-            </div>
+                </>
+            )}
         </div>
     );
 };

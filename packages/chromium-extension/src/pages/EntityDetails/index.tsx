@@ -15,7 +15,7 @@ const EntityDetails = () => {
 
     useEffect(() => {
         const fetchEntity = async () => {
-            await dispatch.entity.fetchEntity(quickEntityFromSearch.location);
+            await dispatch.entity.fetchEntity(quickEntityFromSearch?.location);
         };
 
         fetchEntity();
