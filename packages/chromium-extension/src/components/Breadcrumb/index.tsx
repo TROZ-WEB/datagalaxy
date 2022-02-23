@@ -3,7 +3,6 @@ import { formatBreadcrumb } from 'shared';
 import styles from './index.css';
 
 const Breadcrumb = ({ path, threshold = 3, ellipse = 10 }: { path: string; threshold?: number; ellipse?: number }) => {
-    // TODO: if path undefined, that crash
     const formattedPath = useMemo(() => (path ? formatBreadcrumb(path, threshold, ellipse) : null), [path]);
 
     return (

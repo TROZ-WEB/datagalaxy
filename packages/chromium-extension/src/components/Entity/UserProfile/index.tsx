@@ -20,14 +20,17 @@ const UserProfile = ({
     return (
         <div className={styles.Root}>
             <div className={styles.AvatarWrapper}>
-                {users?.map((user, index) => (
-                    <Avatar
-                        key={user?.userId}
-                        grouped={users?.length > 1 && index !== users?.length - 1}
-                        size="mini"
-                        user={user}
-                    />
-                ))}
+                {users?.map(
+                    (user, index) =>
+                        user && (
+                            <Avatar
+                                key={user?.userId}
+                                grouped={users?.length > 1 && index !== users?.length - 1}
+                                size="mini"
+                                user={user}
+                            />
+                        ),
+                )}
             </div>
             {users?.length > LIMIT_AVATAR_ELLIPSE && <Glyph className={styles.SmallGlyph} icon="Add" />}
             {(users?.length <= LIMIT_AVATAR_ELLIPSE && ellipsed) ||

@@ -30,23 +30,23 @@ const Details = () => {
                 <div className={styles.AccordionWrapper}>
                     <Accordion title={chrome.i18n.getMessage(`entity_details_sections_general`)} initialOpen>
                         <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_status`)}>
-                            <Status status={entity.attributes.status} />
+                            <Status status={entity.attributes?.status} />
                         </Details.SubInfo>
                         <Details.Separator />
                         <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_tags`)}>
                             <Tags>
-                                {entity.attributes.tags.map((tag) => (
-                                    <Tags.Item key={tag} hideLabel={entity.attributes.tags.length > 1} tag={tag} />
+                                {entity.attributes?.tags?.map((tag) => (
+                                    <Tags.Item key={tag} hideLabel={entity.attributes?.tags?.length > 1} tag={tag} />
                                 ))}
                             </Tags>
                         </Details.SubInfo>
                         <Details.Separator />
                         <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_summary`)}>
-                            {entity.attributes.summary}
+                            {entity.attributes?.summary}
                         </Details.SubInfo>
                         <Details.Separator />
                         <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_description`)}>
-                            {entity.attributes.description}
+                            {entity.attributes?.description}
                         </Details.SubInfo>
                     </Accordion>
                 </div>
