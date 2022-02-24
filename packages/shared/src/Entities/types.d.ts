@@ -17,4 +17,5 @@ export interface EntityType {
     path: string;
     technicalName: string;
     type: string;
+    dataType: string;
 }

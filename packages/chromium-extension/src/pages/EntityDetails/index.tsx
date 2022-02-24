@@ -4,6 +4,7 @@ import { EntityType } from 'shared';
 import VerticalMenu from '../../components/Entity/VerticalMenu';
 import SearchCardResult from '../../components/SearchForm/SearchCardResult/index';
 import { useStoreDispatch, useStoreActions, useStoreState } from '../../store/hooks';
+import LinkedEntities from '../LinkedEntities';
 import Details from './pages/Details';
 import styles from './index.css';
 
@@ -43,6 +44,9 @@ const EntityDetails = () => {
                         </Route>
                         <Route path={`${path}/`} exact>
                             <Details entity={entity} setEntity={setEntity} />
+                        </Route>
+                        <Route path={`${path}/linked-objects`} exact>
+                            <LinkedEntities />
                         </Route>
                     </Switch>
                 </div>

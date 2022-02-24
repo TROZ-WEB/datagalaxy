@@ -9,7 +9,12 @@ export const search = async (apiUrl: string, query: string): Promise<SearchRespo
         const response = await post<SearchResponse>(`${apiUrl}/search`, {
             query,
             includedAttributes: ['DataOwners', 'DataStewards', 'EntityStatus', 'Domains'],
+            includeLinks: true,
         });
+
+        const filtered = response.parsedBody.result.entities.filter((entity) => entity.type);
+
+        response.parsedBody.result.entities = filtered;
 
         return response.parsedBody;
     } catch (error) {

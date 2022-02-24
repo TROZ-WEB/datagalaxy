@@ -18,6 +18,7 @@ const SearchForm = () => {
     const { updateSelectedEntity } = useStoreActions((actions) => actions.search);
     const dispatch = useStoreDispatch();
 
+
     const debounceOnChange = async ({ value }) => {
         if (value) {
             setLoading(true);
