@@ -25,6 +25,7 @@ const initializeApp = async () => {
 
     const models = await storeModel();
     const store = createStore(persist(models, { storage: AsyncStorageService }));
+
     ReactDOM.render(
         <StoreProvider store={store}>
             <App />

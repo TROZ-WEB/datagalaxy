@@ -4,21 +4,22 @@
     font-size: 16px;
     border-radius: 30px;
     border: none;
-    color: #001030;
+    color: var(--black);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #ffffff;
-}
-
-.Root:not(:last-child) {
-    margin-right: 5px;
+    background: transparent;
+    position: relative;
 }
 
 .Root:hover {
-    background: #edf1ff;
+    background: hsla(236, 46%, 72%, 0.2);
     border: none;
     cursor: pointer;
+}
+
+.Active {
+    background: hsla(236, 46%, 72%, 0.2);
 }
 
 .Mini {
@@ -29,7 +30,7 @@
 
 .Primary {
     background: linear-gradient(71.97deg, #001aff 11.94%, #084eff 37.82%, #17aeff 85.88%);
-    color: #ffffff;
+    color: var(--white);
 }
 
 .Primary:hover {

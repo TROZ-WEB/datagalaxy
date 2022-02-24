@@ -73,7 +73,7 @@ const SearchForm = () => {
                                                 entity={entity}
                                                 onClick={() => {
                                                     updateSelectedEntity(entity);
-                                                    history.push(`/app/entities/${entity.id}`);
+                                                    history.push(`/app/entities/${entity.id}/`);
                                                 }}
                                                 alwaysExpanded
                                             />

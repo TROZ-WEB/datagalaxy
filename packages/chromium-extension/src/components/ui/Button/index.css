@@ -9,7 +9,7 @@
 
 .Contained {
     background: linear-gradient(71.97deg, #001aff 11.94%, #084eff 37.82%, #17aeff 85.88%);
-    color: #ffffff;
+    color: var(--white);
     border: none;
 }
 
@@ -19,8 +19,8 @@
 
 .Outlined {
     background: none;
-    color: #001030;
-    border: 1px solid rgba(2, 42, 142, 0.1);
+    color: var(--black);
+    border: 1px solid var(--trans-reflex);
 }
 
 .Outlined:hover {

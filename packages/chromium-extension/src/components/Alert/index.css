@@ -6,13 +6,13 @@
 }
 
 .warning {
-    color: #cd3835;
+    color: var(--warning);
     background-color: #f2dede;
     border: 1px solid #ebccd1;
 }
 
 .success {
-    color: #155724;
+    color: var(--success);
     background-color: #d4edda;
     border: 1px solid #c3e6cb;
 }

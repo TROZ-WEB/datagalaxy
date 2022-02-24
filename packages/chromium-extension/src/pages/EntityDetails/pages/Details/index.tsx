@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import { EntityType } from 'shared';
 import Accordion from '../../../../components/Accordion';
 import Status from '../../../../components/Entity/Status';
 import Tags from '../../../../components/Entity/Tags';
-import SearchCardResult from '../../../../components/SearchForm/SearchCardResult';
 import { useStoreState } from '../../../../store/hooks';
 import styles from './index.css';
 
-const Details = () => {
-    const initialEntity = useStoreState((state) => state.search.selectedEntity);
+interface DetailsProps {
+    entity: EntityType;
+    setEntity: Dispatch<SetStateAction<EntityType>>;
+}
+
+const Details = ({ entity, setEntity }: DetailsProps) => {
     const fullyLoadedEntity = useStoreState((state) => state.entity.displayedEntity);
 
     // Initialize the entity with data coming from search to be able to
     // display some information instantly
-    const [entity, setEntity] = useState<EntityType>(initialEntity);
     const [loaded, setLoaded] = useState<boolean>(false);
 
     useEffect(() => {
@@ -25,7 +27,6 @@ const Details = () => {
 
     return (
         <div className={styles.Root}>
-            <SearchCardResult ellipseBreadCrumb={9} entity={entity} alwaysExpanded />
             {loaded && (
                 <div className={styles.AccordionWrapper}>
                     <Accordion title={chrome.i18n.getMessage(`entity_details_sections_general`)} initialOpen>
@@ -63,6 +64,7 @@ Details.SubInfo = ({ title, children }: { title: string; children: React.ReactNo
         </div>
     );
 };
+
 Details.Separator = () => {
     return <div className={styles.Separator} />;
 };

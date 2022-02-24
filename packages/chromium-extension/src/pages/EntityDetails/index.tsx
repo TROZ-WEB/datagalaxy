@@ -1,11 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
+import { EntityType } from 'shared';
 import VerticalMenu from '../../components/Entity/VerticalMenu';
+import SearchCardResult from '../../components/SearchForm/SearchCardResult/index';
 import { useStoreDispatch, useStoreActions, useStoreState } from '../../store/hooks';
 import Details from './pages/Details';
 import styles from './index.css';
 
 const EntityDetails = () => {
+    const initialEntity = useStoreState((state) => state.search.selectedEntity);
+    const [entity, setEntity] = useState<EntityType>(initialEntity);
     const { path } = useRouteMatch();
     const quickEntityFromSearch = useStoreState((state) => state.search.selectedEntity);
 
@@ -28,19 +32,22 @@ const EntityDetails = () => {
     }, [dispatch]);
 
     return (
-        <div className={styles.Root}>
-            <VerticalMenu />
-            <div className={styles.Content}>
-                <Switch>
-                    <Route path={`${path}/insights`} exact>
-                        To implements
-                    </Route>
-                    <Route path={`${path}/`} exact>
-                        <Details />
-                    </Route>
-                </Switch>
+        <>
+            <SearchCardResult ellipseBreadCrumb={9} entity={entity} alwaysExpanded />
+            <div className={styles.Container}>
+                <VerticalMenu entity={entity} />
+                <div className={styles.Content}>
+                    <Switch>
+                        <Route path={`${path}/insights`} exact>
+                            To implements
+                        </Route>
+                        <Route path={`${path}/`} exact>
+                            <Details entity={entity} setEntity={setEntity} />
+                        </Route>
+                    </Switch>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 

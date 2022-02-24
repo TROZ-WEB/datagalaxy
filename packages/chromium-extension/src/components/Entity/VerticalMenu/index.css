@@ -2,36 +2,8 @@
     width: 54px;
     display: flex;
     flex-direction: column;
-}
-
-.MenuItem {
+    align-content: center;
     background-color: var(--pale-reflex);
-    width: 54px;
-    height: 54px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    color: #989CD9;
-    border: none;
-}
-
-.MenuItemActiv {
-    color: var(--reflex);
-}
-
-.MenuItemIcon {
-    width: 20px;
-    height: 20px;
-}
-
-.BackButton {
-    background-color: rgba(2, 42, 142, 0.1);
-    color: var(--black);
-}
-
-.BackButtonIcon {
-    width: 24px;
-    height: 24px;
+    height: 100%;
+    padding: 16px 0px;
 }

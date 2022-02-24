@@ -1,6 +1,6 @@
 .Root {
     border-radius: 50%;
-    border: 1px solid #ffffff;
+    border: 1px solid var(--white);
 }
 
 .normal {
@@ -18,7 +18,7 @@
 
 .FakeAvatar {
     font-size: 14px;
-    color: #ffffff;
+    color: var(--white);
     display: flex;
     justify-content: center;
     align-items: center;

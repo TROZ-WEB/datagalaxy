@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 3px;
-    border: 1px solid rgba(2, 42, 142, 0.1);
+    border: 1px solid var(--trans-reflex);
     transition: 150ms;
 }
 

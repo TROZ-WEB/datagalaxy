@@ -1,0 +1,49 @@
+.Root {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    border-radius: 30px;
+    border: none;
+    color: var(--reflex);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    position: relative;
+    margin: 0 0 8px 0;
+    align-self: center;
+}
+
+.Root:hover {
+    background: var(--trans-reflex);
+    border: none;
+    cursor: pointer;
+}
+
+.Disabled {
+    color: var(--trans-reflex);
+}
+
+.Disabled:hover {
+    background: transparent;
+}
+
+.Active {
+    background: var(--trans-reflex);
+}
+
+.Badge {
+    background-color: var(--grey);
+    height: 16px;
+    width: 16px;
+    border-radius: 16px;
+    font-size: 7px;
+    color: var(--white);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}

@@ -10,13 +10,13 @@
     display: flex;
     align-items: center;
     text-align: center;
-    color: #1035b1;
+    color: var(--reflex);
     font-weight: 700;
 }
 
 .Input {
-    background: #ffffff;
-    border: 1px solid rgba(2, 42, 142, 0.1);
+    background: var(--white);
+    border: 1px solid var(--trans-reflex);
     box-sizing: border-box;
     height: 42px;
     border-radius: 3px;
@@ -28,7 +28,7 @@
 }
 
 .HelperTextError {
-    color: red;
+    color: var(--warning);
     font-size: 0.75rem;
     margin-bottom: 3px;
 }
