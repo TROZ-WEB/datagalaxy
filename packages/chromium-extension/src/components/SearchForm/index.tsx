@@ -77,8 +77,8 @@ const SearchForm = () => {
                                     <div key={entity.id}>
                                         <div className={styles.SearchCardResultWrapper}>
                                             <SearchCardResult
-                                                EntityPage={false}
                                                 entity={entity}
+                                                entityPage={false}
                                                 onClick={() => {
                                                     updateSelectedEntity(entity);
                                                     history.push(`/app/entities/${entity.id}/`);
