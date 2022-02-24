@@ -1,5 +1,5 @@
 import cx from 'clsx';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, FC } from 'react';
 import { entitiesTypeRelatedInfos } from 'shared';
 import Breadcrumb from '../../Breadcrumb';
 import Status from '../../Entity/Status';
@@ -7,32 +7,40 @@ import Tags from '../../Entity/Tags';
 import UserProfile from '../../Entity/UserProfile';
 import OwnersStewardsSeparator from '../../OwnersStewardsSeparator';
 import Glyph from '../../ui/Glyph';
+import TechnicalLogoPlaceholder from '../../../../assets/technical-logo-placeholder.png';
 import styles from './index.css';
 
 const LIMIT_TAGS_ELLIPSE = 3;
-const isTechnical = (entity): boolean => entitiesTypeRelatedInfos[entity.type].kind === 'Technical';
 
-const SearchCardResult = ({
-    alwaysExpanded = false,
-    ellipseBreadCrumb,
-    entity,
-    onClick,
-}: {
+interface SearchCardResultProps {
     alwaysExpanded?: boolean;
     ellipseBreadCrumb?: number;
     entity: any;
+    EntityPage: boolean;
     onClick?: () => void;
+}
+
+const SearchCardResult: FC<SearchCardResultProps> = ({
+    alwaysExpanded = false,
+    ellipseBreadCrumb,
+    entity,
+    EntityPage,
+    onClick,
 }) => {
     const [isCardExpanded, setIsCardExpanded] = useState(alwaysExpanded);
     const [isMoreActionShown, setIsMoreActionsShown] = useState(false);
 
     const isRootEntity = useMemo<boolean>(() => entity?.path === `\\${entity?.name}`, [entity]);
+    const DGGlyph = entitiesTypeRelatedInfos[entity.type];
+
+    // TODO : Link to API (Waiting for API feature)
+    const isTechnicalLogo = true;
 
     return (
         <div>
             {entity && (
                 <div
-                    className={cx(styles.Root, isCardExpanded ? styles.CardExpanded : null, {
+                    className={cx(styles.Root, isCardExpanded && styles.CardExpanded, EntityPage && styles.EntityPage, {
                         [styles.CursorPointer]: !!onClick,
                     })}
                     onClick={onClick}
@@ -43,37 +51,47 @@ const SearchCardResult = ({
                     tabIndex={0}
                 >
                     <div className={styles.WrappedContainer}>
-                        {entitiesTypeRelatedInfos[entity.type] ? (
-                            <div
-                                className={cx(
-                                    styles.LeftSide,
-                                    isTechnical(entity) ? styles.TechnicalColor : styles.FunctionalColor,
-                                )}
-                                title={chrome.i18n.getMessage(`entity_label_full_${entity.type}`)}
-                            >
-                                <div
-                                    className={cx(
-                                        styles.LeftSideBackground,
-                                        isTechnical(entity)
-                                            ? styles.TechnicalColorBackground
-                                            : styles.FunctionalColorBackground,
-                                    )}
+                        <div
+                            className={styles.LeftSide}
+                            title={chrome.i18n.getMessage(`entity_label_full_${entity.type}`)}
+                        >
+                            {isTechnicalLogo ? (
+                                <>
+                                    <img
+                                        alt="Technical Logo"
+                                        className={styles.TechnicalLogo}
+                                        src={TechnicalLogoPlaceholder}
+                                    />
+                                    <div className={styles.EntityDGGlyphContainer}>
+                                        <Glyph
+                                            className={cx(styles.EntityDGGlyph, {
+                                                [styles.Dictionary]: DGGlyph.kind === 'Dictionary',
+                                                [styles.Dataprocessing]: DGGlyph.kind === 'Dataprocessing',
+                                                [styles.Glossary]: DGGlyph.kind === 'Glossary',
+                                                [styles.Uses]: DGGlyph.kind === 'Uses',
+                                            })}
+                                            icon={DGGlyph.glyph}
+                                        />
+                                    </div>
+                                </>
+                            ) : (
+                                <Glyph
+                                    className={cx(styles.BigEntityDGGlyph, {
+                                        [styles.Dictionary]: DGGlyph.kind === 'Dictionary',
+                                        [styles.Dataprocessing]: DGGlyph.kind === 'Dataprocessing',
+                                        [styles.Glossary]: DGGlyph.kind === 'Glossary',
+                                        [styles.Uses]: DGGlyph.kind === 'Uses',
+                                    })}
+                                    icon={DGGlyph.glyph}
                                 />
-                                <span className={styles.EntityGlyphWrapper}>
-                                    <Glyph icon={entitiesTypeRelatedInfos[entity.type].glyph} />
-                                </span>
-                                <span
-                                    className={cx(
-                                        styles.EntityTypeShortLabel,
-                                        isTechnical(entity) ? styles.TechnicalColor : styles.FunctionalColor,
-                                    )}
-                                >
+                            )}
+                            {!EntityPage && (
+                                <span className={styles.EntityTypeShortLabel}>
                                     {chrome.i18n.getMessage(`entity_label_short_${entity.type}`)}
                                 </span>
-                            </div>
-                        ) : (
-                            <div className={cx(styles.LeftSide)} />
-                        )}
+                            )}
+                        </div>
+
                         <div className={styles.RightSide}>
                             {!isRootEntity && (
                                 <div className={styles.BreadcrumbWrapper}>

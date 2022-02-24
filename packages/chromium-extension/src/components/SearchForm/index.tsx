@@ -70,6 +70,7 @@ const SearchForm = () => {
                                     <div key={entity.id}>
                                         <div className={styles.SearchCardResultWrapper}>
                                             <SearchCardResult
+                                                EntityPage={false}
                                                 entity={entity}
                                                 onClick={() => {
                                                     updateSelectedEntity(entity);
