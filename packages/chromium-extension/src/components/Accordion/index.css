@@ -45,3 +45,16 @@
     max-height: 0;
     transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
 }
+
+.NormalTitle {
+    font-size: 14px;
+}
+
+.BigTitle {
+    font-size: 18px;
+}
+
+.Reversed {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}

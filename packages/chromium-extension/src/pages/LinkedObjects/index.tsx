@@ -6,12 +6,11 @@ import SearchCardResult from '../../components/SearchForm/SearchCardResult';
 import { useStoreDispatch, useStoreActions, useStoreState } from '../../store/hooks';
 import styles from './index.css';
 
-const LinkedEntities = () => {
+const LinkedObjects = () => {
     const quickEntityFromSearch = useStoreState((state) => state.search.selectedEntity);
     const history = useHistory();
 
     const dispatch = useStoreDispatch();
-    const { updateDisplayedEntity } = useStoreActions((actions) => actions.entity);
     const { updateSelectedEntity } = useStoreActions((actions) => actions.search);
 
     const linkedObjects = useStoreState((state) => state.entity.linkedObjects);
@@ -32,41 +31,44 @@ const LinkedEntities = () => {
             };
 
             fetchLinkedObjects();
-
-            return () => {
-                // Clear loaded entity in search model and entity model
-                updateDisplayedEntity(null);
-                updateSelectedEntity(null);
-            };
         }
 
         return () => {};
-    }, [dispatch]);
+    }, [dispatch, quickEntityFromSearch]);
 
     return (
         <div className={styles.Root}>
-            {Object.keys(linkedObjects).map((key) => {
-                return (
-                    <div className={styles.AccordionWrapper}>
-                        <Accordion title={chrome.i18n.getMessage(key)} initialOpen>
-                            {linkedObjects[key].map((linkedObject) => {
-                                return (
-                                    <SearchCardResult
-                                        entity={linkedObject}
-                                        onClick={() => {
-                                            updateSelectedEntity(linkedObject);
-                                            history.push(`/app/entities/${linkedObject.id}/`);
-                                        }}
-                                        alwaysExpanded
-                                    />
-                                );
-                            })}
-                        </Accordion>
-                    </div>
-                );
-            })}
+            {linkedObjects &&
+                Object.keys(linkedObjects).map((key) => {
+                    return (
+                        <div key={key} className={styles.AccordionWrapper}>
+                            <Accordion
+                                openButtonPosition="left"
+                                sizeOfTitle="big"
+                                title={chrome.i18n.getMessage(key)}
+                                initialOpen
+                            >
+                                <div className={styles.SearchCardsResultWrapper}>
+                                    {linkedObjects[key].map((linkedObject) => {
+                                        return (
+                                            <SearchCardResult
+                                                key={linkedObject.id}
+                                                entity={linkedObject}
+                                                onClick={() => {
+                                                    updateSelectedEntity(linkedObject);
+                                                    history.push(`/app/entities/${linkedObject.id}/`);
+                                                }}
+                                                alwaysExpanded
+                                            />
+                                        );
+                                    })}
+                                </div>
+                            </Accordion>
+                        </div>
+                    );
+                })}
         </div>
     );
 };
 
-export default LinkedEntities;
+export default LinkedObjects;

@@ -1,5 +1,5 @@
 import cx from 'clsx';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import ArrowDrop from '../../../assets/icons/arrow-drop-up.svg';
 import styles from './index.css';
 
@@ -7,20 +7,41 @@ const Accordion = ({
     initialOpen = false,
     title,
     children,
+    openButtonPosition = 'right',
+    sizeOfTitle = 'normal',
 }: {
     initialOpen?: boolean;
     title: string;
     children?: React.ReactNode;
+    openButtonPosition?: string;
+    sizeOfTitle?: string;
 }) => {
     const [isOpen, setOpen] = useState(initialOpen);
 
+    const computedTitleClass = useMemo(() => {
+        switch (sizeOfTitle) {
+            case 'normal':
+                return 'NormalTitle';
+            case 'big':
+                return 'BigTitle';
+            default:
+                return 'NormalTitle';
+        }
+    }, [sizeOfTitle]);
+
     return (
         <div className={styles.Root}>
-            <button className={styles.Header} onClick={() => setOpen(!isOpen)} type="button">
-                <span>{title}</span>
+            <button
+                className={cx(styles.Header, { [styles.Reversed]: openButtonPosition === 'left' })}
+                onClick={() => setOpen(!isOpen)}
+                type="button"
+            >
+                <span className={styles[computedTitleClass]}>{title}</span>
                 <img
                     alt="Arrow icon"
-                    className={cx(styles.ArrowDrop, { [styles.ArrowDropUp]: !isOpen })}
+                    className={cx(styles.ArrowDrop, {
+                        [styles.ArrowDropUp]: !isOpen,
+                    })}
                     src={ArrowDrop}
                 />
             </button>

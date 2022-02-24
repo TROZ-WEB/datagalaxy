@@ -24,7 +24,7 @@ export const fetchLinkedObjects = async (
 ): Promise<any> => {
     try {
         const response = await get<any>(
-            dataType === DataTypeMapping.Property // TODO: API Ignore technical for properties, should be fix in a moment
+            dataType === DataTypeMapping.Property // TODO: API WORKAROUNG 1 - Api ignore technicalName for properties type
                 ? `${apiUrl}/${dataType}?includeLinks=true&name=${name}&type=${type}&versionId=${versionId}`
                 : `${apiUrl}/${dataType}?includeLinks=true&technicalName=${name}&type=${type}&versionId=${versionId}`,
         );
