@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../store/hooks';
 import HorizontalSeparator from '../HorizontalSeparator';
@@ -17,6 +17,8 @@ const SearchForm = () => {
     const { searchedArgs, searchResults } = useStoreState((state) => state.search);
     const { updateSelectedEntity } = useStoreActions((actions) => actions.search);
     const dispatch = useStoreDispatch();
+
+    const { updateDisplayedEntity } = useStoreActions((actions) => actions.entity);
 
     const debounceOnChange = async ({ value }) => {
         if (value) {
@@ -38,6 +40,11 @@ const SearchForm = () => {
         debounceDuration: 1000,
         debounceOnChange,
         initialState: { value: searchedArgs.term },
+    });
+
+    useEffect(() => {
+        updateDisplayedEntity(null);
+        updateSelectedEntity(null);
     });
 
     return (

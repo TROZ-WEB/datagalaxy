@@ -384,5 +384,155 @@
   },
   "account_update_pat_successful": {
     "message": "Your access key has been updated successfully"
+  },
+  "navigation_back": {
+    "message": "Back"
+  },
+  "IsParentOfTableColumnCatalogException": {
+    "message": "is Parent Of"
+  },
+  "IsChildOfTableColumnCatalogException": {
+    "message": "is Child Of"
+  },
+  "IsImplementedBy": {
+    "message": "is Implemented By"
+  },
+  "Implements": {
+    "message": "implements"
+  },
+  "IsUsedBy": {
+    "message": "is Used By"
+  },
+  "Uses": {
+    "message": "uses"
+  },
+  "IsInputOf": {
+    "message": "is Input Of"
+  },
+  "HasInput": {
+    "message": "has Input"
+  },
+  "IsOutputOf": {
+    "message": "is Output Of"
+  },
+  "HasOutput": {
+    "message": "has Output"
+  },
+  "EntityLink": {
+    "message": "is Linked To"
+  },
+  "IsInputSourceOf": {
+    "message": "is Input Source Of"
+  },
+  "HasInputSource": {
+    "message": "has Input Source"
+  },
+  "IsOutputSourceOf": {
+    "message": "is Output Source Of"
+  },
+  "HasOutputSource": {
+    "message": "has Output Source"
+  },
+  "IsSynonymOf": {
+    "message": "is a synonym of"
+  },
+  "Generalizes": {
+    "message": "generalizes"
+  },
+  "Specializes": {
+    "message": "specializes"
+  },
+  "IsComputedBy": {
+    "message": "is computed by"
+  },
+  "IsUsedForComputationOf": {
+    "message": "is used for computation of"
+  },
+  "IsParentOfGeneric": {
+    "message": "is parent of"
+  },
+  "IsChildOfGeneric": {
+    "message": "is child of"
+  },
+  "DependsOn": {
+    "message": "depends on"
+  },
+  "IsNeededBy": {
+    "message": "is needed by"
+  },
+  "IsLinkedTo": {
+    "message": "is linked to"
+  },
+  "ListsValuesFor": {
+    "message": "lists values for"
+  },
+  "HasForReferenceData": {
+    "message": "has for Reference Data"
+  },
+  "IsDeclinedAccordingToDimension": {
+    "message": "is declined according to the dimension"
+  },
+  "Declines": {
+    "message": "declines"
+  },
+  "Precedes": {
+    "message": "precedes"
+  },
+  "Follows": {
+    "message": "follows"
+  },
+  "IsUniverseOf": {
+    "message": "is the universe of"
+  },
+  "HasForUniverse": {
+      "message": "has for universe"
+  },
+  "IsDomainOf": {
+    "message": "is the domain of"
+  },
+  "HasForDomain": {
+    "message": "has for domain"
+  },
+  "Regroups": {
+    "message": "regroups"
+  },
+  "IsPartOfDimension": {
+    "message": "is part of dimension"
+  },
+  "IsSourceOf": {
+    "message": "is source of"
+  },
+  "HasForSource": {
+    "message": "has for source"
+  },
+  "IsRecordingSystemFor": {
+    "message": "is recording system for"
+  },
+  "HasForRecordingSystem": {
+    "message": "has for recording system"
+  },
+  "HasForUsageSource": {
+    "message": "has for usage source"
+  },
+  "IsUsageSourceFor": {
+    "message": "is usage source for"
+  },
+  "HasForUsageDestination": {
+    "message": "has for usage destination"
+  },
+  "IsUsageDestinationFor": {
+    "message": "is usage destination for"
+  },
+  "IsCalledBy": {
+    "message": "is called by"
+  },
+  "Calls": {
+    "message": "calls"
+  },
+  "Transcodes": {
+    "message": "transcodes"
+  },
+  "Golden": {
+    "message": "Golden"
   }
 }

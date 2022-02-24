@@ -4,10 +4,10 @@ import { useLocation, useHistory } from 'react-router-dom';
 // import CommentDuo from '../../icons/CommentDuo';
 // import FileTasksCheck from '../../icons/FileTasksCheck';
 // import Notification from '../../icons/Notification';
-import ArrowLeft from '../../icons/ArrowLeft';
 import Search from '../../icons/Search';
 import { useStoreState } from '../../store/hooks';
 import Avatar from '../Avatar';
+import Back from '../../../assets/icons/back.svg';
 import WhiteLogo from '../../../assets/logo-icon.svg';
 import styles from './index.css';
 
@@ -21,7 +21,7 @@ function isHistoryRoot(h: any) {
         return false;
     }
 
-    if (h.length === 1) {
+    if (h.length === 1 || h.location.pathname === '/app/search') {
         return true;
     }
 
@@ -62,6 +62,9 @@ const Menu = () => {
     return (
         <div className={styles.Root}>
             <div className={styles.flex}>
+                <a href={url} rel="noreferrer" target="_blank">
+                    <img alt="Datagalaxy logo" className={styles.Logo} src={WhiteLogo} />
+                </a>
                 {canGoBack && (
                     <button
                         className={cx(styles.TopMenuItem, styles.BackButton)}
@@ -70,12 +73,12 @@ const Menu = () => {
                         }}
                         type="button"
                     >
-                        <ArrowLeft className={styles.BackButtonIcon} />
+                        <div className={styles.flex}>
+                            <img alt="back" className={styles.BackButtonIcon} src={Back} />
+                            <span className={styles.backText}>{chrome.i18n.getMessage(`navigation_back`)}</span>
+                        </div>
                     </button>
                 )}
-                <a href={url} rel="noreferrer" target="_blank">
-                    <img alt="Datagalaxy logo" className={styles.Logo} src={WhiteLogo} />
-                </a>
             </div>
             <div className={styles.MenuItemsContainer}>
                 {menuItems.map(({ icon, path }) => (

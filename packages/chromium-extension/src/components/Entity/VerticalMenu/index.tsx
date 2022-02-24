@@ -28,7 +28,7 @@ const VerticalMenu: FC<VerticalMenuProps> = ({ entity }) => {
                 variant={currentLocation === 'linked-objects' && 'active'}
             />
             <VerticalMenuButton
-                badgeCount={entity.childrenCount}
+                badgeCount={entity?.childrenCount}
                 icon="Mapping"
                 onClick={() => history.replace(`${path}/descendants`)}
                 variant={currentLocation === 'descendants' && 'active'}

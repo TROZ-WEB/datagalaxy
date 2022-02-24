@@ -3,7 +3,8 @@ import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import { EntityType } from 'shared';
 import VerticalMenu from '../../components/Entity/VerticalMenu';
 import SearchCardResult from '../../components/SearchForm/SearchCardResult/index';
-import { useStoreDispatch, useStoreActions, useStoreState } from '../../store/hooks';
+import { useStoreDispatch, useStoreState } from '../../store/hooks';
+import LinkedObjects from '../LinkedObjects';
 import Details from './pages/Details';
 import styles from './index.css';
 
@@ -14,8 +15,6 @@ const EntityDetails = () => {
     const quickEntityFromSearch = useStoreState((state) => state.search.selectedEntity);
 
     const dispatch = useStoreDispatch();
-    const { updateDisplayedEntity } = useStoreActions((actions) => actions.entity);
-    const { updateSelectedEntity } = useStoreActions((actions) => actions.search);
 
     useEffect(() => {
         const fetchEntity = async () => {
@@ -23,13 +22,7 @@ const EntityDetails = () => {
         };
 
         fetchEntity();
-
-        return () => {
-            // Clear loaded entity in search model and entity model
-            updateDisplayedEntity(null);
-            updateSelectedEntity(null);
-        };
-    }, [dispatch]);
+    }, [dispatch, quickEntityFromSearch]);
 
     return (
         <>
@@ -43,6 +36,9 @@ const EntityDetails = () => {
                         </Route>
                         <Route path={`${path}/`} exact>
                             <Details entity={entity} setEntity={setEntity} />
+                        </Route>
+                        <Route path={`${path}/linked-objects`} exact>
+                            <LinkedObjects />
                         </Route>
                     </Switch>
                 </div>

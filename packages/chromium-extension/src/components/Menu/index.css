@@ -64,3 +64,8 @@
     display: flex;
     margin-left: 20px;
 }
+
+.backText {
+    color: white;
+    margin-left: 12px;
+}

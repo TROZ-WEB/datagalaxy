@@ -384,5 +384,155 @@
   },
   "account_update_pat_successful": {
     "message": "Votre clé d'accès a été mise à jour correctement"
+  },
+  "navigation_back": {
+    "message": "Retour"
+  },
+  "IsParentOfTableColumnCatalogException": {
+    "message": "est parent de"
+  },
+  "IsChildOfTableColumnCatalogException": {
+    "message": "est enfant de"
+  },
+  "IsImplementedBy": {
+    "message": "est implémenté par"
+  },
+  "Implements": {
+    "message": "implémente"
+  },
+  "IsUsedBy": {
+    "message": "est utilisé par"
+  },
+  "Uses": {
+    "message": "utilise"
+  },
+  "IsInputOf": {
+    "message": "est une entrée pour"
+  },
+  "HasInput": {
+    "message": "a pour entrée"
+  },
+  "IsOutputOf": {
+    "message": "est une sortie pour"
+  },
+  "HasOutput": {
+    "message": "a pour sortie"
+  },
+  "EntityLink": {
+    "message": "est lié à"
+  },
+  "IsInputSourceOf": {
+    "message": "est une source en entrée pour"
+  },
+  "HasInputSource": {
+    "message": "a pour source en entrée"
+  },
+  "IsOutputSourceOf": {
+    "message": "est une source en sortie pour"
+  },
+  "HasOutputSource": {
+    "message": "a pour source en sortie"
+  },
+  "IsSynonymOf": {
+    "message": "est un synonyme de"
+  },
+  "Generalizes": {
+    "message": "généralise"
+  },
+  "Specializes": {
+    "message": "spécialise"
+  },
+  "IsComputedBy": {
+    "message": "est calculé par"
+  },
+  "IsUsedForComputationOf": {
+    "message": "participe au calcul de"
+  },
+  "IsParentOfGeneric": {
+    "message": "est parent de"
+  },
+  "IsChildOfGeneric": {
+    "message": "a pour parent"
+  },
+  "DependsOn": {
+    "message": "dépend de"
+  },
+  "IsNeededBy": {
+    "message": "est nécessaire à"
+  },
+  "IsLinkedTo": {
+    "message": "est lié à"
+  },
+  "ListsValuesFor": {
+    "message": "liste les valeurs pour"
+  },
+  "HasForReferenceData": {
+    "message": "a pour nomenclature"
+  },
+  "Declines": {
+    "message": "décline"
+  },
+  "IsDeclinedAccordingToDimension": {
+    "message": "se décline selon la dimension"
+  },
+  "Precedes": {
+    "message": "précède"
+  },
+  "Follows": {
+    "message": "suit"
+  },
+  "IsUniverseOf": {
+    "message": "est l'univers pour"
+  },
+  "HasForUniverse": {
+    "message": "a pour univers"
+  },
+  "IsDomainOf": {
+    "message": "est un domaine pour"
+  },
+  "HasForDomain": {
+    "message": "a pour domaine"
+  },
+  "Regroups": {
+    "message": "regroupe"
+  },
+  "IsPartOfDimension": {
+    "message": "fait partie de la dimension"
+  },
+  "IsSourceOf": {
+    "message": "est une source de donnée pour"
+  },
+  "HasForSource": {
+    "message": "a pour source de donnée"
+  },
+  "IsRecordingSystemFor": {
+    "message": "est un système d’enregistrement pour"
+  },
+  "HasForRecordingSystem": {
+    "message": "a pour système d’enregistrement"
+  },
+  "HasForUsageSource": {
+    "message": "a pour usage source"
+  },
+  "IsUsageSourceFor": {
+    "message": "est un usage source pour"
+  },
+  "HasForUsageDestination": {
+    "message": "a pour usage destination"
+  },
+  "IsUsageDestinationFor": {
+    "message": "est un usage destination pour"
+  },
+  "IsCalledBy": {
+    "message": "est appelé par"
+  },
+  "Calls": {
+    "message": "fait appel à"
+  },
+  "Transcodes": {
+    "message": "transcode"
+  },
+  "Golden": {
+    "message": "Golden"
   }
 }
