@@ -16,7 +16,7 @@ interface SearchCardResultProps {
     alwaysExpanded?: boolean;
     ellipseBreadCrumb?: number;
     entity: any;
-    EntityPage: boolean;
+    entityPage: boolean;
     onClick?: () => void;
 }
 
@@ -24,14 +24,14 @@ const SearchCardResult: FC<SearchCardResultProps> = ({
     alwaysExpanded = false,
     ellipseBreadCrumb,
     entity,
-    EntityPage,
+    entityPage,
     onClick,
 }) => {
     const [isCardExpanded, setIsCardExpanded] = useState(alwaysExpanded);
     const [isMoreActionShown, setIsMoreActionsShown] = useState(false);
 
     const isRootEntity = useMemo<boolean>(() => entity?.path === `\\${entity?.name}`, [entity]);
-    const DGGlyph = entitiesTypeRelatedInfos[entity.type];
+    const { kind, glyph } = entitiesTypeRelatedInfos[entity.type];
 
     // TODO : Link to API (Waiting for API feature)
     const isTechnicalLogo = true;
@@ -40,7 +40,7 @@ const SearchCardResult: FC<SearchCardResultProps> = ({
         <div>
             {entity && (
                 <div
-                    className={cx(styles.Root, isCardExpanded && styles.CardExpanded, EntityPage && styles.EntityPage, {
+                    className={cx(styles.Root, isCardExpanded && styles.CardExpanded, entityPage && styles.entityPage, {
                         [styles.CursorPointer]: !!onClick,
                     })}
                     onClick={onClick}
@@ -65,27 +65,27 @@ const SearchCardResult: FC<SearchCardResultProps> = ({
                                     <div className={styles.EntityDGGlyphContainer}>
                                         <Glyph
                                             className={cx(styles.EntityDGGlyph, {
-                                                [styles.Dictionary]: DGGlyph.kind === 'Dictionary',
-                                                [styles.Dataprocessing]: DGGlyph.kind === 'Dataprocessing',
-                                                [styles.Glossary]: DGGlyph.kind === 'Glossary',
-                                                [styles.Uses]: DGGlyph.kind === 'Uses',
+                                                [styles.Dictionary]: kind === 'Dictionary',
+                                                [styles.Dataprocessing]: kind === 'Dataprocessing',
+                                                [styles.Glossary]: kind === 'Glossary',
+                                                [styles.Uses]: kind === 'Uses',
                                             })}
-                                            icon={DGGlyph.glyph}
+                                            icon={glyph}
                                         />
                                     </div>
                                 </>
                             ) : (
                                 <Glyph
                                     className={cx(styles.BigEntityDGGlyph, {
-                                        [styles.Dictionary]: DGGlyph.kind === 'Dictionary',
-                                        [styles.Dataprocessing]: DGGlyph.kind === 'Dataprocessing',
-                                        [styles.Glossary]: DGGlyph.kind === 'Glossary',
-                                        [styles.Uses]: DGGlyph.kind === 'Uses',
+                                        [styles.Dictionary]: kind === 'Dictionary',
+                                        [styles.Dataprocessing]: kind === 'Dataprocessing',
+                                        [styles.Glossary]: kind === 'Glossary',
+                                        [styles.Uses]: kind === 'Uses',
                                     })}
-                                    icon={DGGlyph.glyph}
+                                    icon={glyph}
                                 />
                             )}
-                            {!EntityPage && (
+                            {!entityPage && (
                                 <span className={styles.EntityTypeShortLabel}>
                                     {chrome.i18n.getMessage(`entity_label_short_${entity.type}`)}
                                 </span>

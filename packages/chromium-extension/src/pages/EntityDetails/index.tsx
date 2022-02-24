@@ -26,7 +26,7 @@ const EntityDetails = () => {
 
     return (
         <>
-            <SearchCardResult ellipseBreadCrumb={9} entity={entity} EntityPage alwaysExpanded />
+            <SearchCardResult ellipseBreadCrumb={9} entity={entity} alwaysExpanded entityPage />
             <div className={styles.Container}>
                 <VerticalMenu entity={entity} />
                 <div className={styles.Content}>

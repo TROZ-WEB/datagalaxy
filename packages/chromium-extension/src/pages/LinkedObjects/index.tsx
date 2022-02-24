@@ -59,6 +59,7 @@ const LinkedObjects = () => {
                                                     history.push(`/app/entities/${linkedObject.id}/`);
                                                 }}
                                                 alwaysExpanded
+                                                entityPage
                                             />
                                         );
                                     })}
