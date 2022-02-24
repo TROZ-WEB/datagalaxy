@@ -2,18 +2,19 @@
 export type FieldStatus = 'Proposed' | 'InRevision' | 'InValidation' | 'Validated' | 'Obsolete';
 
 export interface EntityType {
-    id: string;
-    name: string;
-    technicalName: string;
-    type: string;
-    path: string;
-    location: string;
     attributes?: {
+        description: string;
         owners: string[];
-        stewards: string[];
         status: string;
+        stewards: string[];
         summary: string;
         tags: string[];
-        description: string;
     };
+    childrenCount: number;
+    id: string;
+    location: string;
+    name: string;
+    path: string;
+    technicalName: string;
+    type: string;
 }
