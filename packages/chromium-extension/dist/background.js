@@ -1,6 +1,6 @@
 function openExtension() {
     const root = window.document.getElementById('datagalaxy_root');
-    root.classList.add('datagalaxy_root--show');
+    root.classList.toggle('datagalaxy_root--show');
 }
 
 chrome.action.onClicked.addListener((tab) => {
