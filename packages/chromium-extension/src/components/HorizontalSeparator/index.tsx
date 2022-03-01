@@ -1,8 +1,17 @@
 import React from 'react';
-import styles from './index.css';
+import styled from 'styled-components';
+
+/* ---------- STYLES ---------- */
+
+const SRoot = styled.span`
+    border-bottom: 1px solid #f3f6ff;
+    display: block;
+`;
+
+/* ---------- COMPONENT ---------- */
 
 const HorizontalSeparator = () => {
-    return <span className={styles.Root} />;
+    return <SRoot />;
 };
 
 export default HorizontalSeparator;

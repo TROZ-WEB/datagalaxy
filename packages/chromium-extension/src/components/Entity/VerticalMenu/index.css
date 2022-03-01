@@ -1,9 +1,0 @@
-.Root {
-    width: 54px;
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    background-color: var(--pale-reflex);
-    height: 100%;
-    padding: 16px 0px;
-}

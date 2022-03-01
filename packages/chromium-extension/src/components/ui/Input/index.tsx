@@ -1,6 +1,44 @@
-import cx from 'clsx';
 import React from 'react';
-import styles from './index.css';
+import styled from 'styled-components';
+
+/* ---------- STYLES ---------- */
+
+const SHelperTextError = styled.p`
+    color: #cd3835;
+    font-size: 0.75rem;
+    margin-bottom: 3px;
+`;
+
+const SInput = styled.input`
+    background: #ffffff;
+    border: 1px solid rgba(2, 42, 142, 0.1);
+    box-sizing: border-box;
+    height: 42px;
+    border-radius: 3px;
+    padding: 16px;
+
+    &:disabled {
+        color: #6d6f88;
+    }
+`;
+
+const SLabel = styled.label`
+    font-size: 12px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #1035b1;
+    font-weight: 700;
+`;
+
+const SRoot = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+`;
+
+/* ---------- COMPONENT ---------- */
 
 interface InputProps {
     name: string;
@@ -15,24 +53,19 @@ interface InputProps {
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ({ label, name, type = 'text', errors, placeholder, disabled = false, readOnly = false, ...rest }, ref) => {
         return (
-            <div className={styles.Root}>
-                <label className={styles.Label} htmlFor={name}>
-                    {label}
-                </label>
-                {errors && errors[name] && <p className={styles.HelperTextError}>{errors[name].message}</p>}
-                <input
+            <SRoot>
+                <SLabel htmlFor={name}>{label}</SLabel>
+                {errors && errors[name] && <SHelperTextError>{errors[name].message}</SHelperTextError>}
+                <SInput
                     ref={ref}
-                    className={cx(styles.Input, {
-                        [styles.Disabled]: disabled || readOnly,
-                    })}
-                    disabled={disabled}
+                    disabled={disabled || readOnly}
                     name={name}
                     placeholder={placeholder}
                     readOnly={readOnly}
                     type={type}
                     {...rest}
                 />
-            </div>
+            </SRoot>
         );
     },
 );

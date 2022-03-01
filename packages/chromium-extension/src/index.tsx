@@ -1,11 +1,12 @@
 import { createStore, StoreProvider, useStoreRehydrated, persist } from 'easy-peasy';
 import React from 'react';
 import * as ReactDOM from 'react-dom';
+import root from 'react-shadow/styled-components';
 import LoadingScreen from './components/LoadingScreen';
 import Popup from './pages/Popup';
 import AsyncStorageService from './Services/AsyncStorageService';
 import storeModel from './store/store';
-import './index.css';
+import { Fonts, Scrollbar } from './Theme';
 
 /**
  * Before displaying the app, we
@@ -18,20 +19,20 @@ const App = () => {
     return isRehydrated ? <Popup /> : <LoadingScreen />;
 };
 
-const initializeApp = async () => {
-    const app = document.createElement('div');
-    app.id = 'datagalaxy_root';
-    document.body.appendChild(app);
+storeModel().then((models) => {
+    const container = document.createElement('div');
+    container.id = 'datagalaxy_container';
+    document.documentElement.appendChild(container);
 
-    const models = await storeModel();
     const store = createStore(persist(models, { storage: AsyncStorageService }));
-
     ReactDOM.render(
         <StoreProvider store={store}>
-            <App />
+            <Fonts />
+            <root.div>
+                <Scrollbar />
+                <App />
+            </root.div>
         </StoreProvider>,
-        app,
+        container,
     );
-};
-
-initializeApp();
+});

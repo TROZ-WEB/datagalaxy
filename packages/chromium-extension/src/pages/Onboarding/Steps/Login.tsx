@@ -1,11 +1,48 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useRouteMatch } from 'react-router-dom';
+import styled from 'styled-components';
 import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/Input';
 import { useStoreActions, useStoreState } from '../../../store/hooks';
 import { StepProps } from '../Stepper';
-import styles from './index.css';
+
+/* ---------- STYLES ---------- */
+
+const SButtonWrapper = styled.div`
+    margin-top: 42px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+`;
+
+const SFindPatHelper = styled.div`
+    text-align: right;
+    margin-top: 1px;
+
+    & > a {
+        color: #1035b1;
+        text-decoration: underline;
+        font-size: 10px;
+        line-height: 13px;
+
+        &::hover,
+        &::focus {
+            color: #001030;
+        }
+    }
+`;
+
+const SStepTitle = styled.p`
+    margin-top: 25px;
+    margin-bottom: 21px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 17px;
+    text-align: center;
+`;
+
+/* ---------- COMPONENT ---------- */
 
 type FormData = {
     email: string;
@@ -65,7 +102,7 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
 
     return (
         <form onSubmit={onSubmit}>
-            <p className={styles.StepTitle}>{chrome.i18n.getMessage('onboarding_login_stepTitle')}</p>
+            <SStepTitle>{chrome.i18n.getMessage('onboarding_login_stepTitle')}</SStepTitle>
             <Input
                 errors={errors}
                 label={chrome.i18n.getMessage('onboarding_login_inputEmailLabel')}
@@ -77,12 +114,12 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
                 type="password"
                 {...register('pat', { required: true })}
             />
-            <div className={styles.FindPatHelper}>
+            <SFindPatHelper>
                 <Link to={`${url}/find-pat-helper`}>{chrome.i18n.getMessage('onboarding_login_findMyPat')}</Link>
-            </div>
-            <div className={styles.ButtonWrapper}>
+            </SFindPatHelper>
+            <SButtonWrapper>
                 <Button type="submit">{chrome.i18n.getMessage('onboarding_login_submitForm')}</Button>
-            </div>
+            </SButtonWrapper>
         </form>
     );
 };

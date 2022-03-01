@@ -1,7 +1,41 @@
-import cx from 'clsx';
 import React from 'react';
-import styles from './index.css';
+import styled from 'styled-components';
 
+/* ---------- STYLES ---------- */
+
+const SRoot = styled.button`
+    padding: 11px 15px;
+    border-radius: 3px;
+    font-size: 14px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    ${(props) =>
+        props.variant === 'contained' &&
+        `background: linear-gradient(71.97deg, #001aff 11.94%, #084eff 37.82%, #17aeff 85.88%);
+        color: #ffffff;
+        border: none;`}
+    ${(props) =>
+        props.variant === 'contained' &&
+        `&:hover, &:focus {
+        background: linear-gradient(90deg, #0016d7, #0297e6);
+    }`}
+
+    ${(props) =>
+        props.variant === 'outlined' &&
+        `background: none;
+        color: #001030;
+        border: 1px solid rgba(2, 42, 142, 0.1)`}
+    ${(props) =>
+        props.variant === 'outlined' &&
+        `&:hover, &:focus {
+        background: linear-gradient(71.97deg, #001aff 11.94%, #084eff 37.82%, #17aeff 85.88%);
+    }`}
+`;
+
+/* ---------- COMPONENT ---------- */
 interface Props {
     children: React.ReactNode;
     type?: 'button' | 'submit' | 'reset';
@@ -11,18 +45,15 @@ interface Props {
 
 const Button: React.FC<Props> = ({ children, onClick, type = 'button', variant = 'contained', ...rest }) => {
     return (
-        <button
-            className={cx(styles.Root, {
-                [styles.Contained]: variant === 'contained',
-                [styles.Outlined]: variant === 'outlined',
-            })}
+        <SRoot
             onClick={onClick}
-            // eslint-disable-next-line react/button-has-type
             type={type}
+            // eslint-disable-next-line react/button-has-type
+            variant={variant}
             {...rest}
         >
             {children}
-        </button>
+        </SRoot>
     );
 };
 

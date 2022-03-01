@@ -1,8 +1,45 @@
 import React from 'react';
 import { UserType } from 'shared';
+import styled from 'styled-components';
 import Avatar from '../../Avatar';
 import Glyph from '../../ui/Glyph';
-import styles from './index.css';
+
+/* ---------- STYLES ---------- */
+
+const SAvatarWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`;
+
+const SRole = styled.span`
+    font-weight: 700;
+    font-size: 10px;
+    color: #1035b1;
+`;
+
+const SRoot = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`;
+
+const SGlyph = styled(Glyph)`
+    font-size: 12px !important;
+`;
+
+const STextInfoWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-right: 3px;
+    margin-left: 2px;
+`;
+
+const SUserName = styled.span`
+    font-size: 10px;
+`;
+
+/* ---------- COMPONENT ---------- */
 
 const LIMIT_AVATAR_ELLIPSE = 3;
 
@@ -18,8 +55,8 @@ const UserProfile = ({
     ellipsed?: boolean;
 }) => {
     return (
-        <div className={styles.Root}>
-            <div className={styles.AvatarWrapper}>
+        <SRoot>
+            <SAvatarWrapper>
                 {users?.map(
                     (user, index) =>
                         user && (
@@ -31,20 +68,20 @@ const UserProfile = ({
                             />
                         ),
                 )}
-            </div>
-            {users?.length > LIMIT_AVATAR_ELLIPSE && <Glyph className={styles.SmallGlyph} icon="Add" />}
+            </SAvatarWrapper>
+            {users?.length > LIMIT_AVATAR_ELLIPSE && <SGlyph icon="Add" />}
             {(users?.length <= LIMIT_AVATAR_ELLIPSE && ellipsed) ||
                 (!hideLabel && (
-                    <div className={styles.TextInfoWrapper}>
-                        <span className={styles.Role}>{chrome.i18n.getMessage(`entity_${governanceRole}`)}</span>
-                        <span className={styles.UserName}>
+                    <STextInfoWrapper>
+                        <SRole>{chrome.i18n.getMessage(`entity_${governanceRole}`)}</SRole>
+                        <SUserName>
                             {users?.length > 1
                                 ? chrome.i18n.getMessage('entity_steward_multiple', [users?.length])
                                 : `${users ? users[0].firstName : ''}. ${users ? users[0].lastName[0] : ''}`}
-                        </span>
-                    </div>
+                        </SUserName>
+                    </STextInfoWrapper>
                 ))}
-        </div>
+        </SRoot>
     );
 };
 

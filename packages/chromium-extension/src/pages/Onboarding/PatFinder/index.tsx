@@ -1,16 +1,35 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 import Button from '../../../components/ui/Button';
 import OnboardingLayout from '../Layout';
-import styles from './index.css';
+
+/* ---------- STYLES ---------- */
+
+const SHeader = styled.p`
+    font-weight: 700;
+    margin-bottom: 30px;
+`;
+
+const SRoot = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    padding: 16px;
+`;
+
+/* ---------- COMPONENT ---------- */
 
 const PatFinder = () => {
     const history = useHistory();
 
     return (
         <OnboardingLayout>
-            <div className={styles.Root}>
-                <p className={styles.Header}>{chrome.i18n.getMessage('onboarding_login_helpPAT')}</p>
+            <SRoot>
+                <SHeader>{chrome.i18n.getMessage('onboarding_login_helpPAT')}</SHeader>
                 {chrome.runtime.getManifest().current_locale.startsWith('en') ? (
                     <iframe
                         allow="autoplay; fullscreen; picture-in-picture"
@@ -33,7 +52,7 @@ const PatFinder = () => {
                 <Button onClick={() => history.goBack()}>
                     {chrome.i18n.getMessage('onboarding_patFinder_closeButton')}
                 </Button>
-            </div>
+            </SRoot>
         </OnboardingLayout>
     );
 };

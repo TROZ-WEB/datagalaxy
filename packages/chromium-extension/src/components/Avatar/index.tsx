@@ -1,7 +1,46 @@
-import cx from 'clsx';
 import React, { useCallback } from 'react';
 import { UserType } from 'shared';
-import styles from './index.css';
+import styled, { css } from 'styled-components';
+
+/* ---------- STYLES ---------- */
+
+const SPictureRoot = styled.img`
+    border-radius: 50%;
+    border: 1px solid #ffffff;
+
+    ${(props) =>
+        props.grouped &&
+        css`
+            margin-right: -5px;
+        `}
+
+    ${(props) =>
+        props.size === 'normal' &&
+        css`
+            width: 30px;
+            height: 30px;
+            border-width: 2px;
+        `}
+
+    ${(props) =>
+        props.size === 'mini' &&
+        css`
+            width: 20px;
+            height: 20px;
+            border-width: 1px;
+            font-size: 10px !important;
+        `}
+`;
+
+const SNoPictureRoot = styled(SPictureRoot)`
+    font-size: 14px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+/* ---------- COMPONENT ---------- */
 
 export enum CustomColors {
     White = 'white',
@@ -129,18 +168,21 @@ const Avatar = ({
 
     if (!user.profileThumbnailUrl) {
         return (
-            <span
-                className={cx(styles.Root, styles[size], styles.FakeAvatar, { [styles.GroupedAvatar]: grouped })}
+            <SNoPictureRoot
+                as="div"
+                grouped={grouped}
+                size={size}
                 style={{ backgroundColor: getColor() }}
-            >{`${user.firstName[0]}${user.lastName[0]}`}</span>
+            >{`${user.firstName[0]}${user.lastName[0]}`}</SNoPictureRoot>
         );
     }
 
     return (
         <div title={`${user.firstName}. ${user.lastName}`}>
-            <img
+            <SPictureRoot
                 alt={`${user.firstName}. ${user.lastName}`}
-                className={cx(styles.Root, styles[size], { [styles.GroupedAvatar]: grouped })}
+                grouped={grouped}
+                size={size}
                 src={user.profileThumbnailUrl}
             />
         </div>

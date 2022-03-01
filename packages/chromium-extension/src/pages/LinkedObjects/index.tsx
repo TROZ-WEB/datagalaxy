@@ -1,10 +1,29 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { DataTypeMapping } from 'shared';
+import styled from 'styled-components';
 import Accordion from '../../components/Accordion';
 import SearchCardResult from '../../components/SearchForm/SearchCardResult';
 import { useStoreDispatch, useStoreActions, useStoreState } from '../../store/hooks';
-import styles from './index.css';
+
+/* ---------- STYLES ---------- */
+
+const SAccordionWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    width: 100%;
+`;
+
+const SSearchCardsResultWrapper = styled.div`
+    overflow-y: scroll;
+    height: 392px;
+    margin-right: -17px;
+    padding-right: 3px;
+    margin-top: 15px;
+`;
+
+/* ---------- COMPONENT ---------- */
 
 const LinkedObjects = () => {
     const quickEntityFromSearch = useStoreState((state) => state.search.selectedEntity);
@@ -37,18 +56,18 @@ const LinkedObjects = () => {
     }, [dispatch, quickEntityFromSearch]);
 
     return (
-        <div className={styles.Root}>
+        <div>
             {linkedObjects &&
                 Object.keys(linkedObjects).map((key) => {
                     return (
-                        <div key={key} className={styles.AccordionWrapper}>
+                        <SAccordionWrapper>
                             <Accordion
                                 openButtonPosition="left"
                                 sizeOfTitle="big"
                                 title={chrome.i18n.getMessage(key)}
                                 initialOpen
                             >
-                                <div className={styles.SearchCardsResultWrapper}>
+                                <SSearchCardsResultWrapper>
                                     {linkedObjects[key].map((linkedObject) => {
                                         return (
                                             <SearchCardResult
@@ -63,9 +82,9 @@ const LinkedObjects = () => {
                                             />
                                         );
                                     })}
-                                </div>
+                                </SSearchCardsResultWrapper>
                             </Accordion>
-                        </div>
+                        </SAccordionWrapper>
                     );
                 })}
         </div>

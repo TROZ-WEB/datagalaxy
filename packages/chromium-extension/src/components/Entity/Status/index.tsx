@@ -1,32 +1,61 @@
 import React, { useMemo } from 'react';
+import styled from 'styled-components';
 import Glyph from '../../ui/Glyph';
-import styles from './index.css';
+
+/* ---------- STYLES ---------- */
+
+const SIconWrapper = styled.span`
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+`;
+
+const SRoot = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 5px 0;
+    font-size: 12px;
+    line-height: 15px;
+`;
+
+const SGlyph = styled(Glyph)`
+    ${(props) => props.icon === 'Help' && `color: #5a5e86`}
+
+    ${(props) => props.icon === 'Redo2' && `color: #ff811a`}
+
+    ${(props) => props.icon === 'Recent' && `color: #28aae2`}
+
+    ${(props) => props.icon === 'CheckCircle1' && `color: #50c516`}
+
+    ${(props) => props.icon === 'CloseCircleFilled' && `color: #ca004a`}
+`;
+
+/* ---------- COMPONENT ---------- */
 
 const Status = ({ status, hideLabel = false }: { status: string; hideLabel?: boolean }) => {
     const iconForStatus = useMemo(() => {
         switch (status) {
             case 'Proposed':
-                return <Glyph className={styles.Proposed} icon="Help" />;
+                return <SGlyph icon="Help" />;
             case 'InRevision':
-                return <Glyph className={styles.InRevision} icon="Redo2" />;
+                return <SGlyph icon="Redo2" />;
             case 'InValidation':
-                return <Glyph className={styles.InValidation} icon="Recent" />;
+                return <SGlyph icon="Recent" />;
             case 'Validated':
-                return <Glyph className={styles.Validated} icon="CheckCircle1" />;
+                return <SGlyph icon="CheckCircle1" />;
             case 'Obsolete':
-                return <Glyph className={styles.Obsolete} icon="CloseCircleFilled" />;
+                return <SGlyph icon="CloseCircleFilled" />;
         }
 
         return null;
     }, [status]);
 
     return (
-        <div className={styles.Root}>
-            <span className={styles.IconWrapper} title={chrome.i18n.getMessage(`entity_status_${status}`)}>
-                {iconForStatus}
-            </span>
+        <SRoot>
+            <SIconWrapper title={chrome.i18n.getMessage(`entity_status_${status}`)}>{iconForStatus}</SIconWrapper>
             {!hideLabel && chrome.i18n.getMessage(`entity_status_${status}`)}
-        </div>
+        </SRoot>
     );
 };
 

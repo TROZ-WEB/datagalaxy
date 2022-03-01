@@ -1,12 +1,76 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../store/hooks';
 import HorizontalSeparator from '../HorizontalSeparator';
 import SearchCardResult from './SearchCardResult';
 import SearchInput from './SearchInput';
 import { useSearchInput } from './SearchInput/useSearchInput';
 import BlankSearch from '../../../assets/blank-search.png';
-import styles from './index.css';
+
+/* ---------- STYLES ---------- */
+
+const SBlankSearch = styled.div`
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: #6d6f88;
+    font-size: 14px;
+`;
+
+const SBlankSearchImage = styled.img`
+    width: 250px;
+`;
+
+const SResults = styled.div`
+    margin-top: 8px;
+`;
+
+const SResultsTitle = styled.p`
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 20px;
+    color: #001030;
+`;
+
+const SResultsTitleWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 29px;
+    margin-bottom: 10px;
+`;
+
+const SSearchCardResultWrapper = styled.div`
+    margin: 9px auto;
+`;
+
+const SSearchCardsResultWrapper = styled.div`
+    overflow-y: scroll;
+    position: absolute;
+    top: 208px;
+    right: 4px;
+    left: 16px;
+    bottom: 16px;
+`;
+
+const STagResultCount = styled.span`
+    width: 21px;
+    height: 17px;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 5px;
+    color: #1035b1;
+    background-color: #f3f6ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    margin-left: 8px;
+`;
+
+/* ---------- COMPONENT ---------- */
 
 const SearchForm = () => {
     const [loading, setLoading] = useState(false);
@@ -48,7 +112,8 @@ const SearchForm = () => {
     });
 
     return (
-        <div>
+        // eslint-disable-next-line react/jsx-no-useless-fragment
+        <>
             {searchResults && (
                 <>
                     <div>
@@ -59,23 +124,23 @@ const SearchForm = () => {
                             success={success}
                         />
                     </div>
-                    <div className={styles.Results}>
+                    <SResults>
                         {searchedArgs.term !== '' && (
-                            <div className={styles.ResultsTitleWrapper}>
-                                <p className={styles.ResultsTitle}>{chrome.i18n.getMessage('search_results')}</p>
-                                <span className={styles.TagResultCount}>{searchResults.total}</span>
-                            </div>
+                            <SResultsTitleWrapper>
+                                <SResultsTitle>{chrome.i18n.getMessage('search_results')}</SResultsTitle>
+                                <STagResultCount>{searchResults.total}</STagResultCount>
+                            </SResultsTitleWrapper>
                         )}
                         {searchResults.result.entities.length === 0 ? (
-                            <div className={styles.BlankSearch}>
-                                <img alt="empty result" className={styles.BlankSearchImage} src={BlankSearch} />
+                            <SBlankSearch>
+                                <SBlankSearchImage alt="empty result" src={BlankSearch} />
                                 <p>{chrome.i18n.getMessage('search_blank_search')}</p>
-                            </div>
+                            </SBlankSearch>
                         ) : (
-                            <div className={styles.SearchCardsResultWrapper}>
+                            <SSearchCardsResultWrapper>
                                 {searchResults.result.entities.map((entity, idx) => (
                                     <div key={entity.id}>
-                                        <div className={styles.SearchCardResultWrapper}>
+                                        <SSearchCardResultWrapper>
                                             <SearchCardResult
                                                 entity={entity}
                                                 entityPage={false}
@@ -85,16 +150,16 @@ const SearchForm = () => {
                                                 }}
                                                 alwaysExpanded
                                             />
-                                        </div>
+                                        </SSearchCardResultWrapper>
                                         {idx < searchResults.result.entities.length - 1 && <HorizontalSeparator />}
                                     </div>
                                 ))}
-                            </div>
+                            </SSearchCardsResultWrapper>
                         )}
-                    </div>
+                    </SResults>
                 </>
             )}
-        </div>
+        </>
     );
 };
 

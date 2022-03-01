@@ -1,12 +1,20 @@
 import React from 'react';
+import styled from 'styled-components';
 import SearchForm from '../../components/SearchForm';
-import styles from './index.css';
+
+/* ---------- STYLES ---------- */
+
+const SRoot = styled.div`
+    padding: 20px 18px;
+`;
+
+/* ---------- COMPONENT ---------- */
 
 const Search = () => {
     return (
-        <div className={styles.Root}>
+        <SRoot>
             <SearchForm />
-        </div>
+        </SRoot>
     );
 };
 

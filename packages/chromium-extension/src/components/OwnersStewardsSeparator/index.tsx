@@ -1,8 +1,19 @@
 import React from 'react';
-import styles from './index.css';
+import styled from 'styled-components';
+
+/* ---------- STYLES ---------- */
+
+const SRoot = styled.div`
+    height: 16px;
+    width: 1px;
+    background-color: rgba(2, 42, 142, 0.1);
+    margin: 0 8px;
+`;
+
+/* ---------- COMPONENT ---------- */
 
 const OwnersStewardsSeparator = () => {
-    return <span className={styles.Root} />;
+    return <SRoot />;
 };
 
 export default OwnersStewardsSeparator;

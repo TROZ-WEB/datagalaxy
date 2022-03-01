@@ -1,12 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import { EntityType } from 'shared';
+import styled from 'styled-components';
 import VerticalMenu from '../../components/Entity/VerticalMenu';
 import SearchCardResult from '../../components/SearchForm/SearchCardResult/index';
 import { useStoreDispatch, useStoreState } from '../../store/hooks';
 import LinkedObjects from '../LinkedObjects';
 import Details from './pages/Details';
-import styles from './index.css';
+
+/* ---------- STYLES ---------- */
+
+const SContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin: 0;
+    height: 100%;
+`;
+
+const SContent = styled.div`
+    padding: 11px;
+    width: 289px;
+`;
+
+/* ---------- COMPONENT ---------- */
 
 const EntityDetails = () => {
     const initialEntity = useStoreState((state) => state.search.selectedEntity);
@@ -27,9 +44,9 @@ const EntityDetails = () => {
     return (
         <>
             <SearchCardResult ellipseBreadCrumb={9} entity={entity} alwaysExpanded entityPage />
-            <div className={styles.Container}>
+            <SContainer>
                 <VerticalMenu entity={entity} />
-                <div className={styles.Content}>
+                <SContent>
                     <Switch>
                         <Route path={`${path}/insights`} exact>
                             To implements
@@ -41,8 +58,8 @@ const EntityDetails = () => {
                             <LinkedObjects />
                         </Route>
                     </Switch>
-                </div>
-            </div>
+                </SContent>
+            </SContainer>
         </>
     );
 };

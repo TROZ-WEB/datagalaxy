@@ -1,6 +1,29 @@
 import React, { Fragment, useMemo } from 'react';
 import { formatBreadcrumb } from 'shared';
-import styles from './index.css';
+import styled from 'styled-components';
+
+/* ---------- STYLES ---------- */
+
+const SChevron = styled.span`
+    position: relative;
+    top: 1px;
+    padding-right: 2px;
+    padding-left: 2px;
+    font-family: 'datagalaxy', sans-serif;
+    color: #6d6f88;
+    font-size: 10px;
+`;
+
+const SRoot = styled.div`
+    color: #6d6f88;
+    font-size: 12px;
+    line-height: 14.5px;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+`;
+
+/* ---------- COMPONENT ---------- */
 
 const Breadcrumb = ({ path, threshold = 3, ellipse = 10 }: { path: string; threshold?: number; ellipse?: number }) => {
     const formattedPath = useMemo(() => (path ? formatBreadcrumb(path, threshold, ellipse) : null), [path]);
@@ -8,18 +31,18 @@ const Breadcrumb = ({ path, threshold = 3, ellipse = 10 }: { path: string; thres
     return (
         <div>
             {formattedPath && (
-                <div className={styles.Root} title={formattedPath.default.join(' > ')}>
+                <SRoot title={formattedPath.default.join(' > ')}>
                     {formattedPath && formattedPath.shorten.length ? (
                         formattedPath.shorten.map((elem, i) => (
                             <Fragment key={elem}>
                                 <span>{elem}</span>
-                                <span className={styles.Chevron}>{i < formattedPath.shorten.length - 1 && ''}</span>
+                                <SChevron>{i < formattedPath.shorten.length - 1 && ''}</SChevron>
                             </Fragment>
                         ))
                     ) : (
                         <br />
                     )}
-                </div>
+                </SRoot>
             )}
         </div>
     );

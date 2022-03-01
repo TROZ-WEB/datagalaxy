@@ -1,5 +1,5 @@
 function openExtension() {
-    const root = window.document.getElementById('datagalaxy_root');
+    const root = window.document.getElementById('datagalaxy_container');
     root.classList.toggle('datagalaxy_root--show');
 }
 

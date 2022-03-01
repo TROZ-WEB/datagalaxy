@@ -1,8 +1,9 @@
 import { useStore } from 'easy-peasy';
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useLocation, Link } from 'react-router-dom';
 import { decodeJWT } from 'shared';
+import styled from 'styled-components';
 import Alert from '../../components/Alert';
 import HorizontalSeparator from '../../components/HorizontalSeparator';
 import Button from '../../components/ui/Button';
@@ -10,14 +11,66 @@ import FormLabel from '../../components/ui/FormLabel';
 import Input from '../../components/ui/Input';
 import { useStoreActions, useStoreState, useStoreDispatch } from '../../store/hooks';
 import LogoutIcon from '../../../assets/icons/logout.svg';
-import styles from './index.css';
+
+/* ---------- STYLES ---------- */
+
+const SFindPatHelper = styled.div`
+    text-align: left;
+    margin-top: 1px;
+
+    & > a {
+        color: #1035b1;
+        text-decoration: underline;
+        font-size: 10px;
+        line-height: 13px;
+
+        &::hover,
+        &::focus {
+            color: #001030;
+        }
+    }
+`;
+
+const SLogoutButton = styled.div`
+    display: flex;
+    margin-top: 20px;
+    justify-content: center;
+`;
+
+const SLogoutIcon = styled.img`
+    margin-right: 8px;
+    color: #001030;
+    width: 16px;
+    height: 16px;
+`;
+
+const SRoot = styled.div`
+    height: 100%;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+`;
+
+const STitle = styled.h1`
+    font-weight: 700;
+    font-size: 20px;
+`;
+
+const SVersionWrapper = styled.div`
+    font-size: 14px;
+    text-align: center;
+    color: #6d6f88;
+`;
+
+/* ---------- COMPONENT ---------- */
 
 type FormData = {
     email: string;
     pat: string;
 };
 
-const Account = () => {
+const Account: FC = () => {
     const history = useHistory();
     const location = useLocation();
 
@@ -72,9 +125,9 @@ const Account = () => {
     });
 
     return (
-        <div className={styles.Root}>
+        <SRoot>
             <form onSubmit={onSubmit}>
-                <h2 className={styles.Title}>{chrome.i18n.getMessage('account_title')}</h2>
+                <STitle>{chrome.i18n.getMessage('account_title')}</STitle>
                 <fieldset disabled>
                     <Input
                         label={<FormLabel>{chrome.i18n.getMessage('onboarding_login_inputEmailLabel')}</FormLabel>}
@@ -86,7 +139,7 @@ const Account = () => {
                 <br />
                 <HorizontalSeparator />
                 <br />
-                <h2 className={styles.Title}>{chrome.i18n.getMessage('account_update_pat')}</h2>
+                <STitle>{chrome.i18n.getMessage('account_update_pat')}</STitle>
                 {isPATError && <Alert type="warning">{chrome.i18n.getMessage('global_error')}</Alert>}
                 <Input
                     errors={errors}
@@ -94,20 +147,20 @@ const Account = () => {
                     type="password"
                     {...register('pat', { required: true })}
                 />
-                <div className={styles.FindPatHelper}>
+                <SFindPatHelper>
                     <Link to="/onboarding/find-pat-helper">{chrome.i18n.getMessage('onboarding_login_findMyPat')}</Link>
-                </div>
+                </SFindPatHelper>
                 {isAlertSuccessVisible && (
                     <Alert type="success">{chrome.i18n.getMessage('account_update_pat_successful')}</Alert>
                 )}
                 <br />
-                <div className={styles.ButtonWrapper}>
+                <div>
                     <Button type="submit">{chrome.i18n.getMessage('account_update_pat_button')}</Button>
                 </div>
             </form>
             <div>
-                <div className={styles.VersionWrapper}>v{chrome.runtime.getManifest().version} - beta</div>
-                <div className={styles.LogoutButton}>
+                <SVersionWrapper>v{chrome.runtime.getManifest().version} - beta</SVersionWrapper>
+                <SLogoutButton>
                     <Button
                         onClick={async () => {
                             await dispatch.auth.logout(store);
@@ -117,12 +170,12 @@ const Account = () => {
                         type="button"
                         variant="outlined"
                     >
-                        <img alt="Logout icon" className={styles.LogoutIcon} src={LogoutIcon} />
+                        <SLogoutIcon alt="Logout icon" src={LogoutIcon} />
                         <span>{chrome.i18n.getMessage('account_logout')}</span>
                     </Button>
-                </div>
+                </SLogoutButton>
             </div>
-        </div>
+        </SRoot>
     );
 };
 
