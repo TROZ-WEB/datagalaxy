@@ -3,7 +3,7 @@ import { Switch, Redirect, Route, useRouteMatch, useHistory } from 'react-router
 import ConnectedLayout from '../components/ConnectedLayout';
 import Account from '../pages/Account';
 import Comments from '../pages/Comments';
-import EntityDetails from '../pages/EntityDetails';
+import EntityPage from '../pages/EntityPage';
 import Notifications from '../pages/Notifications';
 import Search from '../pages/Search';
 import Tasks from '../pages/Tasks';
@@ -42,8 +42,8 @@ const App = () => {
                 <Route path={`${path}/search`}>
                     <Search />
                 </Route>
-                <Route path={`${path}/entities/:id`}>
-                    <EntityDetails />
+                <Route path={`${path}/entities/:URLLocation`}>
+                    <EntityPage />
                 </Route>
                 <Route path={`${path}/comments`}>
                     <Comments />

@@ -16,6 +16,7 @@ const SInput = styled.input`
     height: 42px;
     border-radius: 3px;
     padding: 16px;
+    font-family: 'Montserrat', sans-serif;
 
     &:disabled {
         color: #6d6f88;
@@ -35,7 +36,7 @@ const SLabel = styled.label`
 const SRoot = styled.div`
     display: flex;
     flex-direction: column;
-    margin-top: 25px;
+    margin-top: 8px;
 `;
 
 /* ---------- COMPONENT ---------- */

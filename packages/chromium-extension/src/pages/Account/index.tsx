@@ -128,14 +128,12 @@ const Account: FC = () => {
         <SRoot>
             <form onSubmit={onSubmit}>
                 <STitle>{chrome.i18n.getMessage('account_title')}</STitle>
-                <fieldset disabled>
-                    <Input
-                        label={<FormLabel>{chrome.i18n.getMessage('onboarding_login_inputEmailLabel')}</FormLabel>}
-                        disabled
-                        readOnly
-                        {...register('email', { required: false })}
-                    />
-                </fieldset>
+                <Input
+                    label={<FormLabel>{chrome.i18n.getMessage('onboarding_login_inputEmailLabel')}</FormLabel>}
+                    disabled
+                    readOnly
+                    {...register('email', { required: false })}
+                />
                 <br />
                 <HorizontalSeparator />
                 <br />

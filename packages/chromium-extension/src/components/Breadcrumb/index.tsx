@@ -16,8 +16,7 @@ const SChevron = styled.span`
 
 const SRoot = styled.div`
     color: #6d6f88;
-    font-size: 12px;
-    line-height: 14.5px;
+    font-size: 8px;
     display: flex;
     flex-direction: row;
     align-items: baseline;

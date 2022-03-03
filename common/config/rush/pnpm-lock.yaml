@@ -31,6 +31,7 @@ specifiers:
   prettier: ^2.3.2
   react: ^17.0.2
   react-dom: ^17.0.2
+  react-helmet: ~6.1.0
   react-hook-form: ~7.12.2
   react-router-dom: ~5.2.0
   react-shadow: ~19.0.2
@@ -77,6 +78,7 @@ dependencies:
   prettier: 2.3.2
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
+  react-helmet: 6.1.0_react@17.0.2
   react-hook-form: 7.12.2_react@17.0.2
   react-router-dom: 5.2.0_react@17.0.2
   react-shadow: 19.0.2_react-dom@17.0.2+react@17.0.2
@@ -5122,6 +5124,18 @@ packages:
     resolution: {integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==}
     dev: false
 
+  /react-helmet/6.1.0_react@17.0.2:
+    resolution: {integrity: sha512-4uMzEY9nlDlgxr61NL3XbKRy1hEkXmKNXhjbAIOVw5vcFrsdYbH2FEwcNyWvWinl103nXgzYNlns9ca+8kFiWw==}
+    peerDependencies:
+      react: '>=16.3.0'
+    dependencies:
+      object-assign: 4.1.1
+      prop-types: 15.7.2
+      react: 17.0.2
+      react-fast-compare: 3.2.0
+      react-side-effect: 2.1.1_react@17.0.2
+    dev: false
+
   /react-hook-form/7.12.2_react@17.0.2:
     resolution: {integrity: sha512-cpxocjrgpMAJCMJQR51BQhMoEx80/EQqePNihMTgoTYTqCRbd2GExi+N4GJIr+cFqrmbwNj9wxk5oLWYQsUefg==}
     peerDependencies:
@@ -5205,6 +5219,14 @@ packages:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-use: 15.3.8_react-dom@17.0.2+react@17.0.2
+    dev: false
+
+  /react-side-effect/2.1.1_react@17.0.2:
+    resolution: {integrity: sha512-2FoTQzRNTncBVtnzxFOk2mCpcfxQpenBMbk5kSVBg5UcPqV9fRbgY2zhb7GTWWOlpFmAxhClBDlIq8Rsubz1yQ==}
+    peerDependencies:
+      react: ^16.3.0 || ^17.0.0
+    dependencies:
+      react: 17.0.2
     dev: false
 
   /react-styled-shadow-dom/1.0.0_7a082f7d10047d47195aea793f958a14:
@@ -6539,7 +6561,7 @@ packages:
     dev: false
 
   file:projects/chromium-extension.tgz:
-    resolution: {integrity: sha512-4iI1hRH7D2ihJgn0izdUq05yrRwD9jqfnosZWeWcpFHhRL+4aOUbepTrt/snTIJmdGbLdr0lcsXBmkyYM4WMcg==, tarball: file:projects/chromium-extension.tgz}
+    resolution: {integrity: sha512-ia3sXtluLJ7pTWkvcdhW+Phf1TtOrRCVN8L/eUO+7VpzHbz2HRJgt+HvYWlsXFyqZp1ERWftLhqrsiodNNpm+w==, tarball: file:projects/chromium-extension.tgz}
     name: '@rush-temp/chromium-extension'
     version: 0.0.0
     dependencies:
@@ -6566,6 +6588,7 @@ packages:
       prettier: 2.3.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
+      react-helmet: 6.1.0_react@17.0.2
       react-hook-form: 7.12.2_react@17.0.2
       react-player: 2.9.0_react@17.0.2
       react-router-dom: 5.2.0_react@17.0.2

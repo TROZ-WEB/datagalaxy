@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import Menu from '../Menu';
-// import FabMenu from '../ui/FabMenu';
 
 /* ---------- STYLES ---------- */
 
@@ -21,7 +20,6 @@ const ConnectedLayout = ({ children }: { children?: ReactNode }) => {
         <SRoot>
             <Menu />
             <SContent>{children}</SContent>
-            {/* <FabMenu /> */}
         </SRoot>
     );
 };

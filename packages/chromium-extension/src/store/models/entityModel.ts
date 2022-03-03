@@ -1,7 +1,8 @@
-import { Action, Thunk, Actions, thunk, action } from 'easy-peasy';
+import { Action, Thunk, Actions, thunk, action, debug } from 'easy-peasy';
 import {
     fetchEntity as fetchEntityAPI,
     fetchLinkedObjects as fetchLinkedObjectsAPI,
+    fetchChildrenObjects as fetchChildrenObjectsAPI,
     EntityType,
     LinkedObjectsType,
 } from 'shared';
@@ -12,21 +13,30 @@ import { enhancedEntitiesWithUserInfo, resetModel } from './helper';
  */
 
 const initialState = {
+    isLoaded: false,
     displayedEntity: null,
     linkedObjects: null,
+    childrenObjects: null,
 };
 
 export interface EntityModel {
     /* State */
+    isLoaded: boolean;
     displayedEntity: EntityType;
     linkedObjects: LinkedObjectsType;
+    childrenObjects: EntityType[];
     /* Actions */
     resetModel: Action<EntityModel>;
+    updateIsLoaded: Action<EntityModel, boolean>;
     updateDisplayedEntity: Action<EntityModel, EntityType>;
     updateLinkedObjects: Action<EntityModel, LinkedObjectsType>;
+    updateChildrenObjects: Action<EntityModel, EntityType[]>;
+    updateGrandChildrenObjects: Action<EntityType, { parentId: string; childrenObjects: EntityType[] }>;
     /* Thunks */
     fetchEntity: Thunk<EntityModel, string>;
     fetchLinkedObjects: Thunk<EntityModel, FetchLinkedObjectsParams>;
+    fetchChildrenObjects: Thunk<EntityModel, FetchChildrenObjectsParams>;
+    fetchGrandChildrenObjects: Thunk<EntityModel, FetchChildrenObjectsParams>;
 }
 
 interface FetchLinkedObjectsParams {
@@ -34,6 +44,12 @@ interface FetchLinkedObjectsParams {
     dataType: string;
     name: string;
     type: string;
+    versionId: string;
+}
+
+interface FetchChildrenObjectsParams {
+    parentId: string;
+    dataType: string;
     versionId: string;
 }
 
@@ -61,10 +77,39 @@ const fetchLinkedObjects = thunk(
         const { id, dataType, name, type, versionId } = payload;
         try {
             const url = (getStoreState() as any).auth.pubapi;
-            // First search for results
             const linkedObjects = await fetchLinkedObjectsAPI(id, url, dataType, name, type, versionId);
-
             actions.updateLinkedObjects(linkedObjects);
+        } catch (err) {
+            console.error('error : ', err);
+        }
+    },
+);
+
+const fetchChildrenObjects = thunk(
+    async (actions: Actions<EntityModel>, payload: FetchChildrenObjectsParams, { getStoreState }) => {
+        const { parentId, dataType, versionId } = payload;
+        try {
+            const url = (getStoreState() as any).auth.pubapi;
+            const childrenObjects = await fetchChildrenObjectsAPI(parentId, url, dataType, versionId);
+            actions.updateChildrenObjects(childrenObjects);
+        } catch (err) {
+            console.error('error : ', err);
+        }
+    },
+);
+
+const fetchGrandChildrenObjects = thunk(
+    async (actions: Actions<EntityModel>, payload: FetchChildrenObjectsParams, { getStoreState }) => {
+        const { parentId, dataType, versionId } = payload;
+        try {
+            const url = (getStoreState() as any).auth.pubapi;
+            // First search for results
+            const childrenObjects = await fetchChildrenObjectsAPI(parentId, url, dataType, versionId);
+
+            actions.updateGrandChildrenObjects({
+                parentId,
+                childrenObjects,
+            });
         } catch (err) {
             console.error('error : ', err);
         }
@@ -81,15 +126,27 @@ const entityModel = async (): Promise<EntityModel> => {
         ...initialState,
         /* Actions */
         resetModel: action(resetModel(initialState)),
+        updateIsLoaded: action((state, payload: boolean) => {
+            state.isLoaded = payload;
+        }),
         updateDisplayedEntity: action((state, payload: EntityType) => {
             state.displayedEntity = payload;
         }),
         updateLinkedObjects: action((state, payload: any) => {
             state.linkedObjects = payload;
         }),
+        updateChildrenObjects: action((state, payload: any) => {
+            state.childrenObjects = payload;
+        }),
+        updateGrandChildrenObjects: action((state, payload: any) => {
+            const { parentId, childrenObjects } = payload;
+            state.childrenObjects.find((entity) => entity && entity.id === parentId).childrenObjects = childrenObjects;
+        }),
         /* Thunks */
         fetchEntity,
         fetchLinkedObjects,
+        fetchChildrenObjects,
+        fetchGrandChildrenObjects,
     };
 };
 

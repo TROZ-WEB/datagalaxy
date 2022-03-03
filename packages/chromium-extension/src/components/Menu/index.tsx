@@ -3,9 +3,9 @@ import { useLocation, useHistory } from 'react-router-dom';
 // import CommentDuo from '../../icons/CommentDuo';
 // import FileTasksCheck from '../../icons/FileTasksCheck';
 // import Notification from '../../icons/Notification';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Search from '../../icons/Search';
-import { useStoreState } from '../../store/hooks';
+import { useStoreState, useStoreActions } from '../../store/hooks';
 import Avatar from '../Avatar';
 import SelectedMenu from '../../../assets/anchor-selected-menu.svg';
 import Back from '../../../assets/icons/back.svg';
@@ -14,15 +14,15 @@ import WhiteLogo from '../../../assets/logo-icon.svg';
 /* ---------- STYLES ---------- */
 
 const SBackButton = styled.button`
-    all: unset;
     cursor: pointer;
+    background-color: transparent;
+    border: none;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    height: 100%;
-    width: 32px;
     align-items: start;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px !important;
 `;
 
 const SBackText = styled.span`
@@ -37,8 +37,6 @@ const SFlex = styled.div`
 
 const SLogo = styled.img`
     width: 27px;
-    height: 16px;
-    margin: auto;
 `;
 
 const SMenuItem = styled.button`
@@ -50,11 +48,14 @@ const SMenuItem = styled.button`
     justify-content: center;
     height: 100%;
     width: 64px;
+    font-family: 'Montserrat', sans-serif;
 
     ${(props) =>
         props.isSelected &&
-        `background: url(${SelectedMenu}) center bottom no-repeat;
-        background-size: 34px;`}
+        css`
+            background: url(${SelectedMenu}) center bottom no-repeat;
+            background-size: 34px;
+        `}
 `;
 
 const SMenuItemsContainer = styled.div`
@@ -105,6 +106,7 @@ function isHistoryRoot(h: any) {
 const Menu = () => {
     const { pathname } = useLocation();
     const history = useHistory();
+    const { updateIsLoaded } = useStoreActions((actions) => actions.entity);
 
     const { dgapi: url, user } = useStoreState((state) => state.auth);
 
@@ -142,6 +144,7 @@ const Menu = () => {
                 {canGoBack && (
                     <SBackButton
                         onClick={() => {
+                            updateIsLoaded(false);
                             history.goBack();
                         }}
                         type="button"

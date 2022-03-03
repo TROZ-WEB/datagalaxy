@@ -18,6 +18,7 @@ const SRoot = styled.button`
     position: relative;
     margin: 0 0 8px 0;
     align-self: center;
+    font-family: 'Montserrat', sans-serif;
 
     &:hover,
     &:focus {

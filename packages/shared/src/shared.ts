@@ -6,3 +6,4 @@ export * from './Users';
 export * from './Services';
 export * from './Tags';
 export * from './LinkedObjects';
+export * from './ChildrenObjects';

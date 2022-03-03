@@ -2,9 +2,6 @@ import { createGlobalStyle } from 'styled-components';
 import DatagalaxyGlyphEOT from '../assets/fonts/datagalaxy.eot';
 import DatagalaxyGlyphTTF from '../assets/fonts/datagalaxy.ttf';
 import DatagalaxyGlyphWOFF from '../assets/fonts/datagalaxy.woff';
-import SourceSansProBold from '../assets/fonts/SourceSansPro/SourceSansPro-Bold.ttf';
-import SourceSansProRegular from '../assets/fonts/SourceSansPro/SourceSansPro-Regular.ttf';
-import SourceSansProSemiBold from '../assets/fonts/SourceSansPro/SourceSansPro-SemiBold.ttf';
 import DatagalaxyGlyphSVG from '../assets/fonts/datagalaxy.svg';
 
 export const Theme = {
@@ -44,39 +41,23 @@ export const Theme = {
 
 export const Fonts = createGlobalStyle`
     @font-face {
-        font-family: 'SourceSansPro';
-        src: local('SourceSansPro'), url(${SourceSansProRegular}) format('truetype');
-        font-weight: 400;
-    }
-    @font-face {
-        font-family: 'SourceSansPro';
-        src: local('SourceSansPro'), url(${SourceSansProSemiBold}) format('truetype');
-        font-weight: 600;
-    }
-    @font-face {
-        font-family: 'SourceSansPro';
-        src: local('SourceSansPro'), url(${SourceSansProBold}) format('truetype');
-        font-weight: 700;
-    }
-
-    @font-face {
         font-family: 'datagalaxy';
         src: url(${DatagalaxyGlyphEOT});
         src: url(${DatagalaxyGlyphEOT}) format('embedded-opentype'),
             url(${DatagalaxyGlyphTTF}) format('truetype'),
             url(${DatagalaxyGlyphWOFF}) format('woff'),
             url(${DatagalaxyGlyphSVG}) format('svg');
-        font-weight: normal;
+        font-weight: 400;
         font-style: normal;
         font-display: block;
     }
-
-    #datagalaxy_container {
-        font-family: 'SourceSansPro' !important;
-    }
 `;
 
-export const Scrollbar = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
+    h1, h2, h3, h4, h4, h6 {
+        margin: 0;
+    }
+
     ::-webkit-scrollbar-track {
         background-color: #fff;
         box-shadow: none;

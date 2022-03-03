@@ -7,7 +7,7 @@ import glyphList from './glyphList';
 const SGlyph = styled.span`
     font-family: 'datagalaxy' !important;
     font-style: normal;
-    font-weight: normal;
+    font-weight: 400;
     font-variant: normal;
     text-transform: none;
     line-height: 1;

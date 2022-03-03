@@ -15,7 +15,7 @@ const SStepNumber = styled.span`
     line-height: 10px;
     font-size: 10px;
     color: #ffffff;
-    font-weight: bold;
+    font-weight: 700;
 
     ${(props) =>
         props.activeNumber && `background: linear-gradient(71.97deg, #001aff 11.94%, #084eff 37.82%, #17aeff 85.88%)`}

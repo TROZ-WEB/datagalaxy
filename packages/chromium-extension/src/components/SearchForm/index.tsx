@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../store/hooks';
 import HorizontalSeparator from '../HorizontalSeparator';
-import SearchCardResult from './SearchCardResult';
+import EntityHeader from '../ui/EntityHeader';
 import SearchInput from './SearchInput';
 import { useSearchInput } from './SearchInput/useSearchInput';
 import BlankSearch from '../../../assets/blank-search.png';
@@ -27,9 +27,8 @@ const SResults = styled.div`
 `;
 
 const SResultsTitle = styled.p`
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 20px;
+    font-weight: 700;
+    font-size: 14px;
     color: #001030;
 `;
 
@@ -38,28 +37,26 @@ const SResultsTitleWrapper = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    margin-top: 29px;
-    margin-bottom: 10px;
 `;
 
 const SSearchCardResultWrapper = styled.div`
-    margin: 9px auto;
+    margin: 8px auto;
 `;
 
 const SSearchCardsResultWrapper = styled.div`
     overflow-y: scroll;
     position: absolute;
-    top: 208px;
+    top: 192px;
     right: 4px;
     left: 16px;
-    bottom: 16px;
+    bottom: 0px;
 `;
 
 const STagResultCount = styled.span`
     width: 21px;
     height: 17px;
     font-size: 10px;
-    font-weight: bold;
+    font-weight: 700;
     padding: 2px 5px;
     color: #1035b1;
     background-color: #f3f6ff;
@@ -79,10 +76,9 @@ const SearchForm = () => {
     const history = useHistory();
 
     const { searchedArgs, searchResults } = useStoreState((state) => state.search);
-    const { updateSelectedEntity } = useStoreActions((actions) => actions.search);
     const dispatch = useStoreDispatch();
 
-    const { updateDisplayedEntity } = useStoreActions((actions) => actions.entity);
+    const { updateIsLoaded } = useStoreActions((actions) => actions.entity);
 
     const debounceOnChange = async ({ value }) => {
         if (value) {
@@ -104,11 +100,6 @@ const SearchForm = () => {
         debounceDuration: 1000,
         debounceOnChange,
         initialState: { value: searchedArgs.term },
-    });
-
-    useEffect(() => {
-        updateDisplayedEntity(null);
-        updateSelectedEntity(null);
     });
 
     return (
@@ -141,12 +132,16 @@ const SearchForm = () => {
                                 {searchResults.result.entities.map((entity, idx) => (
                                     <div key={entity.id}>
                                         <SSearchCardResultWrapper>
-                                            <SearchCardResult
+                                            <EntityHeader
                                                 entity={entity}
                                                 entityPage={false}
                                                 onClick={() => {
-                                                    updateSelectedEntity(entity);
-                                                    history.push(`/app/entities/${entity.id}/`);
+                                                    updateIsLoaded(false);
+                                                    const URLLocation = entity.location.replace(
+                                                        new RegExp('/', 'g'),
+                                                        '.',
+                                                    ); // Replace "/" by "." in url
+                                                    history.push(`/app/entities/${URLLocation}`);
                                                 }}
                                                 alwaysExpanded
                                             />

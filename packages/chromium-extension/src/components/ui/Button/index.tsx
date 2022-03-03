@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 /* ---------- STYLES ---------- */
 
@@ -11,28 +11,39 @@ const SRoot = styled.button`
     display: flex;
     align-items: center;
     cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
 
     ${(props) =>
         props.variant === 'contained' &&
-        `background: linear-gradient(71.97deg, #001aff 11.94%, #084eff 37.82%, #17aeff 85.88%);
-        color: #ffffff;
-        border: none;`}
+        css`
+            background: linear-gradient(71.97deg, #001aff 11.94%, #084eff 37.82%, #17aeff 85.88%);
+            color: #ffffff;
+            border: none;
+        `}
     ${(props) =>
         props.variant === 'contained' &&
-        `&:hover, &:focus {
-        background: linear-gradient(90deg, #0016d7, #0297e6);
-    }`}
+        css`
+            &:hover,
+            &:focus {
+                background: linear-gradient(90deg, #0016d7, #0297e6);
+            }
+        `}
 
     ${(props) =>
         props.variant === 'outlined' &&
-        `background: none;
-        color: #001030;
-        border: 1px solid rgba(2, 42, 142, 0.1)`}
+        css`
+            background: none;
+            color: #001030;
+            border: 1px solid rgba(2, 42, 142, 0.1);
+        `}
     ${(props) =>
         props.variant === 'outlined' &&
-        `&:hover, &:focus {
-        background: linear-gradient(71.97deg, #001aff 11.94%, #084eff 37.82%, #17aeff 85.88%);
-    }`}
+        css`
+            &:hover,
+            &:focus {
+                background: linear-gradient(71.97deg, #001aff 11.94%, #084eff 37.82%, #17aeff 85.88%);
+            }
+        `}
 `;
 
 /* ---------- COMPONENT ---------- */

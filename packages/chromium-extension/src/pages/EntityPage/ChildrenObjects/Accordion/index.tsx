@@ -1,19 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import styled, { css } from 'styled-components';
-import ArrowDrop from '../../../assets/icons/arrow-drop-up.svg';
+import ArrowDrop from '../../../../../assets/icons/arrow-drop-up.svg';
 
 /* ---------- STYLES ---------- */
 
 const SArrowDrop = styled.img`
     width: 20px;
     height: 20px;
-    transition-duration: 0.4s;
+    margin-right: 8px;
+    transition-duration: 0.2s;
+    transform: rotate(180deg);
 
     ${(props) =>
         props.arrowDropUp &&
         css`
-            transform: rotate(-180deg);
+            transform: rotate(90deg);
         `}
+`;
+
+const SArrowButton = styled.button`
+    border: none;
+    background: none;
+    padding: 12px 0;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+
+    &:disabled {
+        display: none;
+    }
 `;
 
 const SContent = styled.div`
@@ -31,19 +45,18 @@ const SContent = styled.div`
         `}
 `;
 
-const SHeader = styled.button`
+const SHeader = styled.div`
     width: 100%;
-    height: 18px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     font-size: 14px;
-    font-weight: 700;
     border: none;
     background: none;
-    padding: 5px 0;
+    padding: 12px 0;
     cursor: pointer;
+    border-bottom: 1px solid rgba(0, 76, 255, 0.08);
     font-family: 'Montserrat', sans-serif;
 
     ${(props) =>
@@ -51,6 +64,12 @@ const SHeader = styled.button`
         css`
             flex-direction: row-reverse;
             justify-content: flex-end;
+        `}
+
+    ${(props) =>
+        props.size === 'big' &&
+        css`
+            font-size: 18px;
         `}
 `;
 
@@ -61,37 +80,40 @@ const SRoot = styled.div`
     color: #001030;
 `;
 
-const STitle = styled.span`
-    font-size: 14px;
-    ${(props) =>
-        props.size === 'big' &&
-        css`
-            font-size: 18px;
-        `}
-`;
-
 /* ---------- COMPONENT ---------- */
 
-const Accordion = ({
-    initialOpen = false,
-    title,
-    children,
-    openButtonPosition = 'right',
-    sizeOfTitle = 'normal',
-}: {
+interface ComplexAccordionProps {
     initialOpen?: boolean;
-    title: string;
+    header: string | React.ReactNode;
     children?: React.ReactNode;
     openButtonPosition?: string;
     sizeOfTitle?: string;
+    childrenCount: number;
+}
+
+const Accordion: FC<ComplexAccordionProps> = ({
+    initialOpen = false,
+    header,
+    children,
+    openButtonPosition = 'right',
+    sizeOfTitle = 'normal',
+    childrenCount,
 }) => {
     const [isOpen, setOpen] = useState(initialOpen);
 
+    const handleClick = () => {
+        if (childrenCount > 0) {
+            setOpen(!isOpen);
+        }
+    };
+
     return (
         <SRoot>
-            <SHeader onClick={() => setOpen(!isOpen)} reversed={openButtonPosition === 'left'} type="button">
-                <STitle size={sizeOfTitle}>{title}</STitle>
-                <SArrowDrop alt="Arrow icon" arrowDropUp={!isOpen} src={ArrowDrop} />
+            <SHeader reversed={openButtonPosition === 'left'} sizeOfTitle={sizeOfTitle} type="button">
+                {header}
+                <SArrowButton disabled={childrenCount === 0} type="button">
+                    <SArrowDrop alt="Arrow icon" arrowDropUp={!isOpen} onClick={handleClick} src={ArrowDrop} />
+                </SArrowButton>
             </SHeader>
             <SContent collapsed={!isOpen}>{children}</SContent>
         </SRoot>

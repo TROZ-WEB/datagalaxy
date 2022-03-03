@@ -24,7 +24,7 @@ Remember to update the app version in manifest.json before merging
 ## Install a new dependency
 
 ```
-rush add <dependency>
+rush add -p <dependency>
 ```
 
 ## Build

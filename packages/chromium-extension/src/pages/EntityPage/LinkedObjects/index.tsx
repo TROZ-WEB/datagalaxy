@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { DataTypeMapping } from 'shared';
 import styled from 'styled-components';
-import Accordion from '../../components/Accordion';
-import SearchCardResult from '../../components/SearchForm/SearchCardResult';
-import { useStoreDispatch, useStoreActions, useStoreState } from '../../store/hooks';
+import Accordion from '../../../components/Accordion';
+import EntityHeader from '../../../components/ui/EntityHeader';
+import { useStoreDispatch, useStoreActions, useStoreState } from '../../../store/hooks';
 
 /* ---------- STYLES ---------- */
 
@@ -70,7 +70,7 @@ const LinkedObjects = () => {
                                 <SSearchCardsResultWrapper>
                                     {linkedObjects[key].map((linkedObject) => {
                                         return (
-                                            <SearchCardResult
+                                            <EntityHeader
                                                 key={linkedObject.id}
                                                 entity={linkedObject}
                                                 onClick={() => {

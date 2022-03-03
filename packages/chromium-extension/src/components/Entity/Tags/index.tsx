@@ -25,7 +25,6 @@ const SRootItem = styled.div`
     flex-direction: row;
     align-items: center;
     margin-right: 2px;
-    margin-top: 4px;
 `;
 
 const STagLabel = styled.span`

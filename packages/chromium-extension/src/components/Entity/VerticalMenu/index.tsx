@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useHistory, useRouteMatch, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { EntityType } from 'shared';
 import styled from 'styled-components';
 import VerticalMenuButton from './VerticalMenuButton';
@@ -20,32 +20,31 @@ const SRoot = styled.div`
 
 interface VerticalMenuProps {
     entity: EntityType;
+    URLLocation: string;
 }
 
-const VerticalMenu: FC<VerticalMenuProps> = ({ entity }) => {
-    const { path } = useRouteMatch();
+const VerticalMenu: FC<VerticalMenuProps> = ({ entity, URLLocation }) => {
     const history = useHistory();
-    const location = useLocation();
-    const currentLocation = location.pathname.split('/').pop();
+    const path = useLocation().pathname.split('/').pop();
 
     return (
         <SRoot>
             <VerticalMenuButton
                 icon="Info"
-                onClick={() => history.replace(`${path}/`)}
-                variant={currentLocation === '' && 'active'}
-            />
-            <VerticalMenuButton
-                badgeCount={100}
-                icon="Hierarchy"
-                onClick={() => history.replace(`${path}/linked-objects`)}
-                variant={currentLocation === 'linked-objects' && 'active'}
+                onClick={() => history.replace(`/app/entities/${URLLocation}/`)}
+                variant={path === '' && 'active'}
             />
             <VerticalMenuButton
                 badgeCount={entity?.childrenCount}
+                icon="Hierarchy"
+                onClick={() => history.replace(`/app/entities/${URLLocation}/children-objects`)}
+                variant={path === 'children-objects' && 'active'}
+            />
+            <VerticalMenuButton
+                badgeCount={100}
                 icon="Mapping"
-                onClick={() => history.replace(`${path}/descendants`)}
-                variant={currentLocation === 'descendants' && 'active'}
+                onClick={() => history.replace(`/app/entities/${URLLocation}/linked-objects`)}
+                variant={path === 'linked-objects' && 'active'}
             />
         </SRoot>
     );

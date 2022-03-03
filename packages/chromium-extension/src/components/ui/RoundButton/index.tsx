@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Glyph from '../Glyph/index';
 
 /* ---------- STYLES ---------- */
@@ -16,6 +16,7 @@ const SRoot = styled.button`
     justify-content: center;
     background: transparent;
     position: relative;
+    font-family: 'Montserrat', sans-serif;
 
     &:hover,
     &:focus {
@@ -28,19 +29,26 @@ const SRoot = styled.button`
 
     ${(props) =>
         props.variant === 'mini' &&
-        `width: 20px;
-        height: 20px;
-        font-size: 12px;`}
+        css`
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+        `}
 
     ${(props) =>
         props.variant === 'primary' &&
-        `background: linear-gradient(71.97deg, #001aff 11.94%, #084eff 37.82%, #17aeff 85.88%);
-        color: #ffffff;`}
+        css`
+            background: linear-gradient(71.97deg, #001aff 11.94%, #084eff 37.82%, #17aeff 85.88%);
+            color: #ffffff;
+        `}
     ${(props) =>
         props.variant === 'primary' &&
-        `&:hover, &:focus {
-        background: linear-gradient(90deg, #0016d7, #0297e6);
-    }`}
+        css`
+            &:hover,
+            &:focus {
+                background: linear-gradient(90deg, #0016d7, #0297e6);
+            }
+        `}
 `;
 
 /* ---------- COMPONENT ---------- */

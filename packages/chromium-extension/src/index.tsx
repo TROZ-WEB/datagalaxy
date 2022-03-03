@@ -1,13 +1,13 @@
 import { createStore, StoreProvider, useStoreRehydrated, persist } from 'easy-peasy';
 import React from 'react';
 import * as ReactDOM from 'react-dom';
+import { Helmet } from 'react-helmet';
 import root from 'react-shadow/styled-components';
 import LoadingScreen from './components/LoadingScreen';
 import Popup from './pages/Popup';
 import AsyncStorageService from './Services/AsyncStorageService';
 import storeModel from './store/store';
-import { Fonts, Scrollbar } from './Theme';
-
+import { Fonts, GlobalStyle } from './Theme';
 /**
  * Before displaying the app, we
  *  - re-hydrate our easy-peasy state from chrome.local.storage
@@ -27,9 +27,15 @@ storeModel().then((models) => {
     const store = createStore(persist(models, { storage: AsyncStorageService }));
     ReactDOM.render(
         <StoreProvider store={store}>
+            <Helmet>
+                <link
+                    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+                    rel="stylesheet"
+                />
+            </Helmet>
             <Fonts />
             <root.div>
-                <Scrollbar />
+                <GlobalStyle />
                 <App />
             </root.div>
         </StoreProvider>,

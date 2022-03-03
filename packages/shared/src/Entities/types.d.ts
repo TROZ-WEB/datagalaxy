@@ -18,4 +18,6 @@ export interface EntityType {
     technicalName: string;
     type: string;
     dataType: string;
+    childrenObjects: EntityType[];
+    versionId: string;
 }

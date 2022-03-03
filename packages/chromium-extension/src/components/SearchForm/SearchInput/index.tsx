@@ -15,6 +15,7 @@ const SClearButton = styled.button`
     margin: 0;
     position: relative;
     top: 1px;
+    font-family: 'Montserrat', sans-serif;
 `;
 
 const SIconLoading = styled(Refresh)`
@@ -44,7 +45,7 @@ const SIconSuccess = styled(CheckMark)`
 
     animation: BounceIn 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
     display: block;
-    font-weight: bold;
+    font-weight: 700;
 `;
 
 const SInput = styled.input`
@@ -53,13 +54,13 @@ const SInput = styled.input`
     margin: 0;
     padding: 13px;
     border: none;
-    font-family: 'SourceSansPro';
     font-size: 14px;
     line-height: 18px;
     color: #6d6f88;
     outline: 0;
     background-color: transparent;
     transition: 150ms;
+    font-family: 'Montserrat', sans-serif;
 `;
 
 const SLeft = styled.div`

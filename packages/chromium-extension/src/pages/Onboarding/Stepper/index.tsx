@@ -6,7 +6,7 @@ import StepperProgress from './StepperProgress';
 /* ---------- STYLES ---------- */
 
 const STitle = styled.h1`
-    font-weight: bold;
+    font-weight: 700;
     font-size: 24px;
     line-height: 30px;
     text-align: center;
