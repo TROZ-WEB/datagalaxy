@@ -22,23 +22,23 @@ const SRoot = styled.button`
 
     &:hover,
     &:focus {
-        background: rgba(2, 42, 142, 0.1);
+        background: #cfd6e9;
         border: none;
         cursor: pointer;
     }
 
     &:disabled {
-        color: rgba(2, 42, 142, 0.1);
+        color: #cfd6e9;
         &:hover {
             background: transparent;
         }
     }
 
-    ${(props) => props.active && `background: rgba(2, 42, 142, 0.1)`}
+    ${(props) => props.active && `background: #CFD6E9`}
 `;
 
 const SBadge = styled.span`
-    background-color: #6d6f88;
+    background-color: #989cd9;
     height: 16px;
     width: 16px;
     border-radius: 16px;

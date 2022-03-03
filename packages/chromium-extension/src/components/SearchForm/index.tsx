@@ -141,7 +141,7 @@ const SearchForm = () => {
                                                         new RegExp('/', 'g'),
                                                         '.',
                                                     ); // Replace "/" by "." in url
-                                                    history.push(`/app/entities/${URLLocation}`);
+                                                    history.push(`/app/entities/${URLLocation}/`);
                                                 }}
                                                 alwaysExpanded
                                             />
