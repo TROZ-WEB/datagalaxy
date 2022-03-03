@@ -1,9 +1,11 @@
+import { format, isValid, parseISO } from 'date-fns';
 import React from 'react';
 import { EntityType } from 'shared';
 import styled from 'styled-components';
 import Accordion from '../../../../components/Accordion';
 import Status from '../../../../components/Entity/Status';
 import Tags from '../../../../components/Entity/Tags';
+import UserProfile from '../../../../components/Entity/UserProfile';
 
 /* ---------- STYLES ---------- */
 
@@ -25,11 +27,13 @@ const SSeparator = styled.div`
     background-color: #f3f6ff;
 `;
 
-const SSubInfoContent = styled.span`
+const SSubInfoContent = styled.div`
     font-size: 12px;
     color: #001030;
     margin-bottom: 12px;
     line-height: 1.5;
+    flex-wrap: wrap;
+    display: flex;
 `;
 
 const SSubInfoTitle = styled.span`
@@ -54,29 +58,83 @@ interface DetailsProps {
 }
 
 const Details = ({ entity }: DetailsProps) => {
+    const reservedKeys = [
+        'creationTime',
+        'lastModificationTime',
+        'linkShortcutDomainIds',
+        'owners',
+        'stewards',
+        'logicalParentData',
+    ];
+    const { description, tags, summary, status, owners, stewards, ...rest } = entity.attributes;
+
+    console.warn('UNUSED : ', stewards);
+    console.warn('UNUSED : ', owners);
+
+    const computeData = (data: any) => {
+        if (data === true) {
+            return chrome.i18n.getMessage(`entity_details_data_boolean_1`);
+        }
+        if (data === false) {
+            return chrome.i18n.getMessage(`entity_details_data_boolean_2`);
+        }
+        if (data.name && data.url) {
+            return <a href={data.url}>{data.name}</a>;
+        }
+        if (isValid(parseISO(data))) {
+            return format(parseISO(data), 'dd/MM/yyyy');
+        }
+        if (Array.isArray(data)) {
+            return data?.map((d) => {
+                if (!d) {
+                    return '';
+                }
+                if (d?.userId) {
+                    return <UserProfile user={d} />;
+                }
+
+                return <Tags.Item key={d + Math.random()} hideLabel={false} tag={d} />;
+            });
+        }
+
+        return data.toString();
+    };
+
     return (
         <SRoot>
             <SAccordionWrapper>
                 <Accordion title={chrome.i18n.getMessage(`entity_details_sections_general`)} initialOpen>
                     <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_status`)}>
-                        <Status status={entity.attributes?.status} />
+                        <Status status={status} />
                     </Details.SubInfo>
                     <Details.Separator />
                     <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_tags`)}>
                         <Tags>
-                            {entity.attributes?.tags?.map((tag) => (
-                                <Tags.Item key={tag} hideLabel={entity.attributes?.tags?.length > 1} tag={tag} />
+                            {tags?.map((tag) => (
+                                <Tags.Item key={tag} hideLabel={tags?.length > 1} tag={tag} />
                             ))}
                         </Tags>
                     </Details.SubInfo>
                     <Details.Separator />
                     <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_summary`)}>
-                        {entity.attributes?.summary}
+                        {summary}
                     </Details.SubInfo>
                     <Details.Separator />
                     <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_description`)}>
-                        {entity.attributes?.description}
+                        {description}
                     </Details.SubInfo>
+                    {Object.keys(rest).map((key) => {
+                        return (
+                            <div>
+                                {rest[key] && reservedKeys.indexOf(key) === -1 && (
+                                    <>
+                                        <Details.SubInfo title={key}>{computeData(rest[key])}</Details.SubInfo>
+                                        <Details.Separator />
+                                    </>
+                                )}
+                            </div>
+                        );
+                    })}
                 </Accordion>
             </SAccordionWrapper>
         </SRoot>

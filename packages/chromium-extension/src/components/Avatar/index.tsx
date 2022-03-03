@@ -7,6 +7,7 @@ import styled, { css } from 'styled-components';
 const SPictureRoot = styled.img`
     border-radius: 50%;
     border: 1px solid #ffffff;
+    vertical-align: middle;
 
     ${(props) =>
         props.grouped &&
