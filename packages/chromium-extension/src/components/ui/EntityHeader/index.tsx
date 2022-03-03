@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import Breadcrumb from '../../Breadcrumb';
 import Status from '../../Entity/Status';
 import Tags from '../../Entity/Tags';
-import UserProfile from '../../Entity/UserProfile';
+import UsersProfile from '../../Entity/UsersProfile';
 import OwnersStewardsSeparator from '../../OwnersStewardsSeparator';
 import EntityImage from '../EntityImage';
 import Glyph from '../Glyph';
@@ -197,11 +197,11 @@ const EntityHeader: FC<EntityHeaderProps> = ({
 
                                     <SAssociatedUsersWrapper>
                                         {entity.owners && (
-                                            <UserProfile governanceRole="owner" users={entity.owners} hideLabel />
+                                            <UsersProfile governanceRole="owner" users={entity.owners} hideLabel />
                                         )}
                                         {entity.owners && <OwnersStewardsSeparator />}
                                         {entity.stewards && (
-                                            <UserProfile governanceRole="steward" users={entity.stewards} />
+                                            <UsersProfile governanceRole="steward" users={entity.stewards} />
                                         )}
                                     </SAssociatedUsersWrapper>
                                 </SInfosWrapper>

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const SRoot = styled.div`
     all: initial;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background: #ffffff;
     color: #333333;
     position: absolute;

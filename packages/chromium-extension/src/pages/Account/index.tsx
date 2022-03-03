@@ -63,6 +63,13 @@ const SVersionWrapper = styled.div`
     color: #6d6f88;
 `;
 
+const SSignoutDiv = styled.div`
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+`;
+
 /* ---------- COMPONENT ---------- */
 
 type FormData = {
@@ -156,7 +163,7 @@ const Account: FC = () => {
                     <Button type="submit">{chrome.i18n.getMessage('account_update_pat_button')}</Button>
                 </div>
             </form>
-            <div>
+            <SSignoutDiv>
                 <SVersionWrapper>v{chrome.runtime.getManifest().version} - beta</SVersionWrapper>
                 <SLogoutButton>
                     <Button
@@ -172,7 +179,7 @@ const Account: FC = () => {
                         <span>{chrome.i18n.getMessage('account_logout')}</span>
                     </Button>
                 </SLogoutButton>
-            </div>
+            </SSignoutDiv>
         </SRoot>
     );
 };

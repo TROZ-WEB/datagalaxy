@@ -5,6 +5,7 @@ import {
     fetchChildrenObjects as fetchChildrenObjectsAPI,
     EntityType,
     LinkedObjectsType,
+    getUserByEmail,
 } from 'shared';
 import { enhancedEntitiesWithUserInfo, resetModel } from './helper';
 
@@ -53,6 +54,14 @@ interface FetchChildrenObjectsParams {
     versionId: string;
 }
 
+const validateEmail = (email) => {
+    return String(email)
+        .toLowerCase()
+        .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        );
+};
+
 /**
  * Thunks
  */
@@ -65,6 +74,21 @@ const fetchEntity = thunk(async (actions: Actions<EntityModel>, location: string
 
         // Then enrich the entity object with required user info
         const [enhancedEntity] = await enhancedEntitiesWithUserInfo([entity], url);
+
+        const p = [];
+        /* eslint-disable no-restricted-syntax, no-await-in-loop */
+        for (const key in enhancedEntity.attributes) {
+            if (Array.isArray(enhancedEntity.attributes[key])) {
+                for (const keyAttribute in enhancedEntity.attributes[key]) {
+                    if (validateEmail(enhancedEntity.attributes[key][keyAttribute])) {
+                        enhancedEntity.attributes[key][keyAttribute] = await getUserByEmail(
+                            url,
+                            enhancedEntity.attributes[key][keyAttribute],
+                        );
+                    }
+                }
+            }
+        }
 
         actions.updateDisplayedEntity(enhancedEntity);
     } catch (err) {

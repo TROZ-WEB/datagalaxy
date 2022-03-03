@@ -124,6 +124,12 @@
   "entity_details_sections_general_description": {
     "message": "Description"
   },
+  "entity_details_data_boolean_1": {
+    "message": "Oui"
+  },
+  "entity_details_data_boolean_2": {
+    "message": "Non"
+  },
   "entity_label_short_Universe": {
     "message": "Univers"
   },

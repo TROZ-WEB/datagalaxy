@@ -17,12 +17,13 @@ const SContainer = styled.div`
     flex-direction: row;
     align-items: flex-start;
     margin: 0;
-    height: 100%;
+    height: 90%;
+    overflow: scroll;
 `;
 
 const SContent = styled.div`
     padding: 11px;
-    width: 289px;
+    width: 400px;
 `;
 
 /* ---------- COMPONENT ---------- */
