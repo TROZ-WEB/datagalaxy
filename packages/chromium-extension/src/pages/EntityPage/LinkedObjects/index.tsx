@@ -41,7 +41,7 @@ const LinkedObjects = ({ entity }) => {
                     dataType: entity.dataType,
                     type: entity.type,
                     name:
-                        entity.dataType.entity === DataTypeMapping.Property // TODO: API Ignore technical for properties, should be fix in a moment
+                        entity.dataType === DataTypeMapping.Property // TODO: API Ignore technical for properties, should be fix in a moment
                             ? entity.name
                             : entity.technicalName,
                     versionId: entity.location.split('/')[1],

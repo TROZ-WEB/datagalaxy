@@ -126,7 +126,7 @@ const Details = ({ entity }: DetailsProps) => {
                     {Object.keys(rest).map((key) => {
                         return (
                             rest[key] &&
-                            !rest[key].entries &&
+                            !rest[key].trend &&
                             reservedKeys.indexOf(key) === -1 && (
                                 <>
                                     <Details.SubInfo title={key}>{computeData(rest[key])}</Details.SubInfo>
