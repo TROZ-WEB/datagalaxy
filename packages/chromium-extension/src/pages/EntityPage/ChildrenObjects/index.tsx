@@ -4,6 +4,7 @@ import { DataTypeMapping, EntityType } from 'shared';
 import styled from 'styled-components';
 import LoadingScreen from '../../../components/LoadingScreen';
 import EntityHeader from '../../../components/ui/EntityHeader';
+import Spinner from '../../../components/ui/Spinner/index';
 import { useStoreDispatch, useStoreState, useStoreActions } from '../../../store/hooks';
 import Accordion from './Accordion';
 
@@ -13,6 +14,23 @@ const SEntityWrapper = styled.span`
     width: 100%;
     display: flex;
     align-items: center;
+`;
+
+const SRoot = styled.div`
+    overflow-y: scroll;
+    position: absolute;
+    top: 192px;
+    right: 4px;
+    left: 68px;
+    bottom: 0px;
+`;
+
+const SSpinnerWrapper = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 0px;
 `;
 
 const SSubEntityWrapper = styled.span`
@@ -31,15 +49,6 @@ const SSubEntityWrapper = styled.span`
     box-sizing: border-box;
 `;
 
-const SRoot = styled.div`
-    overflow-y: scroll;
-    position: absolute;
-    top: 192px;
-    right: 4px;
-    left: 68px;
-    bottom: 0px;
-`;
-
 /* ---------- COMPONENT ---------- */
 
 interface ChildrenObjectsProps {
@@ -55,7 +64,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
     const [isChildrenLoaded, setIsChildrenLoaded] = useState<boolean>(false);
 
     useEffect(() => {
-        if (entity) {
+        if (entity && !isChildrenLoaded) {
             const fetchChildrenObjects = async () => {
                 await dispatch.entity.fetchChildrenObjects({
                     parentId: entity.id,
@@ -68,23 +77,30 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
                 setIsChildrenLoaded(true);
             });
         }
+    }, [dispatch, entity]);
 
-        const fetchGrandChildrenObjectsAPI = async (childrenEntity) => {
-            await dispatch.entity.fetchGrandChildrenObjects({
-                parentId: childrenEntity.id,
-                dataType: DataTypeMapping[childrenEntity.dataType],
-                versionId: childrenEntity.location.split('/')[1],
-            });
-        };
+    const fetchGrandChildrenObjectsAPI = async (childrenEntity) => {
+        await dispatch.entity.fetchGrandChildrenObjects({
+            parentId: childrenEntity.id,
+            dataType: DataTypeMapping[childrenEntity.dataType],
+            versionId: childrenEntity.location.split('/')[1],
+        });
+    };
 
-        if (isChildrenLoaded) {
-            for (let i = 0; i < childrenObjects?.length; i++) {
-                if (childrenObjects[i].childrenCount > 0) {
-                    fetchGrandChildrenObjectsAPI(childrenObjects[i]);
+    useEffect(() => {
+        const fetchDataAPI = async () => {
+            if (isChildrenLoaded) {
+                for (let i = 0; i < childrenObjects?.length; i++) {
+                    if (childrenObjects[i].childrenCount > 0) {
+                        // eslint-disable-next-line no-await-in-loop
+                        await fetchGrandChildrenObjectsAPI(childrenObjects[i]);
+                    }
                 }
             }
-        }
-    }, [dispatch, entity]);
+        };
+
+        fetchDataAPI();
+    }, [isChildrenLoaded]);
 
     const handleClick = (childrenEntity) => {
         updateIsLoaded(false);
@@ -107,14 +123,20 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
                         }
                         openButtonPosition="left"
                     >
-                        {childrenEntity?.childrenObjects?.map((grandChildrenEntity) => (
-                            <SSubEntityWrapper
-                                key={grandChildrenEntity.id}
-                                onClick={() => handleClick(grandChildrenEntity)}
-                            >
-                                <EntityHeader entity={grandChildrenEntity} />
-                            </SSubEntityWrapper>
-                        ))}
+                        {childrenEntity?.childrenObjects?.length > 0 ? (
+                            childrenEntity?.childrenObjects?.map((grandChildrenEntity) => (
+                                <SSubEntityWrapper
+                                    key={grandChildrenEntity.id}
+                                    onClick={() => handleClick(grandChildrenEntity)}
+                                >
+                                    <EntityHeader entity={grandChildrenEntity} />
+                                </SSubEntityWrapper>
+                            ))
+                        ) : (
+                            <SSpinnerWrapper>
+                                <Spinner />
+                            </SSpinnerWrapper>
+                        )}
                     </Accordion>
                 ))
             ) : (
