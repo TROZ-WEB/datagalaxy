@@ -24,6 +24,11 @@ storeModel().then((models) => {
     container.id = 'datagalaxy_container';
     document.documentElement.appendChild(container);
 
+    if (window.location.href.indexOf('openDatagalaxy') !== -1) {
+        const r = window.document.getElementById('datagalaxy_container');
+        r.classList.toggle('datagalaxy_root--show');
+    }
+
     const store = createStore(persist(models, { storage: AsyncStorageService }));
     ReactDOM.render(
         <StoreProvider store={store}>
