@@ -22,7 +22,7 @@ const SContainer = styled.div`
 `;
 
 const SContent = styled.div`
-    padding: 11px;
+    padding: 11px 11px 11px 68px;
     width: 400px;
 `;
 

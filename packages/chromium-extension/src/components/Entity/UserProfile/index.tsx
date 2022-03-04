@@ -9,6 +9,7 @@ const SAvatarWrapper = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    border-radius: 12px 3px 3px 12px;
 `;
 
 const SRoot = styled.div`
