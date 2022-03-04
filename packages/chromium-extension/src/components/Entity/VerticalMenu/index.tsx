@@ -14,6 +14,7 @@ const SRoot = styled.div`
     background-color: #f3f6ff;
     height: 100%;
     padding: 16px 0px;
+    box-sizing: border-box;
     position: fixed;
 `;
 
