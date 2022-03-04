@@ -125,14 +125,14 @@ const Details = ({ entity }: DetailsProps) => {
                     </Details.SubInfo>
                     {Object.keys(rest).map((key) => {
                         return (
-                            <div>
-                                {rest[key] && reservedKeys.indexOf(key) === -1 && (
-                                    <>
-                                        <Details.SubInfo title={key}>{computeData(rest[key])}</Details.SubInfo>
-                                        <Details.Separator />
-                                    </>
-                                )}
-                            </div>
+                            rest[key] &&
+                            !rest[key].entries &&
+                            reservedKeys.indexOf(key) === -1 && (
+                                <>
+                                    <Details.SubInfo title={key}>{computeData(rest[key])}</Details.SubInfo>
+                                    <Details.Separator />
+                                </>
+                            )
                         );
                     })}
                 </Accordion>

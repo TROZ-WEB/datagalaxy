@@ -17,7 +17,7 @@ const SContainer = styled.div`
     flex-direction: row;
     align-items: flex-start;
     margin: 0;
-    height: 90%;
+    height: 80%;
     overflow: scroll;
 `;
 
@@ -50,7 +50,7 @@ const EntityPage = () => {
 
     useEffect(() => {
         if (fullyLoadedEntity) {
-            setEntity({ ...fullyLoadedEntity, dataType });
+            setEntity({ ...fullyLoadedEntity, dataType, location });
         }
     }, [fullyLoadedEntity]);
 
@@ -71,7 +71,7 @@ const EntityPage = () => {
                                     <Details entity={entity} />
                                 </Route>
                                 <Route path={`/app/entities/${URLLocation}/linked-objects`} exact>
-                                    <LinkedObjects />
+                                    <LinkedObjects entity={entity} />
                                 </Route>
                                 <Route path={`/app/entities/${URLLocation}/children-objects`} exact>
                                     <ChildrenObjects entity={entity} />
