@@ -1,8 +1,11 @@
+import { AttributeDefinitionType, AttributeType } from '../Attributes/types';
 import { get } from '../Http';
 import { EntityType } from './types';
 
 /* eslint-disable import/prefer-default-export */
 export type { EntityType, FieldStatus } from './types';
+/* eslint-disable import/prefer-default-export */
+export type { AttributeType, AttributeDefinitionType } from '../Attributes/types';
 
 const ellipseAt = (at: number) => (item) => item.slice(0, at);
 
@@ -90,6 +93,40 @@ export const entitiesTypeRelatedInfos: customFieldAttr = {
 export const fetchEntity = async (apiUrl: string, location: string): Promise<any> => {
     try {
         const response = await get<EntityType>(`${apiUrl}/${location}`);
+
+        return response.parsedBody;
+    } catch (error) {
+        console.error(error);
+    }
+
+    return null;
+};
+
+export const getAttributesValues = async (
+    apiUrl: string,
+    attributeDataType: string,
+    attributeKey: string,
+): Promise<AttributeType[]> => {
+    try {
+        const response = await get<AttributeType[]>(
+            `${apiUrl}/attributes/values?dataType=${attributeDataType}&attributeKey=${attributeKey}`,
+        );
+
+        return response.parsedBody;
+    } catch (error) {
+        console.error(error);
+    }
+
+    return null;
+};
+
+export const getAttributes = async (
+    apiUrl: string,
+    route: string,
+    dataType: string,
+): Promise<AttributeDefinitionType[]> => {
+    try {
+        const response = await get<AttributeDefinitionType[]>(`${apiUrl}/${route}?dataType=${dataType}`);
 
         return response.parsedBody;
     } catch (error) {

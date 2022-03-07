@@ -59,7 +59,7 @@ const StepFinal: React.FC<StepProps> = ({ currentStep, step }) => {
                 {chrome.i18n.getMessage('onboarding_final_stepTitle2')}
             </SStepTitle>
             <SSkipButtonWrapper>
-                <Button onClick={onClick}>{chrome.i18n.getMessage('onboarding_final_skipButton')}</Button>
+                <Button id='onboardingSkipButton' onClick={onClick}>{chrome.i18n.getMessage('onboarding_final_skipButton')}</Button>
             </SSkipButtonWrapper>
         </SRoot>
     );

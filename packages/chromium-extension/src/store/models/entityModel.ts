@@ -1,4 +1,4 @@
-import { Action, Thunk, Actions, thunk, action, debug } from 'easy-peasy';
+import { Action, Thunk, Actions, thunk, action } from 'easy-peasy';
 import {
     fetchEntity as fetchEntityAPI,
     fetchLinkedObjects as fetchLinkedObjectsAPI,
@@ -6,6 +6,10 @@ import {
     EntityType,
     LinkedObjectsType,
     getUserByEmail,
+    getAttributesValues,
+    getAttributes,
+    ReverseDataTypeMapping,
+    AttributeDefinitionType,
 } from 'shared';
 import { enhancedEntitiesWithUserInfo, resetModel } from './helper';
 
@@ -75,17 +79,42 @@ const fetchEntity = thunk(async (actions: Actions<EntityModel>, location: string
         // Then enrich the entity object with required user info
         const [enhancedEntity] = await enhancedEntitiesWithUserInfo([entity], url);
 
-        const p = [];
+        const allAttributes: AttributeDefinitionType[] = await getAttributes(
+            url,
+            'attributes',
+            ReverseDataTypeMapping[location.split('/')[0]]?.toLowerCase(),
+        );
+
         /* eslint-disable no-restricted-syntax, no-await-in-loop */
         for (const key in enhancedEntity.attributes) {
             if (Array.isArray(enhancedEntity.attributes[key])) {
-                for (const keyAttribute in enhancedEntity.attributes[key]) {
-                    if (validateEmail(enhancedEntity.attributes[key][keyAttribute])) {
-                        enhancedEntity.attributes[key][keyAttribute] = await getUserByEmail(
+                for (const valueKey in enhancedEntity.attributes[key]) {
+                    if (validateEmail(enhancedEntity.attributes[key][valueKey])) {
+                        enhancedEntity.attributes[key][valueKey] = await getUserByEmail(
                             url,
-                            enhancedEntity.attributes[key][keyAttribute],
+                            enhancedEntity.attributes[key][valueKey],
                         );
                     }
+                }
+            }
+        }
+
+        for (const key in enhancedEntity.attributes) {
+            if (Array.isArray(enhancedEntity.attributes[key]) && allAttributes.find((att) => att.name === key)) {
+                const attributeValues = await getAttributesValues(
+                    url,
+                    allAttributes.find((att) => att.name === key).dataType.toLowerCase(),
+                    allAttributes.find((att) => att.name === key).attributeKey,
+                );
+
+                /* eslint-disable no-restricted-syntax, guard-for-in */
+                for (const valueKey in enhancedEntity.attributes[key]) {
+                    enhancedEntity.attributes[key][valueKey] =
+                        attributeValues?.find(
+                            (val) =>
+                                val.description === enhancedEntity.attributes[key][valueKey] ||
+                                val.label === enhancedEntity.attributes[key][valueKey],
+                        ) || enhancedEntity.attributes[key][valueKey];
                 }
             }
         }

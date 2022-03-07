@@ -49,7 +49,7 @@ const PatFinder = () => {
                         allowFullScreen
                     />
                 )}
-                <Button onClick={() => history.goBack()}>
+                <Button id="patCloseButton" onClick={() => history.goBack()}>
                     {chrome.i18n.getMessage('onboarding_patFinder_closeButton')}
                 </Button>
             </SRoot>

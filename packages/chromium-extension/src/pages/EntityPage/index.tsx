@@ -57,9 +57,15 @@ const EntityPage = () => {
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
-            {isLoaded && entity && Object.keys(entity).length !== 0 ? (
+            {isLoaded && entity && entity.type ? (
                 <>
-                    <EntityHeader ellipseBreadCrumb={9} entity={entity} alwaysExpanded entityPage />
+                    <EntityHeader
+                        ellipseBreadCrumb={9}
+                        entity={entity}
+                        id={`entityHeader${entity.id}`}
+                        alwaysExpanded
+                        entityPage
+                    />
                     <SContainer>
                         <VerticalMenu URLLocation={URLLocation} entity={entity} />
                         <SContent>

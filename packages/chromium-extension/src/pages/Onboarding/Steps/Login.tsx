@@ -104,11 +104,13 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
         <form onSubmit={onSubmit}>
             <SStepTitle>{chrome.i18n.getMessage('onboarding_login_stepTitle')}</SStepTitle>
             <Input
+                id="emailInput"
                 errors={errors}
                 label={chrome.i18n.getMessage('onboarding_login_inputEmailLabel')}
                 {...register('email', { required: true })}
             />
             <Input
+                id="patInput"
                 errors={errors}
                 label={chrome.i18n.getMessage('onboarding_login_inputPatLabel')}
                 type="password"
@@ -118,7 +120,7 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
                 <Link to={`${url}/find-pat-helper`}>{chrome.i18n.getMessage('onboarding_login_findMyPat')}</Link>
             </SFindPatHelper>
             <SButtonWrapper>
-                <Button type="submit">{chrome.i18n.getMessage('onboarding_login_submitForm')}</Button>
+                <Button id="submitButton" type="submit">{chrome.i18n.getMessage('onboarding_login_submitForm')}</Button>
             </SButtonWrapper>
         </form>
     );

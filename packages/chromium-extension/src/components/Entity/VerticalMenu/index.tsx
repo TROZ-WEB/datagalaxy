@@ -7,7 +7,7 @@ import VerticalMenuButton from './VerticalMenuButton';
 /* ---------- STYLES ---------- */
 
 const SRoot = styled.div`
-    width: 4%;
+    width: 46px;
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -33,18 +33,21 @@ const VerticalMenu: FC<VerticalMenuProps> = ({ entity, URLLocation }) => {
         <SRoot>
             <VerticalMenuButton
                 icon="Info"
+                id="infoButton1"
                 onClick={() => history.replace(`/app/entities/${URLLocation}/`)}
                 variant={path === '' && 'active'}
             />
             <VerticalMenuButton
                 badgeCount={entity?.childrenCount}
                 icon="Hierarchy"
+                id="infoButton2"
                 onClick={() => history.replace(`/app/entities/${URLLocation}/children-objects`)}
                 variant={path === 'children-objects' && 'active'}
             />
             <VerticalMenuButton
                 badgeCount={100}
                 icon="Mapping"
+                id="infoButton3"
                 onClick={() => history.replace(`/app/entities/${URLLocation}/linked-objects`)}
                 variant={path === 'linked-objects' && 'active'}
             />

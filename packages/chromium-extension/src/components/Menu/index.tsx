@@ -143,6 +143,7 @@ const Menu = () => {
                 </a>
                 {canGoBack && (
                     <SBackButton
+                        id="backButton"
                         onClick={() => {
                             updateIsLoaded(false);
                             history.goBack();
@@ -157,9 +158,10 @@ const Menu = () => {
                 )}
             </SFlex>
             <SMenuItemsContainer>
-                {menuItems.map(({ icon, path }) => (
+                {menuItems.map(({ icon, path }, index) => (
                     <SMenuItem
                         key={path}
+                        id={`menuItem${index}`}
                         isSelected={path === pathname}
                         onClick={() => history.push(path)}
                         type="button"

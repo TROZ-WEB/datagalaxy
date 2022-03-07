@@ -48,15 +48,17 @@ const SRoot = styled.button`
 
 /* ---------- COMPONENT ---------- */
 interface Props {
+    id: string
     children: React.ReactNode;
     type?: 'button' | 'submit' | 'reset';
     variant?: 'contained' | 'outlined';
     onClick?: () => void;
 }
 
-const Button: React.FC<Props> = ({ children, onClick, type = 'button', variant = 'contained', ...rest }) => {
+const Button: React.FC<Props> = ({ id, children, onClick, type = 'button', variant = 'contained', ...rest }) => {
     return (
         <SRoot
+            id={id}
             onClick={onClick}
             type={type}
             // eslint-disable-next-line react/button-has-type

@@ -136,6 +136,7 @@ const Account: FC = () => {
             <form onSubmit={onSubmit}>
                 <STitle>{chrome.i18n.getMessage('account_title')}</STitle>
                 <Input
+                    id='emailInput'
                     label={<FormLabel>{chrome.i18n.getMessage('onboarding_login_inputEmailLabel')}</FormLabel>}
                     disabled
                     readOnly
@@ -147,6 +148,7 @@ const Account: FC = () => {
                 <STitle>{chrome.i18n.getMessage('account_update_pat')}</STitle>
                 {isPATError && <Alert type="warning">{chrome.i18n.getMessage('global_error')}</Alert>}
                 <Input
+                    id='patInput'
                     errors={errors}
                     label={<FormLabel>{chrome.i18n.getMessage('onboarding_login_inputNewPatLabel')}</FormLabel>}
                     type="password"
@@ -160,13 +162,14 @@ const Account: FC = () => {
                 )}
                 <br />
                 <div>
-                    <Button type="submit">{chrome.i18n.getMessage('account_update_pat_button')}</Button>
+                    <Button id="updatePatButton" type="submit">{chrome.i18n.getMessage('account_update_pat_button')}</Button>
                 </div>
             </form>
             <SSignoutDiv>
                 <SVersionWrapper>v{chrome.runtime.getManifest().version} - beta</SVersionWrapper>
                 <SLogoutButton>
                     <Button
+                        id="logoutButton"
                         onClick={async () => {
                             await dispatch.auth.logout(store);
 

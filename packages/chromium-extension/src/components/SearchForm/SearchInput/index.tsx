@@ -138,11 +138,11 @@ const SearchInput = forwardRef<HTMLInputElement, IProps>(
             <SRoot>
                 {leftElement}
 
-                <SInput {...props} ref={ref} />
+                <SInput id="searchInput" {...props} ref={ref} />
 
                 {props.value && (
                     <SRight>
-                        <SClearButton aria-label="Clear" onClick={onClearSearch} type="button">
+                        <SClearButton id="clearSearch" aria-label="Clear" onClick={onClearSearch} type="button">
                             <Close />
                         </SClearButton>
                     </SRight>

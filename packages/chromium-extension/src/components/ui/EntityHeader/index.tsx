@@ -106,6 +106,7 @@ const SRoot = styled.div`
 const LIMIT_TAGS_ELLIPSE = 3;
 
 interface EntityHeaderProps {
+    id: string;
     alwaysExpanded?: boolean;
     ellipseBreadCrumb?: number;
     entity: any;
@@ -114,6 +115,7 @@ interface EntityHeaderProps {
 }
 
 const EntityHeader: FC<EntityHeaderProps> = ({
+    id,
     alwaysExpanded = false,
     ellipseBreadCrumb,
     entity,
@@ -132,6 +134,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                     cardExpanded={isCardExpanded}
                     cursorPointer={!!onClick}
                     entityPage={entityPage}
+                    id={id}
                     onClick={onClick}
                     onKeyPress={onClick}
                     onMouseEnter={() => alwaysExpanded || setIsCardExpanded(true)}

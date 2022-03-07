@@ -6,6 +6,7 @@ import Accordion from '../../../../components/Accordion';
 import Status from '../../../../components/Entity/Status';
 import Tags from '../../../../components/Entity/Tags';
 import UserProfile from '../../../../components/Entity/UserProfile';
+import DomainCard from '../../../../components/ui/DomainCard';
 
 /* ---------- STYLES ---------- */
 
@@ -58,14 +59,7 @@ interface DetailsProps {
 }
 
 const Details = ({ entity }: DetailsProps) => {
-    const reservedKeys = [
-        'creationTime',
-        'lastModificationTime',
-        'linkShortcutDomainIds',
-        'owners',
-        'stewards',
-        'logicalParentData',
-    ];
+    const reservedKeys = ['creationTime', 'lastModificationTime', 'owners', 'stewards', 'logicalParentData'];
     const { description, tags, summary, status, owners, stewards, ...rest } = entity.attributes;
 
     console.warn('UNUSED : ', stewards);
@@ -89,14 +83,32 @@ const Details = ({ entity }: DetailsProps) => {
                 </a>
             );
         }
+
         if (isValid(parseISO(data))) {
             return format(parseISO(data), 'dd/MM/yyyy');
         }
+
         if (Array.isArray(data)) {
             return data?.map((d) => {
                 if (!d) {
                     return '';
                 }
+
+                if (d.label) {
+                    return (
+                        <Tags.Item
+                            key={d + Math.random()}
+                            color={d.color}
+                            hideLabel={false}
+                            tag={d.description || d.label}
+                        />
+                    );
+                }
+
+                if (d.type) {
+                    return <DomainCard entity={d} />;
+                }
+
                 if (d?.userId) {
                     return <UserProfile user={d} />;
                 }
@@ -106,6 +118,14 @@ const Details = ({ entity }: DetailsProps) => {
         }
 
         return data.toString();
+    };
+
+    const computeTitle = (data: any) => {
+        if (data === 'linkShortcutDomainIds') {
+            return chrome.i18n.getMessage(`linkShortcutDomainIds`);
+        }
+
+        return data;
     };
 
     return (
@@ -119,7 +139,7 @@ const Details = ({ entity }: DetailsProps) => {
                     <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_tags`)}>
                         <Tags>
                             {tags?.map((tag) => (
-                                <Tags.Item key={tag} hideLabel={tags?.length > 1} tag={tag} />
+                                <Tags.Item key={tag} hideLabel={false} tag={tag} />
                             ))}
                         </Tags>
                     </Details.SubInfo>
@@ -137,7 +157,9 @@ const Details = ({ entity }: DetailsProps) => {
                             !rest[key].trend &&
                             reservedKeys.indexOf(key) === -1 && (
                                 <>
-                                    <Details.SubInfo title={key}>{computeData(rest[key])}</Details.SubInfo>
+                                    <Details.SubInfo title={computeTitle(key)}>
+                                        {computeData(rest[key])}
+                                    </Details.SubInfo>
                                     <Details.Separator />
                                 </>
                             )
