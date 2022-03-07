@@ -382,6 +382,9 @@
     "entity_label_full_UsageComponent": {
         "message": "Usage Component"
     },
+    "filter_by": {
+        "message": "Filter by"
+    },
     "account_title": {
         "message": "My profile"
     },

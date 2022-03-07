@@ -1,8 +1,10 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import Glyph from '../Glyph/index';
+import Glyph from './Glyph/index';
 
 /* ---------- STYLES ---------- */
+
+const SGlyph = styled(Glyph)``;
 
 const SRoot = styled.button`
     width: 30px;
@@ -25,14 +27,21 @@ const SRoot = styled.button`
         cursor: pointer;
     }
 
-    ${(props) => props.variant === 'active' && `background: rgba(2, 42, 142, 0.1)`}
+    ${(props) =>
+        props.size === 'XS' &&
+        css`
+            width: 15px;
+            height: 15px;
+
+            ${SGlyph} {
+                font-size: 12px;
+            }
+        `}
 
     ${(props) =>
-        props.variant === 'mini' &&
+        props.variant === 'active' &&
         css`
-            width: 20px;
-            height: 20px;
-            font-size: 12px;
+            background: rgba(2, 42, 142, 0.1);
         `}
 
     ${(props) =>
@@ -55,22 +64,37 @@ const SRoot = styled.button`
 
 interface Props {
     type?: 'button' | 'submit' | 'reset';
-    variant?: 'active' | 'mini' | 'primary' | '';
+    variant?: 'active' | 'primary' | '';
+    size?: 'XS' | 'S' | 'M';
     onClick?: () => void;
+    onBlur?: () => void;
     icon: string;
     badgeCount?: number;
+    className?: string;
 }
 
-const RoundButton: React.FC<Props> = ({ onClick, icon, type = 'button', variant, ...rest }) => {
+const RoundButton: React.FC<Props> = ({
+    onClick,
+    onBlur,
+    icon,
+    type = 'button',
+    variant,
+    size = 'M',
+    className,
+    ...rest
+}) => {
     return (
         <SRoot
+            className={className}
+            onBlur={onBlur}
             onClick={onClick}
-            type={type}
             // eslint-disable-next-line react/button-has-type
+            size={size}
+            type={type}
             variant={variant}
             {...rest}
         >
-            <Glyph icon={icon} />
+            <SGlyph icon={icon} />
         </SRoot>
     );
 };

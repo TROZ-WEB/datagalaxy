@@ -53,6 +53,8 @@
         "react-helmet": "~6.1.0",
         "shared": "~1.0.0",
         "styled-components": "~5.3.3",
-        "webpack-merge": "^5.8.0"
+        "webpack-merge": "^5.8.0",
+        "react-modal": "~3.14.4",
+        "reactjs-popup": "~2.0.5"
     }
 }

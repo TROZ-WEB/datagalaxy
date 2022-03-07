@@ -34,6 +34,7 @@ specifiers:
   react-dom: ^17.0.2
   react-helmet: ~6.1.0
   react-hook-form: ~7.12.2
+  react-modal: ~3.14.4
   react-router-dom: ~5.2.0
   react-shadow: ~19.0.2
   react-styled-shadow-dom: ~1.0.0
@@ -82,6 +83,7 @@ dependencies:
   react-dom: 17.0.2_react@17.0.2
   react-helmet: 6.1.0_react@17.0.2
   react-hook-form: 7.12.2_react@17.0.2
+  react-modal: 3.14.4_react-dom@17.0.2+react@17.0.2
   react-router-dom: 5.2.0_react@17.0.2
   react-shadow: 19.0.2_react-dom@17.0.2+react@17.0.2
   react-styled-shadow-dom: 1.0.0_7a082f7d10047d47195aea793f958a14
@@ -296,7 +298,7 @@ packages:
     resolution: {integrity: sha512-qf9u2WFWVV0MppaL877j2dBtQIDgmidgjGk5VIMw3OadXvYaXn66U1BFlH2t4+t3i+8PhedppRv+i40ABzd+gg==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/helper-validator-identifier': 7.14.5
+      '@babel/helper-validator-identifier': 7.16.7
       chalk: 2.4.2
       js-tokens: 4.0.0
     dev: false
@@ -2982,6 +2984,10 @@ packages:
       strip-final-newline: 2.0.0
     dev: false
 
+  /exenv/1.2.2:
+    resolution: {integrity: sha1-KueOhdmJQVhnCwPUe+wfA72Ru50=}
+    dev: false
+
   /exit/0.1.2:
     resolution: {integrity: sha1-BjJjj42HfMghB9MKD/8aF8uhzQw=}
     engines: {node: '>= 0.8.0'}
@@ -5159,6 +5165,25 @@ packages:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
     dev: false
 
+  /react-lifecycles-compat/3.0.4:
+    resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
+    dev: false
+
+  /react-modal/3.14.4_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-8surmulejafYCH9wfUmFyj4UfbSJwjcgbS9gf3oOItu4Hwd6ivJyVBETI0yHRhpJKCLZMUtnhzk76wXTsNL6Qg==}
+    engines: {node: '>=8'}
+    peerDependencies:
+      react: ^0.14.0 || ^15.0.0 || ^16 || ^17
+      react-dom: ^0.14.0 || ^15.0.0 || ^16 || ^17
+    dependencies:
+      exenv: 1.2.2
+      prop-types: 15.7.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-lifecycles-compat: 3.0.4
+      warning: 4.0.3
+    dev: false
+
   /react-player/2.9.0_react@17.0.2:
     resolution: {integrity: sha512-jNUkTfMmUhwPPAktAdIqiBcVUKsFKrVGH6Ocutj6535CNfM91yrvWxHg6fvIX8Y/fjYUPoejddwh7qboNV9vGA==}
     peerDependencies:
@@ -5290,6 +5315,17 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
+    dev: false
+
+  /reactjs-popup/2.0.5_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-b5hv9a6aGsHEHXFAgPO5s1Jw1eSkopueyUVxQewGdLgqk2eW0IVXZrPRpHR629YcgIpC2oxtX8OOZ8a7bQJbxA==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
     dev: false
 
   /read-pkg-up/3.0.0:
@@ -6319,6 +6355,12 @@ packages:
       makeerror: 1.0.11
     dev: false
 
+  /warning/4.0.3:
+    resolution: {integrity: sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==}
+    dependencies:
+      loose-envify: 1.4.0
+    dev: false
+
   /watchpack/2.2.0:
     resolution: {integrity: sha512-up4YAn/XHgZHIxFBVCdlMiWDj6WaLKpwVeGQk2I5thdYxF/KmF0aaz6TfJZ/hfl1h/XlcDr7k1KH7ThDagpFaA==}
     engines: {node: '>=10.13.0'}
@@ -6568,7 +6610,7 @@ packages:
     dev: false
 
   file:projects/chromium-extension.tgz:
-    resolution: {integrity: sha512-6+/gqDFe2kWWk7eLkBBWuAq5HSaeERoZfnHkTSg61FDwiPpeYF6SrvKELsiKhYS4ZZkO/IxjZvTZw17UPGPUSQ==, tarball: file:projects/chromium-extension.tgz}
+    resolution: {integrity: sha512-2ZklhEiCRcLnUGDnurmjXrHa02gLILgwvRYxlmUEluJtnPInPcv7EzIauZ1RtG0cetdIwvKCRFqDPW6TH+DgkA==, tarball: file:projects/chromium-extension.tgz}
     name: '@rush-temp/chromium-extension'
     version: 0.0.0
     dependencies:
@@ -6598,10 +6640,12 @@ packages:
       react-dom: 17.0.2_react@17.0.2
       react-helmet: 6.1.0_react@17.0.2
       react-hook-form: 7.12.2_react@17.0.2
+      react-modal: 3.14.4_react-dom@17.0.2+react@17.0.2
       react-player: 2.9.0_react@17.0.2
       react-router-dom: 5.2.0_react@17.0.2
       react-shadow: 19.0.2_react-dom@17.0.2+react@17.0.2
       react-styled-shadow-dom: 1.0.0_7a082f7d10047d47195aea793f958a14
+      reactjs-popup: 2.0.5_react-dom@17.0.2+react@17.0.2
       style-loader: 3.0.0_webpack@5.42.1
       styled-components: 5.3.3_react-dom@17.0.2+react@17.0.2
       ts-loader: 9.2.3_typescript@4.3.5+webpack@5.42.1

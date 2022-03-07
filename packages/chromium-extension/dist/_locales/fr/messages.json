@@ -382,6 +382,9 @@
     "entity_label_full_UsageComponent": {
         "message": "Composant usage"
     },
+    "filter_by": {
+        "message": "Filtrer par"
+    },
     "account_title": {
         "message": "Mon profil"
     },

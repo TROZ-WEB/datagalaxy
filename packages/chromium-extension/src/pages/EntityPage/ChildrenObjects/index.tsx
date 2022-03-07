@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import LoadingScreen from '../../../components/LoadingScreen';
 import Accordion from '../../../components/ui/Accordion';
 import EntityHeader from '../../../components/ui/EntityHeader';
-import Spinner from '../../../components/ui/Spinner/index';
+import Spinner from '../../../components/ui/Spinner';
 import { useStoreDispatch, useStoreState, useStoreActions } from '../../../store/hooks';
 
 /* ---------- STYLES ---------- */

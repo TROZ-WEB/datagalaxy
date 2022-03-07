@@ -1,44 +1,9 @@
 import React, { FC } from 'react';
 import { entitiesTypeRelatedInfos } from 'shared';
 import styled, { css } from 'styled-components';
-import Glyph from '../Glyph';
-import TechnicalLogoPlaceholder from '../../../../assets/technical-logo-placeholder.png';
-
+import DGGlyph from './DGGlyph';
+import TechnicalLogoPlaceholder from '../../../assets/technical-logo-placeholder.png';
 /* ---------- STYLES ---------- */
-
-const SEntityDGGlyph = styled(Glyph)`
-    font-size: 16px;
-
-    ${(props) =>
-        props.kind === 'dictionary' &&
-        css`
-            color: #28aae2;
-            fill: #28aae2;
-        `}
-
-    ${(props) =>
-        props.kind === 'dataprocessing' &&
-        css`
-            color: #1035b1;
-            fill: #1035b1;
-        `}
-
-    ${(props) =>
-        props.kind === 'glossary' &&
-        css`
-            color: #50c516;
-            fill: #50c516;
-        `}
-
-    ${(props) =>
-        props.kind === 'uses' &&
-        css`
-            color: #12884b;
-            fill: #12884b;
-        `}
-
-    ${(props) => props.big && 'font-size: 24px'}
-`;
 
 const SEntityDGGlyphContainer = styled.div`
     position: absolute;
@@ -87,15 +52,6 @@ const SRoot = styled.div`
                 height: 24px;
             }
 
-            ${SEntityDGGlyph} {
-                font-size: 20px;
-
-                ${props.big &&
-                css`
-                    font-size: 32px;
-                `}
-            }
-
             ${STechnicalLogo} {
                 width: 42px;
             }
@@ -104,12 +60,12 @@ const SRoot = styled.div`
 
 /* ---------- COMPONENT ---------- */
 
-interface EntityHeaderProps {
+interface EntityImageProps {
     entity: any;
     entityPage?: boolean;
 }
 
-const EntityImage: FC<EntityHeaderProps> = ({ entity, entityPage }) => {
+const EntityImage: FC<EntityImageProps> = ({ entity, entityPage }) => {
     const { kind, glyph } = entitiesTypeRelatedInfos[entity.type];
 
     // TODO : Link to API (Waiting for API feature)
@@ -121,11 +77,11 @@ const EntityImage: FC<EntityHeaderProps> = ({ entity, entityPage }) => {
                 <>
                     <STechnicalLogo alt="Technical Logo" src={TechnicalLogoPlaceholder} />
                     <SEntityDGGlyphContainer>
-                        <SEntityDGGlyph icon={glyph} kind={kind.toLowerCase()} />
+                        <DGGlyph icon={glyph} kind={kind.toLowerCase()} size={entityPage ? 'M' : 'S'} />
                     </SEntityDGGlyphContainer>
                 </>
             ) : (
-                <SEntityDGGlyph icon={glyph} kind={kind.toLowerCase()} big />
+                <DGGlyph icon={glyph} kind={kind.toLowerCase()} size={entityPage ? 'XL' : 'L'} />
             )}
             {!entityPage && (
                 <SEntityTypeShortLabel>

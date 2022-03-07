@@ -1,22 +1,12 @@
 import React, { ComponentPropsWithRef, forwardRef, ReactElement } from 'react';
 import styled from 'styled-components';
 import CheckMark from '../../../icons/CheckMark';
-import Close from '../../../icons/Close';
 import Refresh from '../../../icons/Refresh';
 import Search from '../../../icons/Search';
+import FiltersModal from './FiltersModal';
+import QuickFilterTag from './QuickFilterTag';
 
 /* ---------- STYLES ---------- */
-
-const SClearButton = styled.button`
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    margin: 0;
-    position: relative;
-    top: 1px;
-    font-family: 'Montserrat', sans-serif;
-`;
 
 const SIconLoading = styled(Refresh)`
     @keyframes Rotate {
@@ -94,6 +84,11 @@ const SRight = styled.div`
 `;
 
 const SRoot = styled.div`
+    border: 1px solid #f3f6ff;
+    border-radius: 3px;
+`;
+
+const SSearchInputContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -102,55 +97,63 @@ const SRoot = styled.div`
     transition: 150ms;
 `;
 
+const SQuickFilterTagsContainer = styled.div`
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+`;
+
 /* ---------- COMPONENT ---------- */
 
 export interface IProps extends ComponentPropsWithRef<'input'> {
-    onClearSearch?: () => void;
     loading?: boolean;
     success?: boolean;
 }
 
-const SearchInput = forwardRef<HTMLInputElement, IProps>(
-    ({ onClearSearch, loading = false, success = false, ...props }, ref) => {
-        let leftElement: ReactElement = null;
+const SearchInput = forwardRef<HTMLInputElement, IProps>(({ loading = false, success = false, ...props }, ref) => {
+    let leftElement: ReactElement = null;
 
-        if (loading) {
-            leftElement = (
-                <SLeft>
-                    <SIconLoading />
-                </SLeft>
-            );
-        } else if (success) {
-            leftElement = (
-                <SLeft>
-                    <SIconSuccess />
-                </SLeft>
-            );
-        } else {
-            leftElement = (
-                <SLeft>
-                    <Search />
-                </SLeft>
-            );
-        }
-
-        return (
-            <SRoot>
-                {leftElement}
-
-                <SInput id="searchInput" {...props} ref={ref} />
-
-                {props.value && (
-                    <SRight>
-                        <SClearButton id="clearSearch" aria-label="Clear" onClick={onClearSearch} type="button">
-                            <Close />
-                        </SClearButton>
-                    </SRight>
-                )}
-            </SRoot>
+    if (loading) {
+        leftElement = (
+            <SLeft>
+                <SIconLoading />
+            </SLeft>
         );
-    },
-);
+    } else if (success) {
+        leftElement = (
+            <SLeft>
+                <SIconSuccess />
+            </SLeft>
+        );
+    } else {
+        leftElement = (
+            <SLeft>
+                <Search />
+            </SLeft>
+        );
+    }
+
+    return (
+        <SRoot>
+            <SQuickFilterTagsContainer>
+                <QuickFilterTag icon="Table" kind="dictionary" value="Table" />
+                <QuickFilterTag icon="Table" kind="dictionary" value="Table" />
+                <QuickFilterTag icon="Table" kind="dictionary" value="Table" />
+                <QuickFilterTag icon="Table" kind="dictionary" value="Table" />
+                <QuickFilterTag icon="Table" kind="dictionary" value="Table" />
+            </SQuickFilterTagsContainer>
+
+            <SSearchInputContainer>
+                {leftElement}
+                <SInput id="searchInput" {...props} ref={ref} />
+                <SRight>
+                    <FiltersModal />
+                </SRight>
+            </SSearchInputContainer>
+        </SRoot>
+    );
+});
 
 SearchInput.displayName = 'Input';
 
