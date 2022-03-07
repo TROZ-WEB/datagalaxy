@@ -1,6 +1,6 @@
 import React, { useState, FC } from 'react';
 import styled, { css } from 'styled-components';
-import ArrowDrop from '../../../../../assets/icons/arrow-drop-up.svg';
+import ArrowDrop from '../../../../assets/icons/arrow-drop-up.svg';
 
 /* ---------- STYLES ---------- */
 
@@ -82,27 +82,27 @@ const SRoot = styled.div`
 
 /* ---------- COMPONENT ---------- */
 
-interface ComplexAccordionProps {
+interface AccordionProps {
     initialOpen?: boolean;
     header: string | React.ReactNode;
     children?: React.ReactNode;
     openButtonPosition?: string;
     sizeOfTitle?: string;
-    childrenCount: number;
+    disabled?: boolean;
 }
 
-const Accordion: FC<ComplexAccordionProps> = ({
+const Accordion: FC<AccordionProps> = ({
     initialOpen = false,
     header,
     children,
     openButtonPosition = 'right',
     sizeOfTitle = 'normal',
-    childrenCount,
+    disabled,
 }) => {
     const [isOpen, setOpen] = useState(initialOpen);
 
     const handleClick = () => {
-        if (childrenCount > 0) {
+        if (!disabled) {
             setOpen(!isOpen);
         }
     };
@@ -111,7 +111,7 @@ const Accordion: FC<ComplexAccordionProps> = ({
         <SRoot>
             <SHeader reversed={openButtonPosition === 'left'} sizeOfTitle={sizeOfTitle} type="button">
                 {header}
-                <SArrowButton disabled={childrenCount === 0} type="button">
+                <SArrowButton disabled={disabled} type="button">
                     <SArrowDrop alt="Arrow icon" arrowDropUp={!isOpen} onClick={handleClick} src={ArrowDrop} />
                 </SArrowButton>
             </SHeader>

@@ -2,26 +2,16 @@ import { format, isValid, parseISO } from 'date-fns';
 import React from 'react';
 import { EntityType } from 'shared';
 import styled from 'styled-components';
-import Accordion from '../../../../components/Accordion';
 import Status from '../../../../components/Entity/Status';
 import Tags from '../../../../components/Entity/Tags';
 import UserProfile from '../../../../components/Entity/UserProfile';
+<<<<<<< HEAD
 import DomainCard from '../../../../components/ui/DomainCard';
+=======
+import Accordion from '../../../../components/ui/Accordion';
+>>>>>>> 4d6573e (Fixes)
 
 /* ---------- STYLES ---------- */
-
-const SAccordionWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin-top: 30px;
-    width: 100%;
-`;
-
-const SRoot = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-`;
 
 const SSeparator = styled.div`
     height: 1px;
@@ -50,6 +40,11 @@ const SSubInfoWrapper = styled.div`
     flex-direction: column;
     word-break: break-all;
     width: 100%;
+`;
+
+const STitle = styled.div`
+    font-weight: 700;
+    font-size: 14px;
 `;
 
 /* ---------- COMPONENT ---------- */
@@ -129,45 +124,38 @@ const Details = ({ entity }: DetailsProps) => {
     };
 
     return (
-        <SRoot>
-            <SAccordionWrapper>
-                <Accordion title={chrome.i18n.getMessage(`entity_details_sections_general`)} initialOpen>
-                    <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_status`)}>
-                        <Status status={status} />
-                    </Details.SubInfo>
-                    <Details.Separator />
-                    <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_tags`)}>
-                        <Tags>
-                            {tags?.map((tag) => (
-                                <Tags.Item key={tag} hideLabel={false} tag={tag} />
-                            ))}
-                        </Tags>
-                    </Details.SubInfo>
-                    <Details.Separator />
-                    <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_summary`)}>
-                        {summary}
-                    </Details.SubInfo>
-                    <Details.Separator />
-                    <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_description`)}>
-                        {description}
-                    </Details.SubInfo>
-                    {Object.keys(rest).map((key) => {
-                        return (
-                            rest[key] &&
-                            !rest[key].trend &&
-                            reservedKeys.indexOf(key) === -1 && (
-                                <>
-                                    <Details.SubInfo title={computeTitle(key)}>
-                                        {computeData(rest[key])}
-                                    </Details.SubInfo>
-                                    <Details.Separator />
-                                </>
-                            )
-                        );
-                    })}
-                </Accordion>
-            </SAccordionWrapper>
-        </SRoot>
+        <Accordion header={<STitle>{chrome.i18n.getMessage(`entity_details_sections_general`)}</STitle>} initialOpen>
+            <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_status`)}>
+                <Status status={status} />
+            </Details.SubInfo>
+            <Details.Separator />
+            <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_tags`)}>
+                <Tags>
+                    {tags?.map((tag) => (
+                        <Tags.Item key={tag} hideLabel={tags?.length > 1} tag={tag} />
+                    ))}
+                </Tags>
+            </Details.SubInfo>
+            <Details.Separator />
+            <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_summary`)}>
+                {summary}
+            </Details.SubInfo>
+            <Details.Separator />
+            <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_description`)}>
+                {description}
+            </Details.SubInfo>
+            {Object.keys(rest).map(
+                (key) =>
+                    rest[key] &&
+                    !rest[key].trend &&
+                    reservedKeys.indexOf(key) === -1 && (
+                        <>
+                            <Details.SubInfo title={key}>{computeData(rest[key])}</Details.SubInfo>
+                            <Details.Separator />
+                        </>
+                    ),
+            )}
+        </Accordion>
     );
 };
 

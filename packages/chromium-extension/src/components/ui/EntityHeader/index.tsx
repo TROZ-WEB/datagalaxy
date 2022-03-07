@@ -73,6 +73,8 @@ const SRoot = styled.div`
     overflow: hidden;
     max-height: 58px;
     transition: max-height 0.15s ease-out;
+    position: relative;
+    z-index: 15;
 
     ${(props) =>
         props.cardExpanded &&

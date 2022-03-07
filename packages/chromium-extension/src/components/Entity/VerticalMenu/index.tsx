@@ -16,6 +16,7 @@ const SRoot = styled.div`
     padding: 16px 0px;
     box-sizing: border-box;
     position: fixed;
+    z-index: 10;
 `;
 
 /* ---------- COMPONENT ---------- */

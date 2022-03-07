@@ -2,25 +2,31 @@ import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { DataTypeMapping } from 'shared';
 import styled from 'styled-components';
-import Accordion from '../../../components/Accordion';
+import Accordion from '../../../components/ui/Accordion';
 import EntityHeader from '../../../components/ui/EntityHeader';
 import { useStoreDispatch, useStoreActions, useStoreState } from '../../../store/hooks';
 
 /* ---------- STYLES ---------- */
 
-const SAccordionWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin-top: 30px;
+const SSubEntityWrapper = styled.span`
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    border: none;
+    background: none;
+    padding: 12px 0;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 76, 255, 0.08);
+    font-family: 'Montserrat', sans-serif;
+    box-sizing: border-box;
 `;
 
-const SSearchCardsResultWrapper = styled.div`
-    overflow-y: scroll;
-    height: 392px;
-    margin-right: -17px;
-    padding-right: 3px;
-    margin-top: 15px;
+const STitle = styled.div`
+    font-weight: 700;
+    font-size: 14px;
 `;
 
 /* ---------- COMPONENT ---------- */
@@ -54,40 +60,29 @@ const LinkedObjects = ({ entity }) => {
         return () => {};
     }, [dispatch, entity]);
 
+    const handleClick = (linkedObject) => {
+        updateSelectedEntity(linkedObject);
+        history.push(`/app/entities/${linkedObject.id}/`);
+    };
+
     return (
-        <div>
+        // eslint-disable-next-line react/jsx-no-useless-fragment
+        <>
             {linkedObjects &&
-                Object.keys(linkedObjects).map((key) => {
-                    return (
-                        <SAccordionWrapper>
-                            <Accordion
-                                openButtonPosition="left"
-                                sizeOfTitle="big"
-                                title={chrome.i18n.getMessage(key)}
-                                initialOpen
-                            >
-                                <SSearchCardsResultWrapper>
-                                    {linkedObjects[key].map((linkedObject) => {
-                                        return (
-                                            <EntityHeader
-                                                key={linkedObject.id}
-                                                entity={linkedObject}
-                                                id={`entityHeader${linkedObject.id}`}
-                                                onClick={() => {
-                                                    updateSelectedEntity(linkedObject);
-                                                    history.push(`/app/entities/${linkedObject.id}/`);
-                                                }}
-                                                alwaysExpanded
-                                                entityPage
-                                            />
-                                        );
-                                    })}
-                                </SSearchCardsResultWrapper>
-                            </Accordion>
-                        </SAccordionWrapper>
-                    );
-                })}
-        </div>
+                Object.keys(linkedObjects).map((key) => (
+                    <Accordion
+                        header={<STitle>{chrome.i18n.getMessage(key)}</STitle>}
+                        openButtonPosition="left"
+                        initialOpen
+                    >
+                        {linkedObjects[key].map((linkedObject) => (
+                            <SSubEntityWrapper key={linkedObject.id} onClick={() => handleClick(linkedObject)}>
+                                <EntityHeader entity={linkedObject} alwaysExpanded />
+                            </SSubEntityWrapper>
+                        ))}
+                    </Accordion>
+                ))}
+        </>
     );
 };
 
