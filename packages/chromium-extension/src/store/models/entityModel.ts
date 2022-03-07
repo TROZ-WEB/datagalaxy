@@ -82,7 +82,7 @@ const fetchEntity = thunk(async (actions: Actions<EntityModel>, location: string
         const allAttributes: AttributeDefinitionType[] = await getAttributes(
             url,
             'attributes',
-            ReverseDataTypeMapping[location.split('/')[0]].toLowerCase(),
+            ReverseDataTypeMapping[location.split('/')[0]]?.toLowerCase(),
         );
 
         /* eslint-disable no-restricted-syntax, no-await-in-loop */

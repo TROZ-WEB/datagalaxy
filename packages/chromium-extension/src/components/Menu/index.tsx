@@ -160,8 +160,8 @@ const Menu = () => {
             <SMenuItemsContainer>
                 {menuItems.map(({ icon, path }, index) => (
                     <SMenuItem
-                        id={`menuItem${index}`}
                         key={path}
+                        id={`menuItem${index}`}
                         isSelected={path === pathname}
                         onClick={() => history.push(path)}
                         type="button"

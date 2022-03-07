@@ -131,10 +131,10 @@ const EntityHeader: FC<EntityHeaderProps> = ({
         <div>
             {entity && (
                 <SRoot
-                    id={id}
                     cardExpanded={isCardExpanded}
                     cursorPointer={!!onClick}
                     entityPage={entityPage}
+                    id={id}
                     onClick={onClick}
                     onKeyPress={onClick}
                     onMouseEnter={() => alwaysExpanded || setIsCardExpanded(true)}

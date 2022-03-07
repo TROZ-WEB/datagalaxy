@@ -70,9 +70,9 @@ const LinkedObjects = ({ entity }) => {
                                     {linkedObjects[key].map((linkedObject) => {
                                         return (
                                             <EntityHeader
-                                                id={`entityHeader${linkedObject.id}`}
                                                 key={linkedObject.id}
                                                 entity={linkedObject}
+                                                id={`entityHeader${linkedObject.id}`}
                                                 onClick={() => {
                                                     updateSelectedEntity(linkedObject);
                                                     history.push(`/app/entities/${linkedObject.id}/`);
