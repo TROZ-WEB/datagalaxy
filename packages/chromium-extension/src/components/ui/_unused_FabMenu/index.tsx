@@ -16,7 +16,7 @@ const FabMenu = () => {
 
     return (
         <div className={cx(styles.Root, { [styles.Expanded]: isExpanded })}>
-            <button className={cx(styles.CircleButton, styles.ToggleButton)} onClick={handlePressToggle} type="button">
+            <button id="closeButton" className={cx(styles.CircleButton, styles.ToggleButton)} onClick={handlePressToggle} type="button">
                 <Close />
             </button>
 

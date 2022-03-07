@@ -70,6 +70,7 @@ const LinkedObjects = ({ entity }) => {
                                     {linkedObjects[key].map((linkedObject) => {
                                         return (
                                             <EntityHeader
+                                                id={`entityHeader${linkedObject.id}`}
                                                 key={linkedObject.id}
                                                 entity={linkedObject}
                                                 onClick={() => {

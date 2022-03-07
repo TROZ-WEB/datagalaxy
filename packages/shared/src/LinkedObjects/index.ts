@@ -14,6 +14,16 @@ export enum DataTypeMapping {
     DataProcessing = 'dataProcessing',
 }
 
+export enum ReverseDataTypeMapping {
+    properties = 'Property',
+    sources = 'Source',
+    usages = 'Usage',
+    fields = 'Field',
+    structures = 'Structure',
+    containers = 'Container',
+    dataProcessing = 'DataProcessing',
+}
+
 export const fetchLinkedObjects = async (
     id: string,
     apiUrl: string,

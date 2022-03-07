@@ -118,7 +118,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
                         childrenCount={childrenEntity.childrenCount}
                         header={
                             <SEntityWrapper onClick={() => handleClick(childrenEntity)}>
-                                <EntityHeader entity={childrenEntity} />
+                                <EntityHeader id={`entityHeader${childrenEntity.id}`} entity={childrenEntity} />
                             </SEntityWrapper>
                         }
                         openButtonPosition="left"
@@ -129,7 +129,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
                                     key={grandChildrenEntity.id}
                                     onClick={() => handleClick(grandChildrenEntity)}
                                 >
-                                    <EntityHeader entity={grandChildrenEntity} />
+                                    <EntityHeader id={`entityHeader${grandChildrenEntity.id}`} entity={grandChildrenEntity} />
                                 </SSubEntityWrapper>
                             ))
                         ) : (

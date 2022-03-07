@@ -89,6 +89,7 @@ const Details = ({ entity }: DetailsProps) => {
                 </a>
             );
         }
+
         if (isValid(parseISO(data))) {
             return format(parseISO(data), 'dd/MM/yyyy');
         }
@@ -97,6 +98,18 @@ const Details = ({ entity }: DetailsProps) => {
                 if (!d) {
                     return '';
                 }
+
+                if (d.label) {
+                    return (
+                        <Tags.Item
+                            key={d + Math.random()}
+                            color={d.color}
+                            hideLabel={false}
+                            tag={d.description || d.label}
+                        />
+                    );
+                }
+
                 if (d?.userId) {
                     return <UserProfile user={d} />;
                 }
@@ -119,7 +132,7 @@ const Details = ({ entity }: DetailsProps) => {
                     <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_tags`)}>
                         <Tags>
                             {tags?.map((tag) => (
-                                <Tags.Item key={tag} hideLabel={tags?.length > 1} tag={tag} />
+                                <Tags.Item key={tag} hideLabel={false} tag={tag} />
                             ))}
                         </Tags>
                     </Details.SubInfo>
