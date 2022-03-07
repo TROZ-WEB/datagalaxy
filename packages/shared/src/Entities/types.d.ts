@@ -20,4 +20,5 @@ export interface EntityType {
     dataType: string;
     childrenObjects: EntityType[];
     versionId: string;
+    isExactMatch: boolean;
 }

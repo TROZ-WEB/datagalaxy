@@ -1,547 +1,553 @@
 {
-  "appName": {
-    "message": "DataGalaxy"
-  },
-  "appDesc": {
-    "message": "Extension Chromium de DataGalaxy"
-  },
-  "welcomeMessage": {
-    "message": "Bienvenue sur l'extension DataGalaxy !"
-  },
-  "pat": {
-    "message": "Token d'accès personnel"
-  },
-  "searchQuery": {
-    "message": "Objet à rechercher"
-  },
-  "search": {
-    "message": "Rechercher..."
-  },
-  "search_results": {
-    "message": "Résultats de la recherche"
-  },
-  "search_blank_search": {
-    "message": "Qu’avez-vous envie de trouver aujourd’hui ?"
-  },
-  "global_error": {
-    "message": "Nous rencontrons des difficultés pour vous connecter, vérifiez vos informations de connexion."
-  },
-  "error_pat": {
-    "message": "Clé d'accès non reconnue, vérifiez les chiffres entrés ou envoyez un message à votre administrateur"
-  },
-  "error_pat_email": {
-    "message": "L'identifiant ne correspond pas à la clé d'accès. Veuillez vérifier que la clé d'accès correspond à l'identifiant renseigné ci-dessus."
-  },
-  "error_required_field": {
-    "message": "Ce champ est requis"
-  },
-  "onboarding_title": {
-    "message": "Bienvenue"
-  },
-  "onboarding_nextButton": {
-    "message": "Suivant"
-  },
-  "onboarding_login_stepTitle": {
-    "message": "Pour commencer l'expérience, connectez-vous"
-  },
-  "onboarding_login_helpPAT": {
-    "message": "Rendez-vous sur votre profil personnel dans DataGalaxy"
-  },
-  "onboarding_login_inputEmailLabel": {
-    "message": "Identifiant"
-  },
-  "onboarding_login_inputPatLabel": {
-    "message": "Clé d'accès"
-  },
-  "onboarding_login_inputNewPatLabel": {
-    "message": "Nouvelle clé d'accès"
-  },
-  "onboarding_login_findMyPat": {
-    "message": "Où trouver ma clé d'accès ?"
-  },
-  "onboarding_login_submitForm": {
-    "message": "Se connecter"
-  },
-  "onboarding_final_stepTitle1": {
-    "message": "Bravo !"
-  },
-  "onboarding_final_stepTitle2": {
-    "message": "Vous êtes désormais connecté"
-  },
-  "onboarding_final_discoverFeaturesButton": {
-    "message": "Découvrir les fonctionnalités clés"
-  },
-  "onboarding_final_skipButton": {
-    "message": "Commencer"
-  },
-  "onboarding_patFinder_title": {
-    "message": "Où trouver ma clé ?"
-  },
-  "onboarding_patFinder_closeButton": {
-    "message": "Ok, fermer"
-  },
-  "entity_status_Proposed": {
-    "message": "Proposé"
-  },
-  "entity_status_InRevision": {
-    "message": "En révision"
-  },
-  "entity_status_InValidation": {
-    "message": "En validation"
-  },
-  "entity_status_Validated": {
-    "message": "Validé"
-  },
-  "entity_status_Obsolete": {
-    "message": "Obsolète"
-  },
-  "entity_owner": {
-    "message": "Propriétaire"
-  },
-  "entity_steward": {
-    "message": "Steward"
-  },
-  "entity_steward_multiple": {
-    "message": "$COUNT$ utilisateurs",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
+    "appName": {
+        "message": "DataGalaxy"
+    },
+    "appDesc": {
+        "message": "Extension Chromium de DataGalaxy"
+    },
+    "welcomeMessage": {
+        "message": "Bienvenue sur l'extension DataGalaxy !"
+    },
+    "pat": {
+        "message": "Token d'accès personnel"
+    },
+    "searchQuery": {
+        "message": "Objet à rechercher"
+    },
+    "search": {
+        "message": "Rechercher..."
+    },
+    "search_results": {
+        "message": "Plus de résultats"
+    },
+    "exact_matches": {
+        "message": "Résultats exacts"
+    },
+    "search_blank_search": {
+        "message": "Qu’avez-vous envie de trouver aujourd’hui ?"
+    },
+    "global_error": {
+        "message": "Nous rencontrons des difficultés pour vous connecter, vérifiez vos informations de connexion."
+    },
+    "error_pat": {
+        "message": "Clé d'accès non reconnue, vérifiez les chiffres entrés ou envoyez un message à votre administrateur"
+    },
+    "error_pat_email": {
+        "message": "L'identifiant ne correspond pas à la clé d'accès. Veuillez vérifier que la clé d'accès correspond à l'identifiant renseigné ci-dessus."
+    },
+    "error_required_field": {
+        "message": "Ce champ est requis"
+    },
+    "onboarding_title": {
+        "message": "Bienvenue"
+    },
+    "onboarding_nextButton": {
+        "message": "Suivant"
+    },
+    "onboarding_login_stepTitle": {
+        "message": "Pour commencer l'expérience, connectez-vous"
+    },
+    "onboarding_login_helpPAT": {
+        "message": "Rendez-vous sur votre profil personnel dans DataGalaxy"
+    },
+    "onboarding_login_inputEmailLabel": {
+        "message": "Identifiant"
+    },
+    "onboarding_login_inputPatLabel": {
+        "message": "Clé d'accès"
+    },
+    "onboarding_login_inputNewPatLabel": {
+        "message": "Nouvelle clé d'accès"
+    },
+    "onboarding_login_findMyPat": {
+        "message": "Où trouver ma clé d'accès ?"
+    },
+    "onboarding_login_submitForm": {
+        "message": "Se connecter"
+    },
+    "onboarding_final_stepTitle1": {
+        "message": "Bravo !"
+    },
+    "onboarding_final_stepTitle2": {
+        "message": "Vous êtes désormais connecté"
+    },
+    "onboarding_final_discoverFeaturesButton": {
+        "message": "Découvrir les fonctionnalités clés"
+    },
+    "onboarding_final_skipButton": {
+        "message": "Commencer"
+    },
+    "onboarding_patFinder_title": {
+        "message": "Où trouver ma clé ?"
+    },
+    "onboarding_patFinder_closeButton": {
+        "message": "Ok, fermer"
+    },
+    "entity_status_Proposed": {
+        "message": "Proposé"
+    },
+    "entity_status_InRevision": {
+        "message": "En révision"
+    },
+    "entity_status_InValidation": {
+        "message": "En validation"
+    },
+    "entity_status_Validated": {
+        "message": "Validé"
+    },
+    "entity_status_Obsolete": {
+        "message": "Obsolète"
+    },
+    "entity_owner": {
+        "message": "Propriétaire"
+    },
+    "entity_steward": {
+        "message": "Steward"
+    },
+    "entity_steward_multiple": {
+        "message": "$COUNT$ utilisateurs",
+        "placeholders": {
+            "count": {
+                "content": "$1"
+            }
+        }
+    },
+    "entity_details_sections_general": {
+        "message": "Général"
+    },
+    "entity_details_sections_general_status": {
+        "message": "Statut"
+    },
+    "entity_details_sections_general_tags": {
+        "message": "Étiquettes"
+    },
+    "entity_details_sections_general_summary": {
+        "message": "Résumé"
+    },
+    "entity_details_sections_general_description": {
+        "message": "Description"
+    },
+    "entity_details_data_boolean_1": {
+        "message": "Oui"
+    },
+    "entity_details_data_boolean_2": {
+        "message": "Non"
+    },
+    "entity_label_short_Universe": {
+        "message": "Univers"
+    },
+    "entity_label_short_Concept": {
+        "message": "Concept"
+    },
+    "entity_label_short_ReferenceData": {
+        "message": "Nomenc."
+    },
+    "entity_label_short_IndicatorGroup": {
+        "message": "Gp.Indic"
+    },
+    "entity_label_short_BusinessTerm": {
+        "message": "Terme"
+    },
+    "entity_label_short_Indicator": {
+        "message": "Indicat."
+    },
+    "entity_label_short_ReferenceDataValue": {
+        "message": "Valeur"
+    },
+    "entity_label_short_Dimension": {
+        "message": "Dimens."
+    },
+    "entity_label_short_BusinessDomain": {
+        "message": "Domaine"
+    },
+    "entity_label_short_DimensionGroup": {
+        "message": "Gp.Dim"
+    },
+    "entity_label_short_BusinessDomainGroup": {
+        "message": "Gp.Dom"
+    },
+    "entity_label_short_Relational": {
+        "message": "BDD"
+    },
+    "entity_label_short_NonRelational": {
+        "message": "FileStore"
+    },
+    "entity_label_short_NoSql": {
+        "message": "NoSql"
+    },
+    "entity_label_short_TagBase": {
+        "message": "TagBase"
+    },
+    "entity_label_short_Model": {
+        "message": "Modèle"
+    },
+    "entity_label_short_Directory": {
+        "message": "Répert"
+    },
+    "entity_label_short_Table": {
+        "message": "Table"
+    },
+    "entity_label_short_View": {
+        "message": "Vue"
+    },
+    "entity_label_short_Column": {
+        "message": "Colonne"
+    },
+    "entity_label_short_Field": {
+        "message": "Champ"
+    },
+    "entity_label_short_SubStructure": {
+        "message": "Ss.Struct."
+    },
+    "entity_label_short_File": {
+        "message": "Fichier"
+    },
+    "entity_label_short_Document": {
+        "message": "Doc"
+    },
+    "entity_label_short_Equipment": {
+        "message": "Equipmt"
+    },
+    "entity_label_short_Tag": {
+        "message": "Tag"
+    },
+    "entity_label_short_DataFlow": {
+        "message": "Flux"
+    },
+    "entity_label_short_DataProcessing": {
+        "message": "Traitmnt"
+    },
+    "entity_label_short_DataProcessingItem": {
+        "message": "Elt.Traitm"
+    },
+    "entity_label_short_Application": {
+        "message": "Applic."
+    },
+    "entity_label_short_Us": {
+        "message": "Usage"
+    },
+    "entity_label_short_Process": {
+        "message": "Process."
+    },
+    "entity_label_short_UsageField": {
+        "message": "ChampUs"
+    },
+    "entity_label_short_Feature": {
+        "message": "Fonct"
+    },
+    "entity_label_short_Screen": {
+        "message": "Ecran"
+    },
+    "entity_label_short_Dashboard": {
+        "message": "TDB"
+    },
+    "entity_label_short_Report": {
+        "message": "Rapport"
+    },
+    "entity_label_short_DataSet": {
+        "message": "DataSet"
+    },
+    "entity_label_short_OpenDataSet": {
+        "message": "OpenDS"
+    },
+    "entity_label_short_Algorithm": {
+        "message": "Algorith."
+    },
+    "entity_label_short_UsageComponent": {
+        "message": "CompUs"
+    },
+    "entity_label_full_Universe": {
+        "message": "Univers"
+    },
+    "entity_label_full_Concept": {
+        "message": "Concept "
+    },
+    "entity_label_full_ReferenceData": {
+        "message": "Nomenclature "
+    },
+    "entity_label_full_IndicatorGroup": {
+        "message": "Groupe d'indicateurs "
+    },
+    "entity_label_full_BusinessTerm": {
+        "message": "Terme métier "
+    },
+    "entity_label_full_Indicator": {
+        "message": "Indicateur "
+    },
+    "entity_label_full_ReferenceDataValue": {
+        "message": "Valeur de nomenclature"
+    },
+    "entity_label_full_Dimension": {
+        "message": "Dimension "
+    },
+    "entity_label_full_BusinessDomain": {
+        "message": "Domaine "
+    },
+    "entity_label_full_DimensionGroup": {
+        "message": "Groupe de dimensions "
+    },
+    "entity_label_full_BusinessDomainGroup": {
+        "message": "Groupe de domaines"
+    },
+    "entity_label_full_Relational": {
+        "message": "DataBase"
+    },
+    "entity_label_full_NonRelational": {
+        "message": "FileStore"
+    },
+    "entity_label_full_NoSql": {
+        "message": "Source NoSQL"
+    },
+    "entity_label_full_TagBase": {
+        "message": "Source TagBase"
+    },
+    "entity_label_full_Model": {
+        "message": "Modèle "
+    },
+    "entity_label_full_Directory": {
+        "message": "Répertoire "
+    },
+    "entity_label_full_Table": {
+        "message": "Table "
+    },
+    "entity_label_full_View": {
+        "message": "Vue "
+    },
+    "entity_label_full_Column": {
+        "message": "Colonne "
+    },
+    "entity_label_full_Field": {
+        "message": "Champ "
+    },
+    "entity_label_full_SubStructure": {
+        "message": "Sous-structure "
+    },
+    "entity_label_full_File": {
+        "message": "Fichier"
+    },
+    "entity_label_full_Document": {
+        "message": "Document "
+    },
+    "entity_label_full_Equipment": {
+        "message": "Equipement "
+    },
+    "entity_label_full_Tag": {
+        "message": "Tag"
+    },
+    "entity_label_full_DataFlow": {
+        "message": "Flux de données"
+    },
+    "entity_label_full_DataProcessing": {
+        "message": "Traitement de données"
+    },
+    "entity_label_full_DataProcessingItem": {
+        "message": "Elément de traitement de données"
+    },
+    "entity_label_full_Application": {
+        "message": "Application "
+    },
+    "entity_label_full_Use": {
+        "message": "Usage"
+    },
+    "entity_label_full_Process": {
+        "message": "Processus"
+    },
+    "entity_label_full_UsageField": {
+        "message": "Champ usage"
+    },
+    "entity_label_full_Feature": {
+        "message": "Fonctionnalité "
+    },
+    "entity_label_full_Screen": {
+        "message": "Ecran "
+    },
+    "entity_label_full_Dashboard": {
+        "message": "Tableau de bord "
+    },
+    "entity_label_full_Report": {
+        "message": "Rapport "
+    },
+    "entity_label_full_DataSet": {
+        "message": "DataSet"
+    },
+    "entity_label_full_OpenDataSet": {
+        "message": "OpenDataSet"
+    },
+    "entity_label_full_Algorithm": {
+        "message": "Algorithme"
+    },
+    "entity_label_full_UsageComponent": {
+        "message": "Composant usage"
+    },
+    "account_title": {
+        "message": "Mon profil"
+    },
+    "account_logout": {
+        "message": "Déconnexion"
+    },
+    "account_update_pat": {
+        "message": "Mettre à jour votre clé d'accès"
+    },
+    "account_update_pat_button": {
+        "message": "Mettre à jour votre PAT"
+    },
+    "account_update_pat_successful": {
+        "message": "Votre clé d'accès a été mise à jour correctement"
+    },
+    "navigation_back": {
+        "message": "Retour"
+    },
+    "IsParentOfTableColumnCatalogException": {
+        "message": "est parent de"
+    },
+    "IsChildOfTableColumnCatalogException": {
+        "message": "est enfant de"
+    },
+    "IsImplementedBy": {
+        "message": "est implémenté par"
+    },
+    "Implements": {
+        "message": "implémente"
+    },
+    "IsUsedBy": {
+        "message": "est utilisé par"
+    },
+    "Uses": {
+        "message": "utilise"
+    },
+    "IsInputOf": {
+        "message": "est une entrée pour"
+    },
+    "HasInput": {
+        "message": "a pour entrée"
+    },
+    "IsOutputOf": {
+        "message": "est une sortie pour"
+    },
+    "HasOutput": {
+        "message": "a pour sortie"
+    },
+    "EntityLink": {
+        "message": "est lié à"
+    },
+    "IsInputSourceOf": {
+        "message": "est une source en entrée pour"
+    },
+    "HasInputSource": {
+        "message": "a pour source en entrée"
+    },
+    "IsOutputSourceOf": {
+        "message": "est une source en sortie pour"
+    },
+    "HasOutputSource": {
+        "message": "a pour source en sortie"
+    },
+    "IsSynonymOf": {
+        "message": "est un synonyme de"
+    },
+    "Generalizes": {
+        "message": "généralise"
+    },
+    "Specializes": {
+        "message": "spécialise"
+    },
+    "IsComputedBy": {
+        "message": "est calculé par"
+    },
+    "IsUsedForComputationOf": {
+        "message": "participe au calcul de"
+    },
+    "IsParentOfGeneric": {
+        "message": "est parent de"
+    },
+    "IsChildOfGeneric": {
+        "message": "a pour parent"
+    },
+    "DependsOn": {
+        "message": "dépend de"
+    },
+    "IsNeededBy": {
+        "message": "est nécessaire à"
+    },
+    "IsLinkedTo": {
+        "message": "est lié à"
+    },
+    "ListsValuesFor": {
+        "message": "liste les valeurs pour"
+    },
+    "HasForReferenceData": {
+        "message": "a pour nomenclature"
+    },
+    "Declines": {
+        "message": "décline"
+    },
+    "IsDeclinedAccordingToDimension": {
+        "message": "se décline selon la dimension"
+    },
+    "Precedes": {
+        "message": "précède"
+    },
+    "Follows": {
+        "message": "suit"
+    },
+    "IsUniverseOf": {
+        "message": "est l'univers pour"
+    },
+    "HasForUniverse": {
+        "message": "a pour univers"
+    },
+    "IsDomainOf": {
+        "message": "est un domaine pour"
+    },
+    "HasForDomain": {
+        "message": "a pour domaine"
+    },
+    "Regroups": {
+        "message": "regroupe"
+    },
+    "IsPartOfDimension": {
+        "message": "fait partie de la dimension"
+    },
+    "IsSourceOf": {
+        "message": "est une source de donnée pour"
+    },
+    "HasForSource": {
+        "message": "a pour source de donnée"
+    },
+    "IsRecordingSystemFor": {
+        "message": "est un système d’enregistrement pour"
+    },
+    "HasForRecordingSystem": {
+        "message": "a pour système d’enregistrement"
+    },
+    "HasForUsageSource": {
+        "message": "a pour usage source"
+    },
+    "IsUsageSourceFor": {
+        "message": "est un usage source pour"
+    },
+    "HasForUsageDestination": {
+        "message": "a pour usage destination"
+    },
+    "IsUsageDestinationFor": {
+        "message": "est un usage destination pour"
+    },
+    "IsCalledBy": {
+        "message": "est appelé par"
+    },
+    "Calls": {
+        "message": "fait appel à"
+    },
+    "Transcodes": {
+        "message": "transcode"
+    },
+    "Golden": {
+        "message": "Golden"
+    },
+    "linkShortcutDomainIds": {
+        "message": "Domaine"
+    },
+    "showMore": {
+        "message": "Voir plus"
     }
-  },
-  "entity_details_sections_general": {
-    "message": "Général"
-  },
-  "entity_details_sections_general_status": {
-    "message": "Statut"
-  },
-  "entity_details_sections_general_tags": {
-    "message": "Étiquettes"
-  },
-  "entity_details_sections_general_summary": {
-    "message": "Résumé"
-  },
-  "entity_details_sections_general_description": {
-    "message": "Description"
-  },
-  "entity_details_data_boolean_1": {
-    "message": "Oui"
-  },
-  "entity_details_data_boolean_2": {
-    "message": "Non"
-  },
-  "entity_label_short_Universe": {
-    "message": "Univers"
-  },
-  "entity_label_short_Concept": {
-    "message": "Concept"
-  },
-  "entity_label_short_ReferenceData": {
-    "message": "Nomenc."
-  },
-  "entity_label_short_IndicatorGroup": {
-    "message": "Gp.Indic"
-  },
-  "entity_label_short_BusinessTerm": {
-    "message": "Terme"
-  },
-  "entity_label_short_Indicator": {
-    "message": "Indicat."
-  },
-  "entity_label_short_ReferenceDataValue": {
-    "message": "Valeur"
-  },
-  "entity_label_short_Dimension": {
-    "message": "Dimens."
-  },
-  "entity_label_short_BusinessDomain": {
-    "message": "Domaine"
-  },
-  "entity_label_short_DimensionGroup": {
-    "message": "Gp.Dim"
-  },
-  "entity_label_short_BusinessDomainGroup": {
-    "message": "Gp.Dom"
-  },
-  "entity_label_short_Relational": {
-    "message": "BDD"
-  },
-  "entity_label_short_NonRelational": {
-    "message": "FileStore"
-  },
-  "entity_label_short_NoSql": {
-    "message": "NoSql"
-  },
-  "entity_label_short_TagBase": {
-    "message": "TagBase"
-  },
-  "entity_label_short_Model": {
-    "message": "Modèle"
-  },
-  "entity_label_short_Directory": {
-    "message": "Répert"
-  },
-  "entity_label_short_Table": {
-    "message": "Table"
-  },
-  "entity_label_short_View": {
-    "message": "Vue"
-  },
-  "entity_label_short_Column": {
-    "message": "Colonne"
-  },
-  "entity_label_short_Field": {
-    "message": "Champ"
-  },
-  "entity_label_short_SubStructure": {
-    "message": "Ss.Struct."
-  },
-  "entity_label_short_File": {
-    "message": "Fichier"
-  },
-  "entity_label_short_Document": {
-    "message": "Doc"
-  },
-  "entity_label_short_Equipment": {
-    "message": "Equipmt"
-  },
-  "entity_label_short_Tag": {
-    "message": "Tag"
-  },
-  "entity_label_short_DataFlow": {
-    "message": "Flux"
-  },
-  "entity_label_short_DataProcessing": {
-    "message": "Traitmnt"
-  },
-  "entity_label_short_DataProcessingItem": {
-    "message": "Elt.Traitm"
-  },
-  "entity_label_short_Application": {
-    "message": "Applic."
-  },
-  "entity_label_short_Us": {
-    "message": "Usage"
-  },
-  "entity_label_short_Process": {
-    "message": "Process."
-  },
-  "entity_label_short_UsageField": {
-    "message": "ChampUs"
-  },
-  "entity_label_short_Feature": {
-    "message": "Fonct"
-  },
-  "entity_label_short_Screen": {
-    "message": "Ecran"
-  },
-  "entity_label_short_Dashboard": {
-    "message": "TDB"
-  },
-  "entity_label_short_Report": {
-    "message": "Rapport"
-  },
-  "entity_label_short_DataSet": {
-    "message": "DataSet"
-  },
-  "entity_label_short_OpenDataSet": {
-    "message": "OpenDS"
-  },
-  "entity_label_short_Algorithm": {
-    "message": "Algorith."
-  },
-  "entity_label_short_UsageComponent": {
-    "message": "CompUs"
-  },
-  "entity_label_full_Universe": {
-    "message": "Univers"
-  },
-  "entity_label_full_Concept": {
-    "message": "Concept "
-  },
-  "entity_label_full_ReferenceData": {
-    "message": "Nomenclature "
-  },
-  "entity_label_full_IndicatorGroup": {
-    "message": "Groupe d'indicateurs "
-  },
-  "entity_label_full_BusinessTerm": {
-    "message": "Terme métier "
-  },
-  "entity_label_full_Indicator": {
-    "message": "Indicateur "
-  },
-  "entity_label_full_ReferenceDataValue": {
-    "message": "Valeur de nomenclature"
-  },
-  "entity_label_full_Dimension": {
-    "message": "Dimension "
-  },
-  "entity_label_full_BusinessDomain": {
-    "message": "Domaine "
-  },
-  "entity_label_full_DimensionGroup": {
-    "message": "Groupe de dimensions "
-  },
-  "entity_label_full_BusinessDomainGroup": {
-    "message": "Groupe de domaines"
-  },
-  "entity_label_full_Relational": {
-    "message": "DataBase"
-  },
-  "entity_label_full_NonRelational": {
-    "message": "FileStore"
-  },
-  "entity_label_full_NoSql": {
-    "message": "Source NoSQL"
-  },
-  "entity_label_full_TagBase": {
-    "message": "Source TagBase"
-  },
-  "entity_label_full_Model": {
-    "message": "Modèle "
-  },
-  "entity_label_full_Directory": {
-    "message": "Répertoire "
-  },
-  "entity_label_full_Table": {
-    "message": "Table "
-  },
-  "entity_label_full_View": {
-    "message": "Vue "
-  },
-  "entity_label_full_Column": {
-    "message": "Colonne "
-  },
-  "entity_label_full_Field": {
-    "message": "Champ "
-  },
-  "entity_label_full_SubStructure": {
-    "message": "Sous-structure "
-  },
-  "entity_label_full_File": {
-    "message": "Fichier"
-  },
-  "entity_label_full_Document": {
-    "message": "Document "
-  },
-  "entity_label_full_Equipment": {
-    "message": "Equipement "
-  },
-  "entity_label_full_Tag": {
-    "message": "Tag"
-  },
-  "entity_label_full_DataFlow": {
-    "message": "Flux de données"
-  },
-  "entity_label_full_DataProcessing": {
-    "message": "Traitement de données"
-  },
-  "entity_label_full_DataProcessingItem": {
-    "message": "Elément de traitement de données"
-  },
-  "entity_label_full_Application": {
-    "message": "Application "
-  },
-  "entity_label_full_Use": {
-    "message": "Usage"
-  },
-  "entity_label_full_Process": {
-    "message": "Processus"
-  },
-  "entity_label_full_UsageField": {
-    "message": "Champ usage"
-  },
-  "entity_label_full_Feature": {
-    "message": "Fonctionnalité "
-  },
-  "entity_label_full_Screen": {
-    "message": "Ecran "
-  },
-  "entity_label_full_Dashboard": {
-    "message": "Tableau de bord "
-  },
-  "entity_label_full_Report": {
-    "message": "Rapport "
-  },
-  "entity_label_full_DataSet": {
-    "message": "DataSet"
-  },
-  "entity_label_full_OpenDataSet": {
-    "message": "OpenDataSet"
-  },
-  "entity_label_full_Algorithm": {
-    "message": "Algorithme"
-  },
-  "entity_label_full_UsageComponent": {
-    "message": "Composant usage"
-  },
-  "account_title": {
-    "message": "Mon profil"
-  },
-  "account_logout": {
-    "message": "Déconnexion"
-  },
-  "account_update_pat": {
-    "message": "Mettre à jour votre clé d'accès"
-  },
-  "account_update_pat_button": {
-    "message": "Mettre à jour votre PAT"
-  },
-  "account_update_pat_successful": {
-    "message": "Votre clé d'accès a été mise à jour correctement"
-  },
-  "navigation_back": {
-    "message": "Retour"
-  },
-  "IsParentOfTableColumnCatalogException": {
-    "message": "est parent de"
-  },
-  "IsChildOfTableColumnCatalogException": {
-    "message": "est enfant de"
-  },
-  "IsImplementedBy": {
-    "message": "est implémenté par"
-  },
-  "Implements": {
-    "message": "implémente"
-  },
-  "IsUsedBy": {
-    "message": "est utilisé par"
-  },
-  "Uses": {
-    "message": "utilise"
-  },
-  "IsInputOf": {
-    "message": "est une entrée pour"
-  },
-  "HasInput": {
-    "message": "a pour entrée"
-  },
-  "IsOutputOf": {
-    "message": "est une sortie pour"
-  },
-  "HasOutput": {
-    "message": "a pour sortie"
-  },
-  "EntityLink": {
-    "message": "est lié à"
-  },
-  "IsInputSourceOf": {
-    "message": "est une source en entrée pour"
-  },
-  "HasInputSource": {
-    "message": "a pour source en entrée"
-  },
-  "IsOutputSourceOf": {
-    "message": "est une source en sortie pour"
-  },
-  "HasOutputSource": {
-    "message": "a pour source en sortie"
-  },
-  "IsSynonymOf": {
-    "message": "est un synonyme de"
-  },
-  "Generalizes": {
-    "message": "généralise"
-  },
-  "Specializes": {
-    "message": "spécialise"
-  },
-  "IsComputedBy": {
-    "message": "est calculé par"
-  },
-  "IsUsedForComputationOf": {
-    "message": "participe au calcul de"
-  },
-  "IsParentOfGeneric": {
-    "message": "est parent de"
-  },
-  "IsChildOfGeneric": {
-    "message": "a pour parent"
-  },
-  "DependsOn": {
-    "message": "dépend de"
-  },
-  "IsNeededBy": {
-    "message": "est nécessaire à"
-  },
-  "IsLinkedTo": {
-    "message": "est lié à"
-  },
-  "ListsValuesFor": {
-    "message": "liste les valeurs pour"
-  },
-  "HasForReferenceData": {
-    "message": "a pour nomenclature"
-  },
-  "Declines": {
-    "message": "décline"
-  },
-  "IsDeclinedAccordingToDimension": {
-    "message": "se décline selon la dimension"
-  },
-  "Precedes": {
-    "message": "précède"
-  },
-  "Follows": {
-    "message": "suit"
-  },
-  "IsUniverseOf": {
-    "message": "est l'univers pour"
-  },
-  "HasForUniverse": {
-    "message": "a pour univers"
-  },
-  "IsDomainOf": {
-    "message": "est un domaine pour"
-  },
-  "HasForDomain": {
-    "message": "a pour domaine"
-  },
-  "Regroups": {
-    "message": "regroupe"
-  },
-  "IsPartOfDimension": {
-    "message": "fait partie de la dimension"
-  },
-  "IsSourceOf": {
-    "message": "est une source de donnée pour"
-  },
-  "HasForSource": {
-    "message": "a pour source de donnée"
-  },
-  "IsRecordingSystemFor": {
-    "message": "est un système d’enregistrement pour"
-  },
-  "HasForRecordingSystem": {
-    "message": "a pour système d’enregistrement"
-  },
-  "HasForUsageSource": {
-    "message": "a pour usage source"
-  },
-  "IsUsageSourceFor": {
-    "message": "est un usage source pour"
-  },
-  "HasForUsageDestination": {
-    "message": "a pour usage destination"
-  },
-  "IsUsageDestinationFor": {
-    "message": "est un usage destination pour"
-  },
-  "IsCalledBy": {
-    "message": "est appelé par"
-  },
-  "Calls": {
-    "message": "fait appel à"
-  },
-  "Transcodes": {
-    "message": "transcode"
-  },
-  "Golden": {
-    "message": "Golden"
-  },
-  "linkShortcutDomainIds": {
-    "message": "Domaine"
-  }
 }
