@@ -16,14 +16,15 @@ const SContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    margin: 0;
-    height: 80%;
-    overflow: scroll;
 `;
 
 const SContent = styled.div`
-    padding: 11px 11px 11px 68px;
-    width: 400px;
+    overflow-y: scroll;
+    position: absolute;
+    height: 80%;
+    width: 100%;
+    padding: 0px 4px 16px 68px;
+    box-sizing: border-box;
 `;
 
 /* ---------- COMPONENT ---------- */

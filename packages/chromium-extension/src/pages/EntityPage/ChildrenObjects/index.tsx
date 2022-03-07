@@ -3,10 +3,10 @@ import { useHistory } from 'react-router-dom';
 import { DataTypeMapping, EntityType } from 'shared';
 import styled from 'styled-components';
 import LoadingScreen from '../../../components/LoadingScreen';
+import Accordion from '../../../components/ui/Accordion';
 import EntityHeader from '../../../components/ui/EntityHeader';
 import Spinner from '../../../components/ui/Spinner/index';
 import { useStoreDispatch, useStoreState, useStoreActions } from '../../../store/hooks';
-import Accordion from './Accordion';
 
 /* ---------- STYLES ---------- */
 
@@ -14,15 +14,6 @@ const SEntityWrapper = styled.span`
     width: 100%;
     display: flex;
     align-items: center;
-`;
-
-const SRoot = styled.div`
-    overflow-y: scroll;
-    position: absolute;
-    top: 192px;
-    right: 4px;
-    left: 68px;
-    bottom: 0px;
 `;
 
 const SSpinnerWrapper = styled.div`
@@ -110,12 +101,13 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
     };
 
     return (
-        <SRoot>
+        // eslint-disable-next-line react/jsx-no-useless-fragment
+        <>
             {isChildrenLoaded ? (
                 childrenObjects?.map((childrenEntity) => (
                     <Accordion
                         key={childrenEntity.id}
-                        childrenCount={childrenEntity.childrenCount}
+                        disabled={childrenEntity.childrenCount === 0}
                         header={
                             <SEntityWrapper onClick={() => handleClick(childrenEntity)}>
                                 <EntityHeader entity={childrenEntity} id={`entityHeader${childrenEntity.id}`} />
@@ -145,7 +137,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
             ) : (
                 <LoadingScreen />
             )}
-        </SRoot>
+        </>
     );
 };
 
