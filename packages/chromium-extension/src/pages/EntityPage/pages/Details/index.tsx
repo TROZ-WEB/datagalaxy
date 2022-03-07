@@ -79,7 +79,15 @@ const Details = ({ entity }: DetailsProps) => {
             return chrome.i18n.getMessage(`entity_details_data_boolean_2`);
         }
         if (data.name && data.url) {
-            return <a href={data.url}>{data.name}</a>;
+            return (
+                <a
+                    href={`${data.url}${
+                        data.url.indexOf('?') !== -1 ? '&openDatagalaxy=true' : '?openDatagalaxy=true'
+                    }`}
+                >
+                    {data.name}
+                </a>
+            );
         }
         if (isValid(parseISO(data))) {
             return format(parseISO(data), 'dd/MM/yyyy');

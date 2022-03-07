@@ -7,7 +7,7 @@ import VerticalMenuButton from './VerticalMenuButton';
 /* ---------- STYLES ---------- */
 
 const SRoot = styled.div`
-    width: 54px;
+    width: 4%;
     display: flex;
     flex-direction: column;
     align-content: center;
