@@ -18,6 +18,7 @@ const SRoot = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    flex-wrap: wrap;
 `;
 
 const SRootItem = styled.span`
@@ -44,7 +45,7 @@ const Tags = ({ children, className }: { children: React.ReactNode; className?: 
     return <SRoot className={className}>{children}</SRoot>;
 };
 
-Tags.Item = ({ tag, hideLabel = false }: { tag: string; hideLabel?: boolean }) => {
+Tags.Item = ({ tag, hideLabel = false, color }: { tag: string; hideLabel?: boolean; color?: string }) => {
     let t = tag;
     if (t === 'Finance') {
         // API WORKAROUND 2 : Api return 'Finance' tag in entities, but 'FINANCE' in tags list
@@ -52,17 +53,17 @@ Tags.Item = ({ tag, hideLabel = false }: { tag: string; hideLabel?: boolean }) =
     }
     const tags = useStoreState((state) => state.auth.tags);
     const foundTag = tags?.find(({ label }) => label === t);
-    const color = foundTag?.color;
+    const defaultColor = foundTag?.color;
 
     return (
         <SRootItem>
-            {foundTag && (
+            {(defaultColor || color) && (
                 <SColorPoint
                     style={{
-                        backgroundColor: color,
+                        backgroundColor: color || defaultColor,
                     }}
                     title={tag}
-                    withBorder={color === 'white'}
+                    withBorder={color === 'white' || defaultColor === 'white'}
                 />
             )}
             {!hideLabel && <STagLabel>{tag}</STagLabel>}

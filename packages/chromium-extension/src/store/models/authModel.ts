@@ -190,6 +190,7 @@ const authModel = async (): Promise<AuthModel> => {
         updateTags: action((state, payload: TagType[]) => {
             state.tags = payload;
         }),
+
         updateUser: action((state, payload: UserType) => {
             state.user = payload;
         }),

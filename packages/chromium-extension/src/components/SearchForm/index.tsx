@@ -135,6 +135,7 @@ const SearchForm = () => {
                                             <EntityHeader
                                                 entity={entity}
                                                 entityPage={false}
+                                                id={`entityHeader${idx}`}
                                                 onClick={() => {
                                                     updateIsLoaded(false);
                                                     const URLLocation = entity.location.replace(
