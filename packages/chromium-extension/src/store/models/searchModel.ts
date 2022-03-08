@@ -23,12 +23,14 @@ const initialState = {
     searchedArgs: EMPTY_ARGS,
     searchResults: EMPTY_RESPONSE,
     selectedEntity: null,
+    exactMatches: EMPTY_RESPONSE,
 };
 
 export interface SearchModel {
     /* State */
     searchedArgs?: SearchedArgs;
     searchResults: SearchResponse;
+    exactMatches: SearchResponse;
     // Used to get instantly some basic information to display on the entity details page
     selectedEntity: EntityType;
     /* Actions */
@@ -83,7 +85,23 @@ const searchModel = async (): Promise<SearchModel> => {
             state.searchedArgs = payload;
         }),
         updateResults: action((state, payload: SearchResponse) => {
-            state.searchResults = payload;
+            const searchResults = payload.result.entities.filter((entity) => !entity.isExactMatch);
+            const exactMatches = payload.result.entities.filter((entity) => entity.isExactMatch);
+
+            state.exactMatches = {
+                total: exactMatches.length,
+                total_sum: null,
+                result: {
+                    entities: exactMatches,
+                },
+            };
+            state.searchResults = {
+                total: searchResults.length,
+                total_sum: payload.total_sum,
+                result: {
+                    entities: searchResults,
+                },
+            };
         }),
         updateSelectedEntity: action((state, payload: EntityType) => {
             state.selectedEntity = payload;
