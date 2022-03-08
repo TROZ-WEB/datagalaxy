@@ -75,9 +75,9 @@ const LinkedObjects = ({ entity }) => {
                         openButtonPosition="left"
                         initialOpen
                     >
-                        {linkedObjects[key].map((linkedObject) => (
+                        {linkedObjects[key].map((linkedObject, idx) => (
                             <SSubEntityWrapper key={linkedObject.id} onClick={() => handleClick(linkedObject)}>
-                                <EntityHeader entity={linkedObject} alwaysExpanded />
+                                <EntityHeader entity={linkedObject} id={`entityHeader${idx}`} alwaysExpanded />
                             </SSubEntityWrapper>
                         ))}
                     </Accordion>

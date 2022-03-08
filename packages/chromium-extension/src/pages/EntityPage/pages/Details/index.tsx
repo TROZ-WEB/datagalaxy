@@ -5,11 +5,8 @@ import styled from 'styled-components';
 import Status from '../../../../components/Entity/Status';
 import Tags from '../../../../components/Entity/Tags';
 import UserProfile from '../../../../components/Entity/UserProfile';
-<<<<<<< HEAD
-import DomainCard from '../../../../components/ui/DomainCard';
-=======
 import Accordion from '../../../../components/ui/Accordion';
->>>>>>> 4d6573e (Fixes)
+import DomainCard from '../../../../components/ui/DomainCard';
 
 /* ---------- STYLES ---------- */
 
@@ -150,7 +147,7 @@ const Details = ({ entity }: DetailsProps) => {
                     !rest[key].trend &&
                     reservedKeys.indexOf(key) === -1 && (
                         <>
-                            <Details.SubInfo title={key}>{computeData(rest[key])}</Details.SubInfo>
+                            <Details.SubInfo title={computeTitle(key)}>{computeData(rest[key])}</Details.SubInfo>
                             <Details.Separator />
                         </>
                     ),
