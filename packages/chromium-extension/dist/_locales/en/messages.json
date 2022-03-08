@@ -18,6 +18,9 @@
         "message": "Search..."
     },
     "search_results": {
+        "message": "Search results"
+    },
+    "more_results": {
         "message": "More results"
     },
     "exact_matches": {

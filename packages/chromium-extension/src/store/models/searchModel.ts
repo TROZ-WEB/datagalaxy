@@ -79,6 +79,7 @@ const searchModel = async (): Promise<SearchModel> => {
         resetSearch: action((state) => {
             state.searchedArgs = EMPTY_ARGS;
             state.searchResults = EMPTY_RESPONSE;
+            state.exactMatches = EMPTY_RESPONSE;
         }),
         resetModel: action(resetModel(initialState)),
         updateSearchedArgs: action((state, payload: SearchedArgs) => {
