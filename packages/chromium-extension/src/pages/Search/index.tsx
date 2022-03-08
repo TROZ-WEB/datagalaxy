@@ -6,6 +6,8 @@ import SearchForm from '../../components/SearchForm';
 
 const SRoot = styled.div`
     padding: 20px 18px;
+    overflow: scroll;
+    height: 90%;
 `;
 
 /* ---------- COMPONENT ---------- */
