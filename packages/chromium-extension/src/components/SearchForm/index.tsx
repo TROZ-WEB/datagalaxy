@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { EntityType } from 'shared';
 import styled from 'styled-components';
+import More from '../../icons/More';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../store/hooks';
 import HorizontalSeparator from '../HorizontalSeparator';
 import EntityHeader from '../ui/EntityHeader';
@@ -61,6 +62,18 @@ const STagResultCount = styled.span`
     margin-left: 8px;
 `;
 
+const SMore = styled.span`
+    font-size: 16px;
+    margin-right: 5px;
+`;
+
+const SMoreContainer = styled.div`
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+`;
+
 /* ---------- COMPONENT ---------- */
 
 const SearchForm = () => {
@@ -106,6 +119,9 @@ const SearchForm = () => {
         initialState: { value: searchedArgs.term },
     });
 
+    const hasSearchResults = searchResults.result.entities.length !== 0;
+    const hasExactMatches = exactMatches.result.entities.length !== 0;
+
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
@@ -120,18 +136,13 @@ const SearchForm = () => {
                         />
                     </div>
                     <SResults>
-                        {searchedArgs.term !== '' && (
+                        {searchedArgs.term !== '' && hasExactMatches && (
                             <SResultsTitleWrapper>
                                 <SResultsTitle>{chrome.i18n.getMessage('exact_matches')}</SResultsTitle>
                                 <STagResultCount>{exactMatches.total}</STagResultCount>
                             </SResultsTitleWrapper>
                         )}
-                        {searchResults.result.entities.length === 0 && exactMatches.result.entities.length === 0 ? (
-                            <SBlankSearch>
-                                <SBlankSearchImage alt="empty result" src={BlankSearch} />
-                                <p>{chrome.i18n.getMessage('search_blank_search')}</p>
-                            </SBlankSearch>
-                        ) : (
+                        {hasExactMatches && (
                             <SSearchCardsResultWrapper>
                                 {exactMatchesToDisplay.map((entity, idx) => (
                                     <div key={entity.id}>
@@ -157,19 +168,30 @@ const SearchForm = () => {
                             </SSearchCardsResultWrapper>
                         )}
                     </SResults>
-                    {!displayMoreExactMatches && (
-                        <button onClick={() => setDisplayMoreExactMatches(true)} type="button">
-                            {chrome.i18n.getMessage('showMore')}
-                        </button>
+                    {hasExactMatches && !displayMoreExactMatches && (
+                        <SMoreContainer onClick={() => setDisplayMoreExactMatches(true)}>
+                            <SMore>{chrome.i18n.getMessage('showMore')}</SMore>
+                            <More />
+                        </SMoreContainer>
                     )}
                     <SResults>
                         {searchedArgs.term !== '' && (
                             <SResultsTitleWrapper>
-                                <SResultsTitle>{chrome.i18n.getMessage('search_results')}</SResultsTitle>
+                                <SResultsTitle>
+                                    {hasExactMatches
+                                        ? chrome.i18n.getMessage('more_results')
+                                        : chrome.i18n.getMessage('search_results')}
+                                </SResultsTitle>
                                 <STagResultCount>{searchResults.total}</STagResultCount>
                             </SResultsTitleWrapper>
                         )}
-                        {searchResults.result.entities.length !== 0 && (
+                        {!hasSearchResults && !hasExactMatches && (
+                            <SBlankSearch>
+                                <SBlankSearchImage alt="empty result" src={BlankSearch} />
+                                <p>{chrome.i18n.getMessage('search_blank_search')}</p>
+                            </SBlankSearch>
+                        )}
+                        {hasSearchResults && (
                             <SSearchCardsResultWrapper>
                                 {searchResults.result.entities.map((entity, idx) => (
                                     <div key={entity.id}>
