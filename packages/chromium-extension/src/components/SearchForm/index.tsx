@@ -89,7 +89,7 @@ const SearchForm = () => {
 
     useEffect(() => {
         setExactMatchesToDisplay(
-            displayMoreExactMatches ? exactMatches.result.entities : exactMatches.result.entities.slice(0, 4),
+            displayMoreExactMatches ? exactMatches?.result?.entities : exactMatches?.result?.entities.slice(0, 4),
         );
     }, [exactMatches, displayMoreExactMatches]);
 
@@ -139,7 +139,7 @@ const SearchForm = () => {
                         {searchedArgs.term !== '' && hasExactMatches && (
                             <SResultsTitleWrapper>
                                 <SResultsTitle>{chrome.i18n.getMessage('exact_matches')}</SResultsTitle>
-                                <STagResultCount>{exactMatches.total}</STagResultCount>
+                                <STagResultCount>{exactMatches?.total}</STagResultCount>
                             </SResultsTitleWrapper>
                         )}
                         {hasExactMatches && (
@@ -162,7 +162,7 @@ const SearchForm = () => {
                                                 alwaysExpanded
                                             />
                                         </SSearchCardResultWrapper>
-                                        {idx < exactMatches.result.entities.length - 1 && <HorizontalSeparator />}
+                                        {idx < exactMatches?.result?.entities.length - 1 && <HorizontalSeparator />}
                                     </div>
                                 ))}
                             </SSearchCardsResultWrapper>
@@ -193,7 +193,7 @@ const SearchForm = () => {
                         )}
                         {hasSearchResults && (
                             <SSearchCardsResultWrapper>
-                                {searchResults.result.entities.map((entity, idx) => (
+                                {searchResults?.result?.entities.map((entity, idx) => (
                                     <div key={entity.id}>
                                         <SSearchCardResultWrapper>
                                             <EntityHeader
@@ -211,7 +211,7 @@ const SearchForm = () => {
                                                 alwaysExpanded
                                             />
                                         </SSearchCardResultWrapper>
-                                        {idx < searchResults.result.entities.length - 1 && <HorizontalSeparator />}
+                                        {idx < searchResults?.result?.entities.length - 1 && <HorizontalSeparator />}
                                     </div>
                                 ))}
                             </SSearchCardsResultWrapper>

@@ -20,12 +20,13 @@ const SRoot = styled.div`
     display: flex;
     flex-direction: row;
     align-items: baseline;
+    flex-wrap: wrap;
 `;
 
 /* ---------- COMPONENT ---------- */
 
-const Breadcrumb = ({ path, threshold = 3, ellipse = 10 }: { path: string; threshold?: number; ellipse?: number }) => {
-    const formattedPath = useMemo(() => (path ? formatBreadcrumb(path, threshold, ellipse) : null), [path]);
+const Breadcrumb = ({ path }: { path: string }) => {
+    const formattedPath = useMemo(() => (path ? formatBreadcrumb(path) : null), [path]);
 
     return (
         <div>

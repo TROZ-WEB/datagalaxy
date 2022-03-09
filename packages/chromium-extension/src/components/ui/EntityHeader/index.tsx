@@ -110,20 +110,12 @@ const LIMIT_TAGS_ELLIPSE = 3;
 interface EntityHeaderProps {
     id: string;
     alwaysExpanded?: boolean;
-    ellipseBreadCrumb?: number;
     entity: any;
     entityPage?: boolean;
     onClick?: () => void;
 }
 
-const EntityHeader: FC<EntityHeaderProps> = ({
-    id,
-    alwaysExpanded = false,
-    ellipseBreadCrumb,
-    entity,
-    entityPage,
-    onClick,
-}) => {
+const EntityHeader: FC<EntityHeaderProps> = ({ id, alwaysExpanded = false, entity, entityPage, onClick }) => {
     const [isCardExpanded, setIsCardExpanded] = useState(alwaysExpanded);
     const [isMoreActionShown, setIsMoreActionsShown] = useState(false);
 
@@ -150,7 +142,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                         <SRightSide>
                             {!isRootEntity && (
                                 <SBreadcrumbWrapper>
-                                    <Breadcrumb ellipse={ellipseBreadCrumb} path={entity.path} />
+                                    <Breadcrumb path={entity.path} />
                                 </SBreadcrumbWrapper>
                             )}
                             <SEntityName
