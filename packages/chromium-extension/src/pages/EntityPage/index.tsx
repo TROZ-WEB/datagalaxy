@@ -60,13 +60,7 @@ const EntityPage = () => {
         <>
             {isLoaded && entity && entity.type ? (
                 <>
-                    <EntityHeader
-                        ellipseBreadCrumb={9}
-                        entity={entity}
-                        id={`entityHeader${entity.id}`}
-                        alwaysExpanded
-                        entityPage
-                    />
+                    <EntityHeader entity={entity} id={`entityHeader${entity.id}`} alwaysExpanded entityPage />
                     <SContainer>
                         <VerticalMenu URLLocation={URLLocation} entity={entity} />
                         <SContent>

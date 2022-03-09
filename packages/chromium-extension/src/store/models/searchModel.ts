@@ -59,7 +59,12 @@ const search = thunk(async (actions: Actions<SearchModel>, searchedArgs: Searche
         // First search for results
         enhancedResults = await searchAPI(url, searchedArgs.term);
         // Load additional user information about entities
-        enhancedResults.result.entities = await enhancedEntitiesWithUserInfo(enhancedResults.result.entities, url);
+        if (enhancedResults?.result) {
+            enhancedResults.result.entities = await enhancedEntitiesWithUserInfo(
+                enhancedResults?.result?.entities,
+                url,
+            );
+        }
     } catch (err) {
         console.error('error : ', err);
     }
@@ -86,8 +91,10 @@ const searchModel = async (): Promise<SearchModel> => {
             state.searchedArgs = payload;
         }),
         updateResults: action((state, payload: SearchResponse) => {
-            const searchResults = payload.result.entities.filter((entity) => !entity.isExactMatch);
-            const exactMatches = payload.result.entities.filter((entity) => entity.isExactMatch);
+            const searchResults = payload?.result
+                ? payload.result.entities.filter((entity) => !entity.isExactMatch)
+                : [];
+            const exactMatches = payload?.result ? payload.result.entities.filter((entity) => entity.isExactMatch) : [];
 
             state.exactMatches = {
                 total: exactMatches.length,
@@ -98,7 +105,7 @@ const searchModel = async (): Promise<SearchModel> => {
             };
             state.searchResults = {
                 total: searchResults.length,
-                total_sum: payload.total_sum,
+                total_sum: payload?.total_sum,
                 result: {
                     entities: searchResults,
                 },

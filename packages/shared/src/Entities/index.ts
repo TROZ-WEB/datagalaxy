@@ -7,31 +7,42 @@ export type { EntityType, FieldStatus } from './types';
 /* eslint-disable import/prefer-default-export */
 export type { AttributeType, AttributeDefinitionType } from '../Attributes/types';
 
-const ellipseAt = (at: number) => (item) => item.slice(0, at);
-
 /**
  * Format the breadcrumd in the form 'Database > Modèle'
  *
  * @param {string} path - Represents the raw path as '\\Database\\Modèle\\Table'
- * @param {number} threshold - Threshold from which path is ellipsed
- * @param {number} ellipse - Ellipsed each level text
  * @return {string} Path as a breadcrumb
  */
-export const formatBreadcrumb = (
-    path: string,
-    threshold: number = 3,
-    ellipse?: number,
-): { shorten: string[]; default: string[] } => {
-    const base = path.trim().split('\\').slice(0, -1).filter(Boolean);
-    let shorten = ellipse ? base.map(ellipseAt(ellipse)) : base;
 
-    if (shorten.length > threshold) {
-        shorten = [shorten[0], '...', ...shorten.slice(shorten.length - 2, shorten.length)];
+export const formatBreadcrumb = (path: string): { shorten: string[]; default: string[] } => {
+    const base = path.trim().split('\\').slice(0, -1).filter(Boolean);
+    let pathWithoutFirstElement = base.toString();
+
+    const maxCharacters = 50;
+
+    let security = 0;
+
+    while (pathWithoutFirstElement.length + 2 * (base.length - 1) > maxCharacters && security < 10) {
+        security++;
+
+        const index = Math.floor(base.length / 2);
+
+        const nextBase = JSON.parse(JSON.stringify(base)); // Used to check if that's the last iteration
+        nextBase.splice(index, 1);
+        const nextPathWithoutFirstElement = nextBase.toString();
+
+        if (nextPathWithoutFirstElement.length + 2 * (nextBase.length - 1) > maxCharacters) {
+            base.splice(index, 1);
+        } else {
+            base[index] = '...';
+        }
+
+        pathWithoutFirstElement = base.toString();
     }
 
     return {
-        default: base,
-        shorten,
+        default: path.trim().split('\\').slice(0, -1).filter(Boolean),
+        shorten: base,
     };
 };
 
