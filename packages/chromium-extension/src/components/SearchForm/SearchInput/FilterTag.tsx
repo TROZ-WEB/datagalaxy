@@ -30,11 +30,12 @@ const SRoot = styled.div`
 
 interface FilterTagProps {
     label: string;
+    onClick?: () => void;
 }
 
-const FilterTag: FC<FilterTagProps> = ({ label }) => {
+const FilterTag: FC<FilterTagProps> = ({ label, onClick }) => {
     return (
-        <SRoot onClick={() => console.log('clic')}>
+        <SRoot onClick={onClick}>
             <SLabel>{label}</SLabel>
             <Title>...</Title>
         </SRoot>

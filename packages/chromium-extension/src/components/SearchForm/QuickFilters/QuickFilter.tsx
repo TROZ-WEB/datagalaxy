@@ -35,6 +35,11 @@ const SRoot = styled.div`
     &:not(:first-child) {
         margin-left: 8px;
     }
+
+    &:hover,
+    &:focus {
+        background-color: #004cff14;
+    }
 `;
 
 const STextContainer = styled.div`
@@ -56,11 +61,12 @@ interface QuickFilterProps {
     kind: string;
     label: string;
     value: string;
+    onClick: () => void;
 }
 
-const QuickFilter: FC<QuickFilterProps> = ({ icon, kind, label, value }) => {
+const QuickFilter: FC<QuickFilterProps> = ({ icon, kind, label, value, onClick }) => {
     return (
-        <SRoot>
+        <SRoot onClick={onClick}>
             <SImageContainer>
                 <DGGlyph icon={icon} kind={kind} />
             </SImageContainer>

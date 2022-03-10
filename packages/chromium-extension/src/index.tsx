@@ -22,7 +22,7 @@ const App = () => {
 storeModel().then((models) => {
     const container = document.createElement('div');
     container.id = 'datagalaxy_container';
-    document.body.appendChild(container);
+    document.documentElement.appendChild(container);
 
     if (window.location.href.indexOf('openDatagalaxy') !== -1) {
         const r = window.document.getElementById('datagalaxy_container');
@@ -39,7 +39,7 @@ storeModel().then((models) => {
                 />
             </Helmet>
             <Fonts />
-            <root.div>
+            <root.div id="datagalaxy_shadow_root">
                 <GlobalStyle />
                 <App />
             </root.div>

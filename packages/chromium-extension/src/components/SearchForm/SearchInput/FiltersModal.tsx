@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import RoundButton from '../../ui/RoundButton';
 import Title from '../../ui/Title';
-import FilterTag from './FilterTag';
+import FilterModal from './FilterModal';
 
 /* ---------- STYLES ---------- */
 
@@ -20,8 +20,9 @@ const SModal = styled.div`
     position: absolute;
     width: 200px;
     top: 100%;
-    right: -16px;
+    left: 0px;
     padding: 16px;
+    z-index: 100;
 `;
 
 const SRoot = styled.div`
@@ -38,7 +39,7 @@ const FiltersModal = () => {
     const [isOpen, setIsOpen] = React.useState(false);
 
     const handleBlur = () => {
-        setTimeout(() => setIsOpen(!isOpen), 200);
+        // setTimeout(() => setIsOpen(!isOpen), 200);
     };
 
     return (
@@ -48,14 +49,14 @@ const FiltersModal = () => {
                 <SModal>
                     <STitle>{chrome.i18n.getMessage(`filter_by`)}</STitle>
                     <SFiltersContainer>
-                        <FilterTag label="type" />
-                        <FilterTag label="type" />
-                        <FilterTag label="type" />
-                        <FilterTag label="type" />
-                        <FilterTag label="type" />
-                        <FilterTag label="type" />
-                        <FilterTag label="type" />
-                        <FilterTag label="type" />
+                        <FilterModal label="type" />
+                        <FilterModal label="type" />
+                        <FilterModal label="type" />
+                        <FilterModal label="type" />
+                        <FilterModal label="type" />
+                        <FilterModal label="type" />
+                        <FilterModal label="type" />
+                        <FilterModal label="type" />
                     </SFiltersContainer>
                 </SModal>
             )}

@@ -1,19 +1,15 @@
 /* eslint-disable import/prefer-default-export */
 import { post } from '../Http';
-import { QuickFilter } from './types';
+import { QuickFilters } from './types';
 
-export type { QuickFilter } from './types';
+export type { QuickFilter, QuickFilters } from './types';
 
-export const fetchQuickFilters = async (apiUrl: string, versionId: string): Promise<QuickFilter> => {
+export const fetchQuickFilters = async (apiUrl: string, versionId: string): Promise<QuickFilters> => {
     try {
-        console.log({ versionId });
-        const response = await post<QuickFilter>(`${apiUrl}/search`, {
+        const response = await post<QuickFilters>(`${apiUrl}/search`, {
             query: '',
-            versionId,
             limit: 0,
-        });
-
-        console.log('API : ', response);
+        }); // TODO : add versionId
 
         return response.parsedBody;
     } catch (error) {

@@ -141,7 +141,6 @@ const fetchLinkedObjects = thunk(
 const fetchChildrenObjects = thunk(
     async (actions: Actions<EntityModel>, payload: FetchChildrenObjectsParams, { getStoreState }) => {
         const { parentId, dataType, versionId } = payload;
-        console.log(versionId);
         try {
             const url = (getStoreState() as any).auth.pubapi;
             const childrenObjects = await fetchChildrenObjectsAPI(parentId, url, dataType, versionId);

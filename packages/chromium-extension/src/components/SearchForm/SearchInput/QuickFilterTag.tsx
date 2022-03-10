@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import DGGlyph from '../../ui/DGGlyph';
-import Glyph from '../../ui/Glyph';
 import RoundButton from '../../ui/RoundButton';
 
 /* ---------- STYLES ---------- */
