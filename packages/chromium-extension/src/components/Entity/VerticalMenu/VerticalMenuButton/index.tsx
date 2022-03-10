@@ -60,12 +60,19 @@ interface Props {
     onClick?: () => void;
     icon: string;
     badgeCount?: number;
-    id: string
+    id: string;
 }
 
-const VerticalMenuButton: React.FC<Props> = ({ onClick, icon, variant, badgeCount, id,...rest }) => {
+const VerticalMenuButton: React.FC<Props> = ({ onClick, icon, variant, badgeCount, id, ...rest }) => {
     return (
-        <SRoot id={id} active={variant === 'active'} disabled={badgeCount === 0} onClick={onClick} type="button" {...rest}>
+        <SRoot
+            active={variant === 'active'}
+            disabled={badgeCount === 0}
+            id={id}
+            onClick={onClick}
+            type="button"
+            {...rest}
+        >
             <Glyph icon={icon} />
             {badgeCount > 0 && <SBadge>{badgeCount > 99 ? '99+' : badgeCount}</SBadge>}
         </SRoot>

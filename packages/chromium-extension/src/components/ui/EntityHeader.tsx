@@ -1,4 +1,5 @@
 import React, { useState, useMemo, FC } from 'react';
+import { ExactMatch } from 'shared';
 import styled, { css } from 'styled-components';
 import Breadcrumb from '../Breadcrumb';
 import Status from '../Entity/Status';
@@ -7,6 +8,7 @@ import UsersProfile from '../Entity/UsersProfile';
 import OwnersStewardsSeparator from '../OwnersStewardsSeparator';
 import EntityImage from './EntityImage';
 import Glyph from './Glyph';
+import ArrowDrop from '../../../assets/icons/arrow-drop-up.svg';
 import Out from '../../../assets/icons/out.svg';
 
 /* ---------- STYLES ---------- */
@@ -51,9 +53,8 @@ const SEntityNameMoreActionsIcon = styled.a`
 
 const SRightSide = styled.div`
     display: flex;
-    flex: 2;
-    max-width: 235px;
     flex-direction: column;
+    width: 80%;
 `;
 
 const STagsWrapper = styled(Tags)`
@@ -103,6 +104,58 @@ const SRoot = styled.div`
         `}
 `;
 
+const SAttributeKey = styled.span`
+    color: #2142b6;
+    font-size: 10px;
+    font-weight: bold;
+    min-width: fit-content;
+`;
+
+const SMatchString = styled.span`
+    font-weight: bold;
+    font-size: 12px;
+    white-space: nowrap;
+    margin-left: 4px;
+    margin-bottom: 1px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`;
+
+const SAttributeContainer = styled.div`
+    display: ${(props) => (props.hidden ? 'none' : 'flex')};
+    align-items: center;
+    vertical-align: middle;
+    height: 20px;
+`;
+
+const SDisplayMoreAttributesButton = styled.button`
+    justify-content: center;
+    border: none;
+    border-radius: 8px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-size: 8px;
+    background: white;
+    margin-left: 8px;
+    color: #1035b1;
+    min-width: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
+`;
+
+const SArrowDrop = styled.img`
+    width: 10px;
+    height: 10px;
+
+    ${(props) =>
+        props.arrowDropDown &&
+        css`
+            transform: rotate(180deg);
+        `}
+`;
+
 /* ---------- COMPONENT ---------- */
 
 const LIMIT_TAGS_ELLIPSE = 3;
@@ -113,11 +166,22 @@ interface EntityHeaderProps {
     entity: any;
     entityPage?: boolean;
     onClick?: () => void;
+    exactMatches?: ExactMatch[];
+    searchQuery?: string;
 }
 
-const EntityHeader: FC<EntityHeaderProps> = ({ id, alwaysExpanded = false, entity, entityPage, onClick }) => {
+const EntityHeader: FC<EntityHeaderProps> = ({
+    id,
+    alwaysExpanded = false,
+    entity,
+    entityPage,
+    onClick,
+    exactMatches,
+    searchQuery,
+}) => {
     const [isCardExpanded, setIsCardExpanded] = useState(alwaysExpanded);
     const [isMoreActionShown, setIsMoreActionsShown] = useState(false);
+    const [displayMoreAttributes, setDisplayMoreAttributes] = useState(false);
 
     const isRootEntity = useMemo<boolean>(() => entity?.path === `\\${entity?.name}`, [entity]);
 
@@ -159,6 +223,61 @@ const EntityHeader: FC<EntityHeaderProps> = ({ id, alwaysExpanded = false, entit
                                     />
                                 )}
                             </SEntityName>
+                            {exactMatches?.length !== 0 &&
+                                exactMatches?.map((exactMatch, index, array) => {
+                                    const s = exactMatch.value.toLowerCase().split(searchQuery);
+
+                                    return (
+                                        <SAttributeContainer hidden={index !== 0 && !displayMoreAttributes}>
+                                            <SAttributeKey>
+                                                {chrome.i18n.getMessage(`attribute_key_${exactMatch.attributeKey}`)
+                                                    ? `${chrome.i18n.getMessage(
+                                                          `attribute_key_${exactMatch.attributeKey}`,
+                                                      )} : `
+                                                    : `${exactMatch.attributeKey} : `}
+                                            </SAttributeKey>
+                                            {s.map((elt, idx, arr) => {
+                                                return (
+                                                    <>
+                                                        <span>{elt}</span>
+                                                        {idx !== arr.length - 1 && (
+                                                            <SMatchString>{searchQuery}</SMatchString>
+                                                        )}
+                                                    </>
+                                                );
+                                            })}
+                                            {index === 0 && exactMatches.length > 1 && !displayMoreAttributes && (
+                                                <SDisplayMoreAttributesButton
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setDisplayMoreAttributes(true);
+                                                    }}
+                                                    type="button"
+                                                >
+                                                    {`+ ${exactMatches.length >= 2 ? 2 : exactMatches.length}`}
+                                                    <SArrowDrop alt="Arrow icon" src={ArrowDrop} arrowDropDown />
+                                                </SDisplayMoreAttributesButton>
+                                            )}
+                                            {index === array.length - 1 &&
+                                                exactMatches.length > 1 &&
+                                                displayMoreAttributes && (
+                                                    <SDisplayMoreAttributesButton
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            setDisplayMoreAttributes(false);
+                                                        }}
+                                                        type="button"
+                                                    >
+                                                        <SArrowDrop
+                                                            alt="Arrow icon"
+                                                            arrowDropDown={false}
+                                                            src={ArrowDrop}
+                                                        />
+                                                    </SDisplayMoreAttributesButton>
+                                                )}
+                                        </SAttributeContainer>
+                                    );
+                                })}
                             {entityPage && (
                                 <SInfosWrapper>
                                     {entity.attributes?.status && (

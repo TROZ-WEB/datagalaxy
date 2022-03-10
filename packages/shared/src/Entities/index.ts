@@ -3,7 +3,7 @@ import { get } from '../Http';
 import { EntityType } from './types';
 
 /* eslint-disable import/prefer-default-export */
-export type { EntityType, FieldStatus } from './types';
+export type { EntityType, FieldStatus, ExactMatch } from './types';
 /* eslint-disable import/prefer-default-export */
 export type { AttributeType, AttributeDefinitionType } from '../Attributes/types';
 

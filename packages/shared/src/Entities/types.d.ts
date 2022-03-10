@@ -1,6 +1,11 @@
 /* eslint-disable camelcase */
 export type FieldStatus = 'Proposed' | 'InRevision' | 'InValidation' | 'Validated' | 'Obsolete';
 
+export interface ExactMatch {
+    attributeKey: string;
+    value: string;
+}
+
 export interface EntityType {
     attributes?: {
         description: string;
@@ -21,4 +26,5 @@ export interface EntityType {
     childrenObjects: EntityType[];
     versionId: string;
     isExactMatch: boolean;
+    exactMatchAttributes: ExactMatch[];
 }

@@ -112,12 +112,8 @@ const Details = ({ entity }: DetailsProps) => {
         return data.toString();
     };
 
-    const computeTitle = (data: any) => {
-        if (data === 'linkShortcutDomainIds') {
-            return chrome.i18n.getMessage(`linkShortcutDomainIds`);
-        }
-
-        return data;
+    const computeTitle = (r: any, key: string) => {
+        return chrome.i18n.getMessage(`attribute_key_${key}`) || r[key].name || key;
     };
 
     return (
@@ -147,7 +143,7 @@ const Details = ({ entity }: DetailsProps) => {
                     !rest[key].trend &&
                     reservedKeys.indexOf(key) === -1 && (
                         <>
-                            <Details.SubInfo title={computeTitle(key)}>{computeData(rest[key])}</Details.SubInfo>
+                            <Details.SubInfo title={computeTitle(rest, key)}>{computeData(rest[key])}</Details.SubInfo>
                             <Details.Separator />
                         </>
                     ),

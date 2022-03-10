@@ -16,7 +16,6 @@ const SCheckbox = styled.input`
 const SLabelWrapper = styled.div`
     font-size: 14px;
     line-height: 18px;
-    flex: 1;
 `;
 const SSwitch = styled.div`
     background: #084eff80;
