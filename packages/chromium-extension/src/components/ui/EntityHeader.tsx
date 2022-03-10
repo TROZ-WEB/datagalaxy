@@ -1,13 +1,13 @@
 import React, { useState, useMemo, FC } from 'react';
 import styled, { css } from 'styled-components';
-import Breadcrumb from '../../Breadcrumb';
-import Status from '../../Entity/Status';
-import Tags from '../../Entity/Tags';
-import UsersProfile from '../../Entity/UsersProfile';
-import OwnersStewardsSeparator from '../../OwnersStewardsSeparator';
-import EntityImage from '../EntityImage';
-import Glyph from '../Glyph';
-import Out from '../../../../assets/icons/out.svg';
+import Breadcrumb from '../Breadcrumb';
+import Status from '../Entity/Status';
+import Tags from '../Entity/Tags';
+import UsersProfile from '../Entity/UsersProfile';
+import OwnersStewardsSeparator from '../OwnersStewardsSeparator';
+import EntityImage from './EntityImage';
+import Glyph from './Glyph';
+import Out from '../../../assets/icons/out.svg';
 
 /* ---------- STYLES ---------- */
 

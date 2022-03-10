@@ -59,9 +59,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 <SLabel htmlFor={name}>{label}</SLabel>
                 {errors && errors[name] && <SHelperTextError>{errors[name].message}</SHelperTextError>}
                 <SInput
-                    id={id}
                     ref={ref}
                     disabled={disabled || readOnly}
+                    id={id}
                     name={name}
                     placeholder={placeholder}
                     readOnly={readOnly}

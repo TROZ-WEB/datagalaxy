@@ -48,7 +48,7 @@ const SRoot = styled.button`
 
 /* ---------- COMPONENT ---------- */
 interface Props {
-    id: string
+    id: string;
     children: React.ReactNode;
     type?: 'button' | 'submit' | 'reset';
     variant?: 'contained' | 'outlined';

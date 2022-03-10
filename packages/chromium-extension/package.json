@@ -1,6 +1,6 @@
 {
     "name": "chromium-extension",
-    "version": "1.0.14",
+    "version": "1.0.15",
     "description": "Chromium extension for Datagalaxy",
     "main": "index.js",
     "repository": "git@ssh.dev.azure.com:v3/datagalaxy/Plugins%20Externes/Plugins%20Externes",
@@ -53,6 +53,8 @@
         "react-helmet": "~6.1.0",
         "shared": "~1.0.0",
         "styled-components": "~5.3.3",
-        "webpack-merge": "^5.8.0"
+        "webpack-merge": "^5.8.0",
+        "react-modal": "~3.14.4",
+        "reactjs-popup": "~2.0.5"
     }
 }

@@ -39,7 +39,7 @@ storeModel().then((models) => {
                 />
             </Helmet>
             <Fonts />
-            <root.div>
+            <root.div id="datagalaxy_shadow_root">
                 <GlobalStyle />
                 <App />
             </root.div>

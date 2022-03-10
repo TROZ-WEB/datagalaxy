@@ -26,7 +26,7 @@ const SArrowButton = styled.button`
     font-family: 'Montserrat', sans-serif;
 
     &:disabled {
-        display: none;
+        visibility: hidden;
     }
 `;
 

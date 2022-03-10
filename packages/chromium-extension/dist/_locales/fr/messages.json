@@ -382,6 +382,456 @@
     "entity_label_full_UsageComponent": {
         "message": "Composant usage"
     },
+    "filter_by": {
+        "message": "Filtrer par"
+    },
+    "attribute_key_DisplayName": {
+        "message": "Libellé fonctionnel"
+    },
+    "attribute_key_Name": {
+        "message": "Nom"
+    },
+    "attribute_key_TechnicalName": {
+        "message": "Libellé technique"
+    },
+    "attribute_key_ShortName": {
+        "message": "Alias"
+    },
+    "attribute_key_Description": {
+        "message": "Résumé"
+    },
+    "attribute_key_LongDescription": {
+        "message": "Description"
+    },
+    "attribute_key_LongDescriptionRaw": {
+        "message": "Description"
+    },
+    "attribute_key_Tags": {
+        "message": "Étiquettes"
+    },
+    "attribute_key_Domains": {
+        "message": "Étiquettes"
+    },
+    "attribute_key_DomainsString": {
+        "message": "@:DgServerTypes.BaseData.fields.Domains"
+    },
+    "attribute_key_EntityStatus": {
+        "message": "Statut"
+    },
+    "attribute_key_Status": {
+        "message": "Statut"
+    },
+    "attribute_key_Type": {
+        "message": "Type"
+    },
+    "attribute_key_Module": {
+        "message": "Module"
+    },
+    "attribute_key_Format": {
+        "message": "Format"
+    },
+    "attribute_key_Owner": {
+        "message": "Propriétaire"
+    },
+    "attribute_key_DataStewards": {
+        "message": "Stewards"
+    },
+    "attribute_key_DataOwners": {
+        "message": "Propriétaires"
+    },
+    "attribute_key_DataOwnersString": {
+        "message": "@:DgServerTypes.BaseData.fields.DataOwners"
+    },
+    "attribute_key_DataStewardsString": {
+        "message": "@:DgServerTypes.BaseData.fields.DataStewards"
+    },
+    "attribute_key_CdoUsers": {
+        "message": "CDO"
+    },
+    "attribute_key_CdoUsersString": {
+        "message": "@:DgServerTypes.BaseData.fields.CdoUsers"
+    },
+    "attribute_key_CisoUsers": {
+        "message": "CISO"
+    },
+    "attribute_key_CisoUserstring": {
+        "message": "@:DgServerTypes.BaseData.fields.CisoUsers"
+    },
+    "attribute_key_DpoUsers": {
+        "message": "DPO"
+    },
+    "attribute_key_DpoUsersString": {
+        "message": "@:DgServerTypes.BaseData.fields.DpoUsers"
+    },
+    "attribute_key_ExpertUsers": {
+        "message": "Expert"
+    },
+    "attribute_key_ExpertUsersString": {
+        "message": "@:DgServerTypes.BaseData.fields.ExpertUsers"
+    },
+    "attribute_key_CreationTime": {
+        "message": "Création"
+    },
+    "attribute_key_LastModificationTime": {
+        "message": "Dernière modification"
+    },
+    "attribute_key_CreatedOn": {
+        "message": "Créé le"
+    },
+    "attribute_key_CreatedBy": {
+        "message": "Créé par"
+    },
+    "attribute_key_LastModified": {
+        "message": "Modifié le"
+    },
+    "attribute_key_LastModifiedBy": {
+        "message": "Modifié par"
+    },
+    "attribute_key_TechnologyCode": {
+        "message": "Technologie"
+    },
+    "attribute_key_ModelId": {
+        "message": "Source"
+    },
+    "attribute_key_ContainerId": {
+        "message": "Conteneur"
+    },
+    "attribute_key_TableId": {
+        "message": "Structure"
+    },
+    "attribute_key_ModelDisplayName": {
+        "message": "Nom de la source"
+    },
+    "attribute_key_GdprContainsPersonalData": {
+        "message": "Contient des données personnelles"
+    },
+    "attribute_key_GdprContainsSensitiveData": {
+        "message": "Contient des données sensibles"
+    },
+    "attribute_key_GdprIsPersonalData": {
+        "message": "Est une donnée personnelle"
+    },
+    "attribute_key_GdprIsSensitiveData": {
+        "message": "Est une donnée sensible"
+    },
+    "attribute_key_GdprPersonalDataType": {
+        "message": "Type de donnée personnelle"
+    },
+    "attribute_key_GdprPhysicalPersonType": {
+        "message": "Type personne physique concernée"
+    },
+    "attribute_key_GdprRiskLevel": {
+        "message": "Risque DCP"
+    },
+    "attribute_key_GdprSensitiveDataType": {
+        "message": "Type de donnée sensible"
+    },
+    "attribute_key_GdprConsentExceptionType": {
+        "message": "Exception consentement"
+    },
+    "attribute_key_GdprDataRetentionPolicy": {
+        "message": "Durée conservation des données"
+    },
+    "attribute_key_GdprImpactAnalysisType": {
+        "message": "Besoin PIA"
+    },
+    "attribute_key_GdprImpactAnalysisUrl": {
+        "message": "PIA"
+    },
+    "attribute_key_GdprPersonalDataAccessPolicy": {
+        "message": "Droit d'accès DCP"
+    },
+    "attribute_key_GdprPersonalDataPortabilityPolicy": {
+        "message": "Droit portabilité DCP"
+    },
+    "attribute_key_GdprPersonConsentType": {
+        "message": "Consentement de la personne"
+    },
+    "attribute_key_GdprPersonInformationType": {
+        "message": "Information des personnes"
+    },
+    "attribute_key_GdprMainPurpose": {
+        "message": "Finalité principale"
+    },
+    "attribute_key_GdprSecondaryPurpose": {
+        "message": "Finalité secondaire"
+    },
+    "attribute_key_GdprUsageDuration": {
+        "message": "Durée d'usage"
+    },
+    "attribute_key_GdprUsageNature": {
+        "message": "Nature de l'usage"
+    },
+    "attribute_key_GdprUsageStartDate": {
+        "message": "Date de début"
+    },
+    "attribute_key_Text": {
+        "message": "Texte"
+    },
+    "attribute_key_LogicalParentData": {
+        "message": "Parent"
+    },
+    "attribute_key_LogicalParentId": {
+        "message": "Parent Id"
+    },
+    "attribute_key_LogicalPathString": {
+        "message": "Path (texte)"
+    },
+    "attribute_key_LogicalChildrenCount": {
+        "message": "Nombre d'enfants"
+    },
+    "attribute_key_LogicalAllLevelChildrenCount": {
+        "message": "Nombre de descendants"
+    },
+    "attribute_key_LogicalPath": {
+        "message": "Path"
+    },
+    "attribute_key_EntityLinkCount": {
+        "message": "Nombre d'objets liés"
+    },
+    "attribute_key_ImplementationLinkCount": {
+        "message": "Nombre d'implémentations"
+    },
+    "attribute_key_IsScriptGenerationEnabled": {
+        "message": "Génération de script"
+    },
+    "attribute_key_ModelDiagramCount": {
+        "message": "Nombre de diagrammes"
+    },
+    "attribute_key_TableDiagramCount": {
+        "message": "Nombre de diagrammes"
+    },
+    "attribute_key_DataTypeIsPrecisionRequired": {
+        "message": "Précision obligatoire"
+    },
+    "attribute_key_DataTypeIsSizeRequired": {
+        "message": "Taille obligatoire"
+    },
+    "attribute_key_FullDisplayName": {
+        "message": "Libellé fonctionnel complet"
+    },
+    "attribute_key_FullTechnicalName": {
+        "message": "Libellé technique complet"
+    },
+    "attribute_key_PkOrder": {
+        "message": "Position dans la clé primaire"
+    },
+    "attribute_key_TableType": {
+        "message": "Type de Structure"
+    },
+    "attribute_key_LinkShortcutUniverseId": {
+        "message": "Univers"
+    },
+    "attribute_key_LinkShortcutDomainIds": {
+        "message": "Domaine"
+    },
+    "attribute_key_LinkShortcutDimensionIds": {
+        "message": "Dimension"
+    },
+    "attribute_key_LinkShortcutUsageIds": {
+        "message": "Usage"
+    },
+    "attribute_key_LinkShortcutReferenceDataId": {
+        "message": "Nomenclature"
+    },
+    "attribute_key_LinkShortcutDataSourceIds": {
+        "message": "Source"
+    },
+    "attribute_key_DueTime": {
+        "message": "@:UI.TaskContainer.lblTaskDueTime"
+    },
+    "attribute_key_TaskType": {
+        "message": "@:UI.TaskContainer.lblTaskType"
+    },
+    "attribute_key_LinkShortcutRecordingSystemIds": {
+        "message": "Système d'enregistrement"
+    },
+    "attribute_key_DataFillPercentage": {
+        "message": "Taux de Remplissage"
+    },
+    "attribute_key_RecommendedDataFillPercentage": {
+        "message": "Taux de Complétude"
+    },
+    "attribute_key_StartDate": {
+        "message": "Début de validité"
+    },
+    "attribute_key_EndDate": {
+        "message": "Fin de validité"
+    },
+    "attribute_key_Code": {
+        "message": "Code"
+    },
+    "attribute_key_UserValue1": {
+        "message": "Texte libre 1"
+    },
+    "attribute_key_UserValue2": {
+        "message": "Texte libre 2"
+    },
+    "attribute_key_EntityType": {
+        "message": "Type d'entité"
+    },
+    "attribute_key_ObjectLinkPrefix": {
+        "message": "Lien"
+    },
+    "attribute_key_Parents": {
+        "message": "Parent (Ascendant)"
+    },
+    "attribute_key_FilterDirectParentId": {
+        "message": "Parent (Direct)"
+    },
+    "attribute_key_ContainerContainerCount": {
+        "message": "Nombre de conteneurs enfants"
+    },
+    "attribute_key_ContainerTableCount": {
+        "message": "Nombre de tables enfants"
+    },
+    "attribute_key_ComponentType": {
+        "message": "Type de composant"
+    },
+    "attribute_key_IsGoldenLink": {
+        "message": "Lien Golden"
+    },
+    "attribute_key__EntityType": {
+        "message": "Type"
+    },
+    "attribute_key_PersonalDataClass": {
+        "message": "Classe de donnée à caractère personnel"
+    },
+    "attribute_key_LocalSynonymsNames": {
+        "message": "Synonyme local"
+    },
+    "attribute_key_ExternalId": {
+        "message": "Identifiant externe"
+    },
+    "attribute_key_ExternalDataRefreshTime": {
+        "message": "Date du dernier refresh des données"
+    },
+    "attribute_key_ExternalModificationTime": {
+        "message": "Date de la dernière modification"
+    },
+    "attribute_key_ExternalCreationTime": {
+        "message": "Date de création de l'objet source"
+    },
+    "attribute_key_ExternalDeletionTime": {
+        "message": "Date de suppression de l'objet source"
+    },
+    "attribute_key_ExternalExpirationTime": {
+        "message": "Date d'expiration de l'objet source"
+    },
+    "attribute_key_ExternalModificationUser": {
+        "message": "Utilisateur ayant effectué la dernière modification"
+    },
+    "attribute_key_ExternalExecutionTime": {
+        "message": "Date derniere exécution"
+    },
+    "attribute_key_ExternalLastExecutionStatus": {
+        "message": "Statut de la derniére exécution"
+    },
+    "attribute_key_ExternalTechnology": {
+        "message": "Technologie"
+    },
+    "attribute_key_ExternalTechnologyType": {
+        "message": "Type technique"
+    },
+    "attribute_key_LastSynchronizationTime": {
+        "message": "Date de la dernière synchronisation"
+    },
+    "attribute_key_HistoricalNumberOfRecords": {
+        "message": "Nombre d'enregistrements historique"
+    },
+    "attribute_key_CurrentNumberOfRecords": {
+        "message": "Nombre d'enregistrements"
+    },
+    "attribute_key_HistoricalStorageSize": {
+        "message": "Taille du stockage historique"
+    },
+    "attribute_key_CurrentStorageSize": {
+        "message": "Taille du stockage actuel"
+    },
+    "attribute_key_StorageSizeUnit": {
+        "message": "Unité de stockage"
+    },
+    "attribute_key_ExternalLastAccessTime": {
+        "message": "Date dernier accès"
+    },
+    "attribute_key_ExternalTopUsers": {
+        "message": "Principaux utilisateurs"
+    },
+    "attribute_key_ExternalAccessCount": {
+        "message": "Nombre d'accès"
+    },
+    "attribute_key_ExternalWriteAccessCount": {
+        "message": "Nombre d'accès en écriture"
+    },
+    "attribute_key_ExternalReadAccessCount": {
+        "message": "Nombre d'accès en lecture"
+    },
+    "attribute_key_ExternalDeniedAccessCount": {
+        "message": "Nomdre d'accès refusés"
+    },
+    "attribute_key_ExternalUserAccessCount": {
+        "message": "Nombre d'accès utilisateurs"
+    },
+    "attribute_key_ExternalUserWriteAccessCount": {
+        "message": "Nombre d'accès utilisateurs en écriture"
+    },
+    "attribute_key_ExternalUserReadAccessCount": {
+        "message": "Nombre d'accès utilisateurs en lecture"
+    },
+    "attribute_key_ExternalUserDeniedAccessCount": {
+        "message": "Nomdre d'accès utilisateurs refusés"
+    },
+    "attribute_key_DataSample": {
+        "message": "Exemples de valeurs"
+    },
+    "attribute_key_HistoricalDistinctValueCount": {
+        "message": "Nombre de valeurs distinctes historique"
+    },
+    "attribute_key_CurrentDistinctValueCount": {
+        "message": "Nombre de valeurs distinctes"
+    },
+    "attribute_key_HistoricalEmptyValueCount": {
+        "message": "Nombre de valeurs vides historique"
+    },
+    "attribute_key_CurrentEmptyValueCount": {
+        "message": "Nombre de valeurs vides"
+    },
+    "attribute_key_ExternalUrl": {
+        "message": "URL"
+    },
+    "attribute_key_GeographicalLocation": {
+        "message": "Localisation geographique"
+    },
+    "attribute_key_Expression": {
+        "message": "Expression"
+    },
+    "attribute_key_Query": {
+        "message": "Requête"
+    },
+    "attribute_key_UsageFieldFormat": {
+        "message": "Format"
+    },
+    "attribute_key_IsCalculated": {
+        "message": "Calculé"
+    },
+    "attribute_key_IsAggregatable": {
+        "message": "Aggrégeable"
+    },
+    "attribute_key_ExternalSourceConnection": {
+        "message": "Lien vers la source"
+    },
+    "attribute_key_IsRequiredFilter": {
+        "message": "Filtre obligatoire"
+    },
+    "attribute_key_IsPartitioned": {
+        "message": "Partionné"
+    },
+    "attribute_key_IsIndexed": {
+        "message": "Indexé"
+    },
+    "attribute_key_IsPartitionKey": {
+        "message": "Clé de partition"
+    },
     "account_title": {
         "message": "Mon profil"
     },

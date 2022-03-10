@@ -6,6 +6,8 @@ import More from '../../icons/More';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../store/hooks';
 import HorizontalSeparator from '../HorizontalSeparator';
 import EntityHeader from '../ui/EntityHeader';
+import Title from '../ui/Title';
+import QuickFilters from './QuickFilters';
 import SearchInput from './SearchInput';
 import { useSearchInput } from './SearchInput/useSearchInput';
 import BlankSearch from '../../../assets/blank-search.png';
@@ -28,12 +30,6 @@ const SResults = styled.div`
     margin-top: 8px;
 `;
 
-const SResultsTitle = styled.p`
-    font-weight: 700;
-    font-size: 14px;
-    color: #001030;
-`;
-
 const SResultsTitleWrapper = styled.div`
     display: flex;
     flex-direction: row;
@@ -45,7 +41,14 @@ const SSearchCardResultWrapper = styled.div`
     margin: 8px auto;
 `;
 
-const SSearchCardsResultWrapper = styled.div``;
+const SSearchCardsResultWrapper = styled.div`
+    overflow-y: scroll;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    margin-right: 4px;
+    box-sizing: border-box;
+`;
 
 const STagResultCount = styled.span`
     width: 21px;
@@ -127,18 +130,17 @@ const SearchForm = () => {
         <>
             {searchResults && (
                 <>
-                    <div>
-                        <SearchInput
-                            {...searchInputProps}
-                            loading={loading}
-                            placeholder={chrome.i18n.getMessage('search')}
-                            success={success}
-                        />
-                    </div>
+                    <SearchInput
+                        {...searchInputProps}
+                        loading={loading}
+                        placeholder={chrome.i18n.getMessage('search')}
+                        success={success}
+                    />
+                    <QuickFilters />
                     <SResults>
                         {searchedArgs.term !== '' && hasExactMatches && (
                             <SResultsTitleWrapper>
-                                <SResultsTitle>{chrome.i18n.getMessage('exact_matches')}</SResultsTitle>
+                                <Title>{chrome.i18n.getMessage('exact_matches')}</Title>
                                 <STagResultCount>{exactMatches?.total}</STagResultCount>
                             </SResultsTitleWrapper>
                         )}
@@ -177,11 +179,11 @@ const SearchForm = () => {
                     <SResults>
                         {searchedArgs.term !== '' && (
                             <SResultsTitleWrapper>
-                                <SResultsTitle>
+                                <Title>
                                     {hasExactMatches
                                         ? chrome.i18n.getMessage('more_results')
                                         : chrome.i18n.getMessage('search_results')}
-                                </SResultsTitle>
+                                </Title>
                                 <STagResultCount>{searchResults.total}</STagResultCount>
                             </SResultsTitleWrapper>
                         )}

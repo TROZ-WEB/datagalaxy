@@ -1,10 +1,11 @@
 import React, { ComponentPropsWithRef, forwardRef, ReactElement } from 'react';
 import styled from 'styled-components';
-import CheckMark from '../../../icons/CheckMark';
-import Close from '../../../icons/Close';
 import Refresh from '../../../icons/Refresh';
 import Search from '../../../icons/Search';
-
+import { useStoreState } from '../../../store/hooks';
+import Glyph from '../../ui/Glyph';
+import FiltersModal from './FiltersModal';
+import QuickFilterTag from './QuickFilterTag';
 /* ---------- STYLES ---------- */
 
 const SClearButton = styled.button`
@@ -16,6 +17,19 @@ const SClearButton = styled.button`
     position: relative;
     top: 1px;
     font-family: 'Montserrat', sans-serif;
+
+    @keyframes BounceIn {
+        from {
+            transform: scale(0);
+        }
+        to {
+            transform: scale(1);
+        }
+    }
+
+    animation: BounceIn 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    display: block;
+    font-weight: 700;
 `;
 
 const SIconLoading = styled(Refresh)`
@@ -31,21 +45,6 @@ const SIconLoading = styled(Refresh)`
     animation: Rotate 1700ms cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
     display: block;
     font-size: inherit;
-`;
-
-const SIconSuccess = styled(CheckMark)`
-    @keyframes BounceIn {
-        from {
-            transform: scale(0);
-        }
-        to {
-            transform: scale(1);
-        }
-    }
-
-    animation: BounceIn 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    display: block;
-    font-weight: 700;
 `;
 
 const SInput = styled.input`
@@ -79,7 +78,7 @@ const SLeft = styled.div`
 `;
 
 const SRight = styled.div`
-    margin-right: 8px;
+    margin-right: 12px;
     white-space: nowrap;
 
     & svg {
@@ -94,12 +93,23 @@ const SRight = styled.div`
 `;
 
 const SRoot = styled.div`
+    border: 1px solid rgba(2, 42, 142, 0.1);
+    border-radius: 3px;
+`;
+
+const SSearchInputContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 3px;
-    border: 1px solid rgba(2, 42, 142, 0.1);
     transition: 150ms;
+`;
+
+const SQuickFilterTagsContainer = styled.div`
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 `;
 
 /* ---------- COMPONENT ---------- */
@@ -112,41 +122,41 @@ export interface IProps extends ComponentPropsWithRef<'input'> {
 
 const SearchInput = forwardRef<HTMLInputElement, IProps>(
     ({ onClearSearch, loading = false, success = false, ...props }, ref) => {
-        let leftElement: ReactElement = null;
+        let rightElement: ReactElement = null;
 
         if (loading) {
-            leftElement = (
-                <SLeft>
-                    <SIconLoading />
-                </SLeft>
-            );
+            rightElement = <SIconLoading />;
         } else if (success) {
-            leftElement = (
-                <SLeft>
-                    <SIconSuccess />
-                </SLeft>
+            rightElement = (
+                <SClearButton aria-label="Clear" id="clearSearch" onClick={onClearSearch} type="button">
+                    <Glyph icon="Cancelsearch" />
+                </SClearButton>
             );
         } else {
-            leftElement = (
-                <SLeft>
-                    <Search />
-                </SLeft>
-            );
+            rightElement = <Search />;
         }
+
+        const pickedQuickFilters = useStoreState((state) => state.quickFilters.pickedQuickFilters);
 
         return (
             <SRoot>
-                {leftElement}
+                <SQuickFilterTagsContainer>
+                    {pickedQuickFilters?.map(({ filter }) => (
+                        <QuickFilterTag
+                            icon="Table"
+                            kind="dictionary"
+                            value={filter?.values?.length === 1 && filter?.values?.[0]}
+                        />
+                    ))}
+                </SQuickFilterTagsContainer>
 
-                <SInput id="searchInput" {...props} ref={ref} />
-
-                {props.value && (
-                    <SRight>
-                        <SClearButton id="clearSearch" aria-label="Clear" onClick={onClearSearch} type="button">
-                            <Close />
-                        </SClearButton>
-                    </SRight>
-                )}
+                <SSearchInputContainer>
+                    <SLeft>
+                        <FiltersModal />
+                    </SLeft>
+                    <SInput id="searchInput" {...props} ref={ref} />
+                    <SRight>{rightElement}</SRight>
+                </SSearchInputContainer>
             </SRoot>
         );
     },
