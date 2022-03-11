@@ -16,28 +16,29 @@ export type { AttributeType, AttributeDefinitionType } from '../Attributes/types
 
 export const formatBreadcrumb = (path: string): { shorten: string[]; default: string[] } => {
     const base = path.trim().split('\\').slice(0, -1).filter(Boolean);
-    let pathWithoutFirstElement = base.toString();
+    base.shift(); // remove workspace
+    let pathWithoutFirstAndLastElement = base.toString();
 
     const maxCharacters = 50;
 
     let security = 0;
 
-    while (pathWithoutFirstElement.length + 2 * (base.length - 1) > maxCharacters && security < 10) {
+    while (pathWithoutFirstAndLastElement.length + 2 * (base.length - 1) > maxCharacters && security < 10) {
         security++;
 
         const index = Math.floor(base.length / 2);
 
         const nextBase = JSON.parse(JSON.stringify(base)); // Used to check if that's the last iteration
         nextBase.splice(index, 1);
-        const nextPathWithoutFirstElement = nextBase.toString();
+        const nextPathWithoutFirstAndLastElement = nextBase.toString();
 
-        if (nextPathWithoutFirstElement.length + 2 * (nextBase.length - 1) > maxCharacters) {
+        if (nextPathWithoutFirstAndLastElement.length + 2 * (nextBase.length - 1) > maxCharacters) {
             base.splice(index, 1);
         } else {
             base[index] = '...';
         }
 
-        pathWithoutFirstElement = base.toString();
+        pathWithoutFirstAndLastElement = base.toString();
     }
 
     return {

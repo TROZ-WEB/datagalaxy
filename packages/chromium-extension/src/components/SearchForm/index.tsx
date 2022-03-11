@@ -65,8 +65,9 @@ const STagResultCount = styled.span`
 `;
 
 const SMore = styled.span`
-    font-size: 16px;
-    margin-right: 5px;
+    font-size: 12px;
+    margin-right: 3px;
+    margin-bottom: 3px;
 `;
 
 const SMoreContainer = styled.div`
@@ -110,6 +111,10 @@ const SearchForm = () => {
             displayMoreExactMatches ? exactMatches?.result?.entities : exactMatches?.result?.entities.slice(0, 4),
         );
     }, [exactMatches, displayMoreExactMatches]);
+
+    useEffect(() => {
+        setDisplayMoreExactMatches(false);
+    }, [searchedArgs.term]);
 
     const dispatch = useStoreDispatch();
 

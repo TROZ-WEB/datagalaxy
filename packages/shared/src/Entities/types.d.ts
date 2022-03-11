@@ -27,4 +27,5 @@ export interface EntityType {
     versionId: string;
     isExactMatch: boolean;
     exactMatchAttributes: ExactMatch[];
+    objectUrl: string;
 }

@@ -104,10 +104,9 @@ const SAttributeKey = styled.span`
 
 const SMatchString = styled.span`
     font-weight: bold;
-    font-size: 12px;
+    font-size: 10px;
     white-space: nowrap;
     margin-left: 4px;
-    margin-bottom: 1px;
     overflow: hidden;
     text-overflow: ellipsis;
 `;
