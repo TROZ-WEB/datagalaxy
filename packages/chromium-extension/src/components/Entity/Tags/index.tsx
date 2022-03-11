@@ -32,7 +32,6 @@ const SRootItem = styled.span`
     padding-right: 4px;
     padding-left: 2px;
     border-radius: 12px 3px 3px 12px;
-    background: #0000ff08;
 `;
 
 const STagLabel = styled.span`

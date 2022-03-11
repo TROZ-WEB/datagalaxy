@@ -3,11 +3,9 @@ import { ExactMatch } from 'shared';
 import styled, { css } from 'styled-components';
 import Breadcrumb from '../Breadcrumb';
 import Status from '../Entity/Status';
-import Tags from '../Entity/Tags';
 import UsersProfile from '../Entity/UsersProfile';
 import OwnersStewardsSeparator from '../OwnersStewardsSeparator';
 import EntityImage from './EntityImage';
-import Glyph from './Glyph';
 import ArrowDrop from '../../../assets/icons/arrow-drop-up.svg';
 import Out from '../../../assets/icons/out.svg';
 
@@ -16,6 +14,7 @@ import Out from '../../../assets/icons/out.svg';
 const SAssociatedUsersWrapper = styled.div`
     display: flex;
     flex-direction: row;
+    align-items: center;
 `;
 
 const SBreadcrumbWrapper = styled.div`
@@ -23,10 +22,6 @@ const SBreadcrumbWrapper = styled.div`
     flex-direction: row;
     align-items: center;
     min-height: 19px;
-`;
-
-const SGlyph = styled(Glyph)`
-    font-size: 8px !important;
 `;
 
 const SInfosWrapper = styled.div`
@@ -54,11 +49,7 @@ const SEntityNameMoreActionsIcon = styled.a`
 const SRightSide = styled.div`
     display: flex;
     flex-direction: column;
-    width: 80%;
-`;
-
-const STagsWrapper = styled(Tags)`
-    display: flex;
+    width: 100%;
 `;
 
 const SWrappedContainer = styled.div`
@@ -94,7 +85,7 @@ const SRoot = styled.div`
         ${(props) =>
         props.entityPage &&
         css`
-            padding: 18px;
+            padding: 18px 18px 14px 18px;
             box-shadow: 0px 0px 2px 2px rgba(0, 76, 255, 0.08);
 
             ${SEntityName} {
@@ -156,9 +147,11 @@ const SArrowDrop = styled.img`
         `}
 `;
 
-/* ---------- COMPONENT ---------- */
+const SType = styled.span`
+    font-size: 12px;
+`;
 
-const LIMIT_TAGS_ELLIPSE = 3;
+/* ---------- COMPONENT ---------- */
 
 interface EntityHeaderProps {
     id: string;
@@ -280,33 +273,16 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                                 })}
                             {entityPage && (
                                 <SInfosWrapper>
-                                    {entity.attributes?.status && (
+                                    {entity.type && (
                                         <>
-                                            <Status status={entity.attributes?.status} hideLabel />
+                                            <SType>{chrome.i18n.getMessage(`entity_type_${entity.type}`)}</SType>
                                             <OwnersStewardsSeparator />
                                         </>
                                     )}
 
-                                    {entity.attributes?.tags?.length > 0 && (
+                                    {entity.attributes?.status && (
                                         <>
-                                            <STagsWrapper>
-                                                {entity?.attributes?.tags?.map((tag, idx) => {
-                                                    if (idx > LIMIT_TAGS_ELLIPSE) {
-                                                        return null;
-                                                    }
-
-                                                    return (
-                                                        <Tags.Item
-                                                            key={tag}
-                                                            hideLabel={entity?.attributes?.tags?.length > 1}
-                                                            tag={tag}
-                                                        />
-                                                    );
-                                                })}
-                                                {entity?.attributes?.tags?.length > LIMIT_TAGS_ELLIPSE && (
-                                                    <SGlyph icon="Add" />
-                                                )}
-                                            </STagsWrapper>
+                                            <Status status={entity.attributes?.status} />
                                             <OwnersStewardsSeparator />
                                         </>
                                     )}
@@ -317,7 +293,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                                         )}
                                         {entity.owners && <OwnersStewardsSeparator />}
                                         {entity.stewards && (
-                                            <UsersProfile governanceRole="steward" users={entity.stewards} />
+                                            <UsersProfile governanceRole="steward" users={entity.stewards} hideLabel />
                                         )}
                                     </SAssociatedUsersWrapper>
                                 </SInfosWrapper>

@@ -4,8 +4,8 @@ import styled from 'styled-components';
 /* ---------- STYLES ---------- */
 
 const SRoot = styled.div`
-    height: 16px;
-    background-color: rgba(2, 42, 142, 0.1);
+    height: 20px;
+    border: 1px solid rgba(2, 42, 142, 0.1);
     margin: 0 8px;
 `;
 

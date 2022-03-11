@@ -16,7 +16,6 @@ const SRoot = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    background: #0000ff08;
     margin: 2px;
     border-radius: 12px 3px 3px 12px;
 `;
@@ -29,7 +28,7 @@ const STextInfoWrapper = styled.div`
 `;
 
 const SUserName = styled.span`
-    font-size: 10px;
+    font-size: 12px;
 `;
 
 /* ---------- COMPONENT ---------- */

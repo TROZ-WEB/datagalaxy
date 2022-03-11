@@ -2,11 +2,11 @@ import { format, isValid, parseISO } from 'date-fns';
 import React from 'react';
 import { EntityType } from 'shared';
 import styled from 'styled-components';
-import Status from '../../../../components/Entity/Status';
 import Tags from '../../../../components/Entity/Tags';
 import UserProfile from '../../../../components/Entity/UserProfile';
 import Accordion from '../../../../components/ui/Accordion';
 import DomainCard from '../../../../components/ui/DomainCard';
+import Glyph from '../../../../components/ui/Glyph';
 
 /* ---------- STYLES ---------- */
 
@@ -18,7 +18,6 @@ const SSeparator = styled.div`
 const SSubInfoContent = styled.div`
     font-size: 12px;
     color: #001030;
-    margin-bottom: 12px;
     line-height: 1.5;
     flex-wrap: wrap;
     display: flex;
@@ -28,20 +27,39 @@ const SSubInfoTitle = styled.span`
     font-size: 10px;
     font-weight: 600;
     color: #1035b1;
-    margin-top: 12px;
     margin-bottom: 4px;
 `;
 
 const SSubInfoWrapper = styled.div`
+    margin-top: 12px;
     display: flex;
     flex-direction: column;
     word-break: break-all;
     width: 100%;
+    margin-bottom: 12px;
 `;
 
 const STitle = styled.div`
     font-weight: 700;
     font-size: 14px;
+`;
+
+const SLink = styled.a`
+    text-decoration: none;
+    margin-left: 5px;
+`;
+
+const SLinkContainer = styled.div`
+    display: flex;
+`;
+
+const SBasicFieldsContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 14px rgba(16, 53, 177, 0.12);
+    border-radius: 6px;
+    padding: 20px;
+    margin-top: 20px;
 `;
 
 /* ---------- COMPONENT ---------- */
@@ -52,10 +70,8 @@ interface DetailsProps {
 
 const Details = ({ entity }: DetailsProps) => {
     const reservedKeys = ['creationTime', 'lastModificationTime', 'owners', 'stewards', 'logicalParentData'];
-    const { description, tags, summary, status, owners, stewards, ...rest } = entity.attributes;
-
-    console.warn('UNUSED : ', stewards);
-    console.warn('UNUSED : ', owners);
+    /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+    const { description, tags, summary, owners, stewards, status, ...rest } = entity.attributes;
 
     const computeData = (data: any) => {
         if (data === true) {
@@ -66,13 +82,16 @@ const Details = ({ entity }: DetailsProps) => {
         }
         if (data.name && data.url) {
             return (
-                <a
-                    href={`${data.url}${
-                        data.url.indexOf('?') !== -1 ? '&openDatagalaxy=true' : '?openDatagalaxy=true'
-                    }`}
-                >
-                    {data.name}
-                </a>
+                <SLinkContainer>
+                    <Glyph icon="Link" />
+                    <SLink
+                        href={`${data.url}${
+                            data.url.indexOf('?') !== -1 ? '&openDatagalaxy=true' : '?openDatagalaxy=true'
+                        }`}
+                    >
+                        {data.name}
+                    </SLink>
+                </SLinkContainer>
             );
         }
 
@@ -109,6 +128,10 @@ const Details = ({ entity }: DetailsProps) => {
             });
         }
 
+        if (typeof data === 'number') {
+            return data.toLocaleString(chrome.runtime.getManifest().current_locale);
+        }
+
         return data.toString();
     };
 
@@ -117,45 +140,52 @@ const Details = ({ entity }: DetailsProps) => {
     };
 
     return (
-        <Accordion header={<STitle>{chrome.i18n.getMessage(`entity_details_sections_general`)}</STitle>} initialOpen>
-            <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_status`)}>
-                <Status status={status} />
-            </Details.SubInfo>
-            <Details.Separator />
-            <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_tags`)}>
-                <Tags>
-                    {tags?.map((tag) => (
-                        <Tags.Item key={tag} hideLabel={tags?.length > 1} tag={tag} />
-                    ))}
-                </Tags>
-            </Details.SubInfo>
-            <Details.Separator />
-            <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_summary`)}>
-                {summary}
-            </Details.SubInfo>
-            <Details.Separator />
-            <Details.SubInfo title={chrome.i18n.getMessage(`entity_details_sections_general_description`)}>
-                {description}
-            </Details.SubInfo>
-            {Object.keys(rest).map(
-                (key) =>
-                    rest[key] &&
-                    !rest[key].trend &&
-                    reservedKeys.indexOf(key) === -1 && (
-                        <>
-                            <Details.SubInfo title={computeTitle(rest, key)}>{computeData(rest[key])}</Details.SubInfo>
-                            <Details.Separator />
-                        </>
-                    ),
-            )}
-        </Accordion>
+        <>
+            <SBasicFieldsContainer>
+                <Details.SubInfo title="">{summary || chrome.i18n.getMessage(`preview_empty_field_1`)}</Details.SubInfo>
+                <Details.Separator />
+                <Details.SubInfo title="">
+                    {description || chrome.i18n.getMessage(`preview_empty_field_2`)}
+                </Details.SubInfo>
+                <Details.Separator />
+                <Details.SubInfo title="">
+                    {tags.length !== 0 ? (
+                        <Tags>
+                            {tags?.map((tag) => (
+                                <Tags.Item key={tag} tag={tag} />
+                            ))}
+                        </Tags>
+                    ) : (
+                        chrome.i18n.getMessage(`preview_empty_field_3`)
+                    )}
+                </Details.SubInfo>
+            </SBasicFieldsContainer>
+            <Accordion
+                header={<STitle>{chrome.i18n.getMessage(`entity_details_sections_general`)}</STitle>}
+                initialOpen
+            >
+                {Object.keys(rest).map(
+                    (key) =>
+                        rest[key] &&
+                        !rest[key].trend &&
+                        reservedKeys.indexOf(key) === -1 && (
+                            <>
+                                <Details.SubInfo title={computeTitle(rest, key)}>
+                                    {computeData(rest[key])}
+                                </Details.SubInfo>
+                                <Details.Separator />
+                            </>
+                        ),
+                )}
+            </Accordion>
+        </>
     );
 };
 
 Details.SubInfo = ({ title, children }: { title: string; children: React.ReactNode }) => {
     return (
         <SSubInfoWrapper>
-            <SSubInfoTitle>{title}</SSubInfoTitle>
+            {title && <SSubInfoTitle>{title}</SSubInfoTitle>}
             <SSubInfoContent>{children}</SSubInfoContent>
         </SSubInfoWrapper>
     );

@@ -8,6 +8,7 @@ const SIconWrapper = styled.span`
     width: 16px;
     height: 16px;
     margin-right: 5px;
+    margin-bottom: 2px;
 `;
 
 const SRoot = styled.div`
@@ -15,8 +16,12 @@ const SRoot = styled.div`
     flex-direction: row;
     align-items: center;
     margin: 5px 0;
-    font-size: 12px;
     line-height: 15px;
+    font-size: 10px;
+    margin-left: 2px;
+    background: #f3f6ff;
+    padding: 2px;
+    border-radius: 3px;
 `;
 
 const SGlyph = styled(Glyph)`

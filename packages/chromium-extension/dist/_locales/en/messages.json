@@ -487,6 +487,9 @@
     "attribute_key_LastModifiedBy": {
         "message": "Modified by"
     },
+    "attribute_key_Technology": {
+        "message": "Technology"
+    },
     "attribute_key_TechnologyCode": {
         "message": "Technology"
     },
@@ -652,6 +655,24 @@
     "attribute_key_RecommendedDataFillPercentage": {
         "message": "Completion"
     },
+    "attribute_key_PrimaryKeyTechnicalName": {
+        "message": "Primary Key Technical Label"
+    },
+    "attribute_key_TechnicalComments": {
+        "message": "Technical Comments"
+    },
+    "attribute_key_TableDisplayName": {
+        "message": "Structure Functional Label"
+    },
+    "attribute_key_TableTechnicalName": {
+        "message": "Structure Technical Label"
+    },
+    "attribute_key_Schema": {
+        "message": "Schema"
+    },
+    "attribute_key_SchemaName": {
+        "message": "Schema"
+    },
     "attribute_key_StartDate": {
         "message": "Validity Start"
     },
@@ -695,6 +716,9 @@
         "message": "Personal data class"
     },
     "attribute_key_LocalSynonymsNames": {
+        "message": "Local synonym"
+    },
+    "attribute_key_LocalSynonym": {
         "message": "Local synonym"
     },
     "attribute_key_ExternalId": {
@@ -999,5 +1023,161 @@
     },
     "showMore": {
         "message": "Show more"
+    },
+    "entity_type_BusinessTerm": {
+        "message": "Term"
+    },
+    "entity_type_Indicator": {
+        "message": "Indic"
+    },
+    "entity_type_IndicatorGroup": {
+        "message": "IndicGrp"
+    },
+    "entity_type_Concept": {
+        "message": "Concept"
+    },
+    "entity_type_ReferenceData": {
+        "message": "RefData"
+    },
+    "entity_type_ReferenceDataValue": {
+        "message": "Value"
+    },
+    "entity_type_Dimension": {
+        "message": "Dim"
+    },
+    "entity_type_DimensionGroup": {
+        "message": "DimGrp"
+    },
+    "entity_type_BusinessDomain": {
+        "message": "Domain"
+    },
+    "entity_type_BusinessDomainGroup": {
+        "message": "DomGrp"
+    },
+    "entity_type_Universe": {
+        "message": "Universe"
+    },
+    "entity_type_RelationalModel": {
+        "message": "DB"
+    },
+    "entity_type_NonRelationalModel": {
+        "message": "FileStore"
+    },
+    "entity_type_NoSqlModel": {
+        "message": "NoSql"
+    },
+    "entity_type_TagBase": {
+        "message": "TagBase"
+    },
+    "entity_type_Model": {
+        "message": "Model"
+    },
+    "entity_type_Directory": {
+        "message": "Dir"
+    },
+    "entity_type_Table": {
+        "message": "Table"
+    },
+    "entity_type_View": {
+        "message": "View"
+    },
+    "entity_type_Column": {
+        "message": "Column"
+    },
+    "entity_type_Field": {
+        "message": "Field"
+    },
+    "entity_type_SubStructure": {
+        "message": "SubStr"
+    },
+    "entity_type_File": {
+        "message": "File"
+    },
+    "entity_type_Document": {
+        "message": "Doc"
+    },
+    "entity_type_Tag": {
+        "message": "Tag"
+    },
+    "entity_type_Equipment": {
+        "message": "Equip"
+    },
+    "entity_type_DataFlow": {
+        "message": "Flow"
+    },
+    "entity_type_DataProcessing": {
+        "message": "DP"
+    },
+    "entity_type_DataProcessingItem": {
+        "message": "DPI"
+    },
+    "entity_type_Application": {
+        "message": "App"
+    },
+    "entity_type_Use": {
+        "message": "Usage"
+    },
+    "entity_type_Process": {
+        "message": "Process"
+    },
+    "entity_type_UsageField": {
+        "message": "UsField"
+    },
+    "entity_type_Feature": {
+        "message": "Feature"
+    },
+    "entity_type_Screen": {
+        "message": "Screen"
+    },
+    "entity_type_Dashboard": {
+        "message": "Dash"
+    },
+    "entity_type_Report": {
+        "message": "Report"
+    },
+    "entity_type_DataSet": {
+        "message": "DataSet"
+    },
+    "entity_type_OpenDataSet": {
+        "message": "OpenDS"
+    },
+    "entity_type_Algorithm": {
+        "message": "Algo"
+    },
+    "entity_type_UsageComponent": {
+        "message": "UsComp"
+    },
+    "entity_type_PrimaryKey": {
+        "message": "PK"
+    },
+    "entity_type_ForeignKey": {
+        "message": "FK"
+    },
+    "entity_type_Diagram": {
+        "message": "Diagram"
+    },
+    "entity_type_DiagramNote": {
+        "message": "Note"
+    },
+    "entity_type_FilteredView": {
+        "message": "FilterV"
+    },
+    "entity_type_Project": {
+        "message": "Project"
+    },
+    "entity_type_Organization": {
+        "message": "Orga"
+    },
+    "preview_empty_field_1": {
+        "message": "No Summary available."
+    },
+    "preview_empty_field_2": {
+        "message": "No description available."
+    },
+    "preview_empty_field_3": {
+        "message": "No tag available."
+    },
+    "preview_empty_field_4": {
+        "message": "No URL available."
     }
 }

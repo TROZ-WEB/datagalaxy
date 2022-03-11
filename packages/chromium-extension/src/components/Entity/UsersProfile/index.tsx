@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { UserType } from 'shared';
 import styled from 'styled-components';
 import Avatar from '../../Avatar';
-import Glyph from '../../ui/Glyph';
 
 /* ---------- STYLES ---------- */
 
@@ -24,10 +23,6 @@ const SRoot = styled.div`
     align-items: center;
 `;
 
-const SGlyph = styled(Glyph)`
-    font-size: 12px !important;
-`;
-
 const STextInfoWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -39,9 +34,19 @@ const SUserName = styled.span`
     font-size: 10px;
 `;
 
+const SNumberOfUsers = styled.div`
+    color: #1035b1;
+    font-size: 10px;
+    margin-left: 2px;
+    background: #f3f6ff;
+    padding: 2px;
+    border-radius: 3px;
+    font-weight: bold;
+`;
+
 /* ---------- COMPONENT ---------- */
 
-const LIMIT_AVATAR_ELLIPSE = 3;
+const LIMIT_AVATAR_ELLIPSE = 2;
 
 const UsersProfile = ({
     governanceRole,
@@ -54,22 +59,38 @@ const UsersProfile = ({
     hideLabel?: boolean;
     ellipsed?: boolean;
 }) => {
+    const usersToDisplay = users.slice(0, LIMIT_AVATAR_ELLIPSE);
+    const otherUsers = users.slice(LIMIT_AVATAR_ELLIPSE, users.length);
+    const [otherUsersInformations, setOtherUsersInformations] = useState('');
+
+    useEffect(() => {
+        let informations = '';
+        otherUsers.forEach((user, index, array) => {
+            informations += `${user.firstName} ${user.lastName} ${index === array.length - 1 ? '' : ','} `;
+        });
+        setOtherUsersInformations(informations);
+    }, [otherUsers]);
+
     return (
         <SRoot>
             <SAvatarWrapper>
-                {users?.map(
+                {usersToDisplay?.map(
                     (user, index) =>
                         user && (
                             <Avatar
                                 key={user?.userId}
-                                grouped={users?.length > 1 && index !== users?.length - 1}
+                                grouped={usersToDisplay?.length > 1 && index !== usersToDisplay?.length - 1}
                                 size="mini"
                                 user={user}
                             />
                         ),
                 )}
             </SAvatarWrapper>
-            {users?.length > LIMIT_AVATAR_ELLIPSE && <SGlyph icon="Add" />}
+            {users?.length > LIMIT_AVATAR_ELLIPSE && (
+                <SNumberOfUsers>
+                    <span title={otherUsersInformations}>{`+${users.length - LIMIT_AVATAR_ELLIPSE}`}</span>
+                </SNumberOfUsers>
+            )}
             {(users?.length <= LIMIT_AVATAR_ELLIPSE && ellipsed) ||
                 (!hideLabel && (
                     <STextInfoWrapper>

@@ -169,12 +169,14 @@ const Avatar = ({
 
     if (!user.profileThumbnailUrl) {
         return (
-            <SNoPictureRoot
-                as="div"
-                grouped={grouped}
-                size={size}
-                style={{ backgroundColor: getColor() }}
-            >{`${user.firstName[0]}${user.lastName[0]}`}</SNoPictureRoot>
+            <div title={`${user.firstName}. ${user.lastName}`}>
+                <SNoPictureRoot
+                    as="div"
+                    grouped={grouped}
+                    size={size}
+                    style={{ backgroundColor: getColor() }}
+                >{`${user.firstName[0]}${user.lastName[0]}`}</SNoPictureRoot>
+            </div>
         );
     }
 
