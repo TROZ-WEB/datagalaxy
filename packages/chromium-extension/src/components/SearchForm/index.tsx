@@ -35,6 +35,8 @@ const SResultsTitleWrapper = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
+    margin-top: 15px;
+    margin-bottom: 10px;
 `;
 
 const SSearchCardResultWrapper = styled.div`
@@ -74,7 +76,7 @@ const SMoreContainer = styled.div`
     cursor: pointer;
     display: flex;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 15px;
 `;
 
 /* ---------- COMPONENT ---------- */

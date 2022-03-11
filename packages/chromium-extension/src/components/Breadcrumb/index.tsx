@@ -23,6 +23,24 @@ const SRoot = styled.div`
     flex-wrap: wrap;
 `;
 
+const SFormatted = styled.span`
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px;
+`;
+
+const formatText = (formattedPath: any) => {
+    const text = formattedPath.shorten.map((elem, i) => (
+        <>
+            {elem}
+            <SChevron>{i < formattedPath.shorten.length - 1 && ''}</SChevron>
+        </>
+    ));
+
+    return text;
+};
+
 /* ---------- COMPONENT ---------- */
 
 const Breadcrumb = ({ path }: { path: string }) => {
@@ -33,12 +51,7 @@ const Breadcrumb = ({ path }: { path: string }) => {
             {formattedPath && (
                 <SRoot title={formattedPath.default.join(' > ')}>
                     {formattedPath && formattedPath.shorten.length ? (
-                        formattedPath.shorten.map((elem, i) => (
-                            <Fragment key={elem}>
-                                <span>{elem}</span>
-                                <SChevron>{i < formattedPath.shorten.length - 1 && ''}</SChevron>
-                            </Fragment>
-                        ))
+                        <SFormatted>{formatText(formattedPath)}</SFormatted>
                     ) : (
                         <br />
                     )}

@@ -62,6 +62,11 @@ const SBasicFieldsContainer = styled.div`
     margin-top: 20px;
 `;
 
+const SPreviewEmptyField = styled.div`
+    color: #6d6f88;
+    font-style: italic;
+`;
+
 /* ---------- COMPONENT ---------- */
 
 interface DetailsProps {
@@ -75,7 +80,7 @@ const isEmptyObject = (elt) => {
 const Details = ({ entity }: DetailsProps) => {
     const reservedKeys = ['creationTime', 'lastModificationTime', 'owners', 'stewards', 'logicalParentData'];
     /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-    const { description, tags, summary, owners, stewards, status, ...rest } = entity.attributes;
+    const { description, tags, summary, owners, stewards, status, externalUrl, ...rest } = entity.attributes;
 
     const computeData = (data: any) => {
         if (data === true) {
@@ -140,16 +145,25 @@ const Details = ({ entity }: DetailsProps) => {
     };
 
     const computeTitle = (r: any, key: string) => {
+        console.info('KEY IS :');
+        console.info(key);
+
         return chrome.i18n.getMessage(`attribute_key_${key}`) || r[key].name || key;
     };
 
     return (
         <>
             <SBasicFieldsContainer>
-                <Details.SubInfo title="">{summary || chrome.i18n.getMessage(`preview_empty_field_1`)}</Details.SubInfo>
+                <Details.SubInfo title="">
+                    {summary || (
+                        <SPreviewEmptyField>{chrome.i18n.getMessage(`preview_empty_field_1`)}</SPreviewEmptyField>
+                    )}
+                </Details.SubInfo>
                 <Details.Separator />
                 <Details.SubInfo title="">
-                    {description || chrome.i18n.getMessage(`preview_empty_field_2`)}
+                    {description || (
+                        <SPreviewEmptyField>{chrome.i18n.getMessage(`preview_empty_field_2`)}</SPreviewEmptyField>
+                    )}
                 </Details.SubInfo>
                 <Details.Separator />
                 <Details.SubInfo title="">
@@ -160,19 +174,23 @@ const Details = ({ entity }: DetailsProps) => {
                             ))}
                         </Tags>
                     ) : (
-                        chrome.i18n.getMessage(`preview_empty_field_3`)
+                        <SPreviewEmptyField>{chrome.i18n.getMessage(`preview_empty_field_3`)}</SPreviewEmptyField>
                     )}
                 </Details.SubInfo>
-                {entity.dataType && entity.dataType === DataTypeMapping.Usage && (
+                {entity.dataType && entity.dataType === DataTypeMapping.Usage && externalUrl.url && (
                     <>
                         <Details.Separator />
                         <Details.SubInfo title="">
                             {(
                                 <SLinkContainer>
                                     <Glyph icon="Link" />
-                                    <SLink href={`${entity.objectUrl}`}>{entity.objectUrl}</SLink>
+                                    <SLink href={`${externalUrl.url}`}>{externalUrl.name}</SLink>
                                 </SLinkContainer>
-                            ) || chrome.i18n.getMessage(`preview_empty_field_4`)}
+                            ) || (
+                                <SPreviewEmptyField>
+                                    {chrome.i18n.getMessage(`preview_empty_field_4`)}
+                                </SPreviewEmptyField>
+                            )}
                         </Details.SubInfo>
                     </>
                 )}

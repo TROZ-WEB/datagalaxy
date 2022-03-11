@@ -17,23 +17,29 @@ export type { AttributeType, AttributeDefinitionType } from '../Attributes/types
 export const formatBreadcrumb = (path: string): { shorten: string[]; default: string[] } => {
     const base = path.trim().split('\\').slice(0, -1).filter(Boolean);
     base.shift(); // remove workspace
+
     let pathWithoutFirstAndLastElement = base.toString();
 
     const maxCharacters = 50;
 
     let security = 0;
-
-    while (pathWithoutFirstAndLastElement.length + 2 * (base.length - 1) > maxCharacters && security < 10) {
+    while (pathWithoutFirstAndLastElement.length + 2 * base.length - 1 > maxCharacters && security < 10) {
         security++;
 
         const index = Math.floor(base.length / 2);
 
         const nextBase = JSON.parse(JSON.stringify(base)); // Used to check if that's the last iteration
         nextBase.splice(index, 1);
+
         const nextPathWithoutFirstAndLastElement = nextBase.toString();
 
-        if (nextPathWithoutFirstAndLastElement.length + 2 * (nextBase.length - 1) > maxCharacters) {
+        if (nextPathWithoutFirstAndLastElement.length + 2 * nextBase.length - 1 > maxCharacters) {
             base.splice(index, 1);
+        } else if (base.length === 2) {
+            // eslint-disable-next-line prefer-destructuring
+            base[2] = base[1];
+            base[1] = '...';
+            break;
         } else {
             base[index] = '...';
         }

@@ -229,15 +229,10 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                                                       )} : `
                                                     : `${exactMatch.attributeKey} : `}
                                             </SAttributeKey>
-                                            {s.map((elt, idx, arr) => {
+                                            {s.map(() => {
                                                 return (
                                                     /* eslint-disable-next-line react/no-array-index-key */
-                                                    <div key={idx}>
-                                                        <span>{elt}</span>
-                                                        {idx !== arr.length - 1 && (
-                                                            <SMatchString>{searchQuery}</SMatchString>
-                                                        )}
-                                                    </div>
+                                                    <SMatchString>{searchQuery}</SMatchString>
                                                 );
                                             })}
                                             {index === 0 && exactMatches.length > 1 && !displayMoreAttributes && (
@@ -248,7 +243,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                                                     }}
                                                     type="button"
                                                 >
-                                                    {`+ ${exactMatches.length >= 2 ? 2 : exactMatches.length}`}
+                                                    {`+ ${exactMatches.length - 1 >= 2 ? 2 : exactMatches.length - 1}`}
                                                     <SArrowDrop alt="Arrow icon" src={ArrowDrop} arrowDropDown />
                                                 </SDisplayMoreAttributesButton>
                                             )}

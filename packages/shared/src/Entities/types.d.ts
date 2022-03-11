@@ -6,6 +6,11 @@ export interface ExactMatch {
     value: string;
 }
 
+export interface Link {
+    name: string;
+    url: string;
+}
+
 export interface EntityType {
     attributes?: {
         description: string;
@@ -14,6 +19,7 @@ export interface EntityType {
         stewards: string[];
         summary: string;
         tags: string[];
+        externalUrl: Link;
     };
     childrenCount: number;
     id: string;
