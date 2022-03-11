@@ -133,7 +133,7 @@ const QuickFilters = () => {
                         icon="Table"
                         kind="dictionary"
                         label={chrome.i18n.getMessage(`filter_${filter.attributeKey}`)}
-                        onClick={() => handleClick(filter)}
+                        onClick={() => console.warn('TODO')}
                         value={filter?.values?.length === 1 && filter?.values?.[0]}
                     />
                 ))}

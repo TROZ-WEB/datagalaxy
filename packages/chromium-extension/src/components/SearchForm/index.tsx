@@ -43,7 +43,6 @@ const SSearchCardResultWrapper = styled.div`
 
 const SSearchCardsResultWrapper = styled.div`
     overflow-y: scroll;
-    position: absolute;
     height: 100%;
     width: 100%;
     margin-right: 4px;
@@ -79,6 +78,22 @@ const SMoreContainer = styled.div`
 
 /* ---------- COMPONENT ---------- */
 
+enum AttributesWeight {
+    LocalSynonym = 13,
+    Description = 12,
+    LongDescription = 11,
+    GdprMainPurpose = 10,
+    Code = 9,
+    Technology = 8,
+    Schema = 7,
+    PrimaryKeyTechnicalName = 6,
+    TechnicalComments = 5,
+    TableDisplayName = 4,
+    TableTechnicalName = 3,
+    GdprSecondaryPurpose = 2,
+    GdprUsageDuration = 1,
+}
+
 const SearchForm = () => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -88,10 +103,10 @@ const SearchForm = () => {
     const { searchedArgs, searchResults, exactMatches } = useStoreState((state) => state.search);
 
     const [displayMoreExactMatches, setDisplayMoreExactMatches] = useState(false);
-    const [exactMatchesToDisplay, setExactMatchesToDisplay] = useState<EntityType[]>([]);
+    const [exactMatchesEntitiesToDisplay, setExactMatchesEntitiesToDisplay] = useState<EntityType[]>([]);
 
     useEffect(() => {
-        setExactMatchesToDisplay(
+        setExactMatchesEntitiesToDisplay(
             displayMoreExactMatches ? exactMatches?.result?.entities : exactMatches?.result?.entities.slice(0, 4),
         );
     }, [exactMatches, displayMoreExactMatches]);
@@ -146,27 +161,49 @@ const SearchForm = () => {
                         )}
                         {hasExactMatches && (
                             <SSearchCardsResultWrapper>
-                                {exactMatchesToDisplay.map((entity, idx) => (
-                                    <div key={entity.id}>
-                                        <SSearchCardResultWrapper>
-                                            <EntityHeader
-                                                entity={entity}
-                                                entityPage={false}
-                                                id={`entityHeader${idx}`}
-                                                onClick={() => {
-                                                    updateIsLoaded(false);
-                                                    const URLLocation = entity.location.replace(
-                                                        new RegExp('/', 'g'),
-                                                        '.',
-                                                    ); // Replace "/" by "." in url
-                                                    history.push(`/app/entities/${URLLocation}/`);
-                                                }}
-                                                alwaysExpanded
-                                            />
-                                        </SSearchCardResultWrapper>
-                                        {idx < exactMatches?.result?.entities.length - 1 && <HorizontalSeparator />}
-                                    </div>
-                                ))}
+                                {exactMatchesEntitiesToDisplay.map((entity, idx) => {
+                                    const exactMatchAttributes = entity.exactMatchAttributes.sort((a, b) => {
+                                        if (AttributesWeight[a.attributeKey] && !AttributesWeight[b.attributeKey]) {
+                                            return 1;
+                                        }
+
+                                        if (!AttributesWeight[a.attributeKey] && AttributesWeight[b.attributeKey]) {
+                                            return -1;
+                                        }
+
+                                        if (!AttributesWeight[a.attributeKey] && !AttributesWeight[b.attributeKey]) {
+                                            return a.attributeKey.localeCompare(b.attributeKey);
+                                        }
+
+                                        return AttributesWeight[a.attributeKey] < AttributesWeight[b.attributeKey]
+                                            ? -1
+                                            : 1;
+                                    });
+
+                                    return (
+                                        <div key={entity.id}>
+                                            <SSearchCardResultWrapper>
+                                                <EntityHeader
+                                                    entity={entity}
+                                                    entityPage={false}
+                                                    exactMatches={exactMatchAttributes}
+                                                    id={`entityHeader${idx}`}
+                                                    onClick={() => {
+                                                        updateIsLoaded(false);
+                                                        const URLLocation = entity.location.replace(
+                                                            new RegExp('/', 'g'),
+                                                            '.',
+                                                        ); // Replace "/" by "." in url
+                                                        history.push(`/app/entities/${URLLocation}/`);
+                                                    }}
+                                                    searchQuery={searchedArgs.term}
+                                                    alwaysExpanded
+                                                />
+                                            </SSearchCardResultWrapper>
+                                            {idx < exactMatches?.result?.entities.length - 1 && <HorizontalSeparator />}
+                                        </div>
+                                    );
+                                })}
                             </SSearchCardsResultWrapper>
                         )}
                     </SResults>

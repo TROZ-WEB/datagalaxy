@@ -625,9 +625,6 @@
     "attribute_key_LinkShortcutUniverseId": {
         "message": "Universe"
     },
-    "attribute_key_LinkShortcutDomainIds": {
-        "message": "Domain"
-    },
     "attribute_key_LinkShortcutDimensionIds": {
         "message": "Dimension"
     },
