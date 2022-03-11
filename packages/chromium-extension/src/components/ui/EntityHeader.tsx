@@ -104,10 +104,9 @@ const SAttributeKey = styled.span`
 
 const SMatchString = styled.span`
     font-weight: bold;
-    font-size: 12px;
+    font-size: 10px;
     white-space: nowrap;
     margin-left: 4px;
-    margin-bottom: 1px;
     overflow: hidden;
     text-overflow: ellipsis;
 `;
@@ -221,7 +220,8 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                                     const s = exactMatch.value.toLowerCase().split(searchQuery);
 
                                     return (
-                                        <SAttributeContainer hidden={index !== 0 && !displayMoreAttributes}>
+                                        /* eslint-disable-next-line react/no-array-index-key */
+                                        <SAttributeContainer key={index} hidden={index !== 0 && !displayMoreAttributes}>
                                             <SAttributeKey>
                                                 {chrome.i18n.getMessage(`attribute_key_${exactMatch.attributeKey}`)
                                                     ? `${chrome.i18n.getMessage(
@@ -231,12 +231,13 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                                             </SAttributeKey>
                                             {s.map((elt, idx, arr) => {
                                                 return (
-                                                    <>
+                                                    /* eslint-disable-next-line react/no-array-index-key */
+                                                    <div key={idx}>
                                                         <span>{elt}</span>
                                                         {idx !== arr.length - 1 && (
                                                             <SMatchString>{searchQuery}</SMatchString>
                                                         )}
-                                                    </>
+                                                    </div>
                                                 );
                                             })}
                                             {index === 0 && exactMatches.length > 1 && !displayMoreAttributes && (

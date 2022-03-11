@@ -1,6 +1,6 @@
 import { format, isValid, parseISO } from 'date-fns';
 import React from 'react';
-import { EntityType } from 'shared';
+import { DataTypeMapping, EntityType } from 'shared';
 import styled from 'styled-components';
 import Tags from '../../../../components/Entity/Tags';
 import UserProfile from '../../../../components/Entity/UserProfile';
@@ -67,6 +67,10 @@ const SBasicFieldsContainer = styled.div`
 interface DetailsProps {
     entity: EntityType;
 }
+
+const isEmptyObject = (elt) => {
+    return typeof elt === 'object' ? Object.keys(elt).length === 0 : false;
+};
 
 const Details = ({ entity }: DetailsProps) => {
     const reservedKeys = ['creationTime', 'lastModificationTime', 'owners', 'stewards', 'logicalParentData'];
@@ -159,6 +163,19 @@ const Details = ({ entity }: DetailsProps) => {
                         chrome.i18n.getMessage(`preview_empty_field_3`)
                     )}
                 </Details.SubInfo>
+                {entity.dataType && entity.dataType === DataTypeMapping.Usage && (
+                    <>
+                        <Details.Separator />
+                        <Details.SubInfo title="">
+                            {(
+                                <SLinkContainer>
+                                    <Glyph icon="Link" />
+                                    <SLink href={`${entity.objectUrl}`}>{entity.objectUrl}</SLink>
+                                </SLinkContainer>
+                            ) || chrome.i18n.getMessage(`preview_empty_field_4`)}
+                        </Details.SubInfo>
+                    </>
+                )}
             </SBasicFieldsContainer>
             <Accordion
                 header={<STitle>{chrome.i18n.getMessage(`entity_details_sections_general`)}</STitle>}
@@ -168,6 +185,7 @@ const Details = ({ entity }: DetailsProps) => {
                     (key) =>
                         rest[key] &&
                         !rest[key].trend &&
+                        !isEmptyObject(rest[key]) &&
                         reservedKeys.indexOf(key) === -1 && (
                             <>
                                 <Details.SubInfo title={computeTitle(rest, key)}>
