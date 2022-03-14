@@ -1021,8 +1021,8 @@
     "linkShortcutDomainIds": {
         "message": "Domain"
     },
-    "showMore": {
-        "message": "Show more"
+    "moreDetails": {
+        "message": "More details"
     },
     "entity_type_BusinessTerm": {
         "message": "Term"

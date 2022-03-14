@@ -135,7 +135,7 @@ const SDisplayMoreAttributesButton = styled.button`
     box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
 `;
 
-const SArrowDrop = styled.img`
+const SDrop = styled.img`
     width: 10px;
     height: 10px;
 
@@ -244,7 +244,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                                                     type="button"
                                                 >
                                                     {`+ ${exactMatches.length - 1 >= 2 ? 2 : exactMatches.length - 1}`}
-                                                    <SArrowDrop alt="Arrow icon" src={ArrowDrop} arrowDropDown />
+                                                    <SDrop alt="Arrow icon" src={ArrowDrop} arrowDropDown />
                                                 </SDisplayMoreAttributesButton>
                                             )}
                                             {index === array.length - 1 &&
@@ -257,11 +257,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                                                         }}
                                                         type="button"
                                                     >
-                                                        <SArrowDrop
-                                                            alt="Arrow icon"
-                                                            arrowDropDown={false}
-                                                            src={ArrowDrop}
-                                                        />
+                                                        <SDrop alt="Arrow icon" arrowDropDown={false} src={ArrowDrop} />
                                                     </SDisplayMoreAttributesButton>
                                                 )}
                                         </SAttributeContainer>

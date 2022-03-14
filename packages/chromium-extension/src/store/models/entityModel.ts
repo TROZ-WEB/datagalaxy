@@ -3,6 +3,7 @@ import {
     fetchEntity as fetchEntityAPI,
     fetchLinkedObjects as fetchLinkedObjectsAPI,
     fetchChildrenObjects as fetchChildrenObjectsAPI,
+    fetchScreenConfiguration as fetchScreenConfigurationAPI,
     EntityType,
     LinkedObjectsType,
     getUserByEmail,
@@ -10,6 +11,7 @@ import {
     getAttributes,
     ReverseDataTypeMapping,
     AttributeDefinitionType,
+    ScreenConfiguration,
 } from 'shared';
 import { enhancedEntitiesWithUserInfo, resetModel } from './helper';
 
@@ -22,6 +24,7 @@ const initialState = {
     displayedEntity: null,
     linkedObjects: null,
     childrenObjects: null,
+    screenConfiguration: null,
 };
 
 export interface EntityModel {
@@ -30,6 +33,7 @@ export interface EntityModel {
     displayedEntity: EntityType;
     linkedObjects: LinkedObjectsType;
     childrenObjects: EntityType[];
+    screenConfiguration: ScreenConfiguration;
     /* Actions */
     resetModel: Action<EntityModel>;
     updateIsLoaded: Action<EntityModel, boolean>;
@@ -37,11 +41,13 @@ export interface EntityModel {
     updateLinkedObjects: Action<EntityModel, LinkedObjectsType>;
     updateChildrenObjects: Action<EntityModel, EntityType[]>;
     updateGrandChildrenObjects: Action<EntityType, { parentId: string; childrenObjects: EntityType[] }>;
+    updateScreenConfiguration: Action<EntityModel, ScreenConfiguration>;
     /* Thunks */
     fetchEntity: Thunk<EntityModel, string>;
     fetchLinkedObjects: Thunk<EntityModel, FetchLinkedObjectsParams>;
     fetchChildrenObjects: Thunk<EntityModel, FetchChildrenObjectsParams>;
     fetchGrandChildrenObjects: Thunk<EntityModel, FetchChildrenObjectsParams>;
+    fetchScreenConfiguration: Thunk<EntityModel, FetchScreenConfigurationParams>;
 }
 
 interface FetchLinkedObjectsParams {
@@ -58,6 +64,12 @@ interface FetchChildrenObjectsParams {
     versionId: string;
 }
 
+interface FetchScreenConfigurationParams {
+    dataType: string;
+    versionId: string;
+    type: string;
+}
+
 const validateEmail = (email) => {
     return String(email)
         .toLowerCase()
@@ -69,7 +81,6 @@ const validateEmail = (email) => {
 /**
  * Thunks
  */
-
 const fetchEntity = thunk(async (actions: Actions<EntityModel>, location: string, { getStoreState }) => {
     try {
         const url = (getStoreState() as any).auth.pubapi;
@@ -169,6 +180,19 @@ const fetchGrandChildrenObjects = thunk(
     },
 );
 
+const fetchScreenConfiguration = thunk(
+    async (actions: Actions<EntityModel>, payload: FetchScreenConfigurationParams, { getStoreState }) => {
+        const { dataType, versionId, type } = payload;
+        try {
+            const url = (getStoreState() as any).auth.pubapi;
+            const screenConfiguration = await fetchScreenConfigurationAPI(url, dataType, versionId);
+            actions.updateScreenConfiguration(screenConfiguration.filter((sc) => sc.type === type)[0]);
+        } catch (err) {
+            console.error('error : ', err);
+        }
+    },
+);
+
 /**
  * Entity Model Instance
  */
@@ -195,11 +219,15 @@ const entityModel = async (): Promise<EntityModel> => {
             const { parentId, childrenObjects } = payload;
             state.childrenObjects.find((entity) => entity && entity.id === parentId).childrenObjects = childrenObjects;
         }),
+        updateScreenConfiguration: action((state, payload: any) => {
+            state.screenConfiguration = payload;
+        }),
         /* Thunks */
         fetchEntity,
         fetchLinkedObjects,
         fetchChildrenObjects,
         fetchGrandChildrenObjects,
+        fetchScreenConfiguration,
     };
 };
 

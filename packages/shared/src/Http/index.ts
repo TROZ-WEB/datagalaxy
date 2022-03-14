@@ -18,17 +18,18 @@ export async function http<T>(request: Request): Promise<HttpResponse<T>> {
     response.parsedBody = await response.json();
 
     // Trigger custom error for unauthorized error (accessToken no more valid)
-    if (response.status === 401) {
-        clonedRequest.headers.set('authorization', `Bearer ${await AccessToken.getInstance().refreshAccessToken()}`);
-        const clonedResponse: HttpResponse<T> = await fetch(request);
-
-        clonedResponse.parsedBody = await clonedResponse.json();
-
-        if (!clonedResponse.ok) {
-            throw new Error(clonedResponse.statusText);
+    if (!response.ok) {
+        if (response.status === 401) {
+            const newToken = await AccessToken.getInstance().refreshAccessToken();
+            clonedRequest.headers.set('authorization', `Bearer ${newToken}`);
+            const clonedResponse: HttpResponse<T> = await fetch(request);
+            clonedResponse.parsedBody = await clonedResponse.json();
+            if (!clonedResponse.ok) {
+                throw new Error(clonedResponse.statusText);
+            }
+        } else {
+            throw new Error(response.statusText);
         }
-    } else {
-        throw new Error(response.statusText);
     }
 
     return response;

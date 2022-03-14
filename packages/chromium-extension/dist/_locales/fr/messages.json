@@ -1024,6 +1024,9 @@
     "showMore": {
         "message": "Voir plus"
     },
+    "moreDetails": {
+        "message": "Plus de détails"
+    },
     "Universe": {
         "message": "Univers"
     },

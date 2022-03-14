@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Switch, Route, useParams } from 'react-router-dom';
-import { EntityType } from 'shared';
+import { EntityType, ReverseDataTypeMapping } from 'shared';
 import styled from 'styled-components';
 import VerticalMenu from '../../components/Entity/VerticalMenu';
 import LoadingScreen from '../../components/LoadingScreen';
 import EntityHeader from '../../components/ui/EntityHeader';
-import { useStoreDispatch, useStoreState, useStoreActions } from '../../store/hooks';
+import { useStoreDispatch, useStoreState } from '../../store/hooks';
 import ChildrenObjects from './ChildrenObjects';
 import LinkedObjects from './LinkedObjects';
 import Details from './pages/Details';
@@ -36,29 +36,29 @@ const EntityPage = () => {
     const dataType = location.split('/')[0];
 
     const fullyLoadedEntity = useStoreState((state) => state.entity.displayedEntity);
-    const isLoaded = useStoreState((state) => state.entity.isLoaded);
-    const { updateIsLoaded } = useStoreActions((actions) => actions.entity);
+    const screenConfiguration = useStoreState((state) => state.entity.screenConfiguration);
 
     const [entity, setEntity] = useState<EntityType>();
 
     useEffect(() => {
-        const fetchEntity = async () => {
-            await dispatch.entity.fetchEntity(location);
-        };
-
-        fetchEntity().then(() => updateIsLoaded(true));
+        dispatch.entity.fetchEntity(location);
     }, [dispatch, location]);
 
     useEffect(() => {
         if (fullyLoadedEntity) {
             setEntity({ ...fullyLoadedEntity, dataType, location });
+            dispatch.entity.fetchScreenConfiguration({
+                dataType: ReverseDataTypeMapping[dataType].toLowerCase(),
+                versionId: fullyLoadedEntity.versionId,
+                type: fullyLoadedEntity.type,
+            });
         }
     }, [fullyLoadedEntity]);
 
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
-            {isLoaded && entity && entity.type ? (
+            {entity && entity.type ? (
                 <>
                     <EntityHeader entity={entity} id={`entityHeader${entity.id}`} alwaysExpanded entityPage />
                     <SContainer>
@@ -69,7 +69,7 @@ const EntityPage = () => {
                                     To implements
                                 </Route> */}
                                 <Route path={`/app/entities/${URLLocation}/`} exact>
-                                    <Details entity={entity} />
+                                    <Details entity={entity} screenConfiguration={screenConfiguration} />
                                 </Route>
                                 <Route path={`/app/entities/${URLLocation}/linked-objects`} exact>
                                     <LinkedObjects entity={entity} />
