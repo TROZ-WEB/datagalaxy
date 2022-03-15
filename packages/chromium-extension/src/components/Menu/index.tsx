@@ -108,7 +108,7 @@ const Menu = () => {
     const history = useHistory();
     const { updateIsLoaded } = useStoreActions((actions) => actions.entity);
 
-    const { dgapi: url, user } = useStoreState((state) => state.auth);
+    const { user } = useStoreState((state) => state.auth);
 
     const canGoBack = !isHistoryRoot(history);
 
@@ -138,9 +138,7 @@ const Menu = () => {
     return (
         <SRoot>
             <SFlex>
-                <a href={url} rel="noreferrer" target="_blank">
-                    <SLogo alt="Datagalaxy logo" src={WhiteLogo} />
-                </a>
+                <SLogo alt="Datagalaxy logo" src={WhiteLogo} />
                 {canGoBack && (
                     <SBackButton
                         id="backButton"
