@@ -46,7 +46,7 @@ const VerticalMenu: FC<VerticalMenuProps> = ({ entity, URLLocation }) => {
                 variant={path === 'children-objects' && 'active'}
             />
             <VerticalMenuButton
-                badgeCount={100}
+                badgeCount={entity?.linkedObjectsCount}
                 icon="Mapping"
                 id="infoButton3"
                 onClick={() => history.replace(`/app/entities/${URLLocation}/linked-objects`)}

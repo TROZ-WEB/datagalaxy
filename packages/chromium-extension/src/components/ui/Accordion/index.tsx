@@ -54,9 +54,7 @@ const SHeader = styled.div`
     font-size: 14px;
     border: none;
     background: none;
-    padding: 12px 0;
     cursor: pointer;
-    border-bottom: 1px solid rgba(0, 76, 255, 0.08);
     font-family: 'Montserrat', sans-serif;
 
     ${(props) =>

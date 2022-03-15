@@ -8,3 +8,4 @@ export * from './Tags';
 export * from './LinkedObjects';
 export * from './ChildrenObjects';
 export * from './QuickFilters';
+export * from './ScreenConfiguration';

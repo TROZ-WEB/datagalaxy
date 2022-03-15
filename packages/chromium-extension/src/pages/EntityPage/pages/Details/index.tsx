@@ -1,12 +1,15 @@
 import { format, isValid, parseISO } from 'date-fns';
-import React from 'react';
-import { DataTypeMapping, EntityType } from 'shared';
-import styled from 'styled-components';
+import { enGB, enUS, fr } from 'date-fns/locale';
+
+import React, { useState } from 'react';
+import { DataTypeMapping, EntityType, ScreenConfiguration } from 'shared';
+import styled, { css } from 'styled-components';
 import Tags from '../../../../components/Entity/Tags';
 import UserProfile from '../../../../components/Entity/UserProfile';
 import Accordion from '../../../../components/ui/Accordion';
 import DomainCard from '../../../../components/ui/DomainCard';
 import Glyph from '../../../../components/ui/Glyph';
+import ArrowDrop from '../../../../../assets/icons/arrow-drop-up.svg';
 
 /* ---------- STYLES ---------- */
 
@@ -21,12 +24,13 @@ const SSubInfoContent = styled.div`
     line-height: 1.5;
     flex-wrap: wrap;
     display: flex;
+    word-break: break-word;
 `;
 
 const SSubInfoTitle = styled.span`
     font-size: 10px;
-    font-weight: 600;
-    color: #1035b1;
+    font-weight: 700;
+    color: #989cd9;
     margin-bottom: 4px;
 `;
 
@@ -58,8 +62,20 @@ const SBasicFieldsContainer = styled.div`
     flex-direction: column;
     box-shadow: 0px 0px 14px rgba(16, 53, 177, 0.12);
     border-radius: 6px;
-    padding: 20px;
+    padding: 10px 20px 10px 20px;
     margin-top: 20px;
+    margin-bottom: 20px;
+`;
+
+const SFieldsContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 14px rgba(16, 53, 177, 0.12);
+    border-radius: 6px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 `;
 
 const SPreviewEmptyField = styled.div`
@@ -67,153 +83,224 @@ const SPreviewEmptyField = styled.div`
     font-style: italic;
 `;
 
+const SDisplayMoreDetailsButton = styled.button`
+    justify-content: center;
+    border: none;
+    border-radius: 8px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-size: 10px;
+    background: transparent;
+    color: #1035b1;
+    min-width: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 0;
+`;
+
+const SDrop = styled.img`
+    width: 10px;
+    height: 10px;
+
+    ${(props) =>
+        props.arrowDropDown &&
+        css`
+            transform: rotate(180deg);
+        `}
+`;
+
+const SDisplayMoreButtonContainer = styled.div`
+    position: relative;
+    height: 15px;
+`;
+
 /* ---------- COMPONENT ---------- */
 
 interface DetailsProps {
     entity: EntityType;
+    screenConfiguration: ScreenConfiguration;
 }
 
 const isEmptyObject = (elt) => {
     return typeof elt === 'object' ? Object.keys(elt).length === 0 : false;
 };
 
-const Details = ({ entity }: DetailsProps) => {
-    const reservedKeys = ['creationTime', 'lastModificationTime', 'owners', 'stewards', 'logicalParentData'];
+const computeData = (data: any) => {
+    if (data === true) {
+        return chrome.i18n.getMessage(`entity_details_data_boolean_1`);
+    }
+    if (data === false) {
+        return chrome.i18n.getMessage(`entity_details_data_boolean_2`);
+    }
+    if (data.name && data.url) {
+        return (
+            <SLinkContainer>
+                <Glyph icon="Link" />
+                <SLink
+                    href={`${data.url}${
+                        data.url.indexOf('?') !== -1 ? '&openDatagalaxy=true' : '?openDatagalaxy=true'
+                    }`}
+                >
+                    {data.name}
+                </SLink>
+            </SLinkContainer>
+        );
+    }
+
+    if (isValid(parseISO(data))) {
+        switch (chrome.runtime.getManifest().current_locale) {
+            case 'en-US':
+                return format(parseISO(data), 'MMM d, yyyy', { locale: enUS });
+            case 'fr':
+                return format(parseISO(data), 'dd MMM yyyy', { locale: fr });
+            default:
+                return format(parseISO(data), 'dd MMM yyyy', { locale: enGB });
+        }
+    }
+
+    if (Array.isArray(data)) {
+        return data?.map((d) => {
+            if (!d) {
+                return '';
+            }
+
+            if (d.label) {
+                return (
+                    <Tags.Item
+                        key={d + Math.random()}
+                        color={d.color}
+                        hideLabel={false}
+                        tag={d.description || d.label}
+                    />
+                );
+            }
+
+            if (d.type) {
+                return <DomainCard entity={d} />;
+            }
+
+            if (d?.userId) {
+                return <UserProfile user={d} />;
+            }
+
+            return <Tags.Item key={d + Math.random()} hideLabel={false} tag={d} />;
+        });
+    }
+
+    if (typeof data === 'number') {
+        return data.toLocaleString(chrome.runtime.getManifest().current_locale);
+    }
+
+    return data.toString();
+};
+
+const computeTitle = (r: any, key: string) => {
+    return chrome.i18n.getMessage(`attribute_key_${key}`) || r[key].name || key;
+};
+
+const Details = ({ entity, screenConfiguration }: DetailsProps) => {
+    const reservedKeys = ['creationTime', 'lastModificationTime', 'logicalParentData'];
     /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-    const { description, tags, summary, owners, stewards, status, externalUrl, ...rest } = entity.attributes;
+    const { description, tags, summary, status, externalUrl, ...rest } = entity.attributes;
 
-    const computeData = (data: any) => {
-        if (data === true) {
-            return chrome.i18n.getMessage(`entity_details_data_boolean_1`);
-        }
-        if (data === false) {
-            return chrome.i18n.getMessage(`entity_details_data_boolean_2`);
-        }
-        if (data.name && data.url) {
-            return (
-                <SLinkContainer>
-                    <Glyph icon="Link" />
-                    <SLink
-                        href={`${data.url}${
-                            data.url.indexOf('?') !== -1 ? '&openDatagalaxy=true' : '?openDatagalaxy=true'
-                        }`}
-                    >
-                        {data.name}
-                    </SLink>
-                </SLinkContainer>
-            );
-        }
-
-        if (isValid(parseISO(data))) {
-            return format(parseISO(data), 'dd/MM/yyyy');
-        }
-
-        if (Array.isArray(data)) {
-            return data?.map((d) => {
-                if (!d) {
-                    return '';
-                }
-
-                if (d.label) {
-                    return (
-                        <Tags.Item
-                            key={d + Math.random()}
-                            color={d.color}
-                            hideLabel={false}
-                            tag={d.description || d.label}
-                        />
-                    );
-                }
-
-                if (d.type) {
-                    return <DomainCard entity={d} />;
-                }
-
-                if (d?.userId) {
-                    return <UserProfile user={d} />;
-                }
-
-                return <Tags.Item key={d + Math.random()} hideLabel={false} tag={d} />;
-            });
-        }
-
-        if (typeof data === 'number') {
-            return data.toLocaleString(chrome.runtime.getManifest().current_locale);
-        }
-
-        return data.toString();
-    };
-
-    const computeTitle = (r: any, key: string) => {
-        console.info('KEY IS :');
-        console.info(key);
-
-        return chrome.i18n.getMessage(`attribute_key_${key}`) || r[key].name || key;
-    };
+    const [displayMoreDetails, setDisplayMoreDetails] = useState(false);
 
     return (
+        // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
-            <SBasicFieldsContainer>
-                <Details.SubInfo title="">
-                    {summary || (
-                        <SPreviewEmptyField>{chrome.i18n.getMessage(`preview_empty_field_1`)}</SPreviewEmptyField>
-                    )}
-                </Details.SubInfo>
-                <Details.Separator />
-                <Details.SubInfo title="">
-                    {description || (
-                        <SPreviewEmptyField>{chrome.i18n.getMessage(`preview_empty_field_2`)}</SPreviewEmptyField>
-                    )}
-                </Details.SubInfo>
-                <Details.Separator />
-                <Details.SubInfo title="">
-                    {tags.length !== 0 ? (
-                        <Tags>
-                            {tags?.map((tag) => (
-                                <Tags.Item key={tag} tag={tag} />
-                            ))}
-                        </Tags>
-                    ) : (
-                        <SPreviewEmptyField>{chrome.i18n.getMessage(`preview_empty_field_3`)}</SPreviewEmptyField>
-                    )}
-                </Details.SubInfo>
-                {entity.dataType && entity.dataType === DataTypeMapping.Usage && externalUrl.url && (
-                    <>
-                        <Details.Separator />
+            {entity && screenConfiguration && (
+                <>
+                    <SBasicFieldsContainer>
                         <Details.SubInfo title="">
-                            {(
-                                <SLinkContainer>
-                                    <Glyph icon="Link" />
-                                    <SLink href={`${externalUrl.url}`}>{externalUrl.name}</SLink>
-                                </SLinkContainer>
-                            ) || (
+                            {summary || (
                                 <SPreviewEmptyField>
-                                    {chrome.i18n.getMessage(`preview_empty_field_4`)}
+                                    {chrome.i18n.getMessage(`preview_empty_field_1`)}
                                 </SPreviewEmptyField>
                             )}
                         </Details.SubInfo>
-                    </>
-                )}
-            </SBasicFieldsContainer>
-            <Accordion
-                header={<STitle>{chrome.i18n.getMessage(`entity_details_sections_general`)}</STitle>}
-                initialOpen
-            >
-                {Object.keys(rest).map(
-                    (key) =>
-                        rest[key] &&
-                        !rest[key].trend &&
-                        !isEmptyObject(rest[key]) &&
-                        reservedKeys.indexOf(key) === -1 && (
+                        <Details.Separator />
+                        <Details.SubInfo title="">
+                            {description || (
+                                <SPreviewEmptyField>
+                                    {chrome.i18n.getMessage(`preview_empty_field_2`)}
+                                </SPreviewEmptyField>
+                            )}
+                        </Details.SubInfo>
+                        <Details.Separator />
+                        <Details.SubInfo title="">
+                            {tags.length !== 0 ? (
+                                <Tags>
+                                    {tags?.map((tag) => (
+                                        <Tags.Item key={tag} tag={tag} />
+                                    ))}
+                                </Tags>
+                            ) : (
+                                <SPreviewEmptyField>
+                                    {chrome.i18n.getMessage(`preview_empty_field_3`)}
+                                </SPreviewEmptyField>
+                            )}
+                        </Details.SubInfo>
+                        {entity.dataType && entity.dataType === DataTypeMapping.Usage && externalUrl?.url && (
                             <>
-                                <Details.SubInfo title={computeTitle(rest, key)}>
-                                    {computeData(rest[key])}
-                                </Details.SubInfo>
                                 <Details.Separator />
+                                <Details.SubInfo title="">
+                                    {(
+                                        <SLinkContainer>
+                                            <Glyph icon="Link" />
+                                            <SLink href={`${externalUrl?.url}`}>{externalUrl?.name}</SLink>
+                                        </SLinkContainer>
+                                    ) || (
+                                        <SPreviewEmptyField>
+                                            {chrome.i18n.getMessage(`preview_empty_field_4`)}
+                                        </SPreviewEmptyField>
+                                    )}
+                                </Details.SubInfo>
                             </>
-                        ),
-                )}
-            </Accordion>
+                        )}
+                    </SBasicFieldsContainer>
+                    <SDisplayMoreButtonContainer>
+                        <SDisplayMoreDetailsButton
+                            onClick={() => {
+                                setDisplayMoreDetails(!displayMoreDetails);
+                            }}
+                            type="button"
+                        >
+                            {chrome.i18n.getMessage(`moreDetails`)}
+                            <SDrop alt="Arrow icon" arrowDropDown={displayMoreDetails} src={ArrowDrop} />
+                        </SDisplayMoreDetailsButton>
+                    </SDisplayMoreButtonContainer>
+
+                    {displayMoreDetails &&
+                        screenConfiguration.categories.map((category) => (
+                            <SFieldsContainer>
+                                <Accordion header={<STitle>{category.name}</STitle>} initialOpen>
+                                    {category.attributes.map((attribute) => {
+                                        if (
+                                            rest[attribute.name] &&
+                                            !rest[attribute.name].trend &&
+                                            !isEmptyObject(rest[attribute.name]) &&
+                                            reservedKeys.indexOf(attribute.name) === -1
+                                        ) {
+                                            return (
+                                                <>
+                                                    <Details.SubInfo title={computeTitle(rest, attribute.name)}>
+                                                        {computeData(rest[attribute.name])}
+                                                    </Details.SubInfo>
+                                                    <Details.Separator />
+                                                </>
+                                            );
+                                        }
+
+                                        // eslint-disable-next-line react/jsx-no-useless-fragment
+                                        return <></>;
+                                    })}
+                                </Accordion>
+                            </SFieldsContainer>
+                        ))}
+                </>
+            )}
         </>
     );
 };

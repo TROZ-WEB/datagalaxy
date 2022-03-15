@@ -19,7 +19,6 @@ const SSubEntityWrapper = styled.span`
     background: none;
     padding: 12px 0;
     cursor: pointer;
-    border-bottom: 1px solid rgba(0, 76, 255, 0.08);
     font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;
 `;

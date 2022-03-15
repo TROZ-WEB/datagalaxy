@@ -11,7 +11,7 @@ const SEntityDGGlyphContainer = styled.div`
     width: 18px;
     height: 18px;
     top: 50%;
-    right: 0%;
+    right: 2%;
     transform: translate(50%, -50%);
     box-shadow: 0px 0px 2px 2px rgba(0, 76, 255, 0.08);
     border-radius: 3px;
@@ -32,6 +32,7 @@ const STechnicalLogo = styled.img`
 const SRoot = styled.div`
     width: 44px;
     height: 44px;
+    min-width: 44px;
     background-color: rgba(246, 247, 248, 1);
     border-radius: 3px;
     display: flex;
@@ -46,6 +47,7 @@ const SRoot = styled.div`
         css`
             width: 60px;
             height: 60px;
+            min-width: 60px;
 
             ${SEntityDGGlyphContainer} {
                 width: 24px;

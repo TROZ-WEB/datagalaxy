@@ -5,8 +5,9 @@ import styled from 'styled-components';
 
 const SRoot = styled.div`
     height: 20px;
-    border: 1px solid rgba(2, 42, 142, 0.1);
     margin: 0 8px;
+    width: 1px;
+    background: rgba(2, 42, 142, 0.1);
 `;
 
 /* ---------- COMPONENT ---------- */
