@@ -2,6 +2,7 @@ import React, { useEffect, FC, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { DataTypeMapping, EntityType } from 'shared';
 import styled from 'styled-components';
+import HorizontalSeparator from '../../../components/HorizontalSeparator';
 import LoadingScreen from '../../../components/LoadingScreen';
 import Accordion from '../../../components/ui/Accordion';
 import EntityHeader from '../../../components/ui/EntityHeader';
@@ -10,10 +11,16 @@ import { useStoreDispatch, useStoreState, useStoreActions } from '../../../store
 
 /* ---------- STYLES ---------- */
 
+const SRoot = styled.div`
+    margin-top: 15px;
+`;
+
 const SEntityWrapper = styled.span`
     width: 100%;
     display: flex;
     align-items: center;
+    padding-bottom: 6px;
+    padding-top: 6px;
 `;
 
 const SSpinnerWrapper = styled.div`
@@ -33,9 +40,8 @@ const SSubEntityWrapper = styled.span`
     font-size: 14px;
     border: none;
     background: none;
-    padding: 12px 0 12px 48px;
+    padding: 6px 0 6px 48px;
     cursor: pointer;
-    border-bottom: 1px solid rgba(0, 76, 255, 0.08);
     font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;
 `;
@@ -102,42 +108,52 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
 
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
-        <>
+        <SRoot>
             {isChildrenLoaded ? (
                 childrenObjects?.map((childrenEntity) => (
-                    <Accordion
-                        key={childrenEntity.id}
-                        disabled={childrenEntity.childrenCount === 0}
-                        header={
-                            <SEntityWrapper onClick={() => handleClick(childrenEntity)}>
-                                <EntityHeader entity={childrenEntity} id={`entityHeader${childrenEntity.id}`} />
-                            </SEntityWrapper>
-                        }
-                        openButtonPosition="left"
-                    >
-                        {childrenEntity?.childrenObjects?.length > 0 ? (
-                            childrenEntity?.childrenObjects?.map((grandChildrenEntity) => (
-                                <SSubEntityWrapper
-                                    key={grandChildrenEntity.id}
-                                    onClick={() => handleClick(grandChildrenEntity)}
-                                >
+                    <>
+                        <Accordion
+                            key={childrenEntity.id}
+                            disabled={childrenEntity.childrenCount === 0}
+                            header={
+                                <SEntityWrapper onClick={() => handleClick(childrenEntity)}>
                                     <EntityHeader
-                                        entity={grandChildrenEntity}
-                                        id={`entityHeader${grandChildrenEntity.id}`}
+                                        displayPath={false}
+                                        entity={childrenEntity}
+                                        id={`entityHeader${childrenEntity.id}`}
                                     />
-                                </SSubEntityWrapper>
-                            ))
-                        ) : (
-                            <SSpinnerWrapper>
-                                <Spinner />
-                            </SSpinnerWrapper>
-                        )}
-                    </Accordion>
+                                </SEntityWrapper>
+                            }
+                            openButtonPosition="left"
+                        >
+                            {childrenEntity?.childrenObjects?.length > 0 ? (
+                                childrenEntity?.childrenObjects?.map((grandChildrenEntity) => (
+                                    <>
+                                        <HorizontalSeparator />
+                                        <SSubEntityWrapper
+                                            key={grandChildrenEntity.id}
+                                            onClick={() => handleClick(grandChildrenEntity)}
+                                        >
+                                            <EntityHeader
+                                                entity={grandChildrenEntity}
+                                                id={`entityHeader${grandChildrenEntity.id}`}
+                                            />
+                                        </SSubEntityWrapper>
+                                    </>
+                                ))
+                            ) : (
+                                <SSpinnerWrapper>
+                                    <Spinner />
+                                </SSpinnerWrapper>
+                            )}
+                        </Accordion>
+                        <HorizontalSeparator />
+                    </>
                 ))
             ) : (
                 <LoadingScreen />
             )}
-        </>
+        </SRoot>
     );
 };
 

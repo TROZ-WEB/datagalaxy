@@ -40,7 +40,7 @@ const SEntityName = styled.span`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 75%;
+    max-width: 180px;
 `;
 
 const SEntityNameMoreActionsIcon = styled.a`
@@ -63,6 +63,7 @@ const SWrappedContainer = styled.div`
 `;
 
 const SRoot = styled.div`
+    width: 100%;
     display: flex;
     flex-direction: column;
     color: #001030;
@@ -70,14 +71,6 @@ const SRoot = styled.div`
     transition: max-height 0.15s ease-out;
     position: relative;
     z-index: 15;
-    height: 64px;
-
-    ${(props) =>
-        props.cardExpanded &&
-        css`
-            height: fit-content;
-            transition: max-height 0.5s ease-in;
-        `}
 
     ${(props) =>
         props.cursorPointer &&
@@ -85,7 +78,7 @@ const SRoot = styled.div`
             cursor: pointer;
         `}
 
-        ${(props) =>
+    ${(props) =>
         props.entityPage &&
         css`
             padding: 18px 18px 14px 18px;
@@ -163,6 +156,7 @@ interface EntityHeaderProps {
     onClick?: () => void;
     exactMatches?: ExactMatch[];
     searchQuery?: string;
+    displayPath?: boolean;
 }
 
 const EntityHeader: FC<EntityHeaderProps> = ({
@@ -173,6 +167,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
     onClick,
     exactMatches,
     searchQuery,
+    displayPath = true,
 }) => {
     const [isCardExpanded, setIsCardExpanded] = useState(alwaysExpanded);
     const [isMoreActionShown, setIsMoreActionsShown] = useState(false);
@@ -183,11 +178,14 @@ const EntityHeader: FC<EntityHeaderProps> = ({
     const [entityPathAsString, setEntityPathAsString] = useState();
 
     useEffect(() => {
-        const pathAsString = entity?.path?.trim().split('\\').slice(0, -1).filter(Boolean);
-        if (!entityPage) {
-            pathAsString.shift(); // remove workspace part
+        if (entity) {
+            const pathAsString = entity.path.trim().split('\\').slice(0, -1).filter(Boolean);
+            if (!entityPage) {
+                pathAsString.shift(); // remove workspace part
+            }
+
+            setEntityPathAsString(pathAsString);
         }
-        setEntityPathAsString(pathAsString);
     }, [entity]);
 
     return (
@@ -210,7 +208,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                         <EntityImage entity={entity} entityPage={entityPage} />
 
                         <SRightSide>
-                            {!isRootEntity && (
+                            {!isRootEntity && displayPath && (
                                 <SBreadcrumbWrapper>
                                     <Breadcrumb path={entityPathAsString} />
                                 </SBreadcrumbWrapper>
