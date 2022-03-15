@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import RoundButton from '../../ui/RoundButton';
 import Title from '../../ui/Title';
 import FilterModal from './FilterModal';
-
+import OwnersModal from './Modals/OwnersModal';
+import TechnologiesModal from './Modals/TechnologiesModal';
+import WorkspacesModal from './Modals/WorkspacesModal';
 /* ---------- STYLES ---------- */
 
 const SFiltersContainer = styled.div`
@@ -49,14 +51,19 @@ const FiltersModal = () => {
                 <SModal>
                     <STitle>{chrome.i18n.getMessage(`filter_by`)}</STitle>
                     <SFiltersContainer>
-                        <FilterModal label="type" />
-                        <FilterModal label="type" />
-                        <FilterModal label="type" />
-                        <FilterModal label="type" />
-                        <FilterModal label="type" />
-                        <FilterModal label="type" />
-                        <FilterModal label="type" />
-                        <FilterModal label="type" />
+                        <WorkspacesModal />
+                        <TechnologiesModal />
+                        <FilterModal fields={[]} label={chrome.i18n.getMessage(`attribute_key_Module`)} multiselect />
+                        <FilterModal
+                            fields={[]}
+                            label={chrome.i18n.getMessage(`attribute_key_EntityType`)}
+                            multiselect
+                        />
+                        <FilterModal fields={[]} label={chrome.i18n.getMessage(`attribute_key_Tags`)} multiselect />
+                        <OwnersModal />
+                        <FilterModal fields={[]} label={chrome.i18n.getMessage(`entity_steward`)} multiselect />
+                        <FilterModal fields={[]} label={chrome.i18n.getMessage(`attribute_key_EntityStatus`)} />
+                        <FilterModal fields={[]} label={chrome.i18n.getMessage(`attribute_key_LastModified`)} />
                     </SFiltersContainer>
                 </SModal>
             )}

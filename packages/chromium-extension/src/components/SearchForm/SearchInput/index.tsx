@@ -2,10 +2,11 @@ import React, { ComponentPropsWithRef, forwardRef, ReactElement } from 'react';
 import styled from 'styled-components';
 import Refresh from '../../../icons/Refresh';
 import Search from '../../../icons/Search';
-import { useStoreState } from '../../../store/hooks';
+import { useStoreState, useStoreActions } from '../../../store/hooks';
 import Glyph from '../../ui/Glyph';
 import FiltersModal from './FiltersModal';
-import QuickFilterTag from './QuickFilterTag';
+import FilterTag from './FilterTag';
+
 /* ---------- STYLES ---------- */
 
 const SClearButton = styled.button`
@@ -105,7 +106,7 @@ const SSearchInputContainer = styled.div`
     transition: 150ms;
 `;
 
-const SQuickFilterTagsContainer = styled.div`
+const SFilterTagsContainer = styled.div`
     display: flex;
     width: 100%;
     flex-wrap: wrap;
@@ -136,19 +137,43 @@ const SearchInput = forwardRef<HTMLInputElement, IProps>(
             rightElement = <Search />;
         }
 
-        const pickedQuickFilters = useStoreState((state) => state.quickFilters.pickedQuickFilters);
+        const pickedFilters = useStoreState((state) => state.filters.pickedFilters);
+        const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
+
+        const handleDeleteFilter = (filter) => {
+            const payload = pickedFilters.filter((item) => item !== filter);
+            updatePickedFilters(payload);
+        };
+
+        const versionId = useStoreState((state) => state.filters.versionId);
+        const { updateVersionId } = useStoreActions((actions) => actions.filters);
+
+        const handleDeleteVersion = () => {
+            updateVersionId(null);
+        };
 
         return (
             <SRoot>
-                <SQuickFilterTagsContainer>
-                    {pickedQuickFilters?.map(({ filter }) => (
-                        <QuickFilterTag
+                <SFilterTagsContainer>
+                    {versionId && (
+                        <FilterTag
+                            key={versionId}
                             icon="Table"
                             kind="dictionary"
-                            value={filter?.values?.length === 1 && filter?.values?.[0]}
+                            onClick={() => handleDeleteVersion()}
+                            value="Version"
+                        />
+                    )}
+                    {pickedFilters?.map((filter) => (
+                        <FilterTag
+                            key={filter?.values?.[0]}
+                            icon="Table"
+                            kind="dictionary"
+                            onClick={() => handleDeleteFilter(filter)}
+                            value={filter?.values?.[0] || 'test'}
                         />
                     ))}
-                </SQuickFilterTagsContainer>
+                </SFilterTagsContainer>
 
                 <SSearchInputContainer>
                     <SLeft>

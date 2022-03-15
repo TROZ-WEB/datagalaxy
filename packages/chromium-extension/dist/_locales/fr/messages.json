@@ -388,6 +388,9 @@
     "attribute_key_DisplayName": {
         "message": "Libellé fonctionnel"
     },
+    "attribute_key_Workspace": {
+        "message": "Espace de travail"
+    },
     "attribute_key_Name": {
         "message": "Nom"
     },
@@ -1185,5 +1188,20 @@
     },
     "preview_empty_field_4": {
         "message": "Aucun lien disponible."
+    },
+    "intersection_or": {
+        "message": "Ou"
+    },
+    "intersection_and": {
+        "message": "Et"
+    },
+    "form_send": {
+        "message": "Valider"
+    },
+    "no_quick_filters": {
+        "message": "Aucun Filtre Rapide n’est disponible pour cette recherche"
+    },
+    "no_filters": {
+        "message": "Aucun filtre n’est disponible pour cette recherche"
     }
 }

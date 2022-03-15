@@ -1,5 +1,5 @@
 import { Action, Thunk, Actions, thunk, action } from 'easy-peasy';
-import { search as searchAPI, EntityType, SearchResponse, TechnologyType } from 'shared';
+import { search as searchAPI, EntityType, SearchResponse, TechnologyType, Filter } from 'shared';
 import { enhancedEntitiesWithTechnologiesInfo, enhancedEntitiesWithUserInfo, resetModel } from './helper';
 
 const EMPTY_ARGS = {
@@ -18,6 +18,8 @@ const EMPTY_RESPONSE: SearchResponse = {
 interface SearchedArgs {
     term?: string;
     technologies: TechnologyType[];
+    filters?: Filter[];
+    versionId?: string;
     // Will allow to handle more complex search categories...
 }
 
@@ -59,7 +61,7 @@ const search = thunk(async (actions: Actions<SearchModel>, searchedArgs: Searche
         const url = (getStoreState() as any).auth.pubapi;
 
         // First search for results
-        enhancedResults = await searchAPI(url, searchedArgs.term);
+        enhancedResults = await searchAPI(url, searchedArgs.term, searchedArgs.filters, searchedArgs.versionId);
         // Load additional user information about entities
         if (enhancedResults?.result) {
             enhancedResults.result.entities = await enhancedEntitiesWithUserInfo(

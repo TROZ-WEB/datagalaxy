@@ -388,6 +388,9 @@
     "attribute_key_DisplayName": {
         "message": "Functional Label"
     },
+    "attribute_key_Workspace": {
+        "message": "Workspace"
+    },
     "attribute_key_TechnicalName": {
         "message": "Technical Label"
     },
@@ -1185,5 +1188,20 @@
     },
     "preview_empty_field_4": {
         "message": "No URL available."
+    },
+    "intersection_or": {
+        "message": "Or"
+    },
+    "intersection_and": {
+        "message": "And"
+    },
+    "form_send": {
+        "message": "Send"
+    },
+    "no_quick_filters": {
+        "message": "No Quick Filter is available for this search"
+    },
+    "no_filters": {
+        "message": "No filter is available for this search"
     }
 }
