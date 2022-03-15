@@ -43,7 +43,7 @@ const formatText = (formattedPath: any) => {
 
 /* ---------- COMPONENT ---------- */
 
-const Breadcrumb = ({ path }: { path: string }) => {
+const Breadcrumb = ({ path }: { path: string[] }) => {
     const formattedPath = useMemo(() => (path ? formatBreadcrumb(path) : null), [path]);
 
     return (

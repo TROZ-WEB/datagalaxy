@@ -19,7 +19,6 @@ const SRoot = styled.div`
     line-height: 15px;
     font-size: 10px;
     margin-left: 2px;
-    background: #f3f6ff;
     padding: 2px;
     border-radius: 3px;
 `;

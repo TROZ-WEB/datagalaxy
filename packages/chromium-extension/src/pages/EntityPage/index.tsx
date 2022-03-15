@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Switch, Route, useParams } from 'react-router-dom';
-import { EntityType, ReverseDataTypeMapping } from 'shared';
+import { DataTypeMapping, EntityType, ReverseDataTypeMapping } from 'shared';
 import styled from 'styled-components';
 import VerticalMenu from '../../components/Entity/VerticalMenu';
 import LoadingScreen from '../../components/LoadingScreen';
@@ -23,7 +23,7 @@ const SContent = styled.div`
     position: absolute;
     height: 80%;
     width: 100%;
-    padding: 0px 4px 16px 68px;
+    padding: 0px 15px 13px 73px;
     box-sizing: border-box;
 `;
 
@@ -40,6 +40,8 @@ const EntityPage = () => {
 
     const [entity, setEntity] = useState<EntityType>();
 
+    const linkedObjects = useStoreState((state) => state.entity.linkedObjects);
+
     useEffect(() => {
         dispatch.entity.fetchEntity(location);
     }, [dispatch, location]);
@@ -53,7 +55,37 @@ const EntityPage = () => {
                 type: fullyLoadedEntity.type,
             });
         }
+        if (fullyLoadedEntity) {
+            // API WORKAROUND 4 : API does not provide linked objects size.
+            const fetchLinkedObjects = async () => {
+                await dispatch.entity.fetchLinkedObjects({
+                    id: fullyLoadedEntity.id,
+                    dataType,
+                    type: fullyLoadedEntity.type,
+                    name:
+                        dataType === DataTypeMapping.Property // API WORKAROUND 3 : API Ignore technical name for properties, should be fix in a moment
+                            ? fullyLoadedEntity.name
+                            : fullyLoadedEntity.technicalName,
+                    versionId: location.split('/')[1],
+                });
+            };
+
+            fetchLinkedObjects();
+        }
     }, [fullyLoadedEntity]);
+
+    useEffect(() => {
+        if (linkedObjects) {
+            // API WORKAROUND 4 : API does not provide linked objects size.
+            let count = 0;
+            Object.keys(linkedObjects).forEach((key) => {
+                linkedObjects[key].forEach(() => {
+                    count++;
+                });
+            });
+            setEntity({ ...entity, linkedObjectsCount: count });
+        }
+    }, [linkedObjects]);
 
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -65,9 +97,6 @@ const EntityPage = () => {
                         <VerticalMenu URLLocation={URLLocation} entity={entity} />
                         <SContent>
                             <Switch>
-                                {/* <Route path={`/app/entities/${URLLocation}/insights`} exact>
-                                    To implements
-                                </Route> */}
                                 <Route path={`/app/entities/${URLLocation}/`} exact>
                                     <Details entity={entity} screenConfiguration={screenConfiguration} />
                                 </Route>

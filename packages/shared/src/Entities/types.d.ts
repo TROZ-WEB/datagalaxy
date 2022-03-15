@@ -22,6 +22,7 @@ export interface EntityType {
         externalUrl: Link;
     };
     childrenCount: number;
+    linkedObjectsCount: number;
     id: string;
     location: string;
     name: string;

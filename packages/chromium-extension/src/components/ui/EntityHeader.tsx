@@ -1,4 +1,4 @@
-import React, { useState, useMemo, FC } from 'react';
+import React, { useState, useMemo, FC, useEffect } from 'react';
 import { ExactMatch } from 'shared';
 import styled, { css } from 'styled-components';
 import Breadcrumb from '../Breadcrumb';
@@ -28,7 +28,7 @@ const SInfosWrapper = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 5px;
 `;
 
 const SEntityName = styled.span`
@@ -37,6 +37,10 @@ const SEntityName = styled.span`
     text-decoration: none;
     word-break: break-all;
     width: fit-content;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 75%;
 `;
 
 const SEntityNameMoreActionsIcon = styled.a`
@@ -63,16 +67,15 @@ const SRoot = styled.div`
     flex-direction: column;
     color: #001030;
     overflow: hidden;
-    max-height: 58px;
     transition: max-height 0.15s ease-out;
     position: relative;
     z-index: 15;
+    height: 64px;
 
     ${(props) =>
         props.cardExpanded &&
         css`
             height: fit-content;
-            max-height: 330px;
             transition: max-height 0.5s ease-in;
         `}
 
@@ -86,7 +89,7 @@ const SRoot = styled.div`
         props.entityPage &&
         css`
             padding: 18px 18px 14px 18px;
-            box-shadow: 0px 0px 2px 2px rgba(0, 76, 255, 0.08);
+            box-shadow: 0px 0px 14px rgba(16, 53, 177, 0.12);
 
             ${SEntityName} {
                 font-size: 16px;
@@ -177,8 +180,19 @@ const EntityHeader: FC<EntityHeaderProps> = ({
 
     const isRootEntity = useMemo<boolean>(() => entity?.path === `\\${entity?.name}`, [entity]);
 
+    const [entityPathAsString, setEntityPathAsString] = useState();
+
+    useEffect(() => {
+        const pathAsString = entity?.path?.trim().split('\\').slice(0, -1).filter(Boolean);
+        if (!entityPage) {
+            pathAsString.shift(); // remove workspace part
+        }
+        setEntityPathAsString(pathAsString);
+    }, [entity]);
+
     return (
-        <div>
+        // eslint-disable-next-line react/jsx-no-useless-fragment
+        <>
             {entity && (
                 <SRoot
                     cardExpanded={isCardExpanded}
@@ -198,12 +212,13 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                         <SRightSide>
                             {!isRootEntity && (
                                 <SBreadcrumbWrapper>
-                                    <Breadcrumb path={entity.path} />
+                                    <Breadcrumb path={entityPathAsString} />
                                 </SBreadcrumbWrapper>
                             )}
                             <SEntityName
                                 onMouseEnter={() => setIsMoreActionsShown(true)}
                                 onMouseLeave={() => setIsMoreActionsShown(false)}
+                                title={entity.name}
                             >
                                 {entity.name}
                                 {isMoreActionShown && (
@@ -217,8 +232,6 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                             </SEntityName>
                             {exactMatches?.length !== 0 &&
                                 exactMatches?.map((exactMatch, index, array) => {
-                                    const s = exactMatch.value.toLowerCase().split(searchQuery);
-
                                     return (
                                         /* eslint-disable-next-line react/no-array-index-key */
                                         <SAttributeContainer key={index} hidden={index !== 0 && !displayMoreAttributes}>
@@ -229,12 +242,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                                                       )} : `
                                                     : `${exactMatch.attributeKey} : `}
                                             </SAttributeKey>
-                                            {s.map(() => {
-                                                return (
-                                                    /* eslint-disable-next-line react/no-array-index-key */
-                                                    <SMatchString>{searchQuery}</SMatchString>
-                                                );
-                                            })}
+                                            <SMatchString>{searchQuery}</SMatchString>
                                             {index === 0 && exactMatches.length > 1 && !displayMoreAttributes && (
                                                 <SDisplayMoreAttributesButton
                                                     onClick={(e) => {
@@ -294,7 +302,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                     </SWrappedContainer>
                 </SRoot>
             )}
-        </div>
+        </>
     );
 };
 

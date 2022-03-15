@@ -1,4 +1,6 @@
 import { format, isValid, parseISO } from 'date-fns';
+import { enGB, enUS, fr } from 'date-fns/locale';
+
 import React, { useState } from 'react';
 import { DataTypeMapping, EntityType, ScreenConfiguration } from 'shared';
 import styled, { css } from 'styled-components';
@@ -22,6 +24,7 @@ const SSubInfoContent = styled.div`
     line-height: 1.5;
     flex-wrap: wrap;
     display: flex;
+    word-break: break-word;
 `;
 
 const SSubInfoTitle = styled.span`
@@ -59,7 +62,7 @@ const SBasicFieldsContainer = styled.div`
     flex-direction: column;
     box-shadow: 0px 0px 14px rgba(16, 53, 177, 0.12);
     border-radius: 6px;
-    padding: 20px;
+    padding: 10px 20px 10px 20px;
     margin-top: 20px;
     margin-bottom: 20px;
 `;
@@ -147,7 +150,14 @@ const computeData = (data: any) => {
     }
 
     if (isValid(parseISO(data))) {
-        return format(parseISO(data), 'dd/MM/yyyy');
+        switch (chrome.runtime.getManifest().current_locale) {
+            case 'en-US':
+                return format(parseISO(data), 'MMM d, yyyy', { locale: enUS });
+            case 'fr':
+                return format(parseISO(data), 'dd MMM yyyy', { locale: fr });
+            default:
+                return format(parseISO(data), 'dd MMM yyyy', { locale: enGB });
+        }
     }
 
     if (Array.isArray(data)) {
@@ -232,14 +242,14 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                                 </SPreviewEmptyField>
                             )}
                         </Details.SubInfo>
-                        {entity.dataType && entity.dataType === DataTypeMapping.Usage && externalUrl.url && (
+                        {entity.dataType && entity.dataType === DataTypeMapping.Usage && externalUrl?.url && (
                             <>
                                 <Details.Separator />
                                 <Details.SubInfo title="">
                                     {(
                                         <SLinkContainer>
                                             <Glyph icon="Link" />
-                                            <SLink href={`${externalUrl.url}`}>{externalUrl.name}</SLink>
+                                            <SLink href={`${externalUrl?.url}`}>{externalUrl?.name}</SLink>
                                         </SLinkContainer>
                                     ) || (
                                         <SPreviewEmptyField>
