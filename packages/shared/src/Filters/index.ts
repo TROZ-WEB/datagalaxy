@@ -1,8 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import { post, get } from '../Http';
-import { QuickFilters, Workspaces, Filter, Users, Technologies } from './types';
+import { QuickFilters, Workspaces, Versions, FormatedWorkspace, Filter, Users, Technologies } from './types';
 
-export type { Filter, QuickFilters, Workspaces, Users, Technologies } from './types';
+export type { Filter, QuickFilters, FormatedWorkspace, Users, Technologies } from './types';
 
 export const fetchQuickFilters = async (
     apiUrl: string,
@@ -35,16 +35,54 @@ export const fetchQuickFilters = async (
     return null;
 };
 
-export const fetchWorkspaces = async (apiUrl: string): Promise<Workspaces> => {
+export const fetchWorkspaces = async (apiUrl: string): Promise<FormatedWorkspace[]> => {
     try {
+        const res = [];
         const response = await get<Workspaces>(`${apiUrl}/workspaces`);
+        const { projects } = response.parsedBody;
+        if (projects?.length > 0) {
+            for (let i = 0; i < projects.length; i++) {
+                if (projects[i].isVersioningEnabled) {
+                    try {
+                        // eslint-disable-next-line no-await-in-loop
+                        const version = await get<Versions>(`${apiUrl}/workspaces/${projects[i].id}/versions`);
+                        version.parsedBody.results.map((item) =>
+                            res.push({ id: item.versionId, label: item.versionName }),
+                        );
+                    } catch (error) {
+                        console.error(error);
+                    }
+                } else {
+                    res.push({ id: projects[i].defaultVersionId, label: projects[i].name });
+                }
+            }
+        }
 
-        return response.parsedBody;
+        return res;
     } catch (error) {
         console.error(error);
     }
 
     return null;
+
+    // get<Workspaces>(`${apiUrl}/workspaces`)
+    //     .then((response) => {
+    //         const { projects } = response.parsedBody;
+    //         if (projects?.length > 0) {
+    //             for (let i = 0; i < projects.length; i++) {
+    //                 if (projects[i].isVersioningEnabled) {
+    //                     get<Workspaces>(`${apiUrl}/workspaces/${projects[i].id}/versions`)
+    //                         .then((res) => res.parsedBody)
+    //                         .catch((error) => console.error(error));
+    //                 }
+    //             }
+    //         }
+
+    //         return response.parsedBody;
+    //     })
+    //     .catch((error) => console.error(error));
+
+    // return null;
 };
 
 export const fetchUsers = async (apiUrl: string): Promise<Users> => {

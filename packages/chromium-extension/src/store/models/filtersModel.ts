@@ -6,7 +6,7 @@ import {
     fetchTechnologies as fetchTechnologiesAPI,
     Filter,
     QuickFilters,
-    Workspaces,
+    FormatedWorkspace,
     Users,
     Technologies,
 } from 'shared';
@@ -42,7 +42,7 @@ export interface FiltersModel {
     /* State */
     quickFilters: QuickFilters;
     pickedFilters: Filter[];
-    workspaces: Workspaces;
+    workspaces: FormatedWorkspace[];
     versionId: string;
     users: Users;
     technologies: Technologies;

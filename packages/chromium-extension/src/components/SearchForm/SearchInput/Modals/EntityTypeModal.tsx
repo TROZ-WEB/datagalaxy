@@ -17,18 +17,13 @@ const EntityTypeModal = () => {
         fetchWorkspacesAPI();
     }, [dispatch]);
 
-    const workspacesFields = workspaces.projects.map((item) => {
-        return { id: item.defaultVersionId, label: item.name };
-    });
-
     const handleChange = (id) => {
-        console.log('id : ', id);
         updateVersionId(id);
     };
 
     return (
         <FilterModal
-            fields={workspacesFields}
+            fields={workspaces}
             label={chrome.i18n.getMessage(`attribute_key_Workspace`)}
             onChange={handleChange}
         />

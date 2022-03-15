@@ -4,7 +4,7 @@ import Glyph from './Glyph';
 
 /* ---------- STYLES ---------- */
 
-const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
+const HiddenCheckbox = styled.input`
     border: 0;
     clip: rect(0 0 0 0);
     height: 1px;
@@ -28,6 +28,7 @@ const StyledCheckbox = styled.div`
     background: ${(props) => (props.checked ? '#1035B1' : '#ffffff')};
     transition: all 150ms;
     border: 2px solid ${(props) => (props.checked ? '#1035B1' : '#C1C2DA')};
+    flex: none;
 
     ${SGlyph} {
         visibility: ${(props) => (props.checked ? 'visible' : 'hidden')};
@@ -50,6 +51,9 @@ const CheckboxContainer = styled.label`
 const SLabel = styled.span`
     margin-left: 13px;
     font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 /* ---------- COMPONENT ---------- */
@@ -63,17 +67,14 @@ interface Props {
 }
 
 const Checkbox: React.FC<Props> = ({ label, id, className, checked = false, onChange, ...props }) => {
-    const [isChecked, setIsChecked] = useState(checked);
-
     const handleChange = () => {
         onChange(id);
-        setIsChecked(!isChecked);
     };
 
     return (
         <CheckboxContainer className={className} htmlFor={id}>
-            <HiddenCheckbox checked={isChecked} id={id} onChange={handleChange} {...props} />
-            <StyledCheckbox checked={isChecked}>
+            <HiddenCheckbox checked={checked} id={id} onChange={handleChange} type="checkbox" {...props} />
+            <StyledCheckbox checked={checked}>
                 <SGlyph icon="Check" />
             </StyledCheckbox>
             <SLabel>{label}</SLabel>

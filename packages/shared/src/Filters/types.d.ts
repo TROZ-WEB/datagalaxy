@@ -17,6 +17,11 @@ export interface QuickFilters {
     quickFilters: { filter: Filter }[];
 }
 
+export interface FormatedWorkspace {
+    id: string;
+    label: string;
+}
+
 export interface Workspaces {
     organizations: [
         {
@@ -64,6 +69,23 @@ export interface Workspaces {
                 email: string;
                 userId: string;
             };
+        },
+    ];
+}
+
+export interface Versions {
+    pages: number;
+    total: number;
+    total_sum: number;
+    next_page: string;
+    results: [
+        {
+            workspaceName: string;
+            versionName: string;
+            originVersionId: string;
+            originVersionName: string;
+            isDefaultVersion: boolean;
+            versionId: string;
         },
     ];
 }

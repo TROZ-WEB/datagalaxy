@@ -4,6 +4,7 @@ import RoundButton from '../../ui/RoundButton';
 import Title from '../../ui/Title';
 import FilterModal from './FilterModal';
 import OwnersModal from './Modals/OwnersModal';
+import StewardsModal from './Modals/StewardsModal';
 import TechnologiesModal from './Modals/TechnologiesModal';
 import WorkspacesModal from './Modals/WorkspacesModal';
 /* ---------- STYLES ---------- */
@@ -61,7 +62,7 @@ const FiltersModal = () => {
                         />
                         <FilterModal fields={[]} label={chrome.i18n.getMessage(`attribute_key_Tags`)} multiselect />
                         <OwnersModal />
-                        <FilterModal fields={[]} label={chrome.i18n.getMessage(`entity_steward`)} multiselect />
+                        <StewardsModal />
                         <FilterModal fields={[]} label={chrome.i18n.getMessage(`attribute_key_EntityStatus`)} />
                         <FilterModal fields={[]} label={chrome.i18n.getMessage(`attribute_key_LastModified`)} />
                     </SFiltersContainer>

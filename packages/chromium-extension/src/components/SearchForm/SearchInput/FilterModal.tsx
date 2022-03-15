@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Button from '../../ui/Button';
 import Checkbox from '../../ui/Checkbox';
@@ -95,17 +95,32 @@ interface FilterModalProps {
     label: string;
     multiselect?: boolean;
     fields: any[];
+    intersectionLogic?: string;
+    handleChangeIntersectionLogic?: (params: string) => void;
     onChange?: (id: string) => void;
 }
 
-const FilterModal: FC<FilterModalProps> = ({ label, multiselect = false, fields, onChange }) => {
+const FilterModal: FC<FilterModalProps> = ({
+    label,
+    multiselect = false,
+    fields,
+    intersectionLogic,
+    handleChangeIntersectionLogic,
+    onChange,
+}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [searchValue, setsearchValue] = useState('');
+    const [fieldsCopy, setFieldsCopy] = useState(fields);
     const [filteredFields, setFiteredFields] = useState(fields);
 
-    const handleChange = (event) => {
+    useEffect(() => {
+        setFieldsCopy(fields);
+        setFiteredFields(fields);
+    }, [fields]);
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
-        const newFields = fields.filter((item) => item.label.toLowerCase().includes(value.toLowerCase()));
+        const newFields = fieldsCopy.filter((item) => item.label.toLowerCase().includes(value.toLowerCase()));
         setsearchValue(value);
         setFiteredFields(newFields);
     };
@@ -123,8 +138,22 @@ const FilterModal: FC<FilterModalProps> = ({ label, multiselect = false, fields,
                         <SForm>
                             {multiselect && (
                                 <SIntersection>
-                                    <Radio id="or" label={chrome.i18n.getMessage(`intersection_or`)} bold />
-                                    <SRadio id="and" label={chrome.i18n.getMessage(`intersection_and`)} bold />
+                                    <Radio
+                                        checked={intersectionLogic === 'or'}
+                                        id="or"
+                                        label={chrome.i18n.getMessage(`intersection_or`)}
+                                        name="intersectionLogic"
+                                        onChange={handleChangeIntersectionLogic}
+                                        bold
+                                    />
+                                    <SRadio
+                                        checked={intersectionLogic === 'and'}
+                                        id="and"
+                                        label={chrome.i18n.getMessage(`intersection_and`)}
+                                        name="intersectionLogic"
+                                        onChange={handleChangeIntersectionLogic}
+                                        bold
+                                    />
                                 </SIntersection>
                             )}
                             <SFieldsContainer>
@@ -133,13 +162,22 @@ const FilterModal: FC<FilterModalProps> = ({ label, multiselect = false, fields,
                                     filteredFields.length > 0 ? (
                                         multiselect ? (
                                             filteredFields?.map((field) => (
-                                                <Checkbox id={field.id} label={field.label} onChange={onChange} />
+                                                <Checkbox
+                                                    key={field.id}
+                                                    checked={field.checked}
+                                                    id={field.id}
+                                                    label={field.label}
+                                                    onChange={onChange}
+                                                />
                                             ))
                                         ) : (
                                             filteredFields?.map((field) => (
                                                 <Radio
+                                                    key={field.id}
+                                                    checked={field.checked}
                                                     id={field.id}
                                                     label={field.label}
+                                                    name={label}
                                                     onChange={onChange}
                                                     setIsOpen={setIsOpen}
                                                 />
@@ -152,11 +190,13 @@ const FilterModal: FC<FilterModalProps> = ({ label, multiselect = false, fields,
                                     )
                                 }
                             </SFieldsContainer>
-                            <SButtonContainer>
-                                <Button id={`filter_${label}`} onClick={() => setIsOpen(false)}>
-                                    {chrome.i18n.getMessage(`form_send`)}
-                                </Button>
-                            </SButtonContainer>
+                            {multiselect && (
+                                <SButtonContainer>
+                                    <Button id={`filter_${label}`} onClick={() => setIsOpen(false)}>
+                                        {chrome.i18n.getMessage(`form_send`)}
+                                    </Button>
+                                </SButtonContainer>
+                            )}
                         </SForm>
                     </SModal>
                 </SOverlay>

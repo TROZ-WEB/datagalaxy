@@ -4,7 +4,7 @@ import FilterModal from '../FilterModal';
 
 /* ---------- COMPONENT ---------- */
 
-const OwnersModal = () => {
+const StewardsModal = () => {
     const dispatch = useStoreDispatch();
     const users = useStoreState((state) => state.filters.users);
     const pickedFilters = useStoreState((state) => state.filters.pickedFilters);
@@ -21,8 +21,8 @@ const OwnersModal = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        const index = pickedFilters?.findIndex((item) => item.attributeKey === 'DataOwners');
-        const formatedUsersFields = users?.owners?.map((item) => {
+        const index = pickedFilters?.findIndex((item) => item.attributeKey === 'DataStewards');
+        const formatedUsersFields = users?.stewards?.map((item) => {
             return {
                 id: item.userId,
                 label: `${item.firstName} ${item.lastName}`,
@@ -34,11 +34,11 @@ const OwnersModal = () => {
 
     const handleChange = (id) => {
         const newPickedFilters = [...pickedFilters];
-        const filterIndex = newPickedFilters?.findIndex((item) => item.attributeKey === 'DataOwners');
+        const filterIndex = newPickedFilters?.findIndex((item) => item.attributeKey === 'DataStewards');
         const newOperator = intersectionLogic === 'or' ? 'contains' : 'matchAll';
         if (filterIndex === -1) {
             const filter = {
-                attributeKey: 'DataOwners',
+                attributeKey: 'DataStewards',
                 operator: newOperator,
                 values: [id],
             };
@@ -61,7 +61,7 @@ const OwnersModal = () => {
     const handleChangeIntersectionLogic = (params) => {
         setIntersectionLogic(params);
         const newPickedFilters = [...pickedFilters];
-        const filterIndex = newPickedFilters?.findIndex((item) => item.attributeKey === 'DataOwners');
+        const filterIndex = newPickedFilters?.findIndex((item) => item.attributeKey === 'DataStewards');
         const newOperator = params === 'or' ? 'contains' : 'matchAll';
         if (filterIndex !== -1) {
             newPickedFilters[filterIndex].operator = newOperator;
@@ -75,11 +75,11 @@ const OwnersModal = () => {
             fields={usersFields}
             handleChangeIntersectionLogic={handleChangeIntersectionLogic}
             intersectionLogic={intersectionLogic}
-            label={chrome.i18n.getMessage(`attribute_key_Owner`)}
+            label={chrome.i18n.getMessage(`entity_steward`)}
             onChange={handleChange}
             multiselect
         />
     );
 };
 
-export default OwnersModal;
+export default StewardsModal;

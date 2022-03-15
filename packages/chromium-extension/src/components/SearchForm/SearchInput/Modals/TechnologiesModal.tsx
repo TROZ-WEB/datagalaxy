@@ -39,8 +39,6 @@ const TechnologiesModal = () => {
             newPickedFilters[filterIndex].values = [id];
         }
 
-        console.log(newPickedFilters);
-
         updatePickedFilters(newPickedFilters);
     };
 
