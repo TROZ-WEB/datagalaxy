@@ -1,6 +1,6 @@
-import React, { useEffect, FC, useState } from 'react';
+import React, { useEffect, FC, useState, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
-import { DataTypeMapping, EntityType } from 'shared';
+import { EntityType } from 'shared';
 import styled from 'styled-components';
 import HorizontalSeparator from '../../../components/HorizontalSeparator';
 import LoadingScreen from '../../../components/LoadingScreen';
@@ -59,6 +59,14 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
     const childrenObjects = useStoreState((state) => state.entity.childrenObjects);
     const { updateIsLoaded } = useStoreActions((actions) => actions.entity);
     const [isChildrenLoaded, setIsChildrenLoaded] = useState<boolean>(false);
+    const [children, setChildren] = useState<EntityType[]>();
+    const [grandChildren, setGrandChildren] = useState<EntityType[]>();
+
+    const entityPath = useMemo<string>(() => {
+        const t = entity.path.split('\\');
+
+        return t[t.length - 1].toString();
+    }, [entity]);
 
     useEffect(() => {
         if (entity && !isChildrenLoaded) {
@@ -76,27 +84,21 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
         }
     }, [dispatch, entity]);
 
-    const fetchGrandChildrenObjectsAPI = async (childrenEntity) => {
-        await dispatch.entity.fetchGrandChildrenObjects({
-            parentId: childrenEntity.id,
-            dataType: DataTypeMapping[childrenEntity.dataType],
-            versionId: childrenEntity.location.split('/')[1],
-        });
-    };
-
     useEffect(() => {
-        const fetchDataAPI = async () => {
-            if (isChildrenLoaded) {
-                for (let i = 0; i < childrenObjects?.length; i++) {
-                    if (childrenObjects[i].childrenCount > 0) {
-                        // eslint-disable-next-line no-await-in-loop
-                        await fetchGrandChildrenObjectsAPI(childrenObjects[i]);
-                    }
-                }
-            }
-        };
+        const c = [];
+        const gc = [];
+        childrenObjects.forEach((co) => {
+            const pathSplited = co.path.split('\\');
 
-        fetchDataAPI();
+            if (pathSplited[pathSplited.length - 2] === entityPath) {
+                c.push(co);
+            }
+            if (pathSplited[pathSplited.length - 3] === entityPath) {
+                gc.push(co);
+            }
+        });
+        setChildren(c);
+        setGrandChildren(gc);
     }, [isChildrenLoaded]);
 
     const handleClick = (childrenEntity) => {
@@ -110,7 +112,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <SRoot>
             {isChildrenLoaded ? (
-                childrenObjects?.map((childrenEntity) => (
+                children?.map((childrenEntity) => (
                     <>
                         <Accordion
                             key={childrenEntity.id}
@@ -126,8 +128,8 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
                             }
                             openButtonPosition="left"
                         >
-                            {childrenEntity?.childrenObjects?.length > 0 ? (
-                                childrenEntity?.childrenObjects?.map((grandChildrenEntity) => (
+                            {grandChildren.length > 0 ? (
+                                grandChildren.map((grandChildrenEntity) => (
                                     <>
                                         <HorizontalSeparator />
                                         <SSubEntityWrapper

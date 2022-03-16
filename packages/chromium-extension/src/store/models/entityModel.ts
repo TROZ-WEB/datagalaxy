@@ -12,6 +12,7 @@ import {
     ReverseDataTypeMapping,
     AttributeDefinitionType,
     ScreenConfiguration,
+    DataTypeMapping,
 } from 'shared';
 import { enhancedEntitiesWithUserInfo, resetModel } from './helper';
 
@@ -153,8 +154,29 @@ const fetchChildrenObjects = thunk(
     async (actions: Actions<EntityModel>, payload: FetchChildrenObjectsParams, { getStoreState }) => {
         const { parentId, dataType, versionId } = payload;
         try {
+            let childrenObjects = [];
             const url = (getStoreState() as any).auth.pubapi;
-            const childrenObjects = await fetchChildrenObjectsAPI(parentId, url, dataType, versionId);
+            if (
+                dataType === DataTypeMapping.Source ||
+                dataType === DataTypeMapping.Container ||
+                dataType === DataTypeMapping.Structure ||
+                dataType === DataTypeMapping.Field
+            ) {
+                childrenObjects = childrenObjects.concat(
+                    await fetchChildrenObjectsAPI(parentId, url, DataTypeMapping.Source, versionId),
+                );
+                childrenObjects = childrenObjects.concat(
+                    await fetchChildrenObjectsAPI(parentId, url, DataTypeMapping.Container, versionId),
+                );
+                childrenObjects = childrenObjects.concat(
+                    await fetchChildrenObjectsAPI(parentId, url, DataTypeMapping.Structure, versionId),
+                );
+                childrenObjects = childrenObjects.concat(
+                    await fetchChildrenObjectsAPI(parentId, url, DataTypeMapping.Field, versionId),
+                );
+            } else {
+                childrenObjects = await fetchChildrenObjectsAPI(parentId, url, dataType, versionId);
+            }
             actions.updateChildrenObjects(childrenObjects);
         } catch (err) {
             console.error('error : ', err);
