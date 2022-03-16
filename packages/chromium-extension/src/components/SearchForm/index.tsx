@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { EntityType } from 'shared';
 import styled from 'styled-components';
-import More from '../../icons/More';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../store/hooks';
 import HorizontalSeparator from '../HorizontalSeparator';
 import EntityHeader from '../ui/EntityHeader';
@@ -10,6 +9,7 @@ import Title from '../ui/Title';
 import QuickFilters from './QuickFilters';
 import SearchInput from './SearchInput';
 import { useSearchInput } from './SearchInput/useSearchInput';
+import useExactMatches from './useExactMatches';
 import BlankSearch from '../../../assets/blank-search.png';
 
 /* ---------- STYLES ---------- */
@@ -36,7 +36,6 @@ const SResultsTitleWrapper = styled.div`
     align-items: center;
     justify-content: flex-start;
     margin-top: 15px;
-    margin-bottom: 10px;
 `;
 
 const SSearchCardResultWrapper = styled.div`
@@ -70,13 +69,14 @@ const SMore = styled.span`
     font-size: 12px;
     margin-right: 3px;
     margin-bottom: 3px;
+    margin-top: 15px;
 `;
 
 const SMoreContainer = styled.div`
     cursor: pointer;
     display: flex;
     align-items: center;
-    margin-top: 15px;
+    margin-bottom: 35px;
 `;
 
 /* ---------- COMPONENT ---------- */
@@ -101,18 +101,31 @@ const SearchForm = () => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
 
+    const keyListener = useMemo(
+        () => (event) => {
+            event.stopImmediatePropagation();
+        },
+        [],
+    );
+
     const history = useHistory();
 
     const { searchedArgs, searchResults, exactMatches } = useStoreState((state) => state.search);
+
+    const { filteredExactMatches } = useExactMatches(exactMatches);
 
     const [displayMoreExactMatches, setDisplayMoreExactMatches] = useState(false);
     const [exactMatchesEntitiesToDisplay, setExactMatchesEntitiesToDisplay] = useState<EntityType[]>([]);
 
     useEffect(() => {
-        setExactMatchesEntitiesToDisplay(
-            displayMoreExactMatches ? exactMatches?.result?.entities : exactMatches?.result?.entities.slice(0, 4),
-        );
-    }, [exactMatches, displayMoreExactMatches]);
+        if (filteredExactMatches) {
+            setExactMatchesEntitiesToDisplay(
+                displayMoreExactMatches
+                    ? filteredExactMatches?.result?.entities
+                    : filteredExactMatches?.result?.entities.slice(0, 4),
+            );
+        }
+    }, [filteredExactMatches, displayMoreExactMatches]);
 
     useEffect(() => {
         setDisplayMoreExactMatches(false);
@@ -145,7 +158,8 @@ const SearchForm = () => {
     });
 
     const hasSearchResults = searchResults.result.entities.length !== 0;
-    const hasExactMatches = exactMatches.result.entities.length !== 0;
+    const hasExactMatches = filteredExactMatches?.result.entities.length !== 0;
+    const displayShowMoreButton = filteredExactMatches?.result.entities.length > 4;
 
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -155,6 +169,17 @@ const SearchForm = () => {
                     <SearchInput
                         {...searchInputProps}
                         loading={loading}
+                        onBlur={() => {
+                            window.removeEventListener('keypress', keyListener);
+                            window.removeEventListener('keydown', keyListener);
+                            window.removeEventListener('keyup', keyListener);
+                        }}
+                        onFocus={() => {
+                            // remove background page keys listener when input is focused
+                            window.addEventListener('keypress', keyListener);
+                            window.addEventListener('keydown', keyListener);
+                            window.addEventListener('keyup', keyListener);
+                        }}
                         placeholder={chrome.i18n.getMessage('search')}
                         success={success}
                     />
@@ -163,7 +188,7 @@ const SearchForm = () => {
                         {searchedArgs.term !== '' && hasExactMatches && (
                             <SResultsTitleWrapper>
                                 <Title>{chrome.i18n.getMessage('exact_matches')}</Title>
-                                <STagResultCount>{exactMatches?.total}</STagResultCount>
+                                <STagResultCount>{filteredExactMatches?.total}</STagResultCount>
                             </SResultsTitleWrapper>
                         )}
                         {hasExactMatches && (
@@ -207,19 +232,22 @@ const SearchForm = () => {
                                                     alwaysExpanded
                                                 />
                                             </SSearchCardResultWrapper>
-                                            {idx < exactMatches?.result?.entities.length - 1 && <HorizontalSeparator />}
+                                            {idx < filteredExactMatches?.result?.entities.length - 1 && (
+                                                <HorizontalSeparator />
+                                            )}
                                         </div>
                                     );
                                 })}
                             </SSearchCardsResultWrapper>
                         )}
                     </SResults>
-                    {hasExactMatches && !displayMoreExactMatches && (
-                        <SMoreContainer onClick={() => setDisplayMoreExactMatches(true)}>
+
+                    <SMoreContainer onClick={() => setDisplayMoreExactMatches(true)}>
+                        {displayShowMoreButton && !displayMoreExactMatches && (
                             <SMore>{chrome.i18n.getMessage('showMore')}</SMore>
-                            <More />
-                        </SMoreContainer>
-                    )}
+                        )}
+                    </SMoreContainer>
+
                     <SResults>
                         {searchedArgs.term !== '' && (
                             <SResultsTitleWrapper>
