@@ -41,6 +41,11 @@ const SEntityName = styled.span`
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 180px;
+    ${(props) =>
+        props.bold &&
+        css`
+            font-weight: bold;
+        `}
 `;
 
 const SEntityNameMoreActionsIcon = styled.a`
@@ -214,6 +219,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                                 </SBreadcrumbWrapper>
                             )}
                             <SEntityName
+                                bold={entity.exactMatchOccuredOnName}
                                 onMouseEnter={() => setIsMoreActionsShown(true)}
                                 onMouseLeave={() => setIsMoreActionsShown(false)}
                                 title={entity.name}

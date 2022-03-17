@@ -35,4 +35,5 @@ export interface EntityType {
     isExactMatch: boolean;
     exactMatchAttributes: ExactMatch[];
     objectUrl: string;
+    exactMatchOccuredOnName: boolean;
 }

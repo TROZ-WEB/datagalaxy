@@ -1021,6 +1021,9 @@
     "linkShortcutDomainIds": {
         "message": "Domain"
     },
+    "showMore": {
+        "message": "Show more..."
+    },
     "moreDetails": {
         "message": "More details"
     },
