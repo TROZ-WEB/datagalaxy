@@ -44,7 +44,9 @@ const Popup = () => {
 
                 // Fetch all available tags
                 await dispatch.auth.fetchTags();
+                await dispatch.auth.fetchWorkspaces();
                 await dispatch.auth.fetchUser();
+                await dispatch.auth.fetchTechnologies();
 
                 setIsAppReady(true);
             } catch (error) {

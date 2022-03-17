@@ -1,6 +1,7 @@
-import React, { Fragment, useMemo } from 'react';
-import { formatBreadcrumb } from 'shared';
+import React, { useMemo } from 'react';
+import { formatBreadcrumb, WorkspaceType } from 'shared';
 import styled from 'styled-components';
+import { useStoreState } from '../../store/hooks';
 
 /* ---------- STYLES ---------- */
 
@@ -19,7 +20,7 @@ const SRoot = styled.div`
     font-size: 8px;
     display: flex;
     flex-direction: row;
-    align-items: baseline;
+    align-items: end;
     flex-wrap: wrap;
 `;
 
@@ -28,6 +29,12 @@ const SFormatted = styled.span`
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 250px;
+`;
+
+const SWorkspaceImage = styled.img`
+    width: 20px;
+    height: 20px;
+    margin-right: -5px;
 `;
 
 const formatText = (formattedPath: any) => {
@@ -43,15 +50,26 @@ const formatText = (formattedPath: any) => {
 
 /* ---------- COMPONENT ---------- */
 
-const Breadcrumb = ({ path }: { path: string[] }) => {
+const Breadcrumb = ({ path, workspace }: { path: string[]; workspace: WorkspaceType }) => {
     const formattedPath = useMemo(() => (path ? formatBreadcrumb(path) : null), [path]);
+    const url = useStoreState((state) => state.auth.pubapi);
 
     return (
         <div>
             {formattedPath && (
                 <SRoot title={formattedPath.default.join(' > ')}>
+                    {workspace?.imageHash && (
+                        <SWorkspaceImage
+                            alt="workspace-image"
+                            src={`${url}/image?hash=${workspace?.imageHash}`}
+                            title={workspace?.name}
+                        />
+                    )}
                     {formattedPath && formattedPath.shorten.length ? (
-                        <SFormatted>{formatText(formattedPath)}</SFormatted>
+                        <SFormatted>
+                            {workspace?.imageHash && <SChevron></SChevron>}
+                            {formatText(formattedPath)}
+                        </SFormatted>
                     ) : (
                         <br />
                     )}

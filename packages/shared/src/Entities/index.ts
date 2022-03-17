@@ -19,7 +19,7 @@ export const formatBreadcrumb = (pathAsArray: string[]): { shorten: string[]; de
 
     let pathToString = base.toString();
 
-    const maxCharacters = 50;
+    const maxCharacters = 45;
 
     let security = 0;
     while (pathToString.length + 2 * base.length - 1 > maxCharacters && security < 10) {

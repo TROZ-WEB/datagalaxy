@@ -1,11 +1,15 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-param-reassign */
-import { Action, Actions, Thunk, thunk, action, computed, Computed, Store } from 'easy-peasy';
+import { Action, Actions, Thunk, thunk, action, Computed, Store } from 'easy-peasy';
 import {
     AccessToken,
     decodeJWT,
     TagType,
+    TechnologyType,
+    WorkspaceType,
     fetchTags as fetchTagsApi,
+    fetchWorkspaces as fetchWorkspacesApi,
+    fetchTechnologies as fetchTechnologiesApi,
     UserType,
     getUserByEmail,
     DecodedJWT,
@@ -20,6 +24,8 @@ const initialState = {
     dgapi: '',
     historyLocation: null,
     tags: [],
+    workspaces: [],
+    technologies: [],
     user: null,
 };
 export interface AuthModel {
@@ -30,6 +36,8 @@ export interface AuthModel {
     dgapi: string;
     historyLocation?: string;
     tags: TagType[];
+    workspaces: WorkspaceType[];
+    technologies: TechnologyType[];
     user: UserType;
     /* Computed properties */
     getDecodedPat: Computed<AuthModel, DecodedJWT>;
@@ -41,10 +49,14 @@ export interface AuthModel {
     updateDgapi: Action<AuthModel, string>;
     updateHistoryLocation: Action<AuthModel, string>;
     updateTags: Action<AuthModel, TagType[]>;
+    updateWorkspaces: Action<AuthModel, WorkspaceType[]>;
+    updateTechnologies: Action<AuthModel, TechnologyType[]>;
     updateUser: Action<AuthModel, UserType>;
     /* Thunks */
     loginWithPAT: Thunk<AuthModel, { pat: string; email: string }>;
     fetchTags: Thunk<AuthModel>;
+    fetchTechnologies: Thunk<AuthModel>;
+    fetchWorkspaces: Thunk<AuthModel>;
     fetchUser: Thunk<AuthModel>;
     logout: Thunk<AuthModel, Store>;
     updatePATThunk: Thunk<AuthModel, string>;
@@ -89,6 +101,20 @@ const fetchTags = thunk(async (actions: Actions<AuthModel>, _, { getStoreState }
     const tags: TagType[] = await fetchTagsApi(url);
 
     actions.updateTags(tags);
+});
+
+const fetchWorkspaces = thunk(async (actions: Actions<AuthModel>, _, { getStoreState }) => {
+    const url = (getStoreState() as any).auth.pubapi;
+    const workspaces: WorkspaceType[] = await fetchWorkspacesApi(url);
+
+    actions.updateWorkspaces(workspaces);
+});
+
+const fetchTechnologies = thunk(async (actions: Actions<AuthModel>, _, { getStoreState }) => {
+    const url = (getStoreState() as any).auth.pubapi;
+    const technologies: TechnologyType[] = await fetchTechnologiesApi(url);
+
+    actions.updateTechnologies(technologies);
 });
 
 const fetchUser = thunk(async (actions: Actions<AuthModel>, _, { getStoreState }) => {
@@ -190,7 +216,12 @@ const authModel = async (): Promise<AuthModel> => {
         updateTags: action((state, payload: TagType[]) => {
             state.tags = payload;
         }),
-
+        updateTechnologies: action((state, payload: TechnologyType[]) => {
+            state.technologies = payload;
+        }),
+        updateWorkspaces: action((state, payload: WorkspaceType[]) => {
+            state.workspaces = payload;
+        }),
         updateUser: action((state, payload: UserType) => {
             state.user = payload;
         }),
@@ -200,6 +231,8 @@ const authModel = async (): Promise<AuthModel> => {
         loginWithPAT,
         fetchTags,
         fetchUser,
+        fetchWorkspaces,
+        fetchTechnologies,
         logout,
         updatePATThunk,
     };

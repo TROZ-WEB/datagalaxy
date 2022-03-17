@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { DataTypeMapping } from 'shared';
 import styled from 'styled-components';
 import Accordion from '../../../components/ui/Accordion';
 import EntityHeader from '../../../components/ui/EntityHeader';
-import { useStoreDispatch, useStoreActions, useStoreState } from '../../../store/hooks';
+import { useStoreActions, useStoreState } from '../../../store/hooks';
 
 /* ---------- STYLES ---------- */
 
@@ -29,38 +28,16 @@ const STitle = styled.div`
 
 /* ---------- COMPONENT ---------- */
 
-const LinkedObjects = ({ entity }) => {
+const LinkedObjects = () => {
     const history = useHistory();
 
-    const dispatch = useStoreDispatch();
-    const { updateSelectedEntity } = useStoreActions((actions) => actions.search);
-
     const linkedObjects = useStoreState((state) => state.entity.linkedObjects);
+    const { updateDisplayedEntity } = useStoreActions((actions) => actions.entity);
 
-    useEffect(() => {
-        if (entity) {
-            const fetchLinkedObjects = async () => {
-                await dispatch.entity.fetchLinkedObjects({
-                    id: entity.id,
-                    dataType: entity.dataType,
-                    type: entity.type,
-                    name:
-                        entity.dataType === DataTypeMapping.Property // TODO: API Ignore technical for properties, should be fix in a moment
-                            ? entity.name
-                            : entity.technicalName,
-                    versionId: entity.location.split('/')[1],
-                });
-            };
-
-            fetchLinkedObjects();
-        }
-
-        return () => {};
-    }, [dispatch, entity]);
-
-    const handleClick = (linkedObject) => {
-        updateSelectedEntity(linkedObject);
-        history.push(`/app/entities/${linkedObject.id}/`);
+    const handleClick = (e) => {
+        updateDisplayedEntity(null);
+        const URLLocation = e.location.replace(new RegExp('/', 'g'), '.'); // Replace "/" by "." in url
+        history.push(`/app/entities/${URLLocation}/`);
     };
 
     return (

@@ -9,3 +9,5 @@ export * from './LinkedObjects';
 export * from './ChildrenObjects';
 export * from './QuickFilters';
 export * from './ScreenConfiguration';
+export * from './Workspaces';
+export * from './Technologies';

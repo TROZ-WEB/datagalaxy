@@ -21,7 +21,7 @@ const SEntityDGGlyphContainer = styled.div`
 `;
 
 const SEntityTypeShortLabel = styled.span`
-    font-size: 10px;
+    font-size: 8px;
     color: #6d6f88;
 `;
 

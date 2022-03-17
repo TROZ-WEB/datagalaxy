@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Switch, Route, useParams } from 'react-router-dom';
 import { DataTypeMapping, EntityType, ReverseDataTypeMapping } from 'shared';
 import styled from 'styled-components';
@@ -31,11 +31,12 @@ const SContent = styled.div`
 
 const EntityPage = () => {
     const { URLLocation } = useParams();
-    const dispatch = useStoreDispatch();
-    const location = URLLocation.replace(new RegExp('\\.', 'g'), '/'); // Replace "." by "/" from url
-    const dataType = location.split('/')[0];
 
-    const fullyLoadedEntity = useStoreState((state) => state.entity.displayedEntity);
+    const dispatch = useStoreDispatch();
+    const location = useMemo<string>(() => URLLocation.replace(new RegExp('\\.', 'g'), '/'), [URLLocation]); // Replace "." by "/" from url
+    const dataType = useMemo<string>(() => location.split('/')[0], [location]);
+
+    const displayedEntity = useStoreState((state) => state.entity.displayedEntity);
     const screenConfiguration = useStoreState((state) => state.entity.screenConfiguration);
 
     const [entity, setEntity] = useState<EntityType>();
@@ -47,32 +48,33 @@ const EntityPage = () => {
     }, [dispatch, location]);
 
     useEffect(() => {
-        if (fullyLoadedEntity) {
-            setEntity({ ...fullyLoadedEntity, dataType, location });
+        if (displayedEntity) {
+            setEntity({ ...displayedEntity, dataType, location });
             dispatch.entity.fetchScreenConfiguration({
                 dataType: ReverseDataTypeMapping[dataType].toLowerCase(),
-                versionId: fullyLoadedEntity.versionId,
-                type: fullyLoadedEntity.type,
+                versionId: displayedEntity.versionId,
+                type: displayedEntity.type,
             });
-        }
-        if (fullyLoadedEntity) {
+
             // API WORKAROUND 4 : API does not provide linked objects size.
             const fetchLinkedObjects = async () => {
                 await dispatch.entity.fetchLinkedObjects({
-                    id: fullyLoadedEntity.id,
+                    id: displayedEntity.id,
                     dataType,
-                    type: fullyLoadedEntity.type,
+                    type: displayedEntity.type,
                     name:
                         dataType === DataTypeMapping.Property // API WORKAROUND 3 : API Ignore technical name for properties, should be fix in a moment
-                            ? fullyLoadedEntity.name
-                            : fullyLoadedEntity.technicalName,
+                            ? displayedEntity.name
+                            : displayedEntity.technicalName,
                     versionId: location.split('/')[1],
                 });
             };
 
             fetchLinkedObjects();
+        } else {
+            setEntity(null);
         }
-    }, [fullyLoadedEntity]);
+    }, [displayedEntity]);
 
     useEffect(() => {
         if (linkedObjects) {
@@ -101,7 +103,7 @@ const EntityPage = () => {
                                     <Details entity={entity} screenConfiguration={screenConfiguration} />
                                 </Route>
                                 <Route path={`/app/entities/${URLLocation}/linked-objects`} exact>
-                                    <LinkedObjects entity={entity} />
+                                    <LinkedObjects />
                                 </Route>
                                 <Route path={`/app/entities/${URLLocation}/children-objects`} exact>
                                     <ChildrenObjects entity={entity} />

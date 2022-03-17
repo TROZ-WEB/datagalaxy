@@ -1,6 +1,7 @@
 import React, { useState, useMemo, FC, useEffect } from 'react';
-import { ExactMatch } from 'shared';
+import { ExactMatch, WorkspaceType } from 'shared';
 import styled, { css } from 'styled-components';
+import { useStoreState } from '../../store/hooks';
 import Breadcrumb from '../Breadcrumb';
 import Status from '../Entity/Status';
 import UsersProfile from '../Entity/UsersProfile';
@@ -182,16 +183,27 @@ const EntityHeader: FC<EntityHeaderProps> = ({
 
     const [entityPathAsString, setEntityPathAsString] = useState();
 
+    const workspaces = useStoreState((state) => state.auth.workspaces);
+
+    const [workspace, setWorkspace] = useState<WorkspaceType>();
+
     useEffect(() => {
         if (entity) {
             const pathAsString = entity.path.trim().split('\\').slice(0, -1).filter(Boolean);
+            let workspaceResult;
             if (!entityPage) {
-                pathAsString.shift(); // remove workspace part
+                const workspaceName = pathAsString[0]; // remove workspace part
+                workspaceResult = workspaces.find((w) => workspaceName === w.name);
+                setWorkspace(workspaceResult);
+            }
+
+            if (workspaceResult?.imageHash) {
+                pathAsString.shift();
             }
 
             setEntityPathAsString(pathAsString);
         }
-    }, [entity]);
+    }, [entity, workspaces]);
 
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -215,7 +227,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                         <SRightSide>
                             {!isRootEntity && displayPath && (
                                 <SBreadcrumbWrapper>
-                                    <Breadcrumb path={entityPathAsString} />
+                                    <Breadcrumb path={entityPathAsString} workspace={workspace} />
                                 </SBreadcrumbWrapper>
                             )}
                             <SEntityName

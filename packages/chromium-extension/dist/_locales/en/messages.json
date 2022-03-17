@@ -439,6 +439,9 @@
     "attribute_key_DataOwnersString": {
         "message": "@:DgServerTypes.BaseData.fields.DataOwners"
     },
+    "attribute_key_Technology_Code": {
+        "message": "Technology"
+    },
     "attribute_key_DataStewards": {
         "message": "Stewards"
     },
