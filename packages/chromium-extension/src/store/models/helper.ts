@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { computed } from 'easy-peasy';
-import { decodeJWT, EntityType, getUsersByEmailsAndRole } from 'shared';
+import { decodeJWT, EntityType, getUsersByEmailsAndRole, TechnologyType } from 'shared';
+import { useStoreState } from '../hooks';
 
 const resetModel = (initialState) => (state) => {
     /* eslint-disable-next-line no-restricted-syntax */
@@ -54,4 +55,19 @@ const enhancedEntitiesWithUserInfo = async (rawEntities: EntityType[], url): Pro
     });
 };
 
-export { enhancedEntitiesWithUserInfo, resetModel, getDecodedPAT };
+const enhancedEntitiesWithTechnologiesInfo = async (
+    technologies: TechnologyType[],
+    rawEntities: EntityType[],
+): Promise<EntityType[]> => {
+    return rawEntities.map((result) => {
+        const { technologyCode } = result.attributes;
+        const fullTechnology = technologies.find((t) => t.technologyCode === technologyCode);
+
+        return {
+            ...result,
+            technology: fullTechnology,
+        };
+    });
+};
+
+export { enhancedEntitiesWithUserInfo, enhancedEntitiesWithTechnologiesInfo, resetModel, getDecodedPAT };

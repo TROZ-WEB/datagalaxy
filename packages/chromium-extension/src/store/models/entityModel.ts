@@ -13,8 +13,9 @@ import {
     AttributeDefinitionType,
     ScreenConfiguration,
     DataTypeMapping,
+    TechnologyType,
 } from 'shared';
-import { enhancedEntitiesWithUserInfo, resetModel } from './helper';
+import { enhancedEntitiesWithTechnologiesInfo, enhancedEntitiesWithUserInfo, resetModel } from './helper';
 
 /**
  * This model aims to managed the currently displayed entity in the extension
@@ -44,7 +45,7 @@ export interface EntityModel {
     updateGrandChildrenObjects: Action<EntityType, { parentId: string; childrenObjects: EntityType[] }>;
     updateScreenConfiguration: Action<EntityModel, ScreenConfiguration>;
     /* Thunks */
-    fetchEntity: Thunk<EntityModel, string>;
+    fetchEntity: Thunk<EntityModel, FetchEntityArgs>;
     fetchLinkedObjects: Thunk<EntityModel, FetchLinkedObjectsParams>;
     fetchChildrenObjects: Thunk<EntityModel, FetchChildrenObjectsParams>;
     fetchGrandChildrenObjects: Thunk<EntityModel, FetchChildrenObjectsParams>;
@@ -63,12 +64,18 @@ interface FetchChildrenObjectsParams {
     parentId: string;
     dataType: string;
     versionId: string;
+    technology: TechnologyType;
 }
 
 interface FetchScreenConfigurationParams {
     dataType: string;
     versionId: string;
     type: string;
+}
+
+interface FetchEntityArgs {
+    location: string;
+    technologies: TechnologyType[];
 }
 
 const validateEmail = (email) => {
@@ -82,19 +89,20 @@ const validateEmail = (email) => {
 /**
  * Thunks
  */
-const fetchEntity = thunk(async (actions: Actions<EntityModel>, location: string, { getStoreState }) => {
+const fetchEntity = thunk(async (actions: Actions<EntityModel>, payload: FetchEntityArgs, { getStoreState }) => {
     try {
         const url = (getStoreState() as any).auth.pubapi;
         // First search for results
-        const entity = await fetchEntityAPI(url, location);
+        const entity = await fetchEntityAPI(url, payload.location);
 
         // Then enrich the entity object with required user info
-        const [enhancedEntity] = await enhancedEntitiesWithUserInfo([entity], url);
+        let [enhancedEntity] = await enhancedEntitiesWithUserInfo([entity], url);
+        [enhancedEntity] = await enhancedEntitiesWithTechnologiesInfo(payload.technologies, [entity]);
 
         const allAttributes: AttributeDefinitionType[] = await getAttributes(
             url,
             'attributes',
-            ReverseDataTypeMapping[location.split('/')[0]]?.toLowerCase(),
+            ReverseDataTypeMapping[payload.location.split('/')[0]]?.toLowerCase(),
         );
 
         /* eslint-disable no-restricted-syntax, no-await-in-loop */
@@ -152,7 +160,7 @@ const fetchLinkedObjects = thunk(
 
 const fetchChildrenObjects = thunk(
     async (actions: Actions<EntityModel>, payload: FetchChildrenObjectsParams, { getStoreState }) => {
-        const { parentId, dataType, versionId } = payload;
+        const { parentId, dataType, versionId, technology } = payload;
         try {
             let childrenObjects = [];
             const url = (getStoreState() as any).auth.pubapi;
@@ -177,6 +185,14 @@ const fetchChildrenObjects = thunk(
             } else {
                 childrenObjects = await fetchChildrenObjectsAPI(parentId, url, dataType, versionId);
             }
+            childrenObjects.map((co) => {
+                // set parent technology to childrens
+                if (!co.attributes?.technologyCode) {
+                    co.technology = technology;
+                }
+
+                return co;
+            });
             actions.updateChildrenObjects(childrenObjects);
         } catch (err) {
             console.error('error : ', err);

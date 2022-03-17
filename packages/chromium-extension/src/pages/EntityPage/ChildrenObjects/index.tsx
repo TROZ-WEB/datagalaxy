@@ -75,6 +75,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
                     parentId: entity.id,
                     dataType: entity.dataType,
                     versionId: entity.versionId,
+                    technology: entity.technology,
                 });
             };
 

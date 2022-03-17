@@ -135,12 +135,15 @@ const SearchForm = () => {
 
     const { updateIsLoaded } = useStoreActions((actions) => actions.entity);
 
+    const technologies = useStoreState((state) => state.auth.technologies);
+
     const debounceOnChange = async ({ value }) => {
         if (value) {
             setLoading(true);
 
             await dispatch.search.search({
                 term: value,
+                technologies,
             });
 
             setLoading(false);

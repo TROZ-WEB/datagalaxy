@@ -1,8 +1,10 @@
 /* eslint-disable camelcase */
 export interface TechnologiesResponse {
-    results: TechnologyType[];
+    technologies: TechnologyType[];
 }
 
 export interface TechnologyType {
     id: string;
+    technologyCode: string;
+    imageHash: string;
 }

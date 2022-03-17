@@ -42,10 +42,11 @@ const EntityPage = () => {
     const [entity, setEntity] = useState<EntityType>();
 
     const linkedObjects = useStoreState((state) => state.entity.linkedObjects);
+    const technologies = useStoreState((state) => state.auth.technologies);
 
     useEffect(() => {
-        dispatch.entity.fetchEntity(location);
-    }, [dispatch, location]);
+        dispatch.entity.fetchEntity({ location, technologies });
+    }, [dispatch, location, technologies]);
 
     useEffect(() => {
         if (displayedEntity) {

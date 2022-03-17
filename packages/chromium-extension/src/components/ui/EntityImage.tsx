@@ -1,8 +1,9 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { entitiesTypeRelatedInfos } from 'shared';
 import styled, { css } from 'styled-components';
+import { useStoreState } from '../../store/hooks';
 import DGGlyph from './DGGlyph';
-import TechnicalLogoPlaceholder from '../../../assets/technical-logo-placeholder.png';
+
 /* ---------- STYLES ---------- */
 
 const SEntityDGGlyphContainer = styled.div`
@@ -70,14 +71,23 @@ interface EntityImageProps {
 const EntityImage: FC<EntityImageProps> = ({ entity, entityPage }) => {
     const { kind, glyph } = entitiesTypeRelatedInfos[entity.type];
 
-    // TODO : Link to API (Waiting for API feature)
-    const isTechnicalLogo = true;
+    const url = useStoreState((state) => state.auth.pubapi);
+
+    const hasTechnicalLogo = entity.technology?.imageHash;
+
+    const [errorLoadingImage, setErrorLoadingImage] = useState(false);
 
     return (
         <SRoot entityPage={entityPage} title={chrome.i18n.getMessage(`entity_label_full_${entity.type}`)}>
-            {isTechnicalLogo ? (
+            {!errorLoadingImage && hasTechnicalLogo ? (
                 <>
-                    <STechnicalLogo alt="Technical Logo" src={TechnicalLogoPlaceholder} />
+                    <STechnicalLogo
+                        alt="Technical Logo"
+                        onError={() => {
+                            setErrorLoadingImage(true);
+                        }}
+                        src={`${url}/image?hash=${entity.technology.imageHash}`}
+                    />
                     <SEntityDGGlyphContainer>
                         <DGGlyph icon={glyph} kind={kind.toLowerCase()} size={entityPage ? 'M' : 'S'} />
                     </SEntityDGGlyphContainer>
