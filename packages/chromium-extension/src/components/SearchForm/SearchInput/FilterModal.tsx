@@ -129,8 +129,8 @@ const FilterModal: FC<FilterModalProps> = ({
         <>
             <FiltersModalTag label={label} onClick={() => setIsOpen(!isOpen)} />
             {isOpen && (
-                <SOverlay>
-                    <SModal>
+                <SOverlay onClick={() => setIsOpen(false)}>
+                    <SModal onClick={(e) => e.stopPropagation()}>
                         <SInputContainer>
                             <Glyph icon="Search" />
                             <SInput onChange={handleChange} placeholder="Search..." type="text" value={searchValue} />
@@ -159,12 +159,13 @@ const FilterModal: FC<FilterModalProps> = ({
                             <SFieldsContainer>
                                 {
                                     // eslint-disable-next-line no-nested-ternary
-                                    filteredFields.length > 0 ? (
+                                    filteredFields?.length > 0 ? (
                                         multiselect ? (
                                             filteredFields?.map((field) => (
                                                 <Checkbox
                                                     key={field.id}
                                                     checked={field.checked}
+                                                    icon={field.icon}
                                                     id={field.id}
                                                     label={field.label}
                                                     onChange={onChange}
@@ -175,6 +176,7 @@ const FilterModal: FC<FilterModalProps> = ({
                                                 <Radio
                                                     key={field.id}
                                                     checked={field.checked}
+                                                    icon={field.icon}
                                                     id={field.id}
                                                     label={field.label}
                                                     name={label}

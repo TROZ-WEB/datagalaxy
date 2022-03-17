@@ -20,6 +20,7 @@ export interface QuickFilters {
 export interface FormatedWorkspace {
     id: string;
     label: string;
+    icon: any;
 }
 
 export interface Workspaces {
@@ -69,6 +70,9 @@ export interface Workspaces {
                 email: string;
                 userId: string;
             };
+            trigram: string;
+            imageHash: string;
+            iconHash: string;
         },
     ];
 }
@@ -128,4 +132,17 @@ export interface Technologies {
             lastUsageUserId: string;
         },
     ];
+}
+export interface Domain {
+    label: string;
+    id: string;
+    description: string;
+    color: string;
+    isActive: boolean;
+    isUserSuggestionEnabled: boolean;
+    isNative: boolean;
+}
+export interface Status {
+    key: string;
+    value: string;
 }

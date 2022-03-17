@@ -1,36 +1,44 @@
-import React, { useState } from 'react';
-import { entitiesTypeRelatedInfos } from 'shared';
-import { useStoreState, useStoreActions } from '../../../../store/hooks';
-import DGGlyph from '../../../ui/DGGlyph';
+import React, { useEffect, useState } from 'react';
+import { useStoreState, useStoreDispatch, useStoreActions } from '../../../../store/hooks';
 import FilterModal from '../FilterModal';
 
 /* ---------- COMPONENT ---------- */
 
-const EntityTypeModal = () => {
+const StatusModal = () => {
+    const dispatch = useStoreDispatch();
+    const status = useStoreState((state) => state.filters.status);
     const pickedFilters = useStoreState((state) => state.filters.pickedFilters);
     const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
     const [intersectionLogic, setIntersectionLogic] = useState('or');
+    const [statusFields, setStatusFields] = useState([]);
 
-    const index = pickedFilters?.findIndex((item) => item.attributeKey === 'EntityType');
+    useEffect(() => {
+        const fetchStatusAPI = async () => {
+            await dispatch.filters.fetchStatus(null);
+        };
 
-    const fields = [];
+        fetchStatusAPI();
+    }, [dispatch]);
 
-    for (const [key, value] of Object.entries(entitiesTypeRelatedInfos)) {
-        fields.push({
-            id: key,
-            label: chrome.i18n.getMessage(`entity_label_short_${key}`),
-            icon: <DGGlyph icon={value.glyph} kind={value.kind.toLowerCase()} />,
-            checked: !!pickedFilters?.[index]?.values?.includes(key),
+    useEffect(() => {
+        const index = pickedFilters?.findIndex((item) => item.attributeKey === 'Status');
+        const formatedStatusFields = status?.map((item) => {
+            return {
+                id: item.key,
+                label: item.value,
+                checked: !!pickedFilters?.[index]?.values?.includes(item.key),
+            };
         });
-    }
+        setStatusFields(formatedStatusFields);
+    }, [status, pickedFilters]);
 
     const handleChange = (id) => {
         const newPickedFilters = [...pickedFilters];
-        const filterIndex = newPickedFilters?.findIndex((item) => item.attributeKey === 'EntityType');
+        const filterIndex = newPickedFilters?.findIndex((item) => item.attributeKey === 'Status');
         const newOperator = intersectionLogic === 'or' ? 'contains' : 'matchAll';
         if (filterIndex === -1) {
             const filter = {
-                attributeKey: 'EntityType',
+                attributeKey: 'Status',
                 operator: newOperator,
                 values: [id],
             };
@@ -53,7 +61,7 @@ const EntityTypeModal = () => {
     const handleChangeIntersectionLogic = (params) => {
         setIntersectionLogic(params);
         const newPickedFilters = [...pickedFilters];
-        const filterIndex = newPickedFilters?.findIndex((item) => item.attributeKey === 'EntityType');
+        const filterIndex = newPickedFilters?.findIndex((item) => item.attributeKey === 'Status');
         const newOperator = params === 'or' ? 'contains' : 'matchAll';
         if (filterIndex !== -1) {
             newPickedFilters[filterIndex].operator = newOperator;
@@ -64,14 +72,14 @@ const EntityTypeModal = () => {
 
     return (
         <FilterModal
-            fields={fields}
+            fields={statusFields}
             handleChangeIntersectionLogic={handleChangeIntersectionLogic}
             intersectionLogic={intersectionLogic}
-            label={chrome.i18n.getMessage(`attribute_key_EntityType`)}
+            label={chrome.i18n.getMessage(`attribute_key_EntityStatus`)}
             onChange={handleChange}
             multiselect
         />
     );
 };
 
-export default EntityTypeModal;
+export default StatusModal;

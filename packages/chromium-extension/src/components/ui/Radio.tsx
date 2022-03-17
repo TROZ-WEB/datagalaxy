@@ -60,14 +60,21 @@ const SLabel = styled.span`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
 
     ${(props) => props.bold && `font-weight:700`}
+`;
+
+const SIconContainer = styled.span`
+    margin-right: 8px;
 `;
 
 /* ---------- COMPONENT ---------- */
 
 interface Props {
     label: string;
+    icon?: React.ReactNode;
     id: string;
     className?: string;
     checked?: boolean;
@@ -79,6 +86,7 @@ interface Props {
 
 const Radio: React.FC<Props> = ({
     label,
+    icon,
     id,
     className,
     checked = false,
@@ -100,7 +108,9 @@ const Radio: React.FC<Props> = ({
             <StyledRadio checked={checked}>
                 <SCheck />
             </StyledRadio>
-            <SLabel bold={bold}>{label}</SLabel>
+            <SLabel bold={bold}>
+                <SIconContainer>{icon}</SIconContainer> {label}
+            </SLabel>
         </RadioContainer>
     );
 };

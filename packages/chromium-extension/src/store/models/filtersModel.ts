@@ -4,11 +4,15 @@ import {
     fetchWorkspaces as fetchWorkspacesAPI,
     fetchUsers as fetchUsersAPI,
     fetchTechnologies as fetchTechnologiesAPI,
+    fetchDomains as fetchDomainsAPI,
+    fetchStatus as fetchStatusAPI,
     Filter,
     QuickFilters,
     FormatedWorkspace,
     Users,
     Technologies,
+    Domain,
+    Status,
 } from 'shared';
 import { resetModel } from './helper';
 
@@ -29,6 +33,8 @@ const initialState = {
     versionId: undefined,
     users: null,
     technologies: null,
+    domains: null,
+    status: null,
 };
 
 interface SearchedArgs {
@@ -46,6 +52,8 @@ export interface FiltersModel {
     versionId: string;
     users: Users;
     technologies: Technologies;
+    domains: Domain[];
+    status: Status[];
     /* Actions */
     resetQuickFilters: Action<FiltersModel>;
     updateQuickFilters: Action<FiltersModel, any>;
@@ -54,11 +62,15 @@ export interface FiltersModel {
     updateUsers: Action<FiltersModel, any>;
     updateTechnologies: Action<FiltersModel, any>;
     updateVersionId: Action<FiltersModel, any>;
+    updateDomains: Action<FiltersModel, any>;
+    updateStatus: Action<FiltersModel, any>;
     /* Thunks */
     fetchQuickFilters: Thunk<FiltersModel, SearchedArgs>;
     fetchWorkspaces: Thunk<FiltersModel, SearchedArgs>;
     fetchUsers: Thunk<FiltersModel, SearchedArgs>;
     fetchTechnologies: Thunk<FiltersModel, SearchedArgs>;
+    fetchDomains: Thunk<FiltersModel, SearchedArgs>;
+    fetchStatus: Thunk<FiltersModel, SearchedArgs>;
 }
 
 /**
@@ -117,6 +129,32 @@ const fetchTechnologies = thunk(async (actions: Actions<FiltersModel>, payload: 
     actions.updateTechnologies(technologies);
 });
 
+const fetchDomains = thunk(async (actions: Actions<FiltersModel>, payload: null, { getStoreState }) => {
+    let domains;
+
+    try {
+        const url = (getStoreState() as any).auth.pubapi;
+        domains = await fetchDomainsAPI(url);
+    } catch (err) {
+        console.error('error : ', err);
+    }
+
+    actions.updateDomains(domains);
+});
+
+const fetchStatus = thunk(async (actions: Actions<FiltersModel>, payload: null, { getStoreState }) => {
+    let status;
+
+    try {
+        const url = (getStoreState() as any).auth.pubapi;
+        status = await fetchStatusAPI(url);
+    } catch (err) {
+        console.error('error : ', err);
+    }
+
+    actions.updateStatus(status);
+});
+
 /**
  * Search Model Instance
  */
@@ -145,11 +183,19 @@ const filtersModel = async (): Promise<FiltersModel> => {
         updateTechnologies: action((state, payload) => {
             state.technologies = payload;
         }),
+        updateDomains: action((state, payload) => {
+            state.domains = payload;
+        }),
+        updateStatus: action((state, payload) => {
+            state.status = payload;
+        }),
         /* Thunks */
         fetchQuickFilters,
         fetchWorkspaces,
         fetchUsers,
         fetchTechnologies,
+        fetchDomains,
+        fetchStatus,
     };
 };
 

@@ -1,36 +1,46 @@
-import React, { useState } from 'react';
-import { entitiesTypeRelatedInfos } from 'shared';
-import { useStoreState, useStoreActions } from '../../../../store/hooks';
-import DGGlyph from '../../../ui/DGGlyph';
+import React, { useEffect, useState } from 'react';
+import { useStoreState, useStoreDispatch, useStoreActions } from '../../../../store/hooks';
+import ColorPoint from '../../../ui/ColorPoint';
 import FilterModal from '../FilterModal';
 
 /* ---------- COMPONENT ---------- */
 
-const EntityTypeModal = () => {
+const DomainsModal = () => {
+    const dispatch = useStoreDispatch();
+    const domains = useStoreState((state) => state.filters.domains);
     const pickedFilters = useStoreState((state) => state.filters.pickedFilters);
     const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
     const [intersectionLogic, setIntersectionLogic] = useState('or');
+    const [domainsFields, setDomainsFields] = useState([]);
 
-    const index = pickedFilters?.findIndex((item) => item.attributeKey === 'EntityType');
+    useEffect(() => {
+        const fetchDomainsAPI = async () => {
+            await dispatch.filters.fetchDomains(null);
+        };
 
-    const fields = [];
+        fetchDomainsAPI();
+    }, [dispatch]);
 
-    for (const [key, value] of Object.entries(entitiesTypeRelatedInfos)) {
-        fields.push({
-            id: key,
-            label: chrome.i18n.getMessage(`entity_label_short_${key}`),
-            icon: <DGGlyph icon={value.glyph} kind={value.kind.toLowerCase()} />,
-            checked: !!pickedFilters?.[index]?.values?.includes(key),
+    useEffect(() => {
+        const index = pickedFilters?.findIndex((item) => item.attributeKey === 'Domains');
+        const formatedDomainsFields = domains?.map((item) => {
+            return {
+                id: item.id,
+                label: item.label,
+                icon: <ColorPoint color={item.color} />,
+                checked: !!pickedFilters?.[index]?.values?.includes(item.id),
+            };
         });
-    }
+        setDomainsFields(formatedDomainsFields);
+    }, [domains, pickedFilters]);
 
     const handleChange = (id) => {
         const newPickedFilters = [...pickedFilters];
-        const filterIndex = newPickedFilters?.findIndex((item) => item.attributeKey === 'EntityType');
+        const filterIndex = newPickedFilters?.findIndex((item) => item.attributeKey === 'Domains');
         const newOperator = intersectionLogic === 'or' ? 'contains' : 'matchAll';
         if (filterIndex === -1) {
             const filter = {
-                attributeKey: 'EntityType',
+                attributeKey: 'Domains',
                 operator: newOperator,
                 values: [id],
             };
@@ -53,7 +63,7 @@ const EntityTypeModal = () => {
     const handleChangeIntersectionLogic = (params) => {
         setIntersectionLogic(params);
         const newPickedFilters = [...pickedFilters];
-        const filterIndex = newPickedFilters?.findIndex((item) => item.attributeKey === 'EntityType');
+        const filterIndex = newPickedFilters?.findIndex((item) => item.attributeKey === 'Domains');
         const newOperator = params === 'or' ? 'contains' : 'matchAll';
         if (filterIndex !== -1) {
             newPickedFilters[filterIndex].operator = newOperator;
@@ -64,14 +74,14 @@ const EntityTypeModal = () => {
 
     return (
         <FilterModal
-            fields={fields}
+            fields={domainsFields}
             handleChangeIntersectionLogic={handleChangeIntersectionLogic}
             intersectionLogic={intersectionLogic}
-            label={chrome.i18n.getMessage(`attribute_key_EntityType`)}
+            label={chrome.i18n.getMessage(`attribute_key_Domains`)}
             onChange={handleChange}
             multiselect
         />
     );
 };
 
-export default EntityTypeModal;
+export default DomainsModal;

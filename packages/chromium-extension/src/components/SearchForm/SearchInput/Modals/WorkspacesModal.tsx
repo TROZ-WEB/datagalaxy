@@ -1,6 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../../../store/hooks';
 import FilterModal from '../FilterModal';
+
+/* ---------- STYLES ---------- */
+
+const SIcon = styled.img`
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+`;
 
 /* ---------- COMPONENT ---------- */
 
@@ -8,6 +17,8 @@ const WorkspacesModal = () => {
     const dispatch = useStoreDispatch();
     const workspaces = useStoreState((state) => state.filters.workspaces);
     const { updateVersionId } = useStoreActions((actions) => actions.filters);
+    const url = useStoreState((state) => state.auth.pubapi);
+    const [workspacesFields, setWorkspacesFields] = useState([]);
 
     useEffect(() => {
         const fetchWorkspacesAPI = async () => {
@@ -15,6 +26,17 @@ const WorkspacesModal = () => {
         };
 
         fetchWorkspacesAPI();
+
+        const newWorkspacesFields = workspaces?.map((workspace) => {
+            if (workspace.icon) {
+                const newIcon = <SIcon src={`${url}/image?hash=${workspace.icon}`} />;
+                workspace.icon = newIcon;
+            }
+
+            return workspace;
+        });
+
+        setWorkspacesFields(newWorkspacesFields);
     }, [dispatch]);
 
     const handleChange = (id) => {
@@ -23,7 +45,7 @@ const WorkspacesModal = () => {
 
     return (
         <FilterModal
-            fields={workspaces}
+            fields={workspacesFields}
             label={chrome.i18n.getMessage(`attribute_key_Workspace`)}
             onChange={handleChange}
         />

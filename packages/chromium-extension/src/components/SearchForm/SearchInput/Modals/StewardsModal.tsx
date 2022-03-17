@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../../../store/hooks';
 import FilterModal from '../FilterModal';
+
+/* ---------- STYLES ---------- */
+
+const SIcon = styled.img`
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+`;
 
 /* ---------- COMPONENT ---------- */
 
@@ -27,6 +36,7 @@ const StewardsModal = () => {
                 id: item.userId,
                 label: `${item.firstName} ${item.lastName}`,
                 checked: !!pickedFilters?.[index]?.values?.includes(item.userId),
+                icon: item.profileThumbnailUrl ? <SIcon src={item.profileThumbnailUrl} /> : null,
             };
         });
         setUsersFields(formatedUsersFields);

@@ -1,36 +1,46 @@
 import React, { useState } from 'react';
-import { entitiesTypeRelatedInfos } from 'shared';
 import { useStoreState, useStoreActions } from '../../../../store/hooks';
-import DGGlyph from '../../../ui/DGGlyph';
 import FilterModal from '../FilterModal';
 
 /* ---------- COMPONENT ---------- */
 
-const EntityTypeModal = () => {
+const ModuleModal = () => {
     const pickedFilters = useStoreState((state) => state.filters.pickedFilters);
     const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
     const [intersectionLogic, setIntersectionLogic] = useState('or');
 
-    const index = pickedFilters?.findIndex((item) => item.attributeKey === 'EntityType');
+    const index = pickedFilters?.findIndex((item) => item.attributeKey === 'Module');
 
-    const fields = [];
-
-    for (const [key, value] of Object.entries(entitiesTypeRelatedInfos)) {
-        fields.push({
-            id: key,
-            label: chrome.i18n.getMessage(`entity_label_short_${key}`),
-            icon: <DGGlyph icon={value.glyph} kind={value.kind.toLowerCase()} />,
-            checked: !!pickedFilters?.[index]?.values?.includes(key),
-        });
-    }
+    const fields = [
+        {
+            id: 'glossary',
+            label: chrome.i18n.getMessage(`module_glossary`),
+            checked: !!pickedFilters?.[index]?.values?.includes('glossary'),
+        },
+        {
+            id: 'dictionary',
+            label: chrome.i18n.getMessage(`module_dictionary`),
+            checked: !!pickedFilters?.[index]?.values?.includes('dictionary'),
+        },
+        {
+            id: 'dataprocessing',
+            label: chrome.i18n.getMessage(`module_dataprocessing`),
+            checked: !!pickedFilters?.[index]?.values?.includes('dataprocessing'),
+        },
+        {
+            id: 'uses',
+            label: chrome.i18n.getMessage(`module_uses`),
+            checked: !!pickedFilters?.[index]?.values?.includes('uses'),
+        },
+    ];
 
     const handleChange = (id) => {
         const newPickedFilters = [...pickedFilters];
-        const filterIndex = newPickedFilters?.findIndex((item) => item.attributeKey === 'EntityType');
+        const filterIndex = newPickedFilters?.findIndex((item) => item.attributeKey === 'Module');
         const newOperator = intersectionLogic === 'or' ? 'contains' : 'matchAll';
         if (filterIndex === -1) {
             const filter = {
-                attributeKey: 'EntityType',
+                attributeKey: 'Module',
                 operator: newOperator,
                 values: [id],
             };
@@ -53,7 +63,7 @@ const EntityTypeModal = () => {
     const handleChangeIntersectionLogic = (params) => {
         setIntersectionLogic(params);
         const newPickedFilters = [...pickedFilters];
-        const filterIndex = newPickedFilters?.findIndex((item) => item.attributeKey === 'EntityType');
+        const filterIndex = newPickedFilters?.findIndex((item) => item.attributeKey === 'Module');
         const newOperator = params === 'or' ? 'contains' : 'matchAll';
         if (filterIndex !== -1) {
             newPickedFilters[filterIndex].operator = newOperator;
@@ -67,11 +77,11 @@ const EntityTypeModal = () => {
             fields={fields}
             handleChangeIntersectionLogic={handleChangeIntersectionLogic}
             intersectionLogic={intersectionLogic}
-            label={chrome.i18n.getMessage(`attribute_key_EntityType`)}
+            label={chrome.i18n.getMessage(`attribute_key_Module`)}
             onChange={handleChange}
             multiselect
         />
     );
 };
 
-export default EntityTypeModal;
+export default ModuleModal;

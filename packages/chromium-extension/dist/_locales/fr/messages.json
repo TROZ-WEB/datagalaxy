@@ -226,7 +226,7 @@
     "entity_label_short_Application": {
         "message": "Applic."
     },
-    "entity_label_short_Us": {
+    "entity_label_short_Use": {
         "message": "Usage"
     },
     "entity_label_short_Process": {
@@ -1203,5 +1203,59 @@
     },
     "no_filters": {
         "message": "Aucun filtre n’est disponible pour cette recherche"
+    },
+    "last_modified_pastHour": {
+        "message": "Dans l'heure"
+    },
+    "last_modified_today": {
+        "message": "Aujourd'hui"
+    },
+    "last_modified_yesterday": {
+        "message": "Hier"
+    },
+    "last_modified_currentWeek": {
+        "message": "Cette semaine"
+    },
+    "last_modified_pastWeek": {
+        "message": "La semaine dernière"
+    },
+    "last_modified_beforeCurrentWeek": {
+        "message": "Avant cette semaine"
+    },
+    "last_modified_beforePastWeek": {
+        "message": "Avant la semaine dernière"
+    },
+    "last_modified_currentMonth": {
+        "message": "Ce mois-ci"
+    },
+    "last_modified_pastMonth": {
+        "message": "Le mois dernier"
+    },
+    "last_modified_beforeCurrentMonth": {
+        "message": "Avant ce mois-ci"
+    },
+    "last_modified_beforePastMonth": {
+        "message": "Avant le mois dernier"
+    },
+    "last_modified_beforeToday": {
+        "message": "Avant aujourd'hui"
+    },
+    "last_modified_currentYear": {
+        "message": "Cette année"
+    },
+    "last_modified_last365days": {
+        "message": "Les derniers 365 jours"
+    },
+    "module_glossary": {
+        "message": "Glossaire"
+    },
+    "module_dictionary": {
+        "message": "Dictionaire"
+    },
+    "module_dataprocessing": {
+        "message": "Traitement de donnés"
+    },
+    "module_uses": {
+        "message": "Utilise"
     }
 }

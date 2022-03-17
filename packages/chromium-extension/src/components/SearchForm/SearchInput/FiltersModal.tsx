@@ -3,7 +3,12 @@ import styled from 'styled-components';
 import RoundButton from '../../ui/RoundButton';
 import Title from '../../ui/Title';
 import FilterModal from './FilterModal';
+import DomainsModal from './Modals/DomainsModal';
+import EntityTypeModal from './Modals/EntityTypeModal';
+import LastModifiedModal from './Modals/LastModifiedModal';
+import ModuleModal from './Modals/ModuleModal';
 import OwnersModal from './Modals/OwnersModal';
+import StatusModal from './Modals/StatusModal';
 import StewardsModal from './Modals/StewardsModal';
 import TechnologiesModal from './Modals/TechnologiesModal';
 import WorkspacesModal from './Modals/WorkspacesModal';
@@ -41,30 +46,22 @@ const STitle = styled(Title)`
 const FiltersModal = () => {
     const [isOpen, setIsOpen] = React.useState(false);
 
-    const handleBlur = () => {
-        // setTimeout(() => setIsOpen(!isOpen), 200);
-    };
-
     return (
         <SRoot>
-            <RoundButton icon="FilterEmpty" onBlur={handleBlur} onClick={() => setIsOpen(!isOpen)} />
+            <RoundButton icon="FilterEmpty" onClick={() => setIsOpen(!isOpen)} />
             {isOpen && (
                 <SModal>
                     <STitle>{chrome.i18n.getMessage(`filter_by`)}</STitle>
                     <SFiltersContainer>
                         <WorkspacesModal />
                         <TechnologiesModal />
-                        <FilterModal fields={[]} label={chrome.i18n.getMessage(`attribute_key_Module`)} multiselect />
-                        <FilterModal
-                            fields={[]}
-                            label={chrome.i18n.getMessage(`attribute_key_EntityType`)}
-                            multiselect
-                        />
-                        <FilterModal fields={[]} label={chrome.i18n.getMessage(`attribute_key_Tags`)} multiselect />
+                        <ModuleModal />
+                        <EntityTypeModal />
+                        <DomainsModal />
                         <OwnersModal />
                         <StewardsModal />
-                        <FilterModal fields={[]} label={chrome.i18n.getMessage(`attribute_key_EntityStatus`)} />
-                        <FilterModal fields={[]} label={chrome.i18n.getMessage(`attribute_key_LastModified`)} />
+                        <StatusModal />
+                        <LastModifiedModal />
                     </SFiltersContainer>
                 </SModal>
             )}

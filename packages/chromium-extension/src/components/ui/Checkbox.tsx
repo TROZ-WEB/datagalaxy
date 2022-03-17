@@ -54,19 +54,26 @@ const SLabel = styled.span`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+`;
+
+const SIconContainer = styled.span`
+    margin-right: 8px;
 `;
 
 /* ---------- COMPONENT ---------- */
 
 interface Props {
     label: string;
+    icon: React.ReactNode;
     id: string;
     className?: string;
     checked?: boolean;
     onChange?: (id) => void;
 }
 
-const Checkbox: React.FC<Props> = ({ label, id, className, checked = false, onChange, ...props }) => {
+const Checkbox: React.FC<Props> = ({ label, icon, id, className, checked = false, onChange, ...props }) => {
     const handleChange = () => {
         onChange(id);
     };
@@ -77,7 +84,9 @@ const Checkbox: React.FC<Props> = ({ label, id, className, checked = false, onCh
             <StyledCheckbox checked={checked}>
                 <SGlyph icon="Check" />
             </StyledCheckbox>
-            <SLabel>{label}</SLabel>
+            <SLabel>
+                <SIconContainer>{icon}</SIconContainer> {label}
+            </SLabel>
         </CheckboxContainer>
     );
 };

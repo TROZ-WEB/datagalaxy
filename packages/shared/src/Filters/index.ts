@@ -1,8 +1,18 @@
 /* eslint-disable import/prefer-default-export */
 import { post, get } from '../Http';
-import { QuickFilters, Workspaces, Versions, FormatedWorkspace, Filter, Users, Technologies } from './types';
+import {
+    QuickFilters,
+    Workspaces,
+    Versions,
+    FormatedWorkspace,
+    Filter,
+    Users,
+    Technologies,
+    Domain,
+    Status,
+} from './types';
 
-export type { Filter, QuickFilters, FormatedWorkspace, Users, Technologies } from './types';
+export type { Filter, QuickFilters, FormatedWorkspace, Users, Technologies, Domain, Status } from './types';
 
 export const fetchQuickFilters = async (
     apiUrl: string,
@@ -47,13 +57,21 @@ export const fetchWorkspaces = async (apiUrl: string): Promise<FormatedWorkspace
                         // eslint-disable-next-line no-await-in-loop
                         const version = await get<Versions>(`${apiUrl}/workspaces/${projects[i].id}/versions`);
                         version.parsedBody.results.map((item) =>
-                            res.push({ id: item.versionId, label: item.versionName }),
+                            res.push({
+                                id: item.versionId,
+                                label: item.versionName,
+                                icon: projects[i].iconHash,
+                            }),
                         );
                     } catch (error) {
                         console.error(error);
                     }
                 } else {
-                    res.push({ id: projects[i].defaultVersionId, label: projects[i].name });
+                    res.push({
+                        id: projects[i].defaultVersionId,
+                        label: projects[i].name,
+                        icon: projects[i].iconHash,
+                    });
                 }
             }
         }
@@ -64,25 +82,6 @@ export const fetchWorkspaces = async (apiUrl: string): Promise<FormatedWorkspace
     }
 
     return null;
-
-    // get<Workspaces>(`${apiUrl}/workspaces`)
-    //     .then((response) => {
-    //         const { projects } = response.parsedBody;
-    //         if (projects?.length > 0) {
-    //             for (let i = 0; i < projects.length; i++) {
-    //                 if (projects[i].isVersioningEnabled) {
-    //                     get<Workspaces>(`${apiUrl}/workspaces/${projects[i].id}/versions`)
-    //                         .then((res) => res.parsedBody)
-    //                         .catch((error) => console.error(error));
-    //                 }
-    //             }
-    //         }
-
-    //         return response.parsedBody;
-    //     })
-    //     .catch((error) => console.error(error));
-
-    // return null;
 };
 
 export const fetchUsers = async (apiUrl: string): Promise<Users> => {
@@ -100,6 +99,30 @@ export const fetchUsers = async (apiUrl: string): Promise<Users> => {
 export const fetchTechnologies = async (apiUrl: string): Promise<Technologies> => {
     try {
         const response = await get<Technologies>(`${apiUrl}/technologies`);
+
+        return response.parsedBody;
+    } catch (error) {
+        console.error(error);
+    }
+
+    return null;
+};
+
+export const fetchDomains = async (apiUrl: string): Promise<Domain[]> => {
+    try {
+        const response = await get<Domain[]>(`${apiUrl}/attributes/values?dataType=common&attributeKey=Domains`);
+
+        return response.parsedBody;
+    } catch (error) {
+        console.error(error);
+    }
+
+    return null;
+};
+
+export const fetchStatus = async (apiUrl: string): Promise<Status[]> => {
+    try {
+        const response = await get<Status[]>(`${apiUrl}/attributes/values?dataType=common&attributeKey=EntityStatus`);
 
         return response.parsedBody;
     } catch (error) {
