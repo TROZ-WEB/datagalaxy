@@ -39,7 +39,7 @@ export interface EntityModel {
     /* Actions */
     resetModel: Action<EntityModel>;
     updateIsLoaded: Action<EntityModel, boolean>;
-    updateDisplayedEntity: Action<EntityModel, EntityType>;
+    updateEntity: Action<EntityModel, EntityType>;
     updateLinkedObjects: Action<EntityModel, LinkedObjectsType>;
     updateChildrenObjects: Action<EntityModel, EntityType[]>;
     updateScreenConfiguration: Action<EntityModel, ScreenConfiguration>;
@@ -139,7 +139,7 @@ const fetchEntity = thunk(async (actions: Actions<EntityModel>, payload: FetchEn
             }
         }
 
-        actions.updateDisplayedEntity(enhancedEntity);
+        actions.updateEntity(enhancedEntity);
     } catch (err) {
         console.error('error : ', err);
     }
@@ -228,8 +228,9 @@ const entityModel = async (): Promise<EntityModel> => {
         updateIsLoaded: action((state, payload: boolean) => {
             state.isLoaded = payload;
         }),
-        updateDisplayedEntity: action((state, payload: EntityType) => {
+        updateEntity: action((state, payload: EntityType) => {
             state.displayedEntity = payload;
+            state.isLoaded = true;
         }),
         updateLinkedObjects: action((state, payload: any) => {
             state.linkedObjects = payload;

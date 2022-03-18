@@ -58,7 +58,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
     const childrenObjects = useStoreState((state) => state.entity.childrenObjects);
     const [children, setChildren] = useState<EntityType[]>();
     const [grandChildren, setGrandChildren] = useState<EntityType[]>();
-    const { updateDisplayedEntity } = useStoreActions((actions) => actions.entity);
+    const { updateEntity } = useStoreActions((actions) => actions.entity);
 
     const entityPath = useMemo<string>(() => {
         const t = entity.path.split('\\');
@@ -84,7 +84,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
     }, [childrenObjects]);
 
     const handleClick = (childrenEntity) => {
-        updateDisplayedEntity(null);
+        updateEntity(null);
         const URLLocation = childrenEntity.location.replace(new RegExp('/', 'g'), '.'); // Replace "/" by "." in url
         history.push(`/app/entities/${URLLocation}/`);
     };

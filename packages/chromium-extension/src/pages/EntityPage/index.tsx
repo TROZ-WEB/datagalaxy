@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import VerticalMenu from '../../components/Entity/VerticalMenu';
 import LoadingScreen from '../../components/LoadingScreen';
 import EntityHeader from '../../components/ui/EntityHeader';
-import { useStoreDispatch, useStoreState } from '../../store/hooks';
+import { useStoreActions, useStoreDispatch, useStoreState } from '../../store/hooks';
 import ChildrenObjects from './ChildrenObjects';
 import LinkedObjects from './LinkedObjects';
 import Details from './pages/Details';
@@ -48,7 +48,11 @@ const EntityPage = () => {
     const [childrenObjectsNumber, setChildrenObjectsNumber] = useState(0);
     const [linkedObjectsNumber, setLinkedObjectsNumber] = useState(0);
 
+    const { updateIsLoaded } = useStoreActions((state) => state.entity);
+    const isLoaded = useStoreState((state) => state.entity.isLoaded);
+
     useEffect(() => {
+        updateIsLoaded(false);
         dispatch.entity.fetchEntity({ location, technologies });
     }, [dispatch, location, technologies]);
 
@@ -128,7 +132,7 @@ const EntityPage = () => {
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
-            {entity && entity.type ? (
+            {isLoaded && entity && entity.type ? (
                 <>
                     <EntityHeader entity={entity} id={`entityHeader${entity.id}`} alwaysExpanded entityPage />
                     <SContainer>

@@ -25,10 +25,10 @@ const LinkedObjects = () => {
     const history = useHistory();
 
     const linkedObjects = useStoreState((state) => state.entity.linkedObjects);
-    const { updateDisplayedEntity } = useStoreActions((actions) => actions.entity);
+    const { updateEntity } = useStoreActions((actions) => actions.entity);
 
     const handleClick = (e) => {
-        updateDisplayedEntity(null);
+        updateEntity(null);
         const URLLocation = e.location.replace(new RegExp('/', 'g'), '.'); // Replace "/" by "." in url
         history.push(`/app/entities/${URLLocation}/`);
     };
