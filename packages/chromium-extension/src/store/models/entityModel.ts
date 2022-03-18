@@ -95,9 +95,9 @@ const fetchEntity = thunk(async (actions: Actions<EntityModel>, payload: FetchEn
 
         // Then enrich the entity object with required user info
         const [enhancedEntity1] = await enhancedEntitiesWithUserInfo([entity], url);
-        const [enhancedEntity2] = await enhancedEntitiesWithTechnologiesInfo(payload.technologies, [entity]);
+        const [enhancedEntity2] = await enhancedEntitiesWithTechnologiesInfo(payload.technologies, [enhancedEntity1]);
 
-        const enhancedEntity = { ...enhancedEntity1, enhancedEntity2 };
+        const enhancedEntity = enhancedEntity2;
 
         const allAttributes: AttributeDefinitionType[] = await getAttributes(
             url,

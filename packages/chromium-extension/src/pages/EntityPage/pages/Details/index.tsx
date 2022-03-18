@@ -127,7 +127,7 @@ const isEmptyObject = (elt) => {
     return typeof elt === 'object' ? Object.keys(elt).length === 0 : false;
 };
 
-const computeData = (data: any) => {
+const computeData = (data: any, i: number) => {
     if (data === true) {
         return chrome.i18n.getMessage(`entity_details_data_boolean_1`);
     }
@@ -167,14 +167,7 @@ const computeData = (data: any) => {
             }
 
             if (d.label) {
-                return (
-                    <Tags.Item
-                        key={d + Math.random()}
-                        color={d.color}
-                        hideLabel={false}
-                        tag={d.description || d.label}
-                    />
-                );
+                return <Tags.Item key={i} color={d.color} hideLabel={false} tag={d.description || d.label} />;
             }
 
             if (d.type) {
@@ -185,7 +178,7 @@ const computeData = (data: any) => {
                 return <UserProfile user={d} />;
             }
 
-            return <Tags.Item key={d + Math.random()} hideLabel={false} tag={d} />;
+            return <Tags.Item key={i} hideLabel={false} tag={d} />;
         });
     }
 
@@ -290,7 +283,7 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                                     {filteredAttributes.length !== 0 && (
                                         <SFieldsContainer>
                                             <Accordion header={<STitle>{category.name}</STitle>} initialOpen>
-                                                {filteredAttributes.map((attribute) => {
+                                                {filteredAttributes.map((attribute, i) => {
                                                     if (
                                                         rest[attribute.name] &&
                                                         !rest[attribute.name].trend &&
@@ -302,7 +295,7 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                                                                 <Details.SubInfo
                                                                     title={computeTitle(rest, attribute.name)}
                                                                 >
-                                                                    {computeData(rest[attribute.name])}
+                                                                    {computeData(rest[attribute.name], i)}
                                                                 </Details.SubInfo>
                                                                 <Details.Separator />
                                                             </>

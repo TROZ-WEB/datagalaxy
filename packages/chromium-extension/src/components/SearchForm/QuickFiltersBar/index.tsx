@@ -144,9 +144,10 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                             <SLeftButton disabled={scrollValue === 0} onClick={handleScrollLeft}>
                                 <SGlyph icon="ArrowDropRight" />
                             </SLeftButton>
-                            {QuickFiltersArray?.map(({ filter }) => (
+                            {QuickFiltersArray?.map(({ filter }, i) => (
                                 <QuickFilter
-                                    key={filter?.values?.[0]}
+                                    /* eslint-disable-next-line react/no-array-index-key */
+                                    key={i}
                                     icon="Table"
                                     kind="dictionary"
                                     label={chrome.i18n.getMessage(`attribute_key_${filter?.attributeKey}`)}
