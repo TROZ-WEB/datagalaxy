@@ -58,7 +58,7 @@ const EntityPage = () => {
 
     useEffect(() => {
         if (displayedEntity) {
-            setEntity({ ...entity, ...displayedEntity, dataType, location });
+            setEntity({ ...displayedEntity, dataType, location });
             dispatch.entity.fetchScreenConfiguration({
                 dataType: ReverseDataTypeMapping[dataType].toLowerCase(),
                 versionId: displayedEntity.versionId,
