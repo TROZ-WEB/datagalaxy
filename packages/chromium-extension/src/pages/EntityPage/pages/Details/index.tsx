@@ -201,9 +201,9 @@ const computeTitle = (r: any, key: string) => {
 };
 
 const Details = ({ entity, screenConfiguration }: DetailsProps) => {
-    const reservedKeys = ['creationTime', 'lastModificationTime', 'logicalParentData'];
+    const reservedKeys = ['creationTime', 'lastModificationTime'];
     /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-    const { description, tags, summary, status, externalUrl, ...rest } = entity.attributes;
+    const { description, tags, summary, status, externalUrl, owners, stewards, ...rest } = entity.attributes;
 
     const [displayMoreDetails, setDisplayMoreDetails] = useState(false);
 
@@ -232,8 +232,9 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                         <Details.SubInfo title="">
                             {tags.length !== 0 ? (
                                 <Tags>
-                                    {tags?.map((tag) => (
-                                        <Tags.Item key={tag} tag={tag} />
+                                    {tags?.map((tag, i) => (
+                                        /* eslint-disable-next-line */
+                                        <Tags.Item key={i} tag={tag} />
                                     ))}
                                 </Tags>
                             ) : (
@@ -273,32 +274,50 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                     </SDisplayMoreButtonContainer>
 
                     {displayMoreDetails &&
-                        screenConfiguration.categories.map((category) => (
-                            <SFieldsContainer>
-                                <Accordion header={<STitle>{category.name}</STitle>} initialOpen>
-                                    {category.attributes.map((attribute) => {
-                                        if (
-                                            rest[attribute.name] &&
-                                            !rest[attribute.name].trend &&
-                                            !isEmptyObject(rest[attribute.name]) &&
-                                            reservedKeys.indexOf(attribute.name) === -1
-                                        ) {
-                                            return (
-                                                <>
-                                                    <Details.SubInfo title={computeTitle(rest, attribute.name)}>
-                                                        {computeData(rest[attribute.name])}
-                                                    </Details.SubInfo>
-                                                    <Details.Separator />
-                                                </>
-                                            );
-                                        }
+                        screenConfiguration.categories.map((category) => {
+                            const filteredAttributes = category.attributes.filter((att) => {
+                                return (
+                                    rest[att.name] &&
+                                    !rest[att.name].trend &&
+                                    !isEmptyObject(rest[att.name]) &&
+                                    reservedKeys.indexOf(att.name) === -1
+                                );
+                            });
 
-                                        // eslint-disable-next-line react/jsx-no-useless-fragment
-                                        return <></>;
-                                    })}
-                                </Accordion>
-                            </SFieldsContainer>
-                        ))}
+                            return (
+                                /* eslint-disable-next-line react/jsx-no-useless-fragment */
+                                <>
+                                    {filteredAttributes.length !== 0 && (
+                                        <SFieldsContainer>
+                                            <Accordion header={<STitle>{category.name}</STitle>} initialOpen>
+                                                {filteredAttributes.map((attribute) => {
+                                                    if (
+                                                        rest[attribute.name] &&
+                                                        !rest[attribute.name].trend &&
+                                                        !isEmptyObject(rest[attribute.name]) &&
+                                                        reservedKeys.indexOf(attribute.name) === -1
+                                                    ) {
+                                                        return (
+                                                            <>
+                                                                <Details.SubInfo
+                                                                    title={computeTitle(rest, attribute.name)}
+                                                                >
+                                                                    {computeData(rest[attribute.name])}
+                                                                </Details.SubInfo>
+                                                                <Details.Separator />
+                                                            </>
+                                                        );
+                                                    }
+
+                                                    // eslint-disable-next-line react/jsx-no-useless-fragment
+                                                    return <></>;
+                                                })}
+                                            </Accordion>
+                                        </SFieldsContainer>
+                                    )}
+                                </>
+                            );
+                        })}
                 </>
             )}
         </>

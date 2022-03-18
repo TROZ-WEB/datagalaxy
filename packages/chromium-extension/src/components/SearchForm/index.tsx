@@ -186,15 +186,15 @@ const SearchForm = () => {
                         {...searchInputProps}
                         loading={loading}
                         onBlur={() => {
-                            window.removeEventListener('keypress', keyListener);
-                            window.removeEventListener('keydown', keyListener);
-                            window.removeEventListener('keyup', keyListener);
+                            window.removeEventListener('keypress', keyListener, true);
+                            window.removeEventListener('keydown', keyListener, true);
+                            window.removeEventListener('keyup', keyListener, true);
                         }}
                         onFocus={() => {
                             // remove background page keys listener when input is focused
-                            window.addEventListener('keypress', keyListener);
-                            window.addEventListener('keydown', keyListener);
-                            window.addEventListener('keyup', keyListener);
+                            window.addEventListener('keypress', keyListener, true);
+                            window.addEventListener('keydown', keyListener, true);
+                            window.addEventListener('keyup', keyListener, true);
                         }}
                         placeholder={chrome.i18n.getMessage('search')}
                         success={success}
