@@ -15,8 +15,11 @@ export async function http<T>(request: Request): Promise<HttpResponse<T>> {
     request.headers.set('authorization', `Bearer ${await AccessToken.getInstance().getAccessToken()}`);
     const response: HttpResponse<T> = await fetch(request);
 
-    response.parsedBody = await response.json();
-
+    try {
+        response.parsedBody = await response.json();
+    } catch (error) {
+        response.parsedBody = null;
+    }
     // Trigger custom error for unauthorized error (accessToken no more valid)
     if (!response.ok) {
         if (response.status === 401) {

@@ -94,7 +94,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
         <SRoot>
             {children && children.length !== 0 ? (
                 children?.map((childrenEntity) => (
-                    <>
+                    <React.Fragment key={childrenEntity.id}>
                         <Accordion
                             key={childrenEntity.id}
                             disabled={childrenEntity.childrenCount === 0}
@@ -110,8 +110,8 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
                             openButtonPosition="left"
                         >
                             {grandChildren.length > 0 ? (
-                                grandChildren?.map((grandChildrenEntity) => (
-                                    <>
+                                grandChildren.map((grandChildrenEntity) => (
+                                    <React.Fragment key={grandChildrenEntity.id}>
                                         <HorizontalSeparator />
                                         <SSubEntityWrapper
                                             key={grandChildrenEntity.id}
@@ -122,7 +122,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
                                                 id={`entityHeader${grandChildrenEntity.id}`}
                                             />
                                         </SSubEntityWrapper>
-                                    </>
+                                    </React.Fragment>
                                 ))
                             ) : (
                                 <SSpinnerWrapper>
@@ -131,7 +131,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
                             )}
                         </Accordion>
                         <HorizontalSeparator />
-                    </>
+                    </React.Fragment>
                 ))
             ) : (
                 <LoadingScreen />

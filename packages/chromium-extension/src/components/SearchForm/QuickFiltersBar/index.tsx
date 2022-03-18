@@ -146,7 +146,7 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                             </SLeftButton>
                             {QuickFiltersArray?.map(({ filter }) => (
                                 <QuickFilter
-                                    key={filter?.values?.[0]}
+                                    key={Math.random()}
                                     icon="Table"
                                     kind="dictionary"
                                     label={chrome.i18n.getMessage(`attribute_key_${filter?.attributeKey}`)}

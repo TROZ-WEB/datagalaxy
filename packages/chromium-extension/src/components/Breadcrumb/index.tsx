@@ -39,10 +39,10 @@ const SWorkspaceImage = styled.img`
 
 const formatText = (formattedPath: any) => {
     const text = formattedPath.shorten.map((elem, i) => (
-        <>
+        <React.Fragment key={Math.random()}>
             {elem}
             <SChevron>{i < formattedPath.shorten.length - 1 && ''}</SChevron>
-        </>
+        </React.Fragment>
     ));
 
     return text;
