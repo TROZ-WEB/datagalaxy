@@ -42,13 +42,11 @@ export interface EntityModel {
     updateDisplayedEntity: Action<EntityModel, EntityType>;
     updateLinkedObjects: Action<EntityModel, LinkedObjectsType>;
     updateChildrenObjects: Action<EntityModel, EntityType[]>;
-    updateGrandChildrenObjects: Action<EntityType, { parentId: string; childrenObjects: EntityType[] }>;
     updateScreenConfiguration: Action<EntityModel, ScreenConfiguration>;
     /* Thunks */
     fetchEntity: Thunk<EntityModel, FetchEntityArgs>;
     fetchLinkedObjects: Thunk<EntityModel, FetchLinkedObjectsParams>;
     fetchChildrenObjects: Thunk<EntityModel, FetchChildrenObjectsParams>;
-    fetchGrandChildrenObjects: Thunk<EntityModel, FetchChildrenObjectsParams>;
     fetchScreenConfiguration: Thunk<EntityModel, FetchScreenConfigurationParams>;
 }
 
@@ -185,6 +183,7 @@ const fetchChildrenObjects = thunk(
             } else {
                 childrenObjects = await fetchChildrenObjectsAPI(parentId, url, dataType, versionId);
             }
+
             childrenObjects.map((co) => {
                 // set parent technology to childrens
                 if (!co.attributes?.technologyCode) {
@@ -193,25 +192,8 @@ const fetchChildrenObjects = thunk(
 
                 return co;
             });
+
             actions.updateChildrenObjects(childrenObjects);
-        } catch (err) {
-            console.error('error : ', err);
-        }
-    },
-);
-
-const fetchGrandChildrenObjects = thunk(
-    async (actions: Actions<EntityModel>, payload: FetchChildrenObjectsParams, { getStoreState }) => {
-        const { parentId, dataType, versionId } = payload;
-        try {
-            const url = (getStoreState() as any).auth.pubapi;
-            // First search for results
-            const childrenObjects = await fetchChildrenObjectsAPI(parentId, url, dataType, versionId);
-
-            actions.updateGrandChildrenObjects({
-                parentId,
-                childrenObjects,
-            });
         } catch (err) {
             console.error('error : ', err);
         }
@@ -253,10 +235,6 @@ const entityModel = async (): Promise<EntityModel> => {
         updateChildrenObjects: action((state, payload: any) => {
             state.childrenObjects = payload;
         }),
-        updateGrandChildrenObjects: action((state, payload: any) => {
-            const { parentId, childrenObjects } = payload;
-            state.childrenObjects.find((entity) => entity && entity.id === parentId).childrenObjects = childrenObjects;
-        }),
         updateScreenConfiguration: action((state, payload: any) => {
             state.screenConfiguration = payload;
         }),
@@ -264,7 +242,6 @@ const entityModel = async (): Promise<EntityModel> => {
         fetchEntity,
         fetchLinkedObjects,
         fetchChildrenObjects,
-        fetchGrandChildrenObjects,
         fetchScreenConfiguration,
     };
 };

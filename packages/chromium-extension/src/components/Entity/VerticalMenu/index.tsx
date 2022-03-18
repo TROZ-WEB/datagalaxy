@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { EntityType } from 'shared';
 import styled from 'styled-components';
 import VerticalMenuButton from './VerticalMenuButton';
 
@@ -22,11 +21,12 @@ const SRoot = styled.div`
 /* ---------- COMPONENT ---------- */
 
 interface VerticalMenuProps {
-    entity: EntityType;
     URLLocation: string;
+    childrenObjectsNumber: number;
+    linkedObjectsNumber: number;
 }
 
-const VerticalMenu: FC<VerticalMenuProps> = ({ entity, URLLocation }) => {
+const VerticalMenu: FC<VerticalMenuProps> = ({ URLLocation, childrenObjectsNumber, linkedObjectsNumber }) => {
     const history = useHistory();
     const path = useLocation().pathname.split('/').pop();
 
@@ -39,14 +39,14 @@ const VerticalMenu: FC<VerticalMenuProps> = ({ entity, URLLocation }) => {
                 variant={path === '' && 'active'}
             />
             <VerticalMenuButton
-                badgeCount={entity?.childrenCount}
+                badgeCount={childrenObjectsNumber}
                 icon="Hierarchy"
                 id="infoButton2"
                 onClick={() => history.replace(`/app/entities/${URLLocation}/children-objects`)}
                 variant={path === 'children-objects' && 'active'}
             />
             <VerticalMenuButton
-                badgeCount={entity?.linkedObjectsCount}
+                badgeCount={linkedObjectsNumber}
                 icon="Mapping"
                 id="infoButton3"
                 onClick={() => history.replace(`/app/entities/${URLLocation}/linked-objects`)}

@@ -7,7 +7,7 @@ import LoadingScreen from '../../../components/LoadingScreen';
 import Accordion from '../../../components/ui/Accordion';
 import EntityHeader from '../../../components/ui/EntityHeader';
 import Spinner from '../../../components/ui/Spinner';
-import { useStoreDispatch, useStoreState, useStoreActions } from '../../../store/hooks';
+import { useStoreState, useStoreActions } from '../../../store/hooks';
 
 /* ---------- STYLES ---------- */
 
@@ -55,9 +55,7 @@ interface ChildrenObjectsProps {
 const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
     // /!\ entity and childrenEntity types are not exactly the same
     const history = useHistory();
-    const dispatch = useStoreDispatch();
     const childrenObjects = useStoreState((state) => state.entity.childrenObjects);
-    const [isChildrenLoaded, setIsChildrenLoaded] = useState<boolean>(false);
     const [children, setChildren] = useState<EntityType[]>();
     const [grandChildren, setGrandChildren] = useState<EntityType[]>();
     const { updateDisplayedEntity } = useStoreActions((actions) => actions.entity);
@@ -69,26 +67,9 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
     }, [entity]);
 
     useEffect(() => {
-        if (entity && !isChildrenLoaded) {
-            const fetchChildrenObjects = async () => {
-                await dispatch.entity.fetchChildrenObjects({
-                    parentId: entity.id,
-                    dataType: entity.dataType,
-                    versionId: entity.versionId,
-                    technology: entity.technology,
-                });
-            };
-
-            fetchChildrenObjects().then(() => {
-                setIsChildrenLoaded(true);
-            });
-        }
-    }, [dispatch, entity]);
-
-    useEffect(() => {
         const c = [];
         const gc = [];
-        childrenObjects.forEach((co) => {
+        childrenObjects?.forEach((co) => {
             const pathSplited = co.path.split('\\');
 
             if (pathSplited[pathSplited.length - 2] === entityPath) {
@@ -100,11 +81,10 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
         });
         setChildren(c);
         setGrandChildren(gc);
-    }, [isChildrenLoaded]);
+    }, [childrenObjects]);
 
     const handleClick = (childrenEntity) => {
         updateDisplayedEntity(null);
-        setIsChildrenLoaded(false);
         const URLLocation = childrenEntity.location.replace(new RegExp('/', 'g'), '.'); // Replace "/" by "." in url
         history.push(`/app/entities/${URLLocation}/`);
     };
@@ -112,7 +92,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <SRoot>
-            {isChildrenLoaded ? (
+            {children && children.length !== 0 ? (
                 children?.map((childrenEntity) => (
                     <>
                         <Accordion
