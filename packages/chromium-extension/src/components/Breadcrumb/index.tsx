@@ -57,7 +57,7 @@ const Breadcrumb = ({ path, workspace }: { path: string[]; workspace: WorkspaceT
     return (
         <div>
             {formattedPath && (
-                <SRoot title={formattedPath.default.join(' > ')}>
+                <SRoot title={path.join(' > ')}>
                     {workspace?.imageHash && (
                         <SWorkspaceImage
                             alt="workspace-image"

@@ -15,7 +15,7 @@ export type { AttributeType, AttributeDefinitionType } from '../Attributes/types
  */
 
 export const formatBreadcrumb = (pathAsArray: string[]): { shorten: string[]; default: string[] } => {
-    const base = pathAsArray;
+    const base = JSON.parse(JSON.stringify(pathAsArray));
 
     let pathToString = base.toString();
 
