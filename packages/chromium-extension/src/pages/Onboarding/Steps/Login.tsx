@@ -82,6 +82,9 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
         try {
             await auth.loginWithPAT(values);
             await auth.fetchTags();
+            await auth.fetchWorkspaces();
+            await auth.fetchUser();
+            await auth.fetchTechnologies();
             await auth.fetchUser();
 
             onboarding.resetModel();
@@ -104,14 +107,14 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
         <form onSubmit={onSubmit}>
             <SStepTitle>{chrome.i18n.getMessage('onboarding_login_stepTitle')}</SStepTitle>
             <Input
-                id="emailInput"
                 errors={errors}
+                id="emailInput"
                 label={chrome.i18n.getMessage('onboarding_login_inputEmailLabel')}
                 {...register('email', { required: true })}
             />
             <Input
-                id="patInput"
                 errors={errors}
+                id="patInput"
                 label={chrome.i18n.getMessage('onboarding_login_inputPatLabel')}
                 type="password"
                 {...register('pat', { required: true })}
@@ -120,7 +123,9 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
                 <Link to={`${url}/find-pat-helper`}>{chrome.i18n.getMessage('onboarding_login_findMyPat')}</Link>
             </SFindPatHelper>
             <SButtonWrapper>
-                <Button id="submitButton" type="submit">{chrome.i18n.getMessage('onboarding_login_submitForm')}</Button>
+                <Button id="submitButton" type="submit">
+                    {chrome.i18n.getMessage('onboarding_login_submitForm')}
+                </Button>
             </SButtonWrapper>
         </form>
     );
