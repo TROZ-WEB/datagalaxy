@@ -39,7 +39,8 @@ const SWorkspaceImage = styled.img`
 
 const formatText = (formattedPath: any) => {
     const text = formattedPath.shorten.map((elem, i) => (
-        <React.Fragment key={Math.random()}>
+        /* eslint-disable-next-line react/no-array-index-key */
+        <React.Fragment key={i}>
             {elem}
             <SChevron>{i < formattedPath.shorten.length - 1 && ''}</SChevron>
         </React.Fragment>
