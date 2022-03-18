@@ -3,7 +3,15 @@ import styled from 'styled-components';
 import RoundButton from '../../ui/RoundButton';
 import Title from '../../ui/Title';
 import FilterModal from './FilterModal';
-
+import DomainsModal from './Modals/DomainsModal';
+import EntityTypeModal from './Modals/EntityTypeModal';
+import LastModifiedModal from './Modals/LastModifiedModal';
+import ModuleModal from './Modals/ModuleModal';
+import OwnersModal from './Modals/OwnersModal';
+import StatusModal from './Modals/StatusModal';
+import StewardsModal from './Modals/StewardsModal';
+import TechnologiesModal from './Modals/TechnologiesModal';
+import WorkspacesModal from './Modals/WorkspacesModal';
 /* ---------- STYLES ---------- */
 
 const SFiltersContainer = styled.div`
@@ -38,25 +46,22 @@ const STitle = styled(Title)`
 const FiltersModal = () => {
     const [isOpen, setIsOpen] = React.useState(false);
 
-    const handleBlur = () => {
-        // setTimeout(() => setIsOpen(!isOpen), 200);
-    };
-
     return (
         <SRoot>
-            <RoundButton icon="FilterEmpty" onBlur={handleBlur} onClick={() => setIsOpen(!isOpen)} />
+            <RoundButton icon="FilterEmpty" onClick={() => setIsOpen(!isOpen)} />
             {isOpen && (
                 <SModal>
                     <STitle>{chrome.i18n.getMessage(`filter_by`)}</STitle>
                     <SFiltersContainer>
-                        <FilterModal label="type" />
-                        <FilterModal label="type" />
-                        <FilterModal label="type" />
-                        <FilterModal label="type" />
-                        <FilterModal label="type" />
-                        <FilterModal label="type" />
-                        <FilterModal label="type" />
-                        <FilterModal label="type" />
+                        <WorkspacesModal />
+                        <TechnologiesModal />
+                        <ModuleModal />
+                        <EntityTypeModal />
+                        <DomainsModal />
+                        <OwnersModal />
+                        <StewardsModal />
+                        <StatusModal />
+                        <LastModifiedModal />
                     </SFiltersContainer>
                 </SModal>
             )}

@@ -7,4 +7,5 @@ export interface TechnologyType {
     id: string;
     technologyCode: string;
     imageHash: string;
+    displayName: string;
 }

@@ -1,7 +1,7 @@
 import authModel from './models/authModel';
 import entityModel from './models/entityModel';
+import filtersModel from './models/filtersModel';
 import onboardingModel from './models/onboardingModel';
-import quickFiltersModel from './models/quickFiltersModel';
 import searchModel from './models/searchModel';
 import { StoreModel } from './types';
 
@@ -10,7 +10,7 @@ const storeModel = async (): Promise<StoreModel> => {
         auth: await authModel(),
         search: await searchModel(),
         entity: await entityModel(),
-        quickFilters: await quickFiltersModel(),
+        filters: await filtersModel(),
         onboarding: await onboardingModel(),
     };
 };

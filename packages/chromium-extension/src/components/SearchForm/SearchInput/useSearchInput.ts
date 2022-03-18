@@ -42,6 +42,7 @@ export interface IUseSearchInputParams {
     initialState?: Partial<IState>;
     debounceDuration?: number;
     debounceOnChange?: (result: { value: string }) => void;
+    isNewFilter?: boolean;
 }
 
 export const useSearchInput = ({
