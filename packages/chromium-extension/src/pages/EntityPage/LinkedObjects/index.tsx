@@ -19,6 +19,8 @@ const SSubEntityWrapper = styled.span`
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;
+    margin-top: 5px;
+    margin-bottom: 5px;
 `;
 
 const STitle = styled.div`

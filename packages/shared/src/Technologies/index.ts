@@ -8,7 +8,7 @@ export const fetchTechnologies = async (apiUrl: string): Promise<TechnologyType[
     try {
         const response = await get<TechnologiesResponse>(`${apiUrl}/technologies`);
 
-        return response.parsedBody.results;
+        return response.parsedBody.technologies;
     } catch (error) {
         console.error(error);
     }

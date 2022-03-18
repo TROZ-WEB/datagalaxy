@@ -1,3 +1,5 @@
+import { TechnologyType } from '../Technologies';
+
 /* eslint-disable camelcase */
 export type FieldStatus = 'Proposed' | 'InRevision' | 'InValidation' | 'Validated' | 'Obsolete';
 
@@ -20,6 +22,7 @@ export interface EntityType {
         summary: string;
         tags: string[];
         externalUrl: Link;
+        technologyCode: string;
     };
     childrenCount: number;
     linkedObjectsCount: number;
@@ -36,4 +39,5 @@ export interface EntityType {
     exactMatchAttributes: ExactMatch[];
     objectUrl: string;
     exactMatchOccuredOnName: boolean;
+    technology: TechnologyType;
 }
