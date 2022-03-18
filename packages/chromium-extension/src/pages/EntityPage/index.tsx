@@ -23,7 +23,7 @@ const SContent = styled.div`
     position: absolute;
     height: 80%;
     width: 100%;
-    padding: 0px 15px 13px 73px;
+    padding: 0px 10px 13px 59px;
     box-sizing: border-box;
 `;
 
@@ -81,7 +81,7 @@ const EntityPage = () => {
         if (linkedObjects) {
             // API WORKAROUND 4 : API does not provide linked objects size.
             let count = 0;
-            Object.keys(linkedObjects).forEach((key) => {
+            Object.keys(linkedObjects)?.forEach((key) => {
                 linkedObjects[key].forEach(() => {
                     count++;
                 });

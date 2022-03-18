@@ -65,7 +65,7 @@ const UsersProfile = ({
 
     useEffect(() => {
         let informations = '';
-        otherUsers.forEach((user, index, array) => {
+        otherUsers?.forEach((user, index, array) => {
             informations += `${user.firstName} ${user.lastName} ${index === array.length - 1 ? '' : ','} `;
         });
         setOtherUsersInformations(informations);

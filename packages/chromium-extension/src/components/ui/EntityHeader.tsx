@@ -1,12 +1,12 @@
 import React, { useState, useMemo, FC, useEffect } from 'react';
-import { ExactMatch, WorkspaceType } from 'shared';
+import { ExactMatch, Workspace } from 'shared';
 import styled, { css } from 'styled-components';
 import { useStoreState } from '../../store/hooks';
 import Breadcrumb from '../Breadcrumb';
 import Status from '../Entity/Status';
 import UsersProfile from '../Entity/UsersProfile';
-import OwnersStewardsSeparator from '../OwnersStewardsSeparator';
 import EntityImage from './EntityImage';
+import VerticalSeparator from './VerticalSeparator';
 import ArrowDrop from '../../../assets/icons/arrow-drop-up.svg';
 import Out from '../../../assets/icons/out.svg';
 
@@ -72,6 +72,7 @@ const SRoot = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     color: #001030;
     overflow: hidden;
     transition: max-height 0.15s ease-out;
@@ -87,8 +88,10 @@ const SRoot = styled.div`
     ${(props) =>
         props.entityPage &&
         css`
-            padding: 18px 18px 14px 18px;
-            box-shadow: 0px 0px 14px rgba(16, 53, 177, 0.12);
+            padding: 0px 18px;
+            box-shadow: 0px 0px 14px rgba(16, 53, 177, 0.1);
+            height: 96px;
+            box-sizing: border-box;
 
             ${SEntityName} {
                 font-size: 16px;
@@ -150,6 +153,10 @@ const SDrop = styled.img`
 
 const SType = styled.span`
     font-size: 12px;
+    max-width: 70px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 /* ---------- COMPONENT ---------- */
@@ -185,7 +192,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
 
     const workspaces = useStoreState((state) => state.auth.workspaces);
 
-    const [workspace, setWorkspace] = useState<WorkspaceType>();
+    const [workspace, setWorkspace] = useState<Workspace>();
 
     useEffect(() => {
         if (entity) {
@@ -291,25 +298,33 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                                 <SInfosWrapper>
                                     {entity.type && (
                                         <>
-                                            <SType>{chrome.i18n.getMessage(`entity_type_${entity.type}`)}</SType>
-                                            <OwnersStewardsSeparator />
+                                            <SType title={chrome.i18n.getMessage(`entity_label_full_${entity.type}`)}>
+                                                {chrome.i18n.getMessage(`entity_label_full_${entity.type}`)}
+                                            </SType>
+                                            <VerticalSeparator />
                                         </>
                                     )}
 
                                     {entity.attributes?.status && (
-                                        <>
-                                            <Status status={entity.attributes?.status} />
-                                            <OwnersStewardsSeparator />
-                                        </>
+                                        <Status status={entity.attributes?.status} hideLabel />
                                     )}
 
                                     <SAssociatedUsersWrapper>
                                         {entity.owners && (
-                                            <UsersProfile governanceRole="owner" users={entity.owners} hideLabel />
+                                            <>
+                                                <VerticalSeparator />
+                                                <UsersProfile governanceRole="owner" users={entity.owners} hideLabel />
+                                            </>
                                         )}
-                                        {entity.owners && <OwnersStewardsSeparator />}
                                         {entity.stewards && (
-                                            <UsersProfile governanceRole="steward" users={entity.stewards} hideLabel />
+                                            <>
+                                                <VerticalSeparator />
+                                                <UsersProfile
+                                                    governanceRole="steward"
+                                                    users={entity.stewards}
+                                                    hideLabel
+                                                />{' '}
+                                            </>
                                         )}
                                     </SAssociatedUsersWrapper>
                                 </SInfosWrapper>

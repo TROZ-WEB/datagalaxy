@@ -1,14 +1,14 @@
 import { Action, Thunk, Actions, thunk, action, debug } from 'easy-peasy';
 import {
     fetchQuickFilters as fetchQuickFiltersAPI,
-    fetchFormattedWorkspaces as fetchWorkspacesAPI,
+    fetchWorkspaces as fetchWorkspacesAPI,
     fetchUsers as fetchUsersAPI,
     fetchTechnologies as fetchTechnologiesAPI,
     fetchDomains as fetchDomainsAPI,
     fetchStatus as fetchStatusAPI,
     Filter,
     QuickFilters,
-    FormattedWorkspace,
+    Workspace,
     Users,
     Domain,
     Status,
@@ -48,7 +48,7 @@ export interface FiltersModel {
     /* State */
     quickFilters: QuickFilters;
     pickedFilters: Filter[];
-    workspaces: FormattedWorkspace[];
+    workspaces: Workspace[];
     versionId: string;
     users: Users;
     technologies: TechnologyType[];

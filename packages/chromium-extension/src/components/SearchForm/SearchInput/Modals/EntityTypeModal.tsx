@@ -18,7 +18,7 @@ const EntityTypeModal = () => {
     for (const [key, value] of Object.entries(entitiesTypeRelatedInfos)) {
         fields.push({
             id: key,
-            label: chrome.i18n.getMessage(`entity_label_short_${key}`),
+            label: chrome.i18n.getMessage(`entity_label_full_${key}`),
             icon: <DGGlyph icon={value.glyph} kind={value.kind.toLowerCase()} />,
             checked: !!pickedFilters?.[index]?.values?.includes(key),
         });

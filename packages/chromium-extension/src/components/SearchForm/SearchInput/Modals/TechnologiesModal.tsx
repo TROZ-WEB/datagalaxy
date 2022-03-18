@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../../../store/hooks';
 import FilterModal from '../FilterModal';
+import FieldIcon from './FieldIcon';
 
 /* ---------- COMPONENT ---------- */
 
@@ -18,11 +19,23 @@ const TechnologiesModal = () => {
         fetchTechnologiesAPI();
     }, [dispatch]);
 
-    const technologiesFields = technologies?.map((item) => {
-        return {
-            id: item.technologyCode,
-            label: item.displayName,
+    const technologiesFields = technologies?.map((technology) => {
+        interface field {
+            id: string;
+            label: string;
+            icon?: React.ReactNode;
+        }
+        const t: field = {
+            id: technology.technologyCode,
+            label: technology.displayName,
         };
+
+        if (technology.imageHash) {
+            const newIcon = <FieldIcon hash={technology.imageHash} />;
+            t.icon = newIcon;
+        }
+
+        return t;
     });
 
     const handleChange = (id) => {

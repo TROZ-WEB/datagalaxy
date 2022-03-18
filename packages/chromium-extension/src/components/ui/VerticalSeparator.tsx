@@ -12,8 +12,8 @@ const SRoot = styled.div`
 
 /* ---------- COMPONENT ---------- */
 
-const OwnersStewardsSeparator = () => {
+const VerticalSeparator = () => {
     return <SRoot />;
 };
 
-export default OwnersStewardsSeparator;
+export default VerticalSeparator;

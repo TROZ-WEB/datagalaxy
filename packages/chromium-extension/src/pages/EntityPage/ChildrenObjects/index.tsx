@@ -88,7 +88,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
     useEffect(() => {
         const c = [];
         const gc = [];
-        childrenObjects.forEach((co) => {
+        childrenObjects?.forEach((co) => {
             const pathSplited = co.path.split('\\');
 
             if (pathSplited[pathSplited.length - 2] === entityPath) {

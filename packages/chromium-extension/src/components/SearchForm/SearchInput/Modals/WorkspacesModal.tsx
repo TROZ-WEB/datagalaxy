@@ -1,24 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect } from 'react';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../../../store/hooks';
 import FilterModal from '../FilterModal';
-
-/* ---------- STYLES ---------- */
-
-const SIcon = styled.img`
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-`;
-
-/* ---------- COMPONENT ---------- */
+import FieldIcon from './FieldIcon';
 
 const WorkspacesModal = () => {
     const dispatch = useStoreDispatch();
     const workspaces = useStoreState((state) => state.filters.workspaces);
     const { updateVersionId } = useStoreActions((actions) => actions.filters);
-    const url = useStoreState((state) => state.auth.pubapi);
-    const [workspacesFields, setWorkspacesFields] = useState([]);
 
     useEffect(() => {
         const fetchWorkspacesAPI = async () => {
@@ -26,19 +14,28 @@ const WorkspacesModal = () => {
         };
 
         fetchWorkspacesAPI();
-
-        const newWorkspacesFields = workspaces?.map((workspace) => {
-            const w = workspace;
-            if (w.icon) {
-                const newIcon = <SIcon src={`${url}/image?hash=${workspace.icon}`} />;
-                w.icon = newIcon;
-            }
-
-            return w;
-        });
-
-        setWorkspacesFields(newWorkspacesFields);
     }, [dispatch]);
+
+    const workspacesFields = workspaces?.map((workspace) => {
+        interface field {
+            id: string;
+            label: string;
+            icon?: React.ReactNode;
+        }
+        const w: field = {
+            id: workspace.defaultVersionId,
+            label: workspace.defaultVersionName,
+        };
+
+        if (workspace.iconHash) {
+            const newIcon = <FieldIcon hash={workspace.iconHash} />;
+            w.icon = newIcon;
+        }
+
+        return w;
+    });
+
+    workspacesFields.unshift({ id: null, label: chrome.i18n.getMessage(`all_workspaces`) });
 
     const handleChange = (id) => {
         updateVersionId(id);

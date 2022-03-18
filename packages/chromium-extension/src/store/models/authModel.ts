@@ -6,7 +6,7 @@ import {
     decodeJWT,
     TagType,
     TechnologyType,
-    WorkspaceType,
+    Workspace,
     fetchTags as fetchTagsApi,
     fetchWorkspaces as fetchWorkspacesApi,
     fetchTechnologies as fetchTechnologiesApi,
@@ -36,7 +36,7 @@ export interface AuthModel {
     dgapi: string;
     historyLocation?: string;
     tags: TagType[];
-    workspaces: WorkspaceType[];
+    workspaces: Workspace[];
     technologies: TechnologyType[];
     user: UserType;
     /* Computed properties */
@@ -49,7 +49,7 @@ export interface AuthModel {
     updateDgapi: Action<AuthModel, string>;
     updateHistoryLocation: Action<AuthModel, string>;
     updateTags: Action<AuthModel, TagType[]>;
-    updateWorkspaces: Action<AuthModel, WorkspaceType[]>;
+    updateWorkspaces: Action<AuthModel, Workspace[]>;
     updateTechnologies: Action<AuthModel, TechnologyType[]>;
     updateUser: Action<AuthModel, UserType>;
     /* Thunks */
@@ -105,7 +105,7 @@ const fetchTags = thunk(async (actions: Actions<AuthModel>, _, { getStoreState }
 
 const fetchWorkspaces = thunk(async (actions: Actions<AuthModel>, _, { getStoreState }) => {
     const url = (getStoreState() as any).auth.pubapi;
-    const workspaces: WorkspaceType[] = await fetchWorkspacesApi(url);
+    const workspaces: Workspace[] = await fetchWorkspacesApi(url);
 
     actions.updateWorkspaces(workspaces);
 });
@@ -219,7 +219,7 @@ const authModel = async (): Promise<AuthModel> => {
         updateTechnologies: action((state, payload: TechnologyType[]) => {
             state.technologies = payload;
         }),
-        updateWorkspaces: action((state, payload: WorkspaceType[]) => {
+        updateWorkspaces: action((state, payload: Workspace[]) => {
             state.workspaces = payload;
         }),
         updateUser: action((state, payload: UserType) => {

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { formatBreadcrumb, WorkspaceType } from 'shared';
+import { formatBreadcrumb, Workspace } from 'shared';
 import styled from 'styled-components';
 import { useStoreState } from '../../store/hooks';
 
@@ -50,7 +50,7 @@ const formatText = (formattedPath: any) => {
 
 /* ---------- COMPONENT ---------- */
 
-const Breadcrumb = ({ path, workspace }: { path: string[]; workspace: WorkspaceType }) => {
+const Breadcrumb = ({ path, workspace }: { path: string[]; workspace: Workspace }) => {
     const formattedPath = useMemo(() => (path ? formatBreadcrumb(path) : null), [path]);
     const url = useStoreState((state) => state.auth.pubapi);
 

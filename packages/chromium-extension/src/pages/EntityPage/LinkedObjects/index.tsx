@@ -1,26 +1,17 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import HorizontalSeparator from '../../../components/HorizontalSeparator';
 import Accordion from '../../../components/ui/Accordion';
 import EntityHeader from '../../../components/ui/EntityHeader';
 import { useStoreActions, useStoreState } from '../../../store/hooks';
 
 /* ---------- STYLES ---------- */
 
-const SSubEntityWrapper = styled.span`
+const SEntityWrapper = styled.div`
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 14px;
-    border: none;
-    background: none;
     cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
-    box-sizing: border-box;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    padding: 6px 0px;
 `;
 
 const STitle = styled.div`
@@ -53,9 +44,12 @@ const LinkedObjects = () => {
                         initialOpen
                     >
                         {linkedObjects[key].map((linkedObject, idx) => (
-                            <SSubEntityWrapper key={linkedObject.id} onClick={() => handleClick(linkedObject)}>
-                                <EntityHeader entity={linkedObject} id={`entityHeader${idx}`} alwaysExpanded />
-                            </SSubEntityWrapper>
+                            <div key={linkedObject.id}>
+                                <SEntityWrapper onClick={() => handleClick(linkedObject)}>
+                                    <EntityHeader entity={linkedObject} id={`entityHeader${idx}`} alwaysExpanded />
+                                </SEntityWrapper>
+                                <HorizontalSeparator />
+                            </div>
                         ))}
                     </Accordion>
                 ))}

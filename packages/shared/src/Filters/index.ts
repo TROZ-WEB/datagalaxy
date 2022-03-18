@@ -4,6 +4,13 @@ import { QuickFilters, Filter, Users, Domain, Status } from './types';
 
 export type { Filter, QuickFilters, Users, Domain, Status } from './types';
 
+interface SearchRequestParams {
+    query: string;
+    limit: number;
+    filters: Filter[];
+    versionId?: string;
+}
+
 export const fetchQuickFilters = async (
     apiUrl: string,
     query: string,
@@ -11,21 +18,16 @@ export const fetchQuickFilters = async (
     filters: Filter[],
 ): Promise<QuickFilters> => {
     try {
-        let response;
+        const params: SearchRequestParams = {
+            query,
+            filters,
+            limit: 0,
+        };
+
         if (versionId) {
-            response = await post<QuickFilters>(`${apiUrl}/search`, {
-                query,
-                versionId,
-                filters,
-                limit: 0,
-            });
-        } else {
-            response = await post<QuickFilters>(`${apiUrl}/search`, {
-                query,
-                filters,
-                limit: 0,
-            });
+            params.versionId = versionId;
         }
+        const response = await post<QuickFilters>(`${apiUrl}/search`, params);
 
         return response.parsedBody;
     } catch (error) {
