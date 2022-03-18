@@ -28,12 +28,13 @@ const WorkspacesModal = () => {
         fetchWorkspacesAPI();
 
         const newWorkspacesFields = workspaces?.map((workspace) => {
-            if (workspace.icon) {
+            const w = workspace;
+            if (w.icon) {
                 const newIcon = <SIcon src={`${url}/image?hash=${workspace.icon}`} />;
-                workspace.icon = newIcon;
+                w.icon = newIcon;
             }
 
-            return workspace;
+            return w;
         });
 
         setWorkspacesFields(newWorkspacesFields);

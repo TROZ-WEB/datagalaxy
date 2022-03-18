@@ -8,6 +8,6 @@ export * from './Tags';
 export * from './LinkedObjects';
 export * from './ChildrenObjects';
 export * from './ScreenConfiguration';
-// export * from './Workspaces';
-// export * from './Technologies';
+export * from './Workspaces';
+export * from './Technologies';
 export * from './Filters';

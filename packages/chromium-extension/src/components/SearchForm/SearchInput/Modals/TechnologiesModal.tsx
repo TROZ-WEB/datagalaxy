@@ -18,7 +18,7 @@ const TechnologiesModal = () => {
         fetchTechnologiesAPI();
     }, [dispatch]);
 
-    const technologiesFields = technologies?.technologies?.map((item) => {
+    const technologiesFields = technologies?.map((item) => {
         return {
             id: item.technologyCode,
             label: item.displayName,

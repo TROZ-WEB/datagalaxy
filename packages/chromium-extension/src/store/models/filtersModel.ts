@@ -1,18 +1,18 @@
 import { Action, Thunk, Actions, thunk, action, debug } from 'easy-peasy';
 import {
     fetchQuickFilters as fetchQuickFiltersAPI,
-    fetchWorkspaces as fetchWorkspacesAPI,
+    fetchFormattedWorkspaces as fetchWorkspacesAPI,
     fetchUsers as fetchUsersAPI,
     fetchTechnologies as fetchTechnologiesAPI,
     fetchDomains as fetchDomainsAPI,
     fetchStatus as fetchStatusAPI,
     Filter,
     QuickFilters,
-    FormatedWorkspace,
+    FormattedWorkspace,
     Users,
-    Technologies,
     Domain,
     Status,
+    TechnologyType,
 } from 'shared';
 import { resetModel } from './helper';
 
@@ -48,10 +48,10 @@ export interface FiltersModel {
     /* State */
     quickFilters: QuickFilters;
     pickedFilters: Filter[];
-    workspaces: FormatedWorkspace[];
+    workspaces: FormattedWorkspace[];
     versionId: string;
     users: Users;
-    technologies: Technologies;
+    technologies: TechnologyType[];
     domains: Domain[];
     status: Status[];
     /* Actions */
