@@ -197,10 +197,9 @@ const EntityHeader: FC<EntityHeaderProps> = ({
     useEffect(() => {
         if (entity) {
             const pathAsString = entity.path.trim().split('\\').slice(0, -1).filter(Boolean);
-            let workspaceResult;
             if (!entityPage) {
                 const workspaceName = pathAsString[0]; // remove workspace part
-                workspaceResult = workspaces.find((w) => workspaceName === w.name);
+                const workspaceResult = workspaces.find((w) => workspaceName === w.name);
                 setWorkspace(workspaceResult);
             }
 

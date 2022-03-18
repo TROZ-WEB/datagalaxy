@@ -42,7 +42,11 @@ const EntityPage = () => {
     const [entity, setEntity] = useState<EntityType>();
 
     const linkedObjects = useStoreState((state) => state.entity.linkedObjects);
+    const childrenObjects = useStoreState((state) => state.entity.childrenObjects);
     const technologies = useStoreState((state) => state.auth.technologies);
+
+    const [childrenObjectsNumber, setChildrenObjectsNumber] = useState(0);
+    const [linkedObjectsNumber, setLinkedObjectsNumber] = useState(0);
 
     useEffect(() => {
         dispatch.entity.fetchEntity({ location, technologies });
@@ -50,7 +54,7 @@ const EntityPage = () => {
 
     useEffect(() => {
         if (displayedEntity) {
-            setEntity({ ...displayedEntity, dataType, location });
+            setEntity({ ...entity, ...displayedEntity, dataType, location });
             dispatch.entity.fetchScreenConfiguration({
                 dataType: ReverseDataTypeMapping[dataType].toLowerCase(),
                 versionId: displayedEntity.versionId,
@@ -71,6 +75,16 @@ const EntityPage = () => {
                 });
             };
 
+            const fetchChildrenObjects = async () => {
+                await dispatch.entity.fetchChildrenObjects({
+                    parentId: displayedEntity.id,
+                    dataType,
+                    versionId: location.split('/')[1],
+                    technology: displayedEntity.technology,
+                });
+            };
+
+            fetchChildrenObjects();
             fetchLinkedObjects();
         } else {
             setEntity(null);
@@ -86,9 +100,30 @@ const EntityPage = () => {
                     count++;
                 });
             });
-            setEntity({ ...entity, linkedObjectsCount: count });
+            setLinkedObjectsNumber(count);
         }
     }, [linkedObjects]);
+
+    useEffect(() => {
+        if (childrenObjects) {
+            const t = displayedEntity.path.split('\\');
+
+            const entityPath = t[t.length - 1].toString();
+
+            let count = 0;
+            childrenObjects.forEach((co) => {
+                const pathSplited = co.path.split('\\');
+
+                if (
+                    pathSplited[pathSplited.length - 2] === entityPath ||
+                    pathSplited[pathSplited.length - 3] === entityPath
+                ) {
+                    count++;
+                }
+            });
+            setChildrenObjectsNumber(count);
+        }
+    }, [childrenObjects]);
 
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -97,7 +132,11 @@ const EntityPage = () => {
                 <>
                     <EntityHeader entity={entity} id={`entityHeader${entity.id}`} alwaysExpanded entityPage />
                     <SContainer>
-                        <VerticalMenu URLLocation={URLLocation} entity={entity} />
+                        <VerticalMenu
+                            URLLocation={URLLocation}
+                            childrenObjectsNumber={childrenObjectsNumber}
+                            linkedObjectsNumber={linkedObjectsNumber}
+                        />
                         <SContent>
                             <Switch>
                                 <Route path={`/app/entities/${URLLocation}/`} exact>
