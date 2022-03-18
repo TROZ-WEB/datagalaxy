@@ -186,7 +186,7 @@ const fetchChildrenObjects = thunk(
                 childrenObjects = await fetchChildrenObjectsAPI(parentId, url, dataType, versionId);
             }
 
-            childrenObjects.map((co) => {
+            childrenObjects?.map((co) => {
                 // set parent technology to childrens
                 if (!co.attributes?.technologyCode) {
                     co.technology = technology;

@@ -87,6 +87,7 @@ interface AccordionProps {
     openButtonPosition?: string;
     sizeOfTitle?: string;
     disabled?: boolean;
+    className?: string;
 }
 
 const Accordion: FC<AccordionProps> = ({
@@ -96,6 +97,7 @@ const Accordion: FC<AccordionProps> = ({
     openButtonPosition = 'right',
     sizeOfTitle = 'normal',
     disabled,
+    className,
 }) => {
     const [isOpen, setOpen] = useState(initialOpen);
 
@@ -106,7 +108,7 @@ const Accordion: FC<AccordionProps> = ({
     };
 
     return (
-        <SRoot>
+        <SRoot className={className}>
             <SHeader reversed={openButtonPosition === 'left'} sizeOfTitle={sizeOfTitle} type="button">
                 {header}
                 <SArrowButton disabled={disabled} type="button">

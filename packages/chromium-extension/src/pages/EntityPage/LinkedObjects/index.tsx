@@ -8,6 +8,10 @@ import { useStoreActions, useStoreState } from '../../../store/hooks';
 
 /* ---------- STYLES ---------- */
 
+const SAccordion = styled(Accordion)`
+    margin-top: 8px;
+`;
+
 const SEntityWrapper = styled.div`
     width: 100%;
     cursor: pointer;
@@ -38,7 +42,7 @@ const LinkedObjects = () => {
         <>
             {linkedObjects &&
                 Object.keys(linkedObjects).map((key) => (
-                    <Accordion
+                    <SAccordion
                         header={<STitle>{chrome.i18n.getMessage(key)}</STitle>}
                         openButtonPosition="left"
                         initialOpen
@@ -51,7 +55,7 @@ const LinkedObjects = () => {
                                 <HorizontalSeparator />
                             </div>
                         ))}
-                    </Accordion>
+                    </SAccordion>
                 ))}
         </>
     );

@@ -110,7 +110,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
                             openButtonPosition="left"
                         >
                             {grandChildren.length > 0 ? (
-                                grandChildren.map((grandChildrenEntity) => (
+                                grandChildren?.map((grandChildrenEntity) => (
                                     <>
                                         <HorizontalSeparator />
                                         <SSubEntityWrapper
