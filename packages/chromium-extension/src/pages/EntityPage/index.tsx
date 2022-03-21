@@ -38,6 +38,7 @@ const EntityPage = () => {
 
     const displayedEntity = useStoreState((state) => state.entity.displayedEntity);
     const screenConfiguration = useStoreState((state) => state.entity.screenConfiguration);
+    const currentWorkspace = useStoreState((state) => state.entity.currentWorkspace);
 
     const [entity, setEntity] = useState<EntityType>();
 
@@ -134,7 +135,13 @@ const EntityPage = () => {
         <>
             {isLoaded && entity && entity.type ? (
                 <>
-                    <EntityHeader entity={entity} id={`entityHeader${entity.id}`} alwaysExpanded entityPage />
+                    <EntityHeader
+                        currentWorkspace={currentWorkspace}
+                        entity={entity}
+                        id={`entityHeader${entity.id}`}
+                        alwaysExpanded
+                        entityPage
+                    />
                     <SContainer>
                         <VerticalMenu
                             URLLocation={URLLocation}

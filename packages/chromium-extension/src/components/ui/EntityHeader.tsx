@@ -1,4 +1,4 @@
-import React, { useState, useMemo, FC, useEffect } from 'react';
+import React, { useState, FC, useEffect } from 'react';
 import { ExactMatch, Workspace } from 'shared';
 import styled, { css } from 'styled-components';
 import { useStoreState } from '../../store/hooks';
@@ -170,6 +170,7 @@ interface EntityHeaderProps {
     exactMatches?: ExactMatch[];
     searchQuery?: string;
     displayPath?: boolean;
+    currentWorkspace?: string;
 }
 
 const EntityHeader: FC<EntityHeaderProps> = ({
@@ -181,36 +182,36 @@ const EntityHeader: FC<EntityHeaderProps> = ({
     exactMatches,
     searchQuery,
     displayPath = true,
+    currentWorkspace,
 }) => {
     const [isCardExpanded, setIsCardExpanded] = useState(alwaysExpanded);
     const [isMoreActionShown, setIsMoreActionsShown] = useState(false);
     const [displayMoreAttributes, setDisplayMoreAttributes] = useState(false);
 
-    const isRootEntity = useMemo<boolean>(() => entity?.path === `\\${entity?.name}`, [entity]);
-
-    const [entityPathAsString, setEntityPathAsString] = useState();
+    const [entityPathAsStringArray, setEntityPathAsStringArray] = useState();
 
     const workspaces = useStoreState((state) => state.auth.workspaces);
 
     const [workspace, setWorkspace] = useState<Workspace>();
 
     useEffect(() => {
-        if (entity) {
-            const pathAsString = entity.path.trim().split('\\').slice(0, -1).filter(Boolean);
-            let workspaceResult;
-            if (!entityPage) {
-                const workspaceName = pathAsString[0]; // remove workspace part
-                workspaceResult = workspaces.find((w) => workspaceName === w.name);
-                setWorkspace(workspaceResult);
+        if (entity && displayPath) {
+            const pathAsStringArray = entity.path.trim().split('\\').slice(0, -1).filter(Boolean);
+            if (currentWorkspace) {
+                pathAsStringArray.unshift(currentWorkspace);
             }
+
+            const workspaceName = pathAsStringArray[0];
+            const workspaceResult = workspaces.find((w) => workspaceName === w.name);
+            setWorkspace(workspaceResult);
 
             if (workspaceResult?.imageHash) {
-                pathAsString.shift();
+                pathAsStringArray.shift(); // remove workspace part
             }
 
-            setEntityPathAsString(pathAsString);
+            setEntityPathAsStringArray(pathAsStringArray);
         }
-    }, [entity, workspaces]);
+    }, [entity, workspaces, displayPath]);
 
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -232,9 +233,9 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                         <EntityImage entity={entity} entityPage={entityPage} />
 
                         <SRightSide>
-                            {!isRootEntity && displayPath && (
+                            {displayPath && (
                                 <SBreadcrumbWrapper>
-                                    <Breadcrumb path={entityPathAsString} workspace={workspace} />
+                                    <Breadcrumb path={entityPathAsStringArray} workspace={workspace} />
                                 </SBreadcrumbWrapper>
                             )}
                             <SEntityName
