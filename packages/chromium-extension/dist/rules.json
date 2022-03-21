@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "priority": 1,
+        "path": "rules.json",
+        "action": {
+            "type": "modifyHeaders",
+            "requestHeaders": [{ "header": "User-Agent", "operation": "set", "value": "test-user-agent" }]
+        },
+        "condition": {}
+    }
+]
