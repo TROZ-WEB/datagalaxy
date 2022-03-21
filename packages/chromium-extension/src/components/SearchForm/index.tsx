@@ -135,7 +135,7 @@ const SearchForm = () => {
         setDisplayMoreExactMatches(false);
     }, [searchedArgs.term]);
 
-    const { updateIsLoaded } = useStoreActions((actions) => actions.entity);
+    const { updateIsLoaded, updateCurrentWorkspace } = useStoreActions((actions) => actions.entity);
 
     const technologies = useStoreState((state) => state.auth.technologies);
 
@@ -251,6 +251,8 @@ const SearchForm = () => {
                                                             exactMatches={exactMatchAttributes}
                                                             id={`entityHeader${idx}`}
                                                             onClick={() => {
+                                                                updateCurrentWorkspace(entity.path.split('\\')[1]);
+
                                                                 updateIsLoaded(false);
                                                                 const URLLocation = entity.location.replace(
                                                                     new RegExp('/', 'g'),
@@ -305,6 +307,8 @@ const SearchForm = () => {
                                                         entityPage={false}
                                                         id={`entityHeader${idx}`}
                                                         onClick={() => {
+                                                            updateCurrentWorkspace(entity.path.split('\\')[1]);
+
                                                             updateIsLoaded(false);
                                                             const URLLocation = entity.location.replace(
                                                                 new RegExp('/', 'g'),

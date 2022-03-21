@@ -27,6 +27,7 @@ const initialState = {
     linkedObjects: null,
     childrenObjects: null,
     screenConfiguration: null,
+    currentWorkspace: null,
 };
 
 export interface EntityModel {
@@ -36,6 +37,7 @@ export interface EntityModel {
     linkedObjects: LinkedObjectsType;
     childrenObjects: EntityType[];
     screenConfiguration: ScreenConfiguration;
+    currentWorkspace: string;
     /* Actions */
     resetModel: Action<EntityModel>;
     updateIsLoaded: Action<EntityModel, boolean>;
@@ -43,6 +45,7 @@ export interface EntityModel {
     updateLinkedObjects: Action<EntityModel, LinkedObjectsType>;
     updateChildrenObjects: Action<EntityModel, EntityType[]>;
     updateScreenConfiguration: Action<EntityModel, ScreenConfiguration>;
+    updateCurrentWorkspace: Action<EntityModel, string>;
     /* Thunks */
     fetchEntity: Thunk<EntityModel, FetchEntityArgs>;
     fetchLinkedObjects: Thunk<EntityModel, FetchLinkedObjectsParams>;
@@ -240,6 +243,9 @@ const entityModel = async (): Promise<EntityModel> => {
         }),
         updateScreenConfiguration: action((state, payload: any) => {
             state.screenConfiguration = payload;
+        }),
+        updateCurrentWorkspace: action((state, payload: string) => {
+            state.currentWorkspace = payload;
         }),
         /* Thunks */
         fetchEntity,

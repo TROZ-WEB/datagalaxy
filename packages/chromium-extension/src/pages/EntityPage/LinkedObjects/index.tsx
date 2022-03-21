@@ -37,6 +37,8 @@ const LinkedObjects = () => {
         history.push(`/app/entities/${URLLocation}/`);
     };
 
+    const currentWorkspace = useStoreState((state) => state.entity.currentWorkspace);
+
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
@@ -50,7 +52,12 @@ const LinkedObjects = () => {
                         {linkedObjects[key].map((linkedObject, idx) => (
                             <div key={linkedObject.id}>
                                 <SEntityWrapper onClick={() => handleClick(linkedObject)}>
-                                    <EntityHeader entity={linkedObject} id={`entityHeader${idx}`} alwaysExpanded />
+                                    <EntityHeader
+                                        currentWorkspace={currentWorkspace}
+                                        entity={linkedObject}
+                                        id={`entityHeader${idx}`}
+                                        alwaysExpanded
+                                    />
                                 </SEntityWrapper>
                                 <HorizontalSeparator />
                             </div>
