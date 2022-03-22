@@ -93,46 +93,59 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <SRoot>
             {children && children.length !== 0 ? (
-                children?.map((childrenEntity) => (
-                    <React.Fragment key={childrenEntity.id}>
-                        <Accordion
-                            key={childrenEntity.id}
-                            disabled={childrenEntity.childrenCount === 0}
-                            header={
-                                <SEntityWrapper onClick={() => handleClick(childrenEntity)}>
-                                    <EntityHeader
-                                        displayPath={false}
-                                        entity={childrenEntity}
-                                        id={`entityHeader${childrenEntity.id}`}
-                                    />
-                                </SEntityWrapper>
-                            }
-                            openButtonPosition="left"
-                        >
-                            {grandChildren.length > 0 ? (
-                                grandChildren.map((grandChildrenEntity) => (
-                                    <React.Fragment key={grandChildrenEntity.id}>
-                                        <HorizontalSeparator />
-                                        <SSubEntityWrapper
-                                            key={grandChildrenEntity.id}
-                                            onClick={() => handleClick(grandChildrenEntity)}
-                                        >
-                                            <EntityHeader
-                                                entity={grandChildrenEntity}
-                                                id={`entityHeader${grandChildrenEntity.id}`}
-                                            />
-                                        </SSubEntityWrapper>
-                                    </React.Fragment>
-                                ))
-                            ) : (
-                                <SSpinnerWrapper>
-                                    <Spinner />
-                                </SSpinnerWrapper>
-                            )}
-                        </Accordion>
-                        <HorizontalSeparator />
-                    </React.Fragment>
-                ))
+                children?.map((childrenEntity) => {
+                    const myGrandChildren = grandChildren.filter((gc) => {
+                        const childrenPathSplitted = childrenEntity.path.split('\\');
+                        const childrenPath = childrenPathSplitted[childrenPathSplitted.length - 1].toString();
+                        const grandChildrenPathSplited = gc.path.split('\\');
+
+                        return grandChildrenPathSplited[grandChildrenPathSplited.length - 2] === childrenPath;
+                    });
+
+                    return (
+                        <React.Fragment key={childrenEntity.id}>
+                            <Accordion
+                                key={childrenEntity.id}
+                                disabled={childrenEntity.childrenCount === 0}
+                                header={
+                                    <SEntityWrapper onClick={() => handleClick(childrenEntity)}>
+                                        <EntityHeader
+                                            displayPath={false}
+                                            entity={childrenEntity}
+                                            id={`entityHeader${childrenEntity.id}`}
+                                        />
+                                    </SEntityWrapper>
+                                }
+                                openButtonPosition="left"
+                            >
+                                {myGrandChildren.length > 0 ? (
+                                    myGrandChildren.map((grandChildrenEntity) => {
+                                        return (
+                                            <React.Fragment key={grandChildrenEntity.id}>
+                                                <HorizontalSeparator />
+                                                <SSubEntityWrapper
+                                                    key={grandChildrenEntity.id}
+                                                    onClick={() => handleClick(grandChildrenEntity)}
+                                                >
+                                                    <EntityHeader
+                                                        displayPath={false}
+                                                        entity={grandChildrenEntity}
+                                                        id={`entityHeader${grandChildrenEntity.id}`}
+                                                    />
+                                                </SSubEntityWrapper>
+                                            </React.Fragment>
+                                        );
+                                    })
+                                ) : (
+                                    <SSpinnerWrapper>
+                                        <Spinner />
+                                    </SSpinnerWrapper>
+                                )}
+                            </Accordion>
+                            <HorizontalSeparator />
+                        </React.Fragment>
+                    );
+                })
             ) : (
                 <LoadingScreen />
             )}
