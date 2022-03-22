@@ -28,7 +28,7 @@ const SFormatted = styled.span`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 250px;
+    max-width: 260px;
 `;
 
 const SWorkspaceImage = styled.img`
