@@ -183,7 +183,12 @@ const computeData = (data: any, i: number) => {
     }
 
     if (typeof data === 'number') {
-        return data.toLocaleString(chrome.runtime.getManifest().current_locale);
+        switch (chrome.runtime.getManifest().current_locale) {
+            case 'fr':
+                return data.toLocaleString('fr-FR');
+            default:
+                return data.toLocaleString('en-EN');
+        }
     }
 
     return data.toString();
