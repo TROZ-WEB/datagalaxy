@@ -1,5 +1,5 @@
 import { Action, Thunk, Actions, thunk, action } from 'easy-peasy';
-import { search as searchAPI, EntityType, SearchResponse, TechnologyType, Filter } from 'shared';
+import { search as searchAPI, EntityType, SearchResponse, TechnologyType, Filter, QuickFilters } from 'shared';
 import { enhancedEntitiesWithTechnologiesInfo, enhancedEntitiesWithUserInfo, resetModel } from './helper';
 
 const EMPTY_ARGS = {
@@ -24,6 +24,7 @@ interface SearchedArgs {
 }
 
 const initialState = {
+    quickFilters: null,
     searchedArgs: EMPTY_ARGS,
     searchResults: EMPTY_RESPONSE,
     selectedEntity: null,
@@ -32,6 +33,7 @@ const initialState = {
 
 export interface SearchModel {
     /* State */
+    quickFilters: QuickFilters;
     searchedArgs?: SearchedArgs;
     searchResults: SearchResponse;
     exactMatches: SearchResponse;
@@ -43,6 +45,7 @@ export interface SearchModel {
     updateSearchedArgs: Action<SearchModel, Partial<SearchedArgs>>;
     updateResults: Action<SearchModel, SearchResponse>;
     updateSelectedEntity: Action<SearchModel, EntityType>;
+    updateQuickFilters: Action<SearchModel, any>;
     /* Thunks */
     search: Thunk<SearchModel, Partial<SearchedArgs>>;
 }
@@ -74,6 +77,7 @@ const search = thunk(async (actions: Actions<SearchModel>, searchedArgs: Searche
     }
 
     actions.updateResults(enhancedResults);
+    actions.updateQuickFilters(enhancedResults);
 });
 
 /**
@@ -117,6 +121,9 @@ const searchModel = async (): Promise<SearchModel> => {
         }),
         updateSelectedEntity: action((state, payload: EntityType) => {
             state.selectedEntity = payload;
+        }),
+        updateQuickFilters: action((state, payload) => {
+            state.quickFilters = payload;
         }),
         /* Thunks */
         search,

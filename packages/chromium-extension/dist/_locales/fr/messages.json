@@ -895,7 +895,7 @@
     "IsUsedBy": {
         "message": "est utilisé par"
     },
-    "Uses": {
+    "Usage": {
         "message": "utilise"
     },
     "IsInputOf": {
@@ -1105,14 +1105,14 @@
     "module_glossary": {
         "message": "Glossaire"
     },
-    "module_dictionary": {
-        "message": "Dictionaire"
+    "module_catalog": {
+        "message": "Dictionnaire"
     },
-    "module_dataprocessing": {
-        "message": "Traitement de donnés"
+    "module_processing": {
+        "message": "Traitement de données"
     },
-    "module_uses": {
-        "message": "Utilise"
+    "module_usage": {
+        "message": "Usages"
     },
     "all_workspaces": {
         "message": "Tous les espaces de travail"

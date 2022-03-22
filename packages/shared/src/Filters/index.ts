@@ -1,53 +1,8 @@
 /* eslint-disable import/prefer-default-export */
-import { post, get } from '../Http';
-import { QuickFilters, Filter, Users, Domain, Status } from './types';
+import { get } from '../Http';
+import { Domain, Status } from './types';
 
-export type { Filter, QuickFilters, Users, Domain, Status } from './types';
-
-interface SearchRequestParams {
-    query: string;
-    limit: number;
-    filters: Filter[];
-    versionId?: string;
-}
-
-export const fetchQuickFilters = async (
-    apiUrl: string,
-    query: string,
-    versionId: string,
-    filters: Filter[],
-): Promise<QuickFilters> => {
-    try {
-        const params: SearchRequestParams = {
-            query,
-            filters,
-            limit: 0,
-        };
-
-        if (versionId) {
-            params.versionId = versionId;
-        }
-        const response = await post<QuickFilters>(`${apiUrl}/search`, params);
-
-        return response.parsedBody;
-    } catch (error) {
-        console.error(error);
-    }
-
-    return null;
-};
-
-export const fetchUsers = async (apiUrl: string): Promise<Users> => {
-    try {
-        const response = await get<Users>(`${apiUrl}/users/roles`);
-
-        return response.parsedBody;
-    } catch (error) {
-        console.error(error);
-    }
-
-    return null;
-};
+export type { Filter, QuickFilters, Domain, Status, PickedFilters } from './types';
 
 export const fetchDomains = async (apiUrl: string): Promise<Domain[]> => {
     try {

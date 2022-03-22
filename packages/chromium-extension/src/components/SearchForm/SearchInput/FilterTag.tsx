@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import DGGlyph from '../../ui/DGGlyph';
+import { useStoreState, useStoreActions } from '../../../store/hooks';
 import RoundButton from '../../ui/RoundButton';
 
 /* ---------- STYLES ---------- */
@@ -16,6 +16,7 @@ const SRoot = styled.div`
     height: 34px;
     padding: 4px 8px;
     max-width: 95px;
+    border: none;
     border-radius: 3px;
     cursor: pointer;
     display: flex;
@@ -45,25 +46,35 @@ const SValue = styled.div`
 
 /* ---------- COMPONENT ---------- */
 
-interface FilterTagProps {
-    icon: string;
-    kind: string;
-    value: string;
+interface Props {
+    filter: any;
     onClick: () => void;
 }
 
-const FilterTag: FC<FilterTagProps> = ({ icon, kind, value, onClick }) => {
+const FilterTag = React.forwardRef(({ filter, onClick }: Props, ref) => {
+    const pickedFilters = useStoreState((state) => state.filters.pickedFilters);
+    const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
+    const { updateVersionId } = useStoreActions((actions) => actions.filters);
+
+    const handleDeleteFilter = (e) => {
+        e.stopPropagation();
+        if (filter?.filter?.value === 'Version') {
+            updateVersionId(null);
+        } else {
+            const payload = pickedFilters.filter((item) => item?.filter?.attributeKey !== filter?.filter?.attributeKey);
+            updatePickedFilters(payload);
+        }
+    };
+
     return (
-        <SRoot>
-            <SImageContainer>
-                <DGGlyph icon={icon} kind={kind} />
-            </SImageContainer>
+        <SRoot ref={ref} onClick={onClick}>
+            <SImageContainer>{filter?.icon?.$$typeof && filter?.icon}</SImageContainer>
             <STextContainer>
-                <SValue>{value}</SValue>
+                <SValue>{chrome.i18n.getMessage(`attribute_key_${filter?.filter?.attributeKey}`)}</SValue>
             </STextContainer>
-            <SRoundButton icon="Cancelsearch" onClick={onClick} size="XS" />
+            <SRoundButton icon="Cancelsearch" onClick={(e) => handleDeleteFilter(e)} size="XS" />
         </SRoot>
     );
-};
+});
 
 export default FilterTag;

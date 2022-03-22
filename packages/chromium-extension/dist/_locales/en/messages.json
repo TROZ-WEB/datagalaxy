@@ -1102,13 +1102,13 @@
     "module_glossary": {
         "message": "Glossary"
     },
-    "module_dictionary": {
+    "module_catalog": {
         "message": "Dictionary"
     },
-    "module_dataprocessing": {
+    "module_processing": {
         "message": "Dataprocessing"
     },
-    "module_uses": {
+    "module_usage": {
         "message": "Uses"
     },
     "all_workspaces": {

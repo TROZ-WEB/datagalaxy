@@ -1,16 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
+import { useStoreActions, useStoreState } from '../../../store/hooks';
 import RoundButton from '../../ui/RoundButton';
 import Title from '../../ui/Title';
-import DomainsModal from './Modals/DomainsModal';
-import EntityTypeModal from './Modals/EntityTypeModal';
-import LastModifiedModal from './Modals/LastModifiedModal';
-import ModuleModal from './Modals/ModuleModal';
-import OwnersModal from './Modals/OwnersModal';
-import StatusModal from './Modals/StatusModal';
-import StewardsModal from './Modals/StewardsModal';
-import TechnologiesModal from './Modals/TechnologiesModal';
-import WorkspacesModal from './Modals/WorkspacesModal';
+import FiltersModalTag from './FiltersModalTag';
+
 /* ---------- STYLES ---------- */
 
 const SFiltersContainer = styled.div`
@@ -27,13 +21,14 @@ const SModal = styled.div`
     position: absolute;
     width: 200px;
     top: 100%;
-    left: 0px;
+    left: 0;
     padding: 16px;
     z-index: 100;
 `;
 
 const SRoot = styled.div`
     position: relative;
+    z-index: 500;
 `;
 
 const STitle = styled(Title)`
@@ -43,24 +38,46 @@ const STitle = styled(Title)`
 /* ---------- COMPONENT ---------- */
 
 const FiltersModal = () => {
-    const [isOpen, setIsOpen] = React.useState(false);
+    const { AllFilters } = useStoreState((state) => state.modal);
+
+    const filters = [
+        { label: chrome.i18n.getMessage(`attribute_key_Workspace`), attributeKey: 'Workspace' },
+        { label: chrome.i18n.getMessage(`attribute_key_TechnologyCode`), attributeKey: 'TechnologyCode' },
+        { label: chrome.i18n.getMessage(`attribute_key_Module`), attributeKey: 'Module' },
+        { label: chrome.i18n.getMessage(`attribute_key_EntityType`), attributeKey: 'EntityType' },
+        { label: chrome.i18n.getMessage(`attribute_key_Domains`), attributeKey: 'Domains' },
+        { label: chrome.i18n.getMessage(`attribute_key_DataOwners`), attributeKey: 'DataOwners' },
+        { label: chrome.i18n.getMessage(`attribute_key_DataStewards`), attributeKey: 'DataStewards' },
+        { label: chrome.i18n.getMessage(`attribute_key_EntityStatus`), attributeKey: 'EntityStatus' },
+        { label: chrome.i18n.getMessage(`attribute_key_LastModified`), attributeKey: 'LastModificationTime' },
+    ];
+
+    const { updateModalState, updateModalTop } = useStoreActions((actions) => actions.modal);
+
+    const filtersModal = useRef(null);
+    const modalTop = filtersModal?.current?.getBoundingClientRect()?.bottom;
+
+    const handleOpen = () => {
+        updateModalTop(modalTop);
+        updateModalState({ modal: 'Overlay', isOpen: true });
+        updateModalState({ modal: 'AllFilters', isOpen: true });
+    };
+
+    const handleClick = (attributeKey) => {
+        updateModalState({ modal: attributeKey, isOpen: true });
+        updateModalState({ modal: 'AllFilters', isOpen: false });
+    };
 
     return (
         <SRoot>
-            <RoundButton icon="FilterEmpty" onClick={() => setIsOpen(!isOpen)} />
-            {isOpen && (
-                <SModal>
+            <RoundButton ref={filtersModal} icon="FilterEmpty" onClick={handleOpen} />
+            {AllFilters && (
+                <SModal onClick={(e) => e.stopPropagation()}>
                     <STitle>{chrome.i18n.getMessage(`filter_by`)}</STitle>
                     <SFiltersContainer>
-                        <WorkspacesModal />
-                        <TechnologiesModal />
-                        <ModuleModal />
-                        <EntityTypeModal />
-                        <DomainsModal />
-                        <OwnersModal />
-                        <StewardsModal />
-                        <StatusModal />
-                        <LastModifiedModal />
+                        {filters.map(({ label, attributeKey }) => (
+                            <FiltersModalTag label={label} onClick={() => handleClick(attributeKey)} />
+                        ))}
                     </SFiltersContainer>
                 </SModal>
             )}

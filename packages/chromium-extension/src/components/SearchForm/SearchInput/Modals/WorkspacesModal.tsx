@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../../../store/hooks';
-import FilterModal from '../FilterModal';
+import ModalBase from '../ModalBase';
 import FieldIcon from './FieldIcon';
 
-const WorkspacesModal = () => {
+/* ---------- COMPONENT ---------- */
+
+const WorkspacesModal: FC = () => {
     const dispatch = useStoreDispatch();
     const workspaces = useStoreState((state) => state.filters.workspaces);
     const { updateVersionId } = useStoreActions((actions) => actions.filters);
+    const { Workspace } = useStoreState((state) => state.modal);
 
     useEffect(() => {
         const fetchWorkspacesAPI = async () => {
@@ -24,7 +27,7 @@ const WorkspacesModal = () => {
         }
         const w: field = {
             id: workspace.defaultVersionId,
-            label: workspace.defaultVersionName,
+            label: workspace.name,
         };
 
         if (workspace.iconHash) {
@@ -35,15 +38,16 @@ const WorkspacesModal = () => {
         return w;
     });
 
-    workspacesFields.unshift({ id: null, label: chrome.i18n.getMessage(`all_workspaces`) });
+    workspacesFields?.unshift({ id: null, label: chrome.i18n.getMessage(`all_workspaces`) });
 
     const handleChange = (id) => {
         updateVersionId(id);
     };
 
     return (
-        <FilterModal
+        <ModalBase
             fields={workspacesFields}
+            isOpen={Workspace}
             label={chrome.i18n.getMessage(`attribute_key_Workspace`)}
             onChange={handleChange}
         />

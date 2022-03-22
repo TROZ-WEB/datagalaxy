@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import DGGlyph from '../../ui/DGGlyph';
 
@@ -56,26 +56,21 @@ const SValue = styled.div`
 
 /* ---------- COMPONENT ---------- */
 
-interface QuickFilterProps {
-    icon: string;
-    kind: string;
-    label: string;
-    value: string;
+interface Props {
+    filter: any;
     onClick: () => void;
 }
 
-const QuickFilter: FC<QuickFilterProps> = ({ icon, kind, label, value, onClick }) => {
+const QuickFilter = React.forwardRef(({ filter, onClick }: Props, ref) => {
     return (
-        <SRoot onClick={onClick}>
-            <SImageContainer>
-                <DGGlyph icon={icon} kind={kind} />
-            </SImageContainer>
+        <SRoot ref={ref} onClick={onClick}>
+            <SImageContainer>{/* <DGGlyph icon={filter.icon} kind={filter.kind} /> */}</SImageContainer>
             <STextContainer>
-                <SLabel>{label}</SLabel>
-                <SValue>{value}</SValue>
+                <SLabel>{chrome.i18n.getMessage(`attribute_key_${filter?.attributeKey}`)}</SLabel>
+                <SValue>{filter?.values?.length === 1 && filter?.values?.[0]}</SValue>
             </STextContainer>
         </SRoot>
     );
-};
+});
 
 export default QuickFilter;

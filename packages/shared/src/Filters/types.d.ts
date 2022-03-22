@@ -7,6 +7,10 @@ export interface Filter {
     operator: string;
     values: string[];
 }
+export interface PickedFilters {
+    icon?: any;
+    filter: Filter;
+}
 export interface QuickFilters {
     total: number;
     total_sum: number;
@@ -16,27 +20,6 @@ export interface QuickFilters {
     };
     quickFilters: { filter: Filter }[];
 }
-
-interface User {
-    userId: string;
-    licenseLevel: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    licenseId: number;
-    profileImageUrl: string;
-    profileThumbnailUrl: string;
-}
-
-export interface Users {
-    owners: User[];
-    stewards: User[];
-    cdos: User[];
-    cisos: User[];
-    dpos: User[];
-    experts: User[];
-}
-
 export interface Domain {
     label: string;
     id: string;

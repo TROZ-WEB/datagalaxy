@@ -8,6 +8,15 @@ import EntityHeader from '../ui/EntityHeader';
 import Title from '../ui/Title';
 import QuickFiltersBar from './QuickFiltersBar';
 import SearchInput from './SearchInput';
+import DomainsModal from './SearchInput/Modals/DomainsModal';
+import EntityTypeModal from './SearchInput/Modals/EntityTypeModal';
+import LastModifiedModal from './SearchInput/Modals/LastModifiedModal';
+import ModuleModal from './SearchInput/Modals/ModuleModal';
+import OwnersModal from './SearchInput/Modals/OwnersModal';
+import StatusModal from './SearchInput/Modals/StatusModal';
+import StewardsModal from './SearchInput/Modals/StewardsModal';
+import TechnologiesModal from './SearchInput/Modals/TechnologiesModal';
+import WorkspacesModal from './SearchInput/Modals/WorkspacesModal';
 import { useSearchInput } from './SearchInput/useSearchInput';
 import useExactMatches from './useExactMatches';
 import BlankSearch from '../../../assets/blank-search.png';
@@ -88,6 +97,16 @@ const SMoreContainer = styled.div`
     margin-bottom: 35px;
 `;
 
+const SOverlay = styled.div`
+    position: fixed;
+    width: 400px;
+    height: 100vh;
+    top: 0;
+    right: 0;
+    z-index: 300;
+    background: #00103033;
+`;
+
 /* ---------- COMPONENT ---------- */
 
 enum AttributesWeight {
@@ -108,7 +127,7 @@ enum AttributesWeight {
 
 const SearchForm = () => {
     const dispatch = useStoreDispatch();
-    const quickFilters = useStoreState((state) => state.filters.quickFilters);
+    const quickFilters = useStoreState((state) => state.search.quickFilters);
     const pickedFilters = useStoreState((state) => state.filters.pickedFilters);
     const versionId = useStoreState((state) => state.filters.versionId);
     const { searchedArgs, searchResults, exactMatches } = useStoreState((state) => state.search);
@@ -147,6 +166,8 @@ const SearchForm = () => {
 
     const technologies = useStoreState((state) => state.auth.technologies);
 
+    const searchPickedFilters = pickedFilters.map((item) => item.filter);
+
     const debounceOnChange = async ({ value }) => {
         if (value) {
             setLoading(true);
@@ -154,13 +175,7 @@ const SearchForm = () => {
             await dispatch.search.search({
                 term: value,
                 technologies,
-                filters: pickedFilters,
-            });
-
-            await dispatch.filters.fetchQuickFilters({
-                term: value,
-                versionId,
-                filters: pickedFilters,
+                filters: searchPickedFilters,
             });
 
             setLoading(false);
@@ -184,6 +199,12 @@ const SearchForm = () => {
     const hasSearchResults = searchResults.result.entities.length !== 0;
     const hasExactMatches = filteredExactMatches?.result.entities.length !== 0;
     const displayShowMoreButton = filteredExactMatches?.result.entities.length > 4;
+
+    const { Overlay } = useStoreState((state) => state.modal);
+    const { resetModalState } = useStoreActions((actions) => actions.modal);
+    const handleClose = () => {
+        resetModalState();
+    };
 
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -333,6 +354,16 @@ const SearchForm = () => {
                     )}
                 </>
             )}
+            {Overlay && <SOverlay onClick={handleClose} />}
+            <WorkspacesModal />
+            <TechnologiesModal />
+            <ModuleModal />
+            <EntityTypeModal />
+            <DomainsModal />
+            <OwnersModal />
+            <StewardsModal />
+            <StatusModal />
+            <LastModifiedModal />
         </>
     );
 };

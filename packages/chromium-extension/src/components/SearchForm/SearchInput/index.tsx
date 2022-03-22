@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithRef, forwardRef, ReactElement } from 'react';
+import React, { ComponentPropsWithRef, forwardRef, ReactElement, useRef } from 'react';
 import styled from 'styled-components';
 import Refresh from '../../../icons/Refresh';
 import { useStoreState, useStoreActions } from '../../../store/hooks';
@@ -101,6 +101,8 @@ export interface IProps extends ComponentPropsWithRef<'input'> {
 
 const SearchInput = forwardRef<HTMLInputElement, IProps>(
     ({ onClearSearch, loading = false, success = false, ...props }, ref) => {
+        const pickedFilters = useStoreState((state) => state.filters.pickedFilters);
+        const versionId = useStoreState((state) => state.filters.versionId);
         let rightElement: ReactElement = null;
 
         if (loading) {
@@ -111,19 +113,14 @@ const SearchInput = forwardRef<HTMLInputElement, IProps>(
             rightElement = <RoundButton icon="Search" />;
         }
 
-        const pickedFilters = useStoreState((state) => state.filters.pickedFilters);
-        const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
+        const { updateModalState, updateModalTop } = useStoreActions((actions) => actions.modal);
+        const filtersModal = useRef(null);
+        const modalTop = filtersModal?.current?.getBoundingClientRect()?.bottom;
 
-        const handleDeleteFilter = (filter) => {
-            const payload = pickedFilters.filter((item) => item !== filter);
-            updatePickedFilters(payload);
-        };
-
-        const versionId = useStoreState((state) => state.filters.versionId);
-        const { updateVersionId } = useStoreActions((actions) => actions.filters);
-
-        const handleDeleteVersion = () => {
-            updateVersionId(null);
+        const handleClick = (attributeKey) => {
+            updateModalTop(modalTop);
+            updateModalState({ modal: 'Overlay', isOpen: true });
+            updateModalState({ modal: attributeKey, isOpen: true });
         };
 
         return (
@@ -132,19 +129,16 @@ const SearchInput = forwardRef<HTMLInputElement, IProps>(
                     {versionId && (
                         <FilterTag
                             key={versionId}
-                            icon="Table"
-                            kind="dictionary"
-                            onClick={() => handleDeleteVersion()}
-                            value="Version"
+                            filter={{ icon: 'Table', kind: 'catalog', value: 'Version' }}
+                            onClick={() => handleClick('Workspace')}
                         />
                     )}
                     {pickedFilters?.map((filter) => (
                         <FilterTag
-                            key={filter?.values?.[0]}
-                            icon="Table"
-                            kind="dictionary"
-                            onClick={() => handleDeleteFilter(filter)}
-                            value={filter?.values?.[0] || 'test'}
+                            key={filter?.filter?.values?.[0]}
+                            ref={filtersModal}
+                            filter={filter}
+                            onClick={() => handleClick(filter?.filter?.attributeKey)}
                         />
                     ))}
                 </SFilterTagsContainer>
@@ -160,7 +154,5 @@ const SearchInput = forwardRef<HTMLInputElement, IProps>(
         );
     },
 );
-
-SearchInput.displayName = 'Input';
 
 export default SearchInput;

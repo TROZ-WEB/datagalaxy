@@ -71,32 +71,28 @@ interface Props {
     icon: string;
     badgeCount?: number;
     className?: string;
+    id?: string;
 }
 
-const RoundButton: React.FC<Props> = ({
-    onClick,
-    onBlur,
-    icon,
-    type = 'button',
-    variant,
-    size = 'M',
-    className,
-    ...rest
-}) => {
-    return (
-        <SRoot
-            className={className}
-            onBlur={onBlur}
-            onClick={onClick}
-            // eslint-disable-next-line react/button-has-type
-            size={size}
-            type={type}
-            variant={variant}
-            {...rest}
-        >
-            <SGlyph icon={icon} />
-        </SRoot>
-    );
-};
+const RoundButton = React.forwardRef(
+    ({ onClick, onBlur, icon, type = 'button', variant, size = 'M', className, id, ...rest }: Props, ref) => {
+        return (
+            <SRoot
+                ref={ref}
+                className={className}
+                id={id}
+                onBlur={onBlur}
+                onClick={onClick}
+                // eslint-disable-next-line react/button-has-type
+                size={size}
+                type={type}
+                variant={variant}
+                {...rest}
+            >
+                <SGlyph icon={icon} />
+            </SRoot>
+        );
+    },
+);
 
 export default RoundButton;

@@ -14,10 +14,10 @@ export const Theme = {
 
     text: '#333333',
 
-    dictionary: '#28aae2',
-    dataprocessing: '#1035b1',
+    catalog: '#28aae2',
+    processing: '#1035b1',
     glossary: '#50c516',
-    uses: '#12884b',
+    usage: '#12884b',
 
     warning: '#cd3835',
     success: '#155724',

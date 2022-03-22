@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useStoreState, useStoreActions } from '../../../../store/hooks';
-import FilterModal from '../FilterModal';
+import ModalBase from '../ModalBase';
 
 /* ---------- COMPONENT ---------- */
 
-const LastModifiedModal = () => {
+const LastModifiedModal: FC = () => {
     const pickedFilters = useStoreState((state) => state.filters.pickedFilters);
     const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
+    const { LastModificationTime } = useStoreState((state) => state.modal);
 
     const fields = [
         { id: 'pastHour', label: chrome.i18n.getMessage(`last_modified_pastHour`) },
@@ -28,24 +29,26 @@ const LastModifiedModal = () => {
     const handleChange = (id) => {
         const date = new Date().toString();
         const newPickedFilters = [...pickedFilters];
-        const filterIndex = newPickedFilters?.findIndex((item) => item.attributeKey === 'LastModificationTime');
+        const filterIndex = newPickedFilters?.findIndex(
+            (item) => item?.filter?.attributeKey === 'LastModificationTime',
+        );
         if (filterIndex === -1) {
             const filter = {
-                attributeKey: 'LastModificationTime',
-                operator: id,
-                values: [date],
+                icon: null,
+                filter: { attributeKey: 'LastModificationTime', operator: id, values: [date] },
             };
             newPickedFilters.push(filter);
         } else {
-            newPickedFilters[filterIndex].values = [id];
+            newPickedFilters[filterIndex].filter.values = [id];
         }
 
         updatePickedFilters(newPickedFilters);
     };
 
     return (
-        <FilterModal
+        <ModalBase
             fields={fields}
+            isOpen={LastModificationTime}
             label={chrome.i18n.getMessage(`attribute_key_LastModified`)}
             onChange={handleChange}
         />

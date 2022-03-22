@@ -71,7 +71,8 @@ interface EntityImageProps {
 }
 
 const EntityImage: FC<EntityImageProps> = ({ entity, entityPage }) => {
-    const { kind, glyph } = entitiesTypeRelatedInfos[entity.type];
+    const kind = entitiesTypeRelatedInfos?.[entity.type]?.kind;
+    const glyph = entitiesTypeRelatedInfos?.[entity.type]?.glyph;
 
     const url = useStoreState((state) => state.auth.pubapi);
 
@@ -91,11 +92,11 @@ const EntityImage: FC<EntityImageProps> = ({ entity, entityPage }) => {
                         src={`${url}/image?hash=${entity.technology.imageHash}`}
                     />
                     <SEntityDGGlyphContainer>
-                        <DGGlyph icon={glyph} kind={kind.toLowerCase()} size={entityPage ? 'M' : 'S'} />
+                        <DGGlyph icon={glyph} kind={kind?.toLowerCase()} size={entityPage ? 'M' : 'S'} />
                     </SEntityDGGlyphContainer>
                 </>
             ) : (
-                <DGGlyph icon={glyph} kind={kind.toLowerCase()} size={entityPage ? 'XL' : 'L'} />
+                <DGGlyph icon={glyph} kind={kind?.toLowerCase()} size={entityPage ? 'XL' : 'L'} />
             )}
             {!entityPage && (
                 <SEntityTypeShortLabel>

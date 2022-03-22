@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, useRef } from 'react';
 import { QuickFilters } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/hooks';
@@ -130,8 +130,19 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
         updatePickedFilters([]);
     }, []);
 
+    const { updateModalState, updateModalTop } = useStoreActions((actions) => actions.modal);
+
+    const filtersModal = useRef(null);
+    const modalTop = filtersModal?.current?.getBoundingClientRect()?.bottom;
+
     const handleClick = (filter) => {
-        updatePickedFilters([...pickedFilters, filter]);
+        if (filter?.values?.length === 1) {
+            updatePickedFilters([...pickedFilters, { icon: null, filter }]);
+        } else {
+            updateModalTop(modalTop);
+            updateModalState({ modal: 'Overlay', isOpen: true });
+            updateModalState({ modal: filter?.attributeKey, isOpen: true });
+        }
     };
 
     return (
@@ -146,13 +157,11 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                             </SLeftButton>
                             {QuickFiltersArray?.map(({ filter }, i) => (
                                 <QuickFilter
-                                    /* eslint-disable-next-line react/no-array-index-key */
+                                    // eslint-disable-next-line react/no-array-index-key
                                     key={i}
-                                    icon="Table"
-                                    kind="dictionary"
-                                    label={chrome.i18n.getMessage(`attribute_key_${filter?.attributeKey}`)}
+                                    ref={filtersModal}
+                                    filter={filter}
                                     onClick={() => handleClick(filter)}
-                                    value={filter?.values?.length === 1 && filter?.values?.[0]}
                                 />
                             ))}
                             <SRightButton disabled={scrollValue === maxScroll} onClick={handleScrollRight}>

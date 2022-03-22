@@ -56,14 +56,14 @@ const SEntityDGGlyph = styled(Glyph)`
     font-size: 16px;
 
     ${(props) =>
-        props.kind === 'dictionary' &&
+        props.kind === 'catalog' &&
         css`
             color: #28aae2;
             fill: #28aae2;
         `}
 
     ${(props) =>
-        props.kind === 'dataprocessing' &&
+        props.kind === 'processing' &&
         css`
             color: #1035b1;
             fill: #1035b1;
@@ -77,7 +77,7 @@ const SEntityDGGlyph = styled(Glyph)`
         `}
 
     ${(props) =>
-        props.kind === 'uses' &&
+        props.kind === 'usage' &&
         css`
             color: #12884b;
             fill: #12884b;

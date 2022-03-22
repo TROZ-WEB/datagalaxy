@@ -32,10 +32,10 @@ On récupère les enfants de l’objet affiché grâce à l’id, le dataType et
 
 Chaque objet possède un Glyph Datagalaxy qui fait partie d’une liste finie de Glyphes, accessible dans ‘shared/src/Entities/index.ts’ ayant pour types et couleurs :
 
-bleu clair pour le type ‘dictionary’
-bleu foncé pour le type ‘dataprocessing’
+bleu clair pour le type ‘catalog’
+bleu foncé pour le type ‘processing’
 vert clair pour le type ‘glossary’
-vert foncé pour le type ‘uses’
+vert foncé pour le type ‘usage’
 
 Certains objets possèdent un logo technique qui sera récupéré depuis l’API (TO DO)
 

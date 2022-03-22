@@ -27,12 +27,12 @@ const SRoot = styled.div`
 
 /* ---------- COMPONENT ---------- */
 
-interface FilterTagProps {
+interface Props {
     label: string;
     onClick?: () => void;
 }
 
-const FiltersModalTag: FC<FilterTagProps> = ({ label, onClick }) => {
+const FiltersModalTag: FC<Props> = ({ label, onClick }) => {
     return (
         <SRoot onClick={onClick}>
             <SLabel>{label}</SLabel>

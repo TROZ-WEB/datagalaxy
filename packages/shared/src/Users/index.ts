@@ -34,3 +34,15 @@ export const getUsersByEmailsAndRole = async (
 
     return null;
 };
+
+export const fetchUsers = async (apiUrl: string): Promise<UsersByRoleResponse> => {
+    try {
+        const response = await get<UsersByRoleResponse>(`${apiUrl}/users/roles`);
+
+        return response.parsedBody;
+    } catch (error) {
+        console.error(error);
+    }
+
+    return null;
+};

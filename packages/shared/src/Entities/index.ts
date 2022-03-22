@@ -53,7 +53,7 @@ export const formatBreadcrumb = (pathAsArray: string[]): { shorten: string[]; de
 };
 
 export interface customFieldAttr {
-    [key: string]: { glyph: string; kind: 'Dictionary' | 'Dataprocessing' | 'Glossary' | 'Uses' };
+    [key: string]: { glyph: string; kind: 'Catalog' | 'Processing' | 'Glossary' | 'Usage' };
 }
 
 /**
@@ -73,38 +73,38 @@ export const entitiesTypeRelatedInfos: customFieldAttr = {
     DimensionGroup: { glyph: 'DimensionGroup', kind: 'Glossary' },
     BusinessDomainGroup: { glyph: 'DomainGroup', kind: 'Glossary' },
     /* Dictionnaire (technique) */
-    Relational: { glyph: 'Database', kind: 'Dictionary' },
-    NonRelational: { glyph: 'Filestore', kind: 'Dictionary' },
-    NoSql: { glyph: 'Nosql', kind: 'Dictionary' },
-    TagBase: { glyph: 'Tagbase', kind: 'Dictionary' },
-    Model: { glyph: 'Model', kind: 'Dictionary' },
-    Directory: { glyph: 'Containerfolder', kind: 'Dictionary' },
-    Table: { glyph: 'Table', kind: 'Dictionary' },
-    View: { glyph: 'View', kind: 'Dictionary' },
-    Column: { glyph: 'Columnview', kind: 'Dictionary' },
-    Field: { glyph: 'UsageField', kind: 'Dictionary' },
-    SubStructure: { glyph: 'SubStructure', kind: 'Dictionary' },
-    File: { glyph: 'File', kind: 'Dictionary' },
-    Document: { glyph: 'Document', kind: 'Dictionary' },
-    Equipment: { glyph: 'Equipment', kind: 'Dictionary' },
-    Tag: { glyph: 'Tag', kind: 'Dictionary' },
+    Relational: { glyph: 'Database', kind: 'Catalog' },
+    NonRelational: { glyph: 'Filestore', kind: 'Catalog' },
+    NoSql: { glyph: 'Nosql', kind: 'Catalog' },
+    TagBase: { glyph: 'Tagbase', kind: 'Catalog' },
+    Model: { glyph: 'Model', kind: 'Catalog' },
+    Directory: { glyph: 'Containerfolder', kind: 'Catalog' },
+    Table: { glyph: 'Table', kind: 'Catalog' },
+    View: { glyph: 'View', kind: 'Catalog' },
+    Column: { glyph: 'Columnview', kind: 'Catalog' },
+    Field: { glyph: 'UsageField', kind: 'Catalog' },
+    SubStructure: { glyph: 'SubStructure', kind: 'Catalog' },
+    File: { glyph: 'File', kind: 'Catalog' },
+    Document: { glyph: 'Document', kind: 'Catalog' },
+    Equipment: { glyph: 'Equipment', kind: 'Catalog' },
+    Tag: { glyph: 'Tag', kind: 'Catalog' },
     /* Traitement (technique) */
-    DataFlow: { glyph: 'DataFlow', kind: 'Dataprocessing' },
-    DataProcessing: { glyph: 'Dataprocessing', kind: 'Dataprocessing' },
-    DataProcessingItem: { glyph: 'Processitem', kind: 'Dataprocessing' },
+    DataFlow: { glyph: 'DataFlow', kind: 'Processing' },
+    DataProcessing: { glyph: 'Processing', kind: 'Processing' },
+    DataProcessingItem: { glyph: 'Processitem', kind: 'Processing' },
     /* Usage (fonctionnel) */
-    Application: { glyph: 'SoftwareApplication', kind: 'Uses' },
-    Use: { glyph: 'Software', kind: 'Uses' },
-    Process: { glyph: 'Process', kind: 'Uses' },
-    UsageField: { glyph: 'UsageField', kind: 'Uses' },
-    Feature: { glyph: 'Features', kind: 'Uses' },
-    Screen: { glyph: 'SoftwareScreen', kind: 'Uses' },
-    Dashboard: { glyph: 'SoftwareDashboard', kind: 'Uses' },
-    Report: { glyph: 'Report', kind: 'Uses' },
-    DataSet: { glyph: 'Dataset', kind: 'Uses' },
-    OpenDataSet: { glyph: 'Opendataset', kind: 'Uses' },
-    Algorithm: { glyph: 'Algorithm', kind: 'Uses' },
-    UsageComponent: { glyph: 'UsageComponent', kind: 'Uses' },
+    Application: { glyph: 'SoftwareApplication', kind: 'Usage' },
+    Use: { glyph: 'Software', kind: 'Usage' },
+    Process: { glyph: 'Process', kind: 'Usage' },
+    UsageField: { glyph: 'UsageField', kind: 'Usage' },
+    Feature: { glyph: 'Features', kind: 'Usage' },
+    Screen: { glyph: 'SoftwareScreen', kind: 'Usage' },
+    Dashboard: { glyph: 'SoftwareDashboard', kind: 'Usage' },
+    Report: { glyph: 'Report', kind: 'Usage' },
+    DataSet: { glyph: 'Dataset', kind: 'Usage' },
+    OpenDataSet: { glyph: 'Opendataset', kind: 'Usage' },
+    Algorithm: { glyph: 'Algorithm', kind: 'Usage' },
+    UsageComponent: { glyph: 'UsageComponent', kind: 'Usage' },
 };
 
 export const fetchEntity = async (apiUrl: string, location: string): Promise<any> => {

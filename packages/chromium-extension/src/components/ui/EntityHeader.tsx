@@ -155,6 +155,11 @@ const SDrop = styled.img`
         `}
 `;
 
+const SStatus = styled(Status)`
+    padding: 2px;
+    margin: 5px 0;
+`;
+
 const SType = styled.span`
     font-size: 12px;
     max-width: 70px;
@@ -311,7 +316,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                                     )}
 
                                     {entity.attributes?.status && (
-                                        <Status status={entity.attributes?.status} hideLabel />
+                                        <SStatus status={entity.attributes?.status} hideLabel />
                                     )}
 
                                     <SAssociatedUsersWrapper>

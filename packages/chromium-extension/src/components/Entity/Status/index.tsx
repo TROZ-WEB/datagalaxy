@@ -15,11 +15,9 @@ const SRoot = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 5px 0;
     line-height: 15px;
     font-size: 10px;
     margin-left: 2px;
-    padding: 2px;
     border-radius: 3px;
 `;
 

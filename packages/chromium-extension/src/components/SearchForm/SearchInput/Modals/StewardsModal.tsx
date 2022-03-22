@@ -1,25 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState, FC } from 'react';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../../../store/hooks';
-import FilterModal from '../FilterModal';
-
-/* ---------- STYLES ---------- */
-
-const SIcon = styled.img`
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-`;
+import Avatar from '../../../Avatar';
+import ModalBase from '../ModalBase';
 
 /* ---------- COMPONENT ---------- */
 
-const StewardsModal = () => {
+const StewardsModal: FC = () => {
     const dispatch = useStoreDispatch();
     const users = useStoreState((state) => state.filters.users);
     const pickedFilters = useStoreState((state) => state.filters.pickedFilters);
     const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
     const [intersectionLogic, setIntersectionLogic] = useState('or');
     const [usersFields, setUsersFields] = useState([]);
+    const { DataStewards } = useStoreState((state) => state.modal);
 
     useEffect(() => {
         const fetchUsersAPI = async () => {
@@ -30,13 +23,13 @@ const StewardsModal = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        const index = pickedFilters?.findIndex((item) => item.attributeKey === 'DataStewards');
+        const index = pickedFilters?.findIndex((item) => item?.filter?.attributeKey === 'DataStewards');
         const formatedUsersFields = users?.stewards?.map((item) => {
             return {
                 id: item.userId,
                 label: `${item.firstName} ${item.lastName}`,
-                checked: !!pickedFilters?.[index]?.values?.includes(item.userId),
-                icon: item.profileThumbnailUrl ? <SIcon src={item.profileThumbnailUrl} /> : null,
+                icon: <Avatar size="mini" user={item} />,
+                checked: !!pickedFilters?.[index]?.filter?.values?.includes(item.userId),
             };
         });
         setUsersFields(formatedUsersFields);
@@ -44,24 +37,29 @@ const StewardsModal = () => {
 
     const handleChange = (id) => {
         const newPickedFilters = [...pickedFilters];
-        const filterIndex = newPickedFilters?.findIndex((item) => item.attributeKey === 'DataStewards');
+        const filterIndex = newPickedFilters?.findIndex((item) => item?.filter?.attributeKey === 'DataStewards');
         const newOperator = intersectionLogic === 'or' ? 'contains' : 'matchAll';
         if (filterIndex === -1) {
             const filter = {
-                attributeKey: 'DataStewards',
-                operator: newOperator,
-                values: [id],
+                icon: usersFields.find((item) => item.id === id).icon,
+                filter: { attributeKey: 'DataStewards', operator: newOperator, values: [id] },
             };
             newPickedFilters.push(filter);
         } else {
-            const { values } = newPickedFilters[filterIndex];
-            newPickedFilters[filterIndex].operator = newOperator;
+            const { values } = newPickedFilters[filterIndex].filter;
+            newPickedFilters[filterIndex].filter.operator = newOperator;
             const idIndex = values?.findIndex((item) => item === id);
 
             if (idIndex === -1) {
                 values.push(id);
             } else {
                 values.splice(idIndex, 1);
+            }
+
+            if (values.length === 0) {
+                newPickedFilters.splice(filterIndex, 1);
+            } else if (values.length > 1) {
+                newPickedFilters[filterIndex].icon = null;
             }
         }
 
@@ -71,21 +69,22 @@ const StewardsModal = () => {
     const handleChangeIntersectionLogic = (params) => {
         setIntersectionLogic(params);
         const newPickedFilters = [...pickedFilters];
-        const filterIndex = newPickedFilters?.findIndex((item) => item.attributeKey === 'DataStewards');
+        const filterIndex = newPickedFilters?.findIndex((item) => item?.filter?.attributeKey === 'DataStewards');
         const newOperator = params === 'or' ? 'contains' : 'matchAll';
         if (filterIndex !== -1) {
-            newPickedFilters[filterIndex].operator = newOperator;
+            newPickedFilters[filterIndex].filter.operator = newOperator;
         }
 
         updatePickedFilters(newPickedFilters);
     };
 
     return (
-        <FilterModal
+        <ModalBase
             fields={usersFields}
             handleChangeIntersectionLogic={handleChangeIntersectionLogic}
             intersectionLogic={intersectionLogic}
-            label={chrome.i18n.getMessage(`entity_steward`)}
+            isOpen={DataStewards}
+            label={chrome.i18n.getMessage(`attribute_key_DataStewards`)}
             onChange={handleChange}
             multiselect
         />

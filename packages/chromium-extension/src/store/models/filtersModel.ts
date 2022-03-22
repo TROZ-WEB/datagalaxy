@@ -1,15 +1,15 @@
 import { Action, Thunk, Actions, thunk, action, debug } from 'easy-peasy';
 import {
-    fetchQuickFilters as fetchQuickFiltersAPI,
     fetchWorkspaces as fetchWorkspacesAPI,
     fetchUsers as fetchUsersAPI,
     fetchTechnologies as fetchTechnologiesAPI,
     fetchDomains as fetchDomainsAPI,
     fetchStatus as fetchStatusAPI,
     Filter,
+    PickedFilters,
     QuickFilters,
     Workspace,
-    Users,
+    UsersByRoleResponse,
     Domain,
     Status,
     TechnologyType,
@@ -27,7 +27,6 @@ const EMPTY_RESPONSE: QuickFilters = {
 };
 
 const initialState = {
-    quickFilters: null,
     pickedFilters: [],
     workspaces: null,
     versionId: undefined,
@@ -46,17 +45,15 @@ interface SearchedArgs {
 
 export interface FiltersModel {
     /* State */
-    quickFilters: QuickFilters;
-    pickedFilters: Filter[];
+    pickedFilters: PickedFilters[];
     workspaces: Workspace[];
     versionId: string;
-    users: Users;
+    users: UsersByRoleResponse;
     technologies: TechnologyType[];
     domains: Domain[];
     status: Status[];
     /* Actions */
     resetQuickFilters: Action<FiltersModel>;
-    updateQuickFilters: Action<FiltersModel, any>;
     updatePickedFilters: Action<FiltersModel, any>;
     updateWorkspaces: Action<FiltersModel, any>;
     updateUsers: Action<FiltersModel, any>;
@@ -65,7 +62,6 @@ export interface FiltersModel {
     updateDomains: Action<FiltersModel, any>;
     updateStatus: Action<FiltersModel, any>;
     /* Thunks */
-    fetchQuickFilters: Thunk<FiltersModel, SearchedArgs>;
     fetchWorkspaces: Thunk<FiltersModel, SearchedArgs>;
     fetchUsers: Thunk<FiltersModel, SearchedArgs>;
     fetchTechnologies: Thunk<FiltersModel, SearchedArgs>;
@@ -76,19 +72,6 @@ export interface FiltersModel {
 /**
  * Thunks
  */
-
-const fetchQuickFilters = thunk(async (actions: Actions<FiltersModel>, payload: SearchedArgs, { getStoreState }) => {
-    let quickFilters = EMPTY_RESPONSE;
-
-    try {
-        const url = (getStoreState() as any).auth.pubapi;
-        quickFilters = await fetchQuickFiltersAPI(url, payload.term, payload.versionId, payload.filters);
-    } catch (err) {
-        console.error('error : ', err);
-    }
-
-    actions.updateQuickFilters(quickFilters);
-});
 
 const fetchWorkspaces = thunk(async (actions: Actions<FiltersModel>, payload: null, { getStoreState }) => {
     let workspaces;
@@ -165,9 +148,6 @@ const filtersModel = async (): Promise<FiltersModel> => {
         ...initialState,
         /* Actions */
         resetQuickFilters: action(resetModel(initialState)),
-        updateQuickFilters: action((state, payload) => {
-            state.quickFilters = payload;
-        }),
         updatePickedFilters: action((state, payload) => {
             state.pickedFilters = payload;
         }),
@@ -190,7 +170,6 @@ const filtersModel = async (): Promise<FiltersModel> => {
             state.status = payload;
         }),
         /* Thunks */
-        fetchQuickFilters,
         fetchWorkspaces,
         fetchUsers,
         fetchTechnologies,
