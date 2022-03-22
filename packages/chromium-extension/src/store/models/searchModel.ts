@@ -64,10 +64,6 @@ const search = thunk(async (actions: Actions<SearchModel>, searchedArgs: Searche
         enhancedResults = await searchAPI(url, searchedArgs.term, searchedArgs.filters, searchedArgs.versionId);
         // Load additional user information about entities
         if (enhancedResults?.result) {
-            enhancedResults.result.entities = await enhancedEntitiesWithUserInfo(
-                enhancedResults?.result?.entities,
-                url,
-            );
             enhancedResults.result.entities = await enhancedEntitiesWithTechnologiesInfo(
                 searchedArgs.technologies,
                 enhancedResults.result.entities,

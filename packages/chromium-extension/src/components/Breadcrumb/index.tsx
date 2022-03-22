@@ -21,7 +21,6 @@ const SRoot = styled.div`
     display: flex;
     flex-direction: row;
     align-items: end;
-    flex-wrap: wrap;
 `;
 
 const SFormatted = styled.span`
@@ -34,7 +33,6 @@ const SFormatted = styled.span`
 const SWorkspaceImage = styled.img`
     width: 20px;
     height: 20px;
-    margin-right: -5px;
 `;
 
 const formatText = (formattedPath: any) => {
