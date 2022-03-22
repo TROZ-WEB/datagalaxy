@@ -55,6 +55,7 @@ const SRoot = styled.div`
 const STitle = styled.h1`
     font-weight: 700;
     font-size: 20px;
+    margin-bottom: 10px;
 `;
 
 const SVersionWrapper = styled.div`

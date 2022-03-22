@@ -35,10 +35,10 @@ const SFindPatHelper = styled.div`
 
 const SStepTitle = styled.p`
     margin-top: 25px;
-    margin-bottom: 21px;
+    margin-bottom: 30px;
     font-weight: 700;
     font-size: 16px;
-    line-height: 17px;
+    line-height: 22px;
     text-align: center;
 `;
 
