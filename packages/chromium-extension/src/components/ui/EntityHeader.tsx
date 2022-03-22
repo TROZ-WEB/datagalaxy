@@ -314,17 +314,13 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                                         {entity.owners && (
                                             <>
                                                 <VerticalSeparator />
-                                                <UsersProfile governanceRole="owner" users={entity.owners} hideLabel />
+                                                <UsersProfile governanceRole="owner" users={entity.owners} />
                                             </>
                                         )}
                                         {entity.stewards && (
                                             <>
                                                 <VerticalSeparator />
-                                                <UsersProfile
-                                                    governanceRole="steward"
-                                                    users={entity.stewards}
-                                                    hideLabel
-                                                />{' '}
+                                                <UsersProfile governanceRole="steward" users={entity.stewards} />{' '}
                                             </>
                                         )}
                                     </SAssociatedUsersWrapper>

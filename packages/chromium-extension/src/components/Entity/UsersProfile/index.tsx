@@ -11,27 +11,10 @@ const SAvatarWrapper = styled.div`
     align-items: center;
 `;
 
-const SRole = styled.span`
-    font-weight: 700;
-    font-size: 10px;
-    color: #1035b1;
-`;
-
 const SRoot = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-`;
-
-const STextInfoWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin-right: 3px;
-    margin-left: 2px;
-`;
-
-const SUserName = styled.span`
-    font-size: 10px;
 `;
 
 const SNumberOfUsers = styled.div`
@@ -48,23 +31,14 @@ const SNumberOfUsers = styled.div`
 
 const LIMIT_AVATAR_ELLIPSE = 2;
 
-const UsersProfile = ({
-    governanceRole,
-    users,
-    hideLabel = false,
-    ellipsed = true,
-}: {
-    governanceRole?: 'owner' | 'steward';
-    users: UserType[];
-    hideLabel?: boolean;
-    ellipsed?: boolean;
-}) => {
+const UsersProfile = ({ governanceRole, users }: { governanceRole?: 'owner' | 'steward'; users: UserType[] }) => {
     const usersToDisplay = users.slice(0, LIMIT_AVATAR_ELLIPSE);
     const otherUsers = users.slice(LIMIT_AVATAR_ELLIPSE, users.length);
     const [otherUsersInformations, setOtherUsersInformations] = useState('');
 
     useEffect(() => {
-        let informations = '';
+        let informations = chrome.i18n.getMessage(`entity_${governanceRole}`);
+        informations += '\n';
         otherUsers?.forEach((user, index, array) => {
             informations += `${user.firstName} ${user.lastName} ${index === array.length - 1 ? '' : ','} `;
         });
@@ -80,6 +54,7 @@ const UsersProfile = ({
                             <Avatar
                                 key={user?.userId}
                                 grouped={usersToDisplay?.length > 1 && index !== usersToDisplay?.length - 1}
+                                role={governanceRole}
                                 size="mini"
                                 user={user}
                             />
@@ -91,17 +66,6 @@ const UsersProfile = ({
                     <span title={otherUsersInformations}>{`+${users.length - LIMIT_AVATAR_ELLIPSE}`}</span>
                 </SNumberOfUsers>
             )}
-            {(users?.length <= LIMIT_AVATAR_ELLIPSE && ellipsed) ||
-                (!hideLabel && (
-                    <STextInfoWrapper>
-                        {governanceRole && <SRole>{chrome.i18n.getMessage(`entity_${governanceRole}`)}</SRole>}
-                        <SUserName>
-                            {users?.length > 1
-                                ? chrome.i18n.getMessage('entity_steward_multiple', [users?.length])
-                                : `${users ? users[0].firstName : ''}. ${users ? users[0].lastName[0] : ''}`}
-                        </SUserName>
-                    </STextInfoWrapper>
-                ))}
         </SRoot>
     );
 };

@@ -97,11 +97,17 @@ const Avatar = ({
     grouped = false,
     user,
     size = 'normal',
+    showTitle = true,
+    role,
 }: {
     grouped?: boolean;
     user?: UserType;
     size?: 'normal' | 'mini';
+    showTitle?: boolean;
+    role?: string;
 }) => {
+    const translatedGovernanceRole = chrome.i18n.getMessage(`entity_${role}`);
+
     const getColor = useCallback(() => {
         switch (user.firstName[0]) {
             case 'a':
@@ -168,8 +174,21 @@ const Avatar = ({
     }
 
     if (!user.profileThumbnailUrl) {
-        return (
-            <div title={`${user.firstName}. ${user.lastName}`}>
+        return showTitle ? (
+            <div
+                title={`${translatedGovernanceRole ? `${translatedGovernanceRole}\n` : ''}${user.firstName} ${
+                    user.lastName
+                }`}
+            >
+                <SNoPictureRoot
+                    as="div"
+                    grouped={grouped}
+                    size={size}
+                    style={{ backgroundColor: getColor() }}
+                >{`${user.firstName[0]}${user.lastName[0]}`}</SNoPictureRoot>
+            </div>
+        ) : (
+            <div>
                 <SNoPictureRoot
                     as="div"
                     grouped={grouped}
@@ -180,8 +199,21 @@ const Avatar = ({
         );
     }
 
-    return (
-        <div title={`${user.firstName}. ${user.lastName}`}>
+    return showTitle ? (
+        <div
+            title={`${translatedGovernanceRole ? `${translatedGovernanceRole}\n` : ''}${user.firstName} ${
+                user.lastName
+            }`}
+        >
+            <SPictureRoot
+                alt={`${user.firstName} ${user.lastName}`}
+                grouped={grouped}
+                size={size}
+                src={user.profileThumbnailUrl}
+            />
+        </div>
+    ) : (
+        <div>
             <SPictureRoot
                 alt={`${user.firstName}. ${user.lastName}`}
                 grouped={grouped}
