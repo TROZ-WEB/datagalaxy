@@ -167,7 +167,7 @@ const computeData = (data: any, i: number) => {
             }
 
             if (d.label) {
-                return <Tags.Item key={i} color={d.color} hideLabel={false} tag={d.description || d.label} />;
+                return <Tags.Item key={i} color={d.color} hideLabel={false} tag={d.label} title={d.description} />;
             }
 
             if (d.type) {

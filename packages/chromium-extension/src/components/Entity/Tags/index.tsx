@@ -44,7 +44,17 @@ const Tags = ({ children, className }: { children: React.ReactNode; className?: 
     return <SRoot className={className}>{children}</SRoot>;
 };
 
-Tags.Item = ({ tag, hideLabel = false, color }: { tag: string; hideLabel?: boolean; color?: string }) => {
+Tags.Item = ({
+    tag,
+    hideLabel = false,
+    color,
+    title,
+}: {
+    tag: string;
+    hideLabel?: boolean;
+    color?: string;
+    title?: string;
+}) => {
     let t = tag;
     if (t === 'Finance') {
         // API WORKAROUND 2 : Api return 'Finance' tag in entities, but 'FINANCE' in tags list
@@ -61,7 +71,7 @@ Tags.Item = ({ tag, hideLabel = false, color }: { tag: string; hideLabel?: boole
                     style={{
                         backgroundColor: color || defaultColor,
                     }}
-                    title={tag}
+                    title={title || tag}
                     withBorder={color === 'white' || defaultColor === 'white'}
                 />
             )}
