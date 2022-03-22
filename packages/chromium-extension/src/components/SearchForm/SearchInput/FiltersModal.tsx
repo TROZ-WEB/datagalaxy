@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import RoundButton from '../../ui/RoundButton';
 import Title from '../../ui/Title';
-import FilterModal from './FilterModal';
 import DomainsModal from './Modals/DomainsModal';
 import EntityTypeModal from './Modals/EntityTypeModal';
 import LastModifiedModal from './Modals/LastModifiedModal';

@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { EntityType } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../store/hooks';
-import HorizontalSeparator from '../HorizontalSeparator';
 import LoadingScreen from '../LoadingScreen';
 import EntityHeader from '../ui/EntityHeader';
 import Title from '../ui/Title';
@@ -39,15 +38,24 @@ const SResultsTitleWrapper = styled.div`
     margin-top: 15px;
 `;
 
+const SSearchCardResultContainer = styled.div`
+    border-bottom: 1px solid rgba(0, 76, 255, 0.08);
+    border-top: 1px solid transparent;
+
+    &:hover,
+    &:focus {
+        background: rgba(0, 76, 255, 0.08);
+    }
+`;
+
 const SSearchCardResultWrapper = styled.div`
     margin: 8px auto;
+    margin-left: 6px;
 `;
 
 const SSearchCardsResultWrapper = styled.div`
-    overflow-y: scroll;
     height: 100%;
     width: 100%;
-    margin-right: 4px;
     box-sizing: border-box;
 `;
 
@@ -243,7 +251,7 @@ const SearchForm = () => {
                                             });
 
                                             return (
-                                                <div key={entity.id}>
+                                                <SSearchCardResultContainer key={entity.id}>
                                                     <SSearchCardResultWrapper>
                                                         <EntityHeader
                                                             entity={entity}
@@ -264,10 +272,7 @@ const SearchForm = () => {
                                                             alwaysExpanded
                                                         />
                                                     </SSearchCardResultWrapper>
-                                                    {idx < filteredExactMatches?.result?.entities.length - 1 && (
-                                                        <HorizontalSeparator />
-                                                    )}
-                                                </div>
+                                                </SSearchCardResultContainer>
                                             );
                                         })}
                                     </SSearchCardsResultWrapper>
@@ -300,7 +305,7 @@ const SearchForm = () => {
                                 {hasSearchResults && (
                                     <SSearchCardsResultWrapper>
                                         {searchResults?.result?.entities.map((entity, idx) => (
-                                            <div key={entity.id}>
+                                            <SSearchCardResultContainer key={entity.id}>
                                                 <SSearchCardResultWrapper>
                                                     <EntityHeader
                                                         entity={entity}
@@ -319,10 +324,7 @@ const SearchForm = () => {
                                                         alwaysExpanded
                                                     />
                                                 </SSearchCardResultWrapper>
-                                                {idx < searchResults?.result?.entities.length - 1 && (
-                                                    <HorizontalSeparator />
-                                                )}
-                                            </div>
+                                            </SSearchCardResultContainer>
                                         ))}
                                     </SSearchCardsResultWrapper>
                                 )}
