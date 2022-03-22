@@ -59,16 +59,16 @@ const Breadcrumb = ({ path, workspace }: { path: string[]; workspace: Workspace 
         <div>
             {formattedPath && (
                 <SRoot title={path.join(' > ')}>
-                    {workspace?.imageHash && (
+                    {workspace?.iconHash && (
                         <SWorkspaceImage
                             alt="workspace-image"
-                            src={`${url}/image?hash=${workspace?.imageHash}`}
+                            src={`${url}/image?hash=${workspace?.iconHash}`}
                             title={workspace?.name}
                         />
                     )}
                     {formattedPath && formattedPath.shorten.length !== 0 ? (
                         <SFormatted>
-                            {workspace?.imageHash && <SChevron></SChevron>}
+                            {workspace?.iconHash && <SChevron></SChevron>}
                             {formatText(formattedPath)}
                         </SFormatted>
                     ) : (

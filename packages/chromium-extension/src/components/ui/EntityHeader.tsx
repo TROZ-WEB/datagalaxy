@@ -205,7 +205,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
             const workspaceResult = workspaces.find((w) => workspaceName === w.name);
             setWorkspace(workspaceResult);
 
-            if (workspaceResult?.imageHash) {
+            if (workspaceResult?.iconHash) {
                 pathAsStringArray.shift(); // remove workspace part
             }
 
