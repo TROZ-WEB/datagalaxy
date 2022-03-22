@@ -22,7 +22,7 @@ const SRoot = styled.button`
 
     &:hover,
     &:focus {
-        background: rgba(2, 42, 142, 0.1);
+        background: rgba(0, 76, 255, 0.08);
         border: none;
         cursor: pointer;
     }

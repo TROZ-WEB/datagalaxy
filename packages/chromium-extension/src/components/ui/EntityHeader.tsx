@@ -22,7 +22,11 @@ const SBreadcrumbWrapper = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    min-height: 19px;
+    ${(props) =>
+        props.entityPage &&
+        css`
+            min-height: 19px;
+        `}
 `;
 
 const SInfosWrapper = styled.div`
@@ -234,7 +238,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
 
                         <SRightSide>
                             {displayPath && (
-                                <SBreadcrumbWrapper>
+                                <SBreadcrumbWrapper entityPage={entityPage}>
                                     <Breadcrumb path={entityPathAsStringArray} workspace={workspace} />
                                 </SBreadcrumbWrapper>
                             )}

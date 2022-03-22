@@ -24,6 +24,8 @@ const SEntityDGGlyphContainer = styled.div`
 const SEntityTypeShortLabel = styled.span`
     font-size: 8px;
     color: #6d6f88;
+    margin-top: 2px;
+    margin-bottom: -2px;
 `;
 
 const STechnicalLogo = styled.img`

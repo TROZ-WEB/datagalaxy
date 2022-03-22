@@ -1,37 +1,12 @@
 import React, { ComponentPropsWithRef, forwardRef, ReactElement } from 'react';
 import styled from 'styled-components';
 import Refresh from '../../../icons/Refresh';
-import Search from '../../../icons/Search';
 import { useStoreState, useStoreActions } from '../../../store/hooks';
-import Glyph from '../../ui/Glyph';
+import RoundButton from '../../ui/RoundButton';
 import FiltersModal from './FiltersModal';
 import FilterTag from './FilterTag';
 
 /* ---------- STYLES ---------- */
-
-const SClearButton = styled.button`
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    margin: 0;
-    position: relative;
-    top: 1px;
-    font-family: 'Montserrat', sans-serif;
-
-    @keyframes BounceIn {
-        from {
-            transform: scale(0);
-        }
-        to {
-            transform: scale(1);
-        }
-    }
-
-    animation: BounceIn 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    display: block;
-    font-weight: 700;
-`;
 
 const SIconLoading = styled(Refresh)`
     @keyframes Rotate {
@@ -46,6 +21,7 @@ const SIconLoading = styled(Refresh)`
     animation: Rotate 1700ms cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
     display: block;
     font-size: inherit;
+    margin-right: 4px;
 `;
 
 const SInput = styled.input`
@@ -53,6 +29,8 @@ const SInput = styled.input`
     min-width: 0;
     margin: 0;
     padding: 13px;
+    padding-left: 4px;
+    padding-right: 4px;
     border: none;
     font-size: 14px;
     line-height: 18px;
@@ -64,7 +42,7 @@ const SInput = styled.input`
 `;
 
 const SLeft = styled.div`
-    margin-left: 12px;
+    margin-left: 4px;
     white-space: nowrap;
 
     & svg {
@@ -79,7 +57,7 @@ const SLeft = styled.div`
 `;
 
 const SRight = styled.div`
-    margin-right: 12px;
+    margin-right: 4px;
     white-space: nowrap;
 
     & svg {
@@ -128,13 +106,9 @@ const SearchInput = forwardRef<HTMLInputElement, IProps>(
         if (loading) {
             rightElement = <SIconLoading />;
         } else if (success) {
-            rightElement = (
-                <SClearButton aria-label="Clear" id="clearSearch" onClick={onClearSearch} type="button">
-                    <Glyph icon="Cancelsearch" />
-                </SClearButton>
-            );
+            rightElement = <RoundButton icon="Cancelsearch" onClick={onClearSearch} />;
         } else {
-            rightElement = <Search />;
+            rightElement = <RoundButton icon="Search" />;
         }
 
         const pickedFilters = useStoreState((state) => state.filters.pickedFilters);
