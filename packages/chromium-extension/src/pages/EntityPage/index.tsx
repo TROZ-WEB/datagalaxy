@@ -66,7 +66,6 @@ const EntityPage = () => {
                 type: displayedEntity.type,
             });
 
-            // API WORKAROUND 4 : API does not provide linked objects size.
             const fetchLinkedObjects = async () => {
                 await dispatch.entity.fetchLinkedObjects({
                     id: displayedEntity.id,
