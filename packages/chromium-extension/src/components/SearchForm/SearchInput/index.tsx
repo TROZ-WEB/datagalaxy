@@ -101,8 +101,7 @@ export interface IProps extends ComponentPropsWithRef<'input'> {
 
 const SearchInput = forwardRef<HTMLInputElement, IProps>(
     ({ onClearSearch, loading = false, success = false, ...props }, ref) => {
-        const pickedFilters = useStoreState((state) => state.filters.pickedFilters);
-        const versionId = useStoreState((state) => state.filters.versionId);
+        const { pickedFilters } = useStoreState((state) => state.filters);
         let rightElement: ReactElement = null;
 
         if (loading) {
@@ -126,13 +125,6 @@ const SearchInput = forwardRef<HTMLInputElement, IProps>(
         return (
             <SRoot>
                 <SFilterTagsContainer>
-                    {versionId && (
-                        <FilterTag
-                            key={versionId}
-                            filter={{ icon: 'Table', kind: 'catalog', value: 'Version' }}
-                            onClick={() => handleClick('Workspace')}
-                        />
-                    )}
                     {pickedFilters?.map((filter) => (
                         <FilterTag
                             key={filter?.filter?.values?.[0]}

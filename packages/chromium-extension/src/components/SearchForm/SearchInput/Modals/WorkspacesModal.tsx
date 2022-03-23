@@ -7,8 +7,8 @@ import FieldIcon from './FieldIcon';
 
 const WorkspacesModal: FC = () => {
     const dispatch = useStoreDispatch();
-    const workspaces = useStoreState((state) => state.filters.workspaces);
-    const { updateVersionId } = useStoreActions((actions) => actions.filters);
+    const { workspaces, pickedFilters } = useStoreState((state) => state.filters);
+    const { updateVersionId, updatePickedFilters } = useStoreActions((actions) => actions.filters);
     const { Workspace } = useStoreState((state) => state.modal);
 
     useEffect(() => {
@@ -42,6 +42,20 @@ const WorkspacesModal: FC = () => {
 
     const handleChange = (id) => {
         updateVersionId(id);
+        const newPickedFilters = [...pickedFilters];
+        const filterIndex = newPickedFilters?.findIndex((item) => item?.filter?.attributeKey === 'Workspace');
+        if (filterIndex === -1) {
+            const filter = {
+                icon: workspacesFields.find((item) => item.id === id).icon,
+                filter: { attributeKey: 'Workspace', operator: 'contains', values: [id] },
+            };
+            newPickedFilters.push(filter);
+        } else {
+            newPickedFilters[filterIndex].filter.values = [id];
+            newPickedFilters[filterIndex].icon = workspacesFields.find((item) => item.id === id).icon;
+        }
+
+        updatePickedFilters(newPickedFilters);
     };
 
     return (
