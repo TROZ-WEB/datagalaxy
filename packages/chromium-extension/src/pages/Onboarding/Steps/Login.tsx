@@ -7,6 +7,8 @@ import Input from '../../../components/ui/Input';
 import { useStoreActions, useStoreState } from '../../../store/hooks';
 import { StepProps } from '../Stepper';
 
+declare const pendo: any;
+
 /* ---------- STYLES ---------- */
 
 const SButtonWrapper = styled.div`
@@ -57,6 +59,9 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
     const { auth, onboarding } = useStoreActions((actions) => actions);
     const { onboarding: onboardingState } = useStoreState((state) => state);
 
+    const user = useStoreState((s) => s.auth.user);
+    const aT = useStoreState((s) => s.auth.getDecodedPat);
+
     const {
         register,
         handleSubmit,
@@ -77,6 +82,20 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
         onboarding.updateEmail(emailChanges);
         onboarding.updatePat(btoa(patChanges));
     }, [emailChanges, patChanges]);
+
+    /* useEffect(() => { // TODO: pendo implementation
+        if (user?.userId && aT?.uid) {
+            pendo.initialize({
+                visitor: {
+                    id: aT.uid,
+                },
+
+                account: {
+                    id: aT.cid,
+                },
+            });
+        }
+    }, [user, aT]); */
 
     const onSubmit = handleSubmit(async (values) => {
         try {

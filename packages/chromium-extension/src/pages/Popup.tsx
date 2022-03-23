@@ -7,6 +7,8 @@ import LoadingScreen from '../components/LoadingScreen';
 import { useStoreDispatch, useStoreState } from '../store/hooks';
 import Onboarding from './Onboarding';
 
+declare const pendo: any;
+
 enum AppInitialLoadingStatus {
     Loading,
     // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -35,13 +37,15 @@ const Popup = () => {
     const [isAppReady, setIsAppReady] = useState<boolean>(false);
     const [globalError, setGlobalError] = useState<boolean>(null);
 
+    const user = useStoreState((s) => s.auth.user);
+    const aT = useStoreState((s) => s.auth.getDecodedPat);
+
     useEffect(() => {
         const initApp = async () => {
             try {
                 // Refresh accessToken at the extension launch
                 const accessTokenSingleton = AccessToken.getInstance();
                 await accessTokenSingleton.init(pat);
-
                 // Fetch all available tags
                 await dispatch.auth.fetchTags();
                 await dispatch.auth.fetchWorkspaces();
@@ -58,6 +62,20 @@ const Popup = () => {
             initApp();
         }
     }, []);
+
+    /* useEffect(() => { // TODO: pendo implementation
+        if (user?.userId && aT?.uid) {
+            pendo.initialize({
+                visitor: {
+                    id: aT.uid,
+                },
+
+                account: {
+                    id: aT.cid,
+                },
+            });
+        }
+    }, [user, aT]); */
 
     const renderBootingExtension = () => {
         if (globalError) {
