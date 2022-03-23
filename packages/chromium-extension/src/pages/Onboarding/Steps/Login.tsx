@@ -83,7 +83,7 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
         onboarding.updatePat(btoa(patChanges));
     }, [emailChanges, patChanges]);
 
-    /* useEffect(() => { // TODO: pendo implementation
+    useEffect(() => {
         if (user?.userId && aT?.uid) {
             pendo.initialize({
                 visitor: {
@@ -95,7 +95,7 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
                 },
             });
         }
-    }, [user, aT]); */
+    }, [user, aT]);
 
     const onSubmit = handleSubmit(async (values) => {
         try {
