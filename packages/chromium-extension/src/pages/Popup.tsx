@@ -63,7 +63,7 @@ const Popup = () => {
         }
     }, []);
 
-    useEffect(() => {
+    /* useEffect(() => { // TODO: pendo implementation
         if (user?.userId && aT?.uid) {
             pendo.initialize({
                 visitor: {
@@ -75,7 +75,7 @@ const Popup = () => {
                 },
             });
         }
-    }, [user, aT]);
+    }, [user, aT]); */
 
     const renderBootingExtension = () => {
         if (globalError) {
