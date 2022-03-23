@@ -4,8 +4,8 @@ import styled from 'styled-components';
 /* ---------- STYLES ---------- */
 
 const SStepNumber = styled.span`
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,8 +17,7 @@ const SStepNumber = styled.span`
     color: #ffffff;
     font-weight: 700;
 
-    ${(props) =>
-        props.activeNumber && `background: linear-gradient(71.97deg, #001aff 11.94%, #084eff 37.82%, #17aeff 85.88%)`}
+    ${(props) => props.activeNumber && `background: #1035B1;`}
 `;
 
 const SStepTrait = styled.span`
@@ -37,7 +36,7 @@ const SStepWrapper = styled.div`
 
 const SRoot = styled.div`
     margin: 0 auto;
-    padding: 16px 0;
+    padding: 30px 0;
     display: flex;
     justify-content: center;
 `;
