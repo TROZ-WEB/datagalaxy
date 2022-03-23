@@ -58,12 +58,11 @@ const FilterTag = React.forwardRef(({ filter, onClick }: Props, ref) => {
 
     const handleDeleteFilter = (e) => {
         e.stopPropagation();
-        if (filter?.filter?.value === 'Version') {
+        if (filter?.filter?.attributeKey === 'Workspace') {
             updateVersionId(null);
-        } else {
-            const payload = pickedFilters.filter((item) => item?.filter?.attributeKey !== filter?.filter?.attributeKey);
-            updatePickedFilters(payload);
         }
+        const payload = pickedFilters.filter((item) => item?.filter?.attributeKey !== filter?.filter?.attributeKey);
+        updatePickedFilters(payload);
     };
 
     return (

@@ -7,8 +7,7 @@ import FieldIcon from './FieldIcon';
 
 const TechnologiesModal: FC = () => {
     const dispatch = useStoreDispatch();
-    const technologies = useStoreState((state) => state.filters.technologies);
-    const pickedFilters = useStoreState((state) => state.filters.pickedFilters);
+    const { pickedFilters, technologies } = useStoreState((state) => state.filters);
     const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
     const { TechnologyCode } = useStoreState((state) => state.modal);
 

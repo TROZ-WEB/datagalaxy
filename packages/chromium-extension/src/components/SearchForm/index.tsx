@@ -166,7 +166,9 @@ const SearchForm = () => {
 
     const technologies = useStoreState((state) => state.auth.technologies);
 
-    const searchPickedFilters = pickedFilters.map((item) => item.filter);
+    const searchPickedFilters = pickedFilters
+        .map((item) => item.filter)
+        .filter((item) => item.attributeKey !== 'Workspace');
 
     const debounceOnChange = async ({ value }) => {
         if (value) {

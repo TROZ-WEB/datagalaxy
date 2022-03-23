@@ -75,8 +75,12 @@ const FiltersModal = () => {
                 <SModal onClick={(e) => e.stopPropagation()}>
                     <STitle>{chrome.i18n.getMessage(`filter_by`)}</STitle>
                     <SFiltersContainer>
-                        {filters.map(({ label, attributeKey }) => (
-                            <FiltersModalTag label={label} onClick={() => handleClick(attributeKey)} />
+                        {filters?.map(({ label, attributeKey }) => (
+                            <FiltersModalTag
+                                key={attributeKey}
+                                label={label}
+                                onClick={() => handleClick(attributeKey)}
+                            />
                         ))}
                     </SFiltersContainer>
                 </SModal>
