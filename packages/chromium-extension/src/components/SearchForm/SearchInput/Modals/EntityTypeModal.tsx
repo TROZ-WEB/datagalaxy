@@ -20,7 +20,7 @@ const EntityTypeModal: FC = () => {
         fields.push({
             id: key,
             label: chrome.i18n.getMessage(`entity_label_full_${key}`),
-            icon: <DGGlyph icon={value.glyph} kind={value.kind.toLowerCase()} />,
+            icon: <DGGlyph icon={value?.glyph} kind={value?.kind.toLowerCase()} />,
             checked: !!pickedFilters?.[index]?.filter?.values?.includes(key),
         });
     }
