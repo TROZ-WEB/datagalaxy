@@ -44,6 +44,10 @@ const SGlyph = styled(Glyph)`
     transform: rotate(180deg);
 `;
 
+const SQuickFiltersContainer = styled.div`
+    display: flex;
+`;
+
 const SRoot = styled.div`
     margin-top: 16px;
     position: relative;
@@ -116,11 +120,11 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
     };
 
     const handleScrollLeft = () => {
-        scrollContainer.scrollLeft -= 300;
+        scrollContainer.scrollLeft -= 325;
     };
 
     const handleScrollRight = () => {
-        scrollContainer.scrollLeft += 300;
+        scrollContainer.scrollLeft += 325;
     };
 
     const pickedFilters = useStoreState((state) => state.filters.pickedFilters);
@@ -155,15 +159,17 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                             <SLeftButton disabled={scrollValue === 0} onClick={handleScrollLeft}>
                                 <SGlyph icon="ArrowDropRight" />
                             </SLeftButton>
-                            {QuickFiltersArray?.map(({ filter }, i) => (
-                                <QuickFilter
-                                    // eslint-disable-next-line react/no-array-index-key
-                                    key={i}
-                                    ref={filtersModal}
-                                    filter={filter}
-                                    onClick={() => handleClick(filter)}
-                                />
-                            ))}
+                            <SQuickFiltersContainer>
+                                {QuickFiltersArray?.map(({ filter }, i) => (
+                                    <QuickFilter
+                                        // eslint-disable-next-line react/no-array-index-key
+                                        key={i}
+                                        ref={filtersModal}
+                                        filter={filter}
+                                        onClick={() => handleClick(filter)}
+                                    />
+                                ))}
+                            </SQuickFiltersContainer>
                             <SRightButton disabled={scrollValue === maxScroll} onClick={handleScrollRight}>
                                 <Glyph icon="ArrowDropRight" />
                             </SRightButton>

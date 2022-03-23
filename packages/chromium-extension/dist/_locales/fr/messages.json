@@ -692,7 +692,7 @@
         "message": "Texte libre 2"
     },
     "attribute_key_EntityType": {
-        "message": "Type d'entité"
+        "message": "Type"
     },
     "attribute_key_ObjectLinkPrefix": {
         "message": "Lien"
@@ -1055,7 +1055,7 @@
         "message": "Valider"
     },
     "no_quick_filters": {
-        "message": "Aucun Filtre Rapide n’est disponible pour cette recherche"
+        "message": "Aucun filtre rapide n’est disponible pour cette recherche"
     },
     "no_filters": {
         "message": "Aucun filtre n’est disponible pour cette recherche"

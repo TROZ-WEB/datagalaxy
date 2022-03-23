@@ -695,7 +695,7 @@
         "message": "User Value 2"
     },
     "attribute_key_EntityType": {
-        "message": "Entity type"
+        "message": "Type"
     },
     "attribute_key_ObjectLinkPrefix": {
         "message": "Link"
@@ -1055,7 +1055,7 @@
         "message": "Send"
     },
     "no_quick_filters": {
-        "message": "No Quick Filter is available for this search"
+        "message": "No quick filter is available for this search"
     },
     "last_modified_pastHour": {
         "message": "Past hour"

@@ -189,13 +189,6 @@ const ModalBase: FC<ModalBaseProps> = ({
                                 )
                             }
                         </SFieldsContainer>
-                        {multiselect && (
-                            <SButtonContainer>
-                                <Button id={`filter_${label}`} onClick={handleClose}>
-                                    {chrome.i18n.getMessage(`form_send`)}
-                                </Button>
-                            </SButtonContainer>
-                        )}
                     </SForm>
                 </SModal>
             )}

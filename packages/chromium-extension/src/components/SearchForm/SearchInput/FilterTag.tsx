@@ -13,9 +13,9 @@ const SImageContainer = styled.div`
 
 const SRoot = styled.div`
     background: #ffffff;
-    height: 34px;
+    height: 26px;
     padding: 4px 8px;
-    max-width: 95px;
+    max-width: 110px;
     border: none;
     border-radius: 3px;
     cursor: pointer;
@@ -67,7 +67,13 @@ const FilterTag = React.forwardRef(({ filter, onClick }: Props, ref) => {
     };
 
     return (
-        <SRoot ref={ref} onClick={onClick}>
+        <SRoot
+            ref={ref}
+            onClick={onClick}
+            title={`${chrome.i18n.getMessage(
+                `attribute_key_${filter?.filter?.attributeKey}`,
+            )} : ${filter?.filter?.values?.join(', ')}`}
+        >
             <SImageContainer>{filter?.icon?.$$typeof && filter?.icon}</SImageContainer>
             <STextContainer>
                 <SValue>{chrome.i18n.getMessage(`attribute_key_${filter?.filter?.attributeKey}`)}</SValue>

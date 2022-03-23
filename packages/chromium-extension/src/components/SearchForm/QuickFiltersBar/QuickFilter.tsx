@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import DGGlyph from '../../ui/DGGlyph';
 
 /* ---------- STYLES ---------- */
 
@@ -14,7 +13,7 @@ const SLabel = styled.div`
 `;
 
 const SImageContainer = styled.div`
-    margin-right: 5px;
+    /* margin-right: 5px; */
     align-items: center;
     display: flex;
 `;
@@ -23,7 +22,7 @@ const SRoot = styled.div`
     background: #ffffff;
     height: 34px;
     padding: 4px 8px;
-    max-width: 95px;
+    max-width: 110px;
     border-radius: 3px;
     cursor: pointer;
     display: flex;
@@ -32,8 +31,8 @@ const SRoot = styled.div`
     color: #001030;
     box-sizing: border-box;
 
-    &:not(:first-child) {
-        margin-left: 8px;
+    &:not(:last-child) {
+        margin-right: 8px;
     }
 
     &:hover,
@@ -59,11 +58,19 @@ const SValue = styled.div`
 interface Props {
     filter: any;
     onClick: () => void;
+    className?: string;
 }
 
-const QuickFilter = React.forwardRef(({ filter, onClick }: Props, ref) => {
+const QuickFilter = React.forwardRef(({ filter, onClick, className }: Props, ref) => {
     return (
-        <SRoot ref={ref} onClick={onClick}>
+        <SRoot
+            ref={ref}
+            className={className}
+            onClick={onClick}
+            title={`${chrome.i18n.getMessage(`attribute_key_${filter?.attributeKey}`)}${
+                filter?.values?.length === 1 ? ` : ${filter?.values?.[0]}` : ''
+            }`}
+        >
             <SImageContainer>{/* <DGGlyph icon={filter.icon} kind={filter.kind} /> */}</SImageContainer>
             <STextContainer>
                 <SLabel>{chrome.i18n.getMessage(`attribute_key_${filter?.attributeKey}`)}</SLabel>
