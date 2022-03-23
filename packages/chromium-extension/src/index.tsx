@@ -29,7 +29,14 @@ storeModel().then((models) => {
         r.classList.toggle('datagalaxy_root--show');
     }
 
-    const store = createStore(persist(models, { storage: AsyncStorageService }));
+    const store = createStore({
+        auth: persist(models.auth, { storage: AsyncStorageService }),
+        onboarding: persist(models.onboarding, { storage: AsyncStorageService }),
+        entity: models.entity,
+        search: models.search,
+        filters: models.filters,
+        modal: models.modal,
+    });
     ReactDOM.render(
         <StoreProvider store={store}>
             <Helmet>
