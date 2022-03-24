@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState, useRef } from 'react';
 import { EnhancedFilter } from 'shared';
 import styled from 'styled-components';
-import { EnhancedFilter } from '../../../../../shared/src/Filters/types';
 import { useStoreState, useStoreActions } from '../../../store/hooks';
 import Glyph from '../../ui/Glyph';
 import QuickFilter from './QuickFilter';
