@@ -248,7 +248,7 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                         </Details.SubInfo>
                         <Details.Separator />
                         <Details.SubInfo title="">
-                            {tags.length !== 0 ? (
+                            {tags?.length !== 0 ? (
                                 <Tags>
                                     {tags?.map((tag, i) => (
                                         /* eslint-disable-next-line */
