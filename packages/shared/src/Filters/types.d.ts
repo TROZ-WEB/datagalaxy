@@ -7,6 +7,11 @@ export interface Filter {
     operator: string;
     values: string[];
 }
+export interface EnhancedFilter {
+    filter: Filter;
+    icon?: any;
+    label?: string;
+}
 export interface PickedFilters {
     icon?: any;
     filter: Filter;

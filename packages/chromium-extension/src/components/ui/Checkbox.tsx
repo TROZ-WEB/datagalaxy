@@ -85,7 +85,7 @@ const Checkbox: React.FC<Props> = ({ label, icon, id, className, checked = false
                 <SGlyph icon="Check" />
             </StyledCheckbox>
             <SLabel>
-                <SIconContainer>{icon}</SIconContainer> {label}
+                {icon && <SIconContainer>{icon}</SIconContainer>} {label}
             </SLabel>
         </CheckboxContainer>
     );

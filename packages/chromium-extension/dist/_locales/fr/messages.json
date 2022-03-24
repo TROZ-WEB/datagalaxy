@@ -27,7 +27,7 @@
         "message": "Résultats exacts"
     },
     "search_blank_search": {
-        "message": "Qu’avez-vous envie de trouver aujourd’hui ?"
+        "message": "Vos dernières recherches et derniers objets consultés s’afficheront ici, vous pourrez y accéder rapidement."
     },
     "global_error": {
         "message": "Nous rencontrons des difficultés pour vous connecter, vérifiez vos informations de connexion."
@@ -389,7 +389,7 @@
         "message": "Libellé fonctionnel"
     },
     "attribute_key_Workspace": {
-        "message": "Espace de travail"
+        "message": "Espace"
     },
     "attribute_key_Name": {
         "message": "Nom"
@@ -1057,6 +1057,9 @@
     "no_quick_filters": {
         "message": "Aucun filtre rapide n’est disponible pour cette recherche"
     },
+    "add_filter": {
+        "message": "Ajouter un filtre"
+    },
     "no_filters": {
         "message": "Aucun filtre n’est disponible pour cette recherche"
     },
@@ -1115,6 +1118,6 @@
         "message": "Usages"
     },
     "all_workspaces": {
-        "message": "Tous les espaces de travail"
+        "message": "Tous les espaces"
     }
 }

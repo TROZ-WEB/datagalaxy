@@ -72,10 +72,11 @@ interface Props {
     badgeCount?: number;
     className?: string;
     id?: string;
+    title?: string;
 }
 
 const RoundButton = React.forwardRef(
-    ({ onClick, onBlur, icon, type = 'button', variant, size = 'M', className, id, ...rest }: Props, ref) => {
+    ({ onClick, onBlur, icon, type = 'button', variant, size = 'M', className, id, title, ...rest }: Props, ref) => {
         return (
             <SRoot
                 ref={ref}
@@ -85,6 +86,7 @@ const RoundButton = React.forwardRef(
                 onClick={onClick}
                 // eslint-disable-next-line react/button-has-type
                 size={size}
+                title={title}
                 type={type}
                 variant={variant}
                 {...rest}

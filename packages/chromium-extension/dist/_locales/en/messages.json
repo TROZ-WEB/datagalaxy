@@ -27,7 +27,7 @@
         "message": "Exact matches"
     },
     "search_blank_search": {
-        "message": "What do you want to find today ?"
+        "message": "Your latest searches and viewed items will be displayed here, so you can access them quickly."
     },
     "global_error": {
         "message": "We are having difficulty logging in, please verify your login information."
@@ -1056,6 +1056,12 @@
     },
     "no_quick_filters": {
         "message": "No quick filter is available for this search"
+    },
+    "add_filter": {
+        "message": "Add a filter"
+    },
+    "no_filters": {
+        "message": "No filter is available for this search"
     },
     "last_modified_pastHour": {
         "message": "Past hour"

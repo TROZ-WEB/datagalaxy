@@ -2,7 +2,6 @@ import React, { FC, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useStoreActions, useStoreState } from '../../../store/hooks';
 import keyListener from '../../../utils';
-import Button from '../../ui/Button';
 import Checkbox from '../../ui/Checkbox';
 import Glyph from '../../ui/Glyph';
 import Radio from '../../ui/Radio';
@@ -38,6 +37,10 @@ const SInput = styled.input`
     padding: 4px;
     font-size: 14px;
     height: 32px;
+
+    &:focus-visible {
+        outline: -webkit-focus-ring-color auto 0px;
+    }
 `;
 
 const SIntersection = styled.div`
@@ -46,13 +49,11 @@ const SIntersection = styled.div`
 `;
 
 const SRadio = styled(Radio)`
-    margin-left: 16px;
-`;
+    width: auto;
 
-const SButtonContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    margin-top: 8px;
+    &:not(:first-child) {
+        margin-left: 16px;
+    }
 `;
 
 const SForm = styled.form`
@@ -151,7 +152,7 @@ const ModalBase: FC<ModalBaseProps> = ({
                     <SForm>
                         {multiselect && (
                             <SIntersection>
-                                <Radio
+                                <SRadio
                                     checked={intersectionLogic === 'or'}
                                     id="or"
                                     label={chrome.i18n.getMessage(`intersection_or`)}

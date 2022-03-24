@@ -13,7 +13,7 @@ const SLabel = styled.div`
 `;
 
 const SImageContainer = styled.div`
-    /* margin-right: 5px; */
+    margin-right: 5px;
     align-items: center;
     display: flex;
 `;
@@ -67,14 +67,14 @@ const QuickFilter = React.forwardRef(({ filter, onClick, className }: Props, ref
             ref={ref}
             className={className}
             onClick={onClick}
-            title={`${chrome.i18n.getMessage(`attribute_key_${filter?.attributeKey}`)}${
+            title={`${chrome.i18n.getMessage(`attribute_key_${filter?.filter?.attributeKey}`)}${
                 filter?.values?.length === 1 ? ` : ${filter?.values?.[0]}` : ''
             }`}
         >
-            <SImageContainer>{/* <DGGlyph icon={filter.icon} kind={filter.kind} /> */}</SImageContainer>
+            {filter?.icon && <SImageContainer>{filter?.icon}</SImageContainer>}
             <STextContainer>
-                <SLabel>{chrome.i18n.getMessage(`attribute_key_${filter?.attributeKey}`)}</SLabel>
-                <SValue>{filter?.values?.length === 1 && filter?.values?.[0]}</SValue>
+                <SLabel>{chrome.i18n.getMessage(`attribute_key_${filter?.filter?.attributeKey}`)}</SLabel>
+                <SValue>{filter?.label ? filter?.label : '...'}</SValue>
             </STextContainer>
         </SRoot>
     );

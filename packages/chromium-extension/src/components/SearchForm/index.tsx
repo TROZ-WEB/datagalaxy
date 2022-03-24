@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { EntityType } from 'shared';
+import { EntityType, entitiesTypeRelatedInfos, EnhancedFilter } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../store/hooks';
 import keyListener from '../../utils';
 import LoadingScreen from '../LoadingScreen';
+import DGGlyph from '../ui/DGGlyph';
 import EntityHeader from '../ui/EntityHeader';
 import Title from '../ui/Title';
 import QuickFiltersBar from './QuickFiltersBar';
 import SearchInput from './SearchInput';
 import DomainsModal from './SearchInput/Modals/DomainsModal';
 import EntityTypeModal from './SearchInput/Modals/EntityTypeModal';
+import FieldIcon from './SearchInput/Modals/FieldIcon';
 import LastModifiedModal from './SearchInput/Modals/LastModifiedModal';
 import ModuleModal from './SearchInput/Modals/ModuleModal';
 import OwnersModal from './SearchInput/Modals/OwnersModal';
 import StatusModal from './SearchInput/Modals/StatusModal';
 import StewardsModal from './SearchInput/Modals/StewardsModal';
 import TechnologiesModal from './SearchInput/Modals/TechnologiesModal';
+import { moduleFields } from './SearchInput/Modals/usages';
 import WorkspacesModal from './SearchInput/Modals/WorkspacesModal';
 import { useSearchInput } from './SearchInput/useSearchInput';
 import useExactMatches from './useExactMatches';
-import BlankSearch from '../../../assets/blank-search.png';
+import BlankSearch from '../../../assets/blank-search.svg';
 
 /* ---------- STYLES ---------- */
 
@@ -28,16 +31,17 @@ const SBlankSearch = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    height: 100%;
     color: #6d6f88;
     font-size: 14px;
+    flex: 1;
 `;
 
 const SBlankSearchImage = styled.img`
     width: 250px;
-`;
-
-const SResults = styled.div`
-    margin-top: 8px;
+    margin-bottom: 40px;
 `;
 
 const SResultsTitleWrapper = styled.div`
@@ -45,7 +49,7 @@ const SResultsTitleWrapper = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    margin-top: 15px;
+    margin: 16px 0px 8px 0px;
 `;
 
 const SSearchCardResultContainer = styled.div`
@@ -64,7 +68,6 @@ const SSearchCardResultWrapper = styled.div`
 `;
 
 const SSearchCardsResultWrapper = styled.div`
-    height: 100%;
     width: 100%;
     box-sizing: border-box;
 `;
@@ -84,17 +87,15 @@ const STagResultCount = styled.span`
     margin-left: 8px;
 `;
 
-const SMore = styled.span`
+const SMore = styled.div`
     font-size: 12px;
     margin-right: 3px;
     margin-bottom: 3px;
     margin-top: 15px;
+    cursor: pointer;
 `;
 
-const SMoreContainer = styled.div`
-    cursor: pointer;
-    display: flex;
-    align-items: center;
+const SExactMatchsContainer = styled.div`
     margin-bottom: 35px;
 `;
 
@@ -128,12 +129,61 @@ enum AttributesWeight {
 
 const SearchForm = () => {
     const dispatch = useStoreDispatch();
-    const quickFilters = useStoreState((state) => state.search.quickFilters);
-    const pickedFilters = useStoreState((state) => state.filters.pickedFilters);
-    const versionId = useStoreState((state) => state.filters.versionId);
-    const { searchedArgs, searchResults, exactMatches } = useStoreState((state) => state.search);
+    const { pickedFilters, versionId } = useStoreState((state) => state.filters);
+    const technologyFilters = useStoreState((state) => state.filters.technologies);
+    const { searchedArgs, searchResults, exactMatches, quickFilters } = useStoreState((state) => state.search);
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
+
+    const enhancedQuickFilters = [];
+
+    quickFilters?.quickFilters?.forEach(({ filter }) => {
+        if (filter.values.length > 0) {
+            const enhancedFilter: EnhancedFilter = {
+                filter,
+            };
+            const value = filter.values[0];
+            switch (filter.attributeKey) {
+                case 'TechnologyCode': {
+                    const tempEnhancedFilter = technologyFilters.find((item) => item.technologyCode === value);
+                    if (tempEnhancedFilter?.imageHash) {
+                        enhancedFilter.icon = <FieldIcon hash={tempEnhancedFilter?.imageHash} />;
+                    }
+                    enhancedFilter.label = tempEnhancedFilter?.displayName;
+
+                    enhancedQuickFilters.push(enhancedFilter);
+
+                    break;
+                }
+                case 'EntityType': {
+                    enhancedFilter.icon = (
+                        <DGGlyph
+                            icon={entitiesTypeRelatedInfos[value].glyph}
+                            kind={entitiesTypeRelatedInfos[value].kind.toLocaleLowerCase()}
+                        />
+                    );
+                    enhancedFilter.label = chrome.i18n.getMessage(`entity_label_full_${value}`);
+
+                    enhancedQuickFilters.push(enhancedFilter);
+
+                    break;
+                }
+                case 'Module': {
+                    const tempEnhancedFilter = moduleFields.find((item) => item.id === value);
+                    enhancedFilter.icon = tempEnhancedFilter.icon;
+                    enhancedFilter.label = tempEnhancedFilter.label;
+
+                    enhancedQuickFilters.push(enhancedFilter);
+
+                    break;
+                }
+                default:
+                    enhancedQuickFilters.push({ label: filter.values[0], filter });
+            }
+        } else {
+            enhancedQuickFilters.push({ filter });
+        }
+    });
 
     const history = useHistory();
 
@@ -165,21 +215,33 @@ const SearchForm = () => {
         .filter((item) => item.attributeKey !== 'Workspace');
 
     const debounceOnChange = async ({ value }) => {
-        if (value) {
-            setLoading(true);
-
-            await dispatch.search.search({
-                term: value,
-                technologies,
-                filters: searchPickedFilters,
-            });
-
-            setLoading(false);
-            setSuccess(true);
-        } else {
-            await dispatch.search.resetSearch();
-            setSuccess(false);
+        interface Payload {
+            term: string;
+            technologies: any[];
+            filters: any[];
+            limit?: number;
+            versionId?: string;
         }
+        const payload: Payload = {
+            term: value,
+            technologies,
+            filters: searchPickedFilters,
+        };
+
+        if (!value && pickedFilters.length === 0) {
+            payload.limit = 0;
+        }
+
+        if (versionId) {
+            payload.versionId = versionId;
+        }
+
+        setLoading(true);
+
+        await dispatch.search.search(payload);
+
+        setLoading(false);
+        setSuccess(true);
     };
 
     useEffect(() => {
@@ -223,19 +285,19 @@ const SearchForm = () => {
                         placeholder={chrome.i18n.getMessage('search')}
                         success={success}
                     />
-                    <QuickFiltersBar quickFilters={quickFilters} search={searchedArgs.term} />
+                    <QuickFiltersBar quickFilters={enhancedQuickFilters} search={searchedArgs.term} />
                     {loading ? (
                         <LoadingScreen />
                     ) : (
                         <>
-                            <SResults>
-                                {searchedArgs.term !== '' && hasExactMatches && (
-                                    <SResultsTitleWrapper>
-                                        <Title>{chrome.i18n.getMessage('exact_matches')}</Title>
-                                        <STagResultCount>{exactMatches?.total}</STagResultCount>
-                                    </SResultsTitleWrapper>
-                                )}
-                                {hasExactMatches && (
+                            {searchedArgs.term !== '' && hasExactMatches && (
+                                <SResultsTitleWrapper>
+                                    <Title>{chrome.i18n.getMessage('exact_matches')}</Title>
+                                    <STagResultCount>{exactMatches?.total}</STagResultCount>
+                                </SResultsTitleWrapper>
+                            )}
+                            {hasExactMatches && (
+                                <SExactMatchsContainer>
                                     <SSearchCardsResultWrapper>
                                         {exactMatchesEntitiesToDisplay.map((entity, idx) => {
                                             const exactMatchAttributes = entity.exactMatchAttributes.sort((a, b) => {
@@ -292,59 +354,57 @@ const SearchForm = () => {
                                             );
                                         })}
                                     </SSearchCardsResultWrapper>
-                                )}
-                            </SResults>
 
-                            <SMoreContainer onClick={() => setDisplayMoreExactMatches(true)}>
-                                {displayShowMoreButton && !displayMoreExactMatches && (
-                                    <SMore>{chrome.i18n.getMessage('showMore')}</SMore>
-                                )}
-                            </SMoreContainer>
+                                    {displayShowMoreButton && !displayMoreExactMatches && (
+                                        <SMore onClick={() => setDisplayMoreExactMatches(true)}>
+                                            {chrome.i18n.getMessage('showMore')}
+                                        </SMore>
+                                    )}
+                                </SExactMatchsContainer>
+                            )}
 
-                            <SResults>
-                                {searchedArgs.term !== '' && (
-                                    <SResultsTitleWrapper>
-                                        <Title>
-                                            {hasExactMatches
-                                                ? chrome.i18n.getMessage('more_results')
-                                                : chrome.i18n.getMessage('search_results')}
-                                        </Title>
-                                        <STagResultCount>{searchResults.total}</STagResultCount>
-                                    </SResultsTitleWrapper>
-                                )}
-                                {!hasSearchResults && !hasExactMatches && (
-                                    <SBlankSearch>
-                                        <SBlankSearchImage alt="empty result" src={BlankSearch} />
-                                        <p>{chrome.i18n.getMessage('search_blank_search')}</p>
-                                    </SBlankSearch>
-                                )}
-                                {hasSearchResults && (
-                                    <SSearchCardsResultWrapper>
-                                        {searchResults?.result?.entities.map((entity, idx) => (
-                                            <SSearchCardResultContainer key={entity.id}>
-                                                <SSearchCardResultWrapper>
-                                                    <EntityHeader
-                                                        entity={entity}
-                                                        entityPage={false}
-                                                        id={`entityHeader${idx}`}
-                                                        onClick={() => {
-                                                            updateCurrentWorkspace(entity.path.split('\\')[1]);
+                            {searchedArgs.term !== '' && (
+                                <SResultsTitleWrapper>
+                                    <Title>
+                                        {hasExactMatches
+                                            ? chrome.i18n.getMessage('more_results')
+                                            : chrome.i18n.getMessage('search_results')}
+                                    </Title>
+                                    <STagResultCount>{searchResults.total}</STagResultCount>
+                                </SResultsTitleWrapper>
+                            )}
+                            {!hasSearchResults && !hasExactMatches && (
+                                <SBlankSearch>
+                                    <SBlankSearchImage alt="empty result" src={BlankSearch} />
+                                    <p>{chrome.i18n.getMessage('search_blank_search')}</p>
+                                </SBlankSearch>
+                            )}
+                            {hasSearchResults && (
+                                <SSearchCardsResultWrapper>
+                                    {searchResults?.result?.entities.map((entity, idx) => (
+                                        <SSearchCardResultContainer key={entity.id}>
+                                            <SSearchCardResultWrapper>
+                                                <EntityHeader
+                                                    entity={entity}
+                                                    entityPage={false}
+                                                    id={`entityHeader${idx}`}
+                                                    onClick={() => {
+                                                        updateCurrentWorkspace(entity.path.split('\\')[1]);
 
-                                                            updateIsLoaded(false);
-                                                            const URLLocation = entity.location.replace(
-                                                                new RegExp('/', 'g'),
-                                                                '.',
-                                                            ); // Replace "/" by "." in url
-                                                            history.push(`/app/entities/${URLLocation}/`);
-                                                        }}
-                                                        alwaysExpanded
-                                                    />
-                                                </SSearchCardResultWrapper>
-                                            </SSearchCardResultContainer>
-                                        ))}
-                                    </SSearchCardsResultWrapper>
-                                )}
-                            </SResults>
+                                                        updateIsLoaded(false);
+                                                        const URLLocation = entity.location.replace(
+                                                            new RegExp('/', 'g'),
+                                                            '.',
+                                                        ); // Replace "/" by "." in url
+                                                        history.push(`/app/entities/${URLLocation}/`);
+                                                    }}
+                                                    alwaysExpanded
+                                                />
+                                            </SSearchCardResultWrapper>
+                                        </SSearchCardResultContainer>
+                                    ))}
+                                </SSearchCardsResultWrapper>
+                            )}
                         </>
                     )}
                 </>

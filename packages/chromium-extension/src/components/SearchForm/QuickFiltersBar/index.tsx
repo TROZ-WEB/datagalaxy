@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState, useRef } from 'react';
 import { QuickFilters } from 'shared';
 import styled from 'styled-components';
+import { EnhancedFilter } from '../../../../../shared/src/Filters/types';
 import { useStoreState, useStoreActions } from '../../../store/hooks';
 import Glyph from '../../ui/Glyph';
 import QuickFilter from './QuickFilter';
@@ -103,12 +104,12 @@ const SScrollContainer = styled.div`
 /* ---------- COMPONENT ---------- */
 
 interface Props {
-    quickFilters: QuickFilters;
+    quickFilters: EnhancedFilter[];
     search: string;
 }
 
 const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
-    const QuickFiltersArray = quickFilters?.quickFilters?.slice(0, 12);
+    const QuickFiltersArray = quickFilters.slice(0, 12);
 
     const [scrollValue, setScrollValue] = useState(0);
     const shadowRoot = document.getElementById('datagalaxy_shadow_root');
@@ -160,7 +161,7 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                                 <SGlyph icon="ArrowDropRight" />
                             </SLeftButton>
                             <SQuickFiltersContainer>
-                                {QuickFiltersArray?.map(({ filter }, i) => (
+                                {QuickFiltersArray?.map((filter, i) => (
                                     <QuickFilter
                                         // eslint-disable-next-line react/no-array-index-key
                                         key={i}

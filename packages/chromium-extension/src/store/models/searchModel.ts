@@ -20,6 +20,7 @@ interface SearchedArgs {
     technologies: TechnologyType[];
     filters?: Filter[];
     versionId?: string;
+    limit?: number;
     // Will allow to handle more complex search categories...
 }
 
@@ -62,9 +63,14 @@ const search = thunk(async (actions: Actions<SearchModel>, searchedArgs: Searche
         actions.updateSearchedArgs(searchedArgs);
 
         const url = (getStoreState() as any).auth.pubapi;
-
         // First search for results
-        enhancedResults = await searchAPI(url, searchedArgs.term, searchedArgs.filters, searchedArgs.versionId);
+        enhancedResults = await searchAPI(
+            url,
+            searchedArgs.term,
+            searchedArgs.filters,
+            searchedArgs.versionId,
+            searchedArgs.limit,
+        );
         // Load additional user information about entities
         if (enhancedResults?.result) {
             enhancedResults.result.entities = await enhancedEntitiesWithTechnologiesInfo(

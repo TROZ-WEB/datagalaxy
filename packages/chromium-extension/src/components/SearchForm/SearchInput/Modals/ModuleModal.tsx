@@ -1,7 +1,7 @@
 import React, { useState, FC } from 'react';
 import { useStoreState, useStoreActions } from '../../../../store/hooks';
-import DGGlyph from '../../../ui/DGGlyph';
 import ModalBase from '../ModalBase';
+import { moduleFields } from './usages';
 
 /* ---------- COMPONENT ---------- */
 
@@ -12,33 +12,9 @@ const ModuleModal: FC = () => {
     const { Module } = useStoreState((state) => state.modal);
 
     const index = pickedFilters?.findIndex((item) => item?.filter?.attributeKey === 'Module');
-
-    const fields = [
-        {
-            id: 'Glossary',
-            label: chrome.i18n.getMessage(`module_glossary`),
-            icon: <DGGlyph icon="Glossary" kind="glossary" />,
-            checked: !!pickedFilters?.[index]?.filter?.values?.includes('Glossary'),
-        },
-        {
-            id: 'Catalog',
-            label: chrome.i18n.getMessage(`module_catalog`),
-            icon: <DGGlyph icon="Catalog" kind="catalog" />,
-            checked: !!pickedFilters?.[index]?.filter?.values?.includes('Catalog'),
-        },
-        {
-            id: 'Processing',
-            label: chrome.i18n.getMessage(`module_processing`),
-            icon: <DGGlyph icon="Processing" kind="processing" />,
-            checked: !!pickedFilters?.[index]?.filter?.values?.includes('Processing'),
-        },
-        {
-            id: 'Usage',
-            label: chrome.i18n.getMessage(`module_usage`),
-            icon: <DGGlyph icon="UsageField" kind="usage" />,
-            checked: !!pickedFilters?.[index]?.filter?.values?.includes('Usage'),
-        },
-    ];
+    const enhancedModuleFields = moduleFields.map((item) => {
+        return { ...item, checked: !!pickedFilters?.[index]?.filter?.values?.includes(item.id) };
+    });
 
     const handleChange = (id) => {
         const newPickedFilters = [...pickedFilters];
@@ -46,7 +22,7 @@ const ModuleModal: FC = () => {
         const newOperator = intersectionLogic === 'or' ? 'contains' : 'matchAll';
         if (filterIndex === -1) {
             const filter = {
-                icon: fields.find((item) => item.id === id).icon,
+                icon: enhancedModuleFields.find((item) => item.id === id).icon,
                 filter: { attributeKey: 'Module', operator: newOperator, values: [id] },
             };
             newPickedFilters.push(filter);
@@ -85,7 +61,7 @@ const ModuleModal: FC = () => {
 
     return (
         <ModalBase
-            fields={fields}
+            fields={enhancedModuleFields}
             handleChangeIntersectionLogic={handleChangeIntersectionLogic}
             intersectionLogic={intersectionLogic}
             isOpen={Module}

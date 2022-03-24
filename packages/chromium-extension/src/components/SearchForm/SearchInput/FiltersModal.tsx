@@ -23,12 +23,11 @@ const SModal = styled.div`
     top: 100%;
     left: 0;
     padding: 16px;
-    z-index: 100;
+    z-index: 500;
 `;
 
 const SRoot = styled.div`
     position: relative;
-    z-index: 500;
 `;
 
 const STitle = styled(Title)`
@@ -70,7 +69,12 @@ const FiltersModal = () => {
 
     return (
         <SRoot>
-            <RoundButton ref={filtersModal} icon="FilterEmpty" onClick={handleOpen} />
+            <RoundButton
+                ref={filtersModal}
+                icon="FilterEmpty"
+                onClick={handleOpen}
+                title={chrome.i18n.getMessage(`add_filter`)}
+            />
             {AllFilters && (
                 <SModal onClick={(e) => e.stopPropagation()}>
                     <STitle>{chrome.i18n.getMessage(`filter_by`)}</STitle>

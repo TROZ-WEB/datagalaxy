@@ -109,7 +109,7 @@ const Radio: React.FC<Props> = ({
                 <SCheck />
             </StyledRadio>
             <SLabel bold={bold}>
-                <SIconContainer>{icon}</SIconContainer> {label}
+                {icon && <SIconContainer>{icon}</SIconContainer>} {label}
             </SLabel>
         </RadioContainer>
     );

@@ -11,9 +11,10 @@ interface SearchRequestParams {
     includeLinks: boolean;
     filters: Filter[];
     versionId?: string;
+    limit?: number;
 }
 
-export const search = async (apiUrl: string, query: string, filters: Filter[], versionId): Promise<SearchResponse> => {
+export const search = async (apiUrl, query, filters, versionId, limit): Promise<SearchResponse> => {
     try {
         const params: SearchRequestParams = {
             query,
@@ -25,6 +26,11 @@ export const search = async (apiUrl: string, query: string, filters: Filter[], v
         if (versionId) {
             params.versionId = versionId;
         }
+
+        if (limit !== undefined) {
+            params.limit = limit;
+        }
+
         const response = await post<SearchResponse>(`${apiUrl}/search`, params);
 
         const filtered = response.parsedBody.result.entities.filter((entity) => entity.type);
