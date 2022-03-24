@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState, useRef } from 'react';
-import { QuickFilters } from 'shared';
+import { EnhancedFilter } from 'shared';
 import styled from 'styled-components';
 import { EnhancedFilter } from '../../../../../shared/src/Filters/types';
 import { useStoreState, useStoreActions } from '../../../store/hooks';
