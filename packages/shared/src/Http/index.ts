@@ -25,7 +25,7 @@ export async function http<T>(request: Request): Promise<HttpResponse<T>> {
         if (response.status === 401) {
             const newToken = await AccessToken.getInstance().refreshAccessToken();
             clonedRequest.headers.set('authorization', `Bearer ${newToken}`);
-            const clonedResponse: HttpResponse<T> = await fetch(request);
+            const clonedResponse: HttpResponse<T> = await fetch(clonedRequest);
             clonedResponse.parsedBody = await clonedResponse.json();
             if (!clonedResponse.ok) {
                 throw new Error(clonedResponse.statusText);
