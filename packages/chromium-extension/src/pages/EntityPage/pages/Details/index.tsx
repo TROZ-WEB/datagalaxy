@@ -1,7 +1,7 @@
 import { format, isValid, parseISO } from 'date-fns';
 import { enGB, enUS, fr } from 'date-fns/locale';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DataTypeMapping, EntityType, ScreenConfiguration } from 'shared';
 import styled, { css } from 'styled-components';
 import Tags from '../../../../components/Entity/Tags';
@@ -9,6 +9,7 @@ import UserProfile from '../../../../components/Entity/UserProfile';
 import Accordion from '../../../../components/ui/Accordion';
 import DomainCard from '../../../../components/ui/DomainCard';
 import Glyph from '../../../../components/ui/Glyph';
+import { useStoreActions, useStoreState } from '../../../../store/hooks';
 import ArrowDrop from '../../../../../assets/icons/arrow-drop-up.svg';
 
 /* ---------- STYLES ---------- */
@@ -62,7 +63,7 @@ const SBasicFieldsContainer = styled.div`
     flex-direction: column;
     box-shadow: 0px 0px 14px rgba(16, 53, 177, 0.12);
     border-radius: 6px;
-    padding: 10px 20px 10px 20px;
+    padding: 10px 16px 10px 16px;
     margin-top: 20px;
     margin-bottom: 20px;
 `;
@@ -89,15 +90,15 @@ const SDisplayMoreDetailsButton = styled.button`
     border-radius: 8px;
     padding-top: 3px;
     padding-bottom: 3px;
-    font-size: 10px;
+    font-size: 12px;
     background: transparent;
-    color: #1035b1;
     min-width: 30px;
     cursor: pointer;
     display: flex;
     align-items: center;
     position: absolute;
     right: 0;
+    font-family: 'Montserrat', sans-serif;
 `;
 
 const SDrop = styled.img`
@@ -201,9 +202,28 @@ const computeTitle = (r: any, key: string) => {
 const Details = ({ entity, screenConfiguration }: DetailsProps) => {
     const reservedKeys = ['creationTime', 'lastModificationTime'];
     /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-    const { description, tags, summary, status, externalUrl, owners, stewards, ...rest } = entity.attributes;
+    const { description, tags, summary, status, externalUrl, owners, stewards, technologyCode, pathString, ...rest } =
+        entity.attributes;
+
+    const shouldDisplayAttribute = (attribute: any) => {
+        return (
+            (rest[attribute.name] || rest[attribute.name] === false) &&
+            !rest[attribute.name].trend &&
+            !isEmptyObject(rest[attribute.name]) &&
+            reservedKeys.indexOf(attribute.name) === -1 &&
+            !rest[attribute.name].entries
+        );
+    };
+
+    const { updateShowMoreDetails } = useStoreActions((actions) => actions.auth);
+
+    const showMoreDetails = useStoreState((state) => state.auth.showMoreDetails);
 
     const [displayMoreDetails, setDisplayMoreDetails] = useState(false);
+
+    useEffect(() => {
+        setDisplayMoreDetails(showMoreDetails);
+    }, [showMoreDetails]);
 
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -228,7 +248,7 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                         </Details.SubInfo>
                         <Details.Separator />
                         <Details.SubInfo title="">
-                            {tags.length !== 0 ? (
+                            {tags?.length !== 0 ? (
                                 <Tags>
                                     {tags?.map((tag, i) => (
                                         /* eslint-disable-next-line */
@@ -262,7 +282,7 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                     <SDisplayMoreButtonContainer>
                         <SDisplayMoreDetailsButton
                             onClick={() => {
-                                setDisplayMoreDetails(!displayMoreDetails);
+                                updateShowMoreDetails(!showMoreDetails);
                             }}
                             type="button"
                         >
@@ -272,15 +292,9 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                     </SDisplayMoreButtonContainer>
 
                     {displayMoreDetails &&
+                        screenConfiguration.categories.length !== 0 &&
                         screenConfiguration.categories.map((category) => {
-                            const filteredAttributes = category.attributes.filter((att) => {
-                                return (
-                                    rest[att.name] &&
-                                    !rest[att.name].trend &&
-                                    !isEmptyObject(rest[att.name]) &&
-                                    reservedKeys.indexOf(att.name) === -1
-                                );
-                            });
+                            const filteredAttributes = category.attributes.filter((att) => shouldDisplayAttribute(att));
 
                             return (
                                 /* eslint-disable-next-line react/jsx-no-useless-fragment */
@@ -289,26 +303,14 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                                         <SFieldsContainer>
                                             <Accordion header={<STitle>{category.name}</STitle>} initialOpen>
                                                 {filteredAttributes.map((attribute, i) => {
-                                                    if (
-                                                        rest[attribute.name] &&
-                                                        !rest[attribute.name].trend &&
-                                                        !isEmptyObject(rest[attribute.name]) &&
-                                                        reservedKeys.indexOf(attribute.name) === -1
-                                                    ) {
-                                                        return (
-                                                            <>
-                                                                <Details.SubInfo
-                                                                    title={computeTitle(rest, attribute.name)}
-                                                                >
-                                                                    {computeData(rest[attribute.name], i)}
-                                                                </Details.SubInfo>
-                                                                <Details.Separator />
-                                                            </>
-                                                        );
-                                                    }
-
-                                                    // eslint-disable-next-line react/jsx-no-useless-fragment
-                                                    return <></>;
+                                                    return (
+                                                        <>
+                                                            <Details.SubInfo title={computeTitle(rest, attribute.name)}>
+                                                                {computeData(rest[attribute.name], i)}
+                                                            </Details.SubInfo>
+                                                            <Details.Separator />
+                                                        </>
+                                                    );
                                                 })}
                                             </Accordion>
                                         </SFieldsContainer>

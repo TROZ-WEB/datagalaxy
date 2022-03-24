@@ -49,7 +49,7 @@ const LinkedObjects = () => {
                         openButtonPosition="left"
                         initialOpen
                     >
-                        {linkedObjects[key].map((linkedObject, idx) => (
+                        {linkedObjects[key].map((linkedObject, idx, array) => (
                             <div key={linkedObject.id}>
                                 <SEntityWrapper onClick={() => handleClick(linkedObject)}>
                                     <EntityHeader
@@ -59,7 +59,7 @@ const LinkedObjects = () => {
                                         alwaysExpanded
                                     />
                                 </SEntityWrapper>
-                                <HorizontalSeparator />
+                                {idx !== array.length - 1 && <HorizontalSeparator />}
                             </div>
                         ))}
                     </SAccordion>

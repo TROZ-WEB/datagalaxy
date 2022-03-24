@@ -23,7 +23,7 @@ const SContent = styled.div`
     position: absolute;
     height: 80%;
     width: 100%;
-    padding: 0px 10px 13px 59px;
+    padding: 0px 8px 0px 66px;
     box-sizing: border-box;
 `;
 
@@ -116,13 +116,15 @@ const EntityPage = () => {
 
             let count = 0;
             childrenObjects.forEach((co) => {
-                const pathSplited = co.path.split('\\');
+                if (co) {
+                    const pathSplited = co.path.split('\\');
 
-                if (
-                    pathSplited[pathSplited.length - 2] === entityPath ||
-                    pathSplited[pathSplited.length - 3] === entityPath
-                ) {
-                    count++;
+                    if (
+                        pathSplited[pathSplited.length - 2] === entityPath ||
+                        pathSplited[pathSplited.length - 3] === entityPath
+                    ) {
+                        count++;
+                    }
                 }
             });
             setChildrenObjectsNumber(count);

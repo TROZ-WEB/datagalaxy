@@ -70,13 +70,15 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
         const c = [];
         const gc = [];
         childrenObjects?.forEach((co) => {
-            const pathSplited = co.path.split('\\');
+            if (co) {
+                const pathSplited = co.path.split('\\');
 
-            if (pathSplited[pathSplited.length - 2] === entityPath) {
-                c.push(co);
-            }
-            if (pathSplited[pathSplited.length - 3] === entityPath) {
-                gc.push(co);
+                if (pathSplited[pathSplited.length - 2] === entityPath) {
+                    c.push(co);
+                }
+                if (pathSplited[pathSplited.length - 3] === entityPath) {
+                    gc.push(co);
+                }
             }
         });
         setChildren(c);

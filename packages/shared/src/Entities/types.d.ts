@@ -23,6 +23,7 @@ export interface EntityType {
         tags: string[];
         externalUrl: Link;
         technologyCode: string;
+        pathString: string;
     };
     childrenCount: number;
     linkedObjectsCount: number;

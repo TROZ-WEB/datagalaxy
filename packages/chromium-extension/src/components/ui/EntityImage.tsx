@@ -89,7 +89,7 @@ const EntityImage: FC<EntityImageProps> = ({ entity, entityPage }) => {
                         onError={() => {
                             setErrorLoadingImage(true);
                         }}
-                        src={`${url}/image?hash=${entity.technology.imageHash}`}
+                        src={`${url}/image?hash=${encodeURIComponent(entity.technology.imageHash)}`}
                     />
                     <SEntityDGGlyphContainer>
                         <DGGlyph icon={glyph} kind={kind?.toLowerCase()} size={entityPage ? 'M' : 'S'} />

@@ -9,7 +9,7 @@ import { useStoreState, useStoreActions } from '../../store/hooks';
 import Avatar from '../Avatar';
 import SelectedMenu from '../../../assets/anchor-selected-menu.svg';
 import Back from '../../../assets/icons/back.svg';
-import WhiteLogo from '../../../assets/logo-icon.svg';
+import GreyLogo from '../../../assets/logo-icon.svg';
 
 /* ---------- STYLES ---------- */
 
@@ -138,7 +138,7 @@ const Menu = () => {
     return (
         <SRoot>
             <SFlex>
-                <SLogo alt="Datagalaxy logo" src={WhiteLogo} />
+                <SLogo alt="Datagalaxy logo" src={GreyLogo} />
                 {canGoBack && (
                     <SBackButton
                         id="backButton"
