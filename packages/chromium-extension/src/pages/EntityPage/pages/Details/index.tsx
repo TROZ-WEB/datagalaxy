@@ -1,7 +1,7 @@
 import { format, isValid, parseISO } from 'date-fns';
 import { enGB, enUS, fr } from 'date-fns/locale';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DataTypeMapping, EntityType, ScreenConfiguration } from 'shared';
 import styled, { css } from 'styled-components';
 import Tags from '../../../../components/Entity/Tags';
@@ -9,6 +9,7 @@ import UserProfile from '../../../../components/Entity/UserProfile';
 import Accordion from '../../../../components/ui/Accordion';
 import DomainCard from '../../../../components/ui/DomainCard';
 import Glyph from '../../../../components/ui/Glyph';
+import { useStoreActions, useStoreState } from '../../../../store/hooks';
 import ArrowDrop from '../../../../../assets/icons/arrow-drop-up.svg';
 
 /* ---------- STYLES ---------- */
@@ -62,7 +63,7 @@ const SBasicFieldsContainer = styled.div`
     flex-direction: column;
     box-shadow: 0px 0px 14px rgba(16, 53, 177, 0.12);
     border-radius: 6px;
-    padding: 10px 20px 10px 20px;
+    padding: 10px 16px 10px 16px;
     margin-top: 20px;
     margin-bottom: 20px;
 `;
@@ -89,15 +90,15 @@ const SDisplayMoreDetailsButton = styled.button`
     border-radius: 8px;
     padding-top: 3px;
     padding-bottom: 3px;
-    font-size: 10px;
+    font-size: 12px;
     background: transparent;
-    color: #1035b1;
     min-width: 30px;
     cursor: pointer;
     display: flex;
     align-items: center;
     position: absolute;
     right: 0;
+    font-family: 'Montserrat', sans-serif;
 `;
 
 const SDrop = styled.img`
@@ -214,7 +215,15 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
         );
     };
 
+    const { updateShowMoreDetails } = useStoreActions((actions) => actions.auth);
+
+    const showMoreDetails = useStoreState((state) => state.auth.showMoreDetails);
+
     const [displayMoreDetails, setDisplayMoreDetails] = useState(false);
+
+    useEffect(() => {
+        setDisplayMoreDetails(showMoreDetails);
+    }, [showMoreDetails]);
 
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -273,7 +282,7 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                     <SDisplayMoreButtonContainer>
                         <SDisplayMoreDetailsButton
                             onClick={() => {
-                                setDisplayMoreDetails(!displayMoreDetails);
+                                updateShowMoreDetails(!showMoreDetails);
                             }}
                             type="button"
                         >
@@ -283,6 +292,7 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                     </SDisplayMoreButtonContainer>
 
                     {displayMoreDetails &&
+                        screenConfiguration.categories.length !== 0 &&
                         screenConfiguration.categories.map((category) => {
                             const filteredAttributes = category.attributes.filter((att) => shouldDisplayAttribute(att));
 

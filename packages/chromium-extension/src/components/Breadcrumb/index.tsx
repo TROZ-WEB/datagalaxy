@@ -60,7 +60,7 @@ const Breadcrumb = ({ path, workspace }: { path: string[]; workspace: Workspace 
                     {workspace?.iconHash && (
                         <SWorkspaceImage
                             alt="workspace-image"
-                            src={`${url}/image?hash=${workspace?.iconHash}`}
+                            src={`${url}/image?hash=${encodeURIComponent(workspace?.iconHash)}`}
                             title={workspace?.name}
                         />
                     )}

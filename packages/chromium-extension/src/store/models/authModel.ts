@@ -27,6 +27,7 @@ const initialState = {
     workspaces: [],
     technologies: [],
     user: null,
+    showMoreDetails: false,
 };
 export interface AuthModel {
     /* State */
@@ -39,6 +40,7 @@ export interface AuthModel {
     workspaces: Workspace[];
     technologies: TechnologyType[];
     user: UserType;
+    showMoreDetails: boolean;
     /* Computed properties */
     getDecodedPat: Computed<AuthModel, DecodedJWT>;
     /* Actions */
@@ -52,6 +54,7 @@ export interface AuthModel {
     updateWorkspaces: Action<AuthModel, Workspace[]>;
     updateTechnologies: Action<AuthModel, TechnologyType[]>;
     updateUser: Action<AuthModel, UserType>;
+    updateShowMoreDetails: Action<AuthModel, boolean>;
     /* Thunks */
     loginWithPAT: Thunk<AuthModel, { pat: string; email: string }>;
     fetchTags: Thunk<AuthModel>;
@@ -224,6 +227,9 @@ const authModel = async (): Promise<AuthModel> => {
         }),
         updateUser: action((state, payload: UserType) => {
             state.user = payload;
+        }),
+        updateShowMoreDetails: action((state, payload: boolean) => {
+            state.showMoreDetails = payload;
         }),
         /* Computed properties */
         getDecodedPat: getDecodedPAT('pat'),
