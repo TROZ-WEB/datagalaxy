@@ -191,7 +191,7 @@ const fetchChildrenObjects = thunk(
 
             childrenObjects?.map((co) => {
                 // set parent technology to childrens
-                if (!co.attributes?.technologyCode) {
+                if (co && !co.attributes?.technologyCode) {
                     co.technology = technology;
                 }
 

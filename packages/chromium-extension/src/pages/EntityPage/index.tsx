@@ -116,13 +116,15 @@ const EntityPage = () => {
 
             let count = 0;
             childrenObjects.forEach((co) => {
-                const pathSplited = co.path.split('\\');
+                if (co) {
+                    const pathSplited = co.path.split('\\');
 
-                if (
-                    pathSplited[pathSplited.length - 2] === entityPath ||
-                    pathSplited[pathSplited.length - 3] === entityPath
-                ) {
-                    count++;
+                    if (
+                        pathSplited[pathSplited.length - 2] === entityPath ||
+                        pathSplited[pathSplited.length - 3] === entityPath
+                    ) {
+                        count++;
+                    }
                 }
             });
             setChildrenObjectsNumber(count);
