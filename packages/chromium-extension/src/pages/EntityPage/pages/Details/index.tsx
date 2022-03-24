@@ -201,7 +201,18 @@ const computeTitle = (r: any, key: string) => {
 const Details = ({ entity, screenConfiguration }: DetailsProps) => {
     const reservedKeys = ['creationTime', 'lastModificationTime'];
     /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-    const { description, tags, summary, status, externalUrl, owners, stewards, ...rest } = entity.attributes;
+    const { description, tags, summary, status, externalUrl, owners, stewards, technologyCode, pathString, ...rest } =
+        entity.attributes;
+
+    const shouldDisplayAttribute = (attribute: any) => {
+        return (
+            (rest[attribute.name] || rest[attribute.name] === false) &&
+            !rest[attribute.name].trend &&
+            !isEmptyObject(rest[attribute.name]) &&
+            reservedKeys.indexOf(attribute.name) === -1 &&
+            !rest[attribute.name].entries
+        );
+    };
 
     const [displayMoreDetails, setDisplayMoreDetails] = useState(false);
 
@@ -273,14 +284,7 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
 
                     {displayMoreDetails &&
                         screenConfiguration.categories.map((category) => {
-                            const filteredAttributes = category.attributes.filter((att) => {
-                                return (
-                                    rest[att.name] &&
-                                    !rest[att.name].trend &&
-                                    !isEmptyObject(rest[att.name]) &&
-                                    reservedKeys.indexOf(att.name) === -1
-                                );
-                            });
+                            const filteredAttributes = category.attributes.filter((att) => shouldDisplayAttribute(att));
 
                             return (
                                 /* eslint-disable-next-line react/jsx-no-useless-fragment */
@@ -289,26 +293,14 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                                         <SFieldsContainer>
                                             <Accordion header={<STitle>{category.name}</STitle>} initialOpen>
                                                 {filteredAttributes.map((attribute, i) => {
-                                                    if (
-                                                        rest[attribute.name] &&
-                                                        !rest[attribute.name].trend &&
-                                                        !isEmptyObject(rest[attribute.name]) &&
-                                                        reservedKeys.indexOf(attribute.name) === -1
-                                                    ) {
-                                                        return (
-                                                            <>
-                                                                <Details.SubInfo
-                                                                    title={computeTitle(rest, attribute.name)}
-                                                                >
-                                                                    {computeData(rest[attribute.name], i)}
-                                                                </Details.SubInfo>
-                                                                <Details.Separator />
-                                                            </>
-                                                        );
-                                                    }
-
-                                                    // eslint-disable-next-line react/jsx-no-useless-fragment
-                                                    return <></>;
+                                                    return (
+                                                        <>
+                                                            <Details.SubInfo title={computeTitle(rest, attribute.name)}>
+                                                                {computeData(rest[attribute.name], i)}
+                                                            </Details.SubInfo>
+                                                            <Details.Separator />
+                                                        </>
+                                                    );
                                                 })}
                                             </Accordion>
                                         </SFieldsContainer>
