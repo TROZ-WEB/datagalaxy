@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { EntityType } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../store/hooks';
+import keyListener from '../../utils';
 import LoadingScreen from '../LoadingScreen';
 import EntityHeader from '../ui/EntityHeader';
 import Title from '../ui/Title';
@@ -134,13 +135,6 @@ const SearchForm = () => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
 
-    const keyListener = useMemo(
-        () => (event) => {
-            event.stopImmediatePropagation();
-        },
-        [],
-    );
-
     const history = useHistory();
 
     const { filteredExactMatches } = useExactMatches(exactMatches);
@@ -222,7 +216,6 @@ const SearchForm = () => {
                             window.removeEventListener('keyup', keyListener, true);
                         }}
                         onFocus={() => {
-                            // remove background page keys listener when input is focused
                             window.addEventListener('keypress', keyListener, true);
                             window.addEventListener('keydown', keyListener, true);
                             window.addEventListener('keyup', keyListener, true);

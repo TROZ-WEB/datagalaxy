@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import keyListener from '../../utils';
 
 /* ---------- STYLES ---------- */
 
@@ -67,6 +68,16 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     readOnly={readOnly}
                     type={type}
                     {...rest}
+                    onBlur={() => {
+                        window.removeEventListener('keypress', keyListener, true);
+                        window.removeEventListener('keydown', keyListener, true);
+                        window.removeEventListener('keyup', keyListener, true);
+                    }}
+                    onFocus={() => {
+                        window.addEventListener('keypress', keyListener, true);
+                        window.addEventListener('keydown', keyListener, true);
+                        window.addEventListener('keyup', keyListener, true);
+                    }}
                 />
             </SRoot>
         );

@@ -1,6 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useStoreActions, useStoreState } from '../../../store/hooks';
+import keyListener from '../../../utils';
 import Button from '../../ui/Button';
 import Checkbox from '../../ui/Checkbox';
 import Glyph from '../../ui/Glyph';
@@ -130,7 +131,22 @@ const ModalBase: FC<ModalBaseProps> = ({
                 <SModal onClick={(e) => e.stopPropagation()} top={Top}>
                     <SInputContainer>
                         <Glyph icon="Search" />
-                        <SInput onChange={handleChange} placeholder="Search..." type="text" value={searchValue} />
+                        <SInput
+                            onBlur={() => {
+                                window.removeEventListener('keypress', keyListener, true);
+                                window.removeEventListener('keydown', keyListener, true);
+                                window.removeEventListener('keyup', keyListener, true);
+                            }}
+                            onChange={handleChange}
+                            onFocus={() => {
+                                window.addEventListener('keypress', keyListener, true);
+                                window.addEventListener('keydown', keyListener, true);
+                                window.addEventListener('keyup', keyListener, true);
+                            }}
+                            placeholder="Search..."
+                            type="text"
+                            value={searchValue}
+                        />
                     </SInputContainer>
                     <SForm>
                         {multiselect && (
