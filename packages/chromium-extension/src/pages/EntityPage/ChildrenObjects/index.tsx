@@ -37,7 +37,7 @@ const SSubEntityWrapper = styled.span`
 `;
 
 const SCardResultContainer = styled.div`
-    border-bottom: 1px solid rgba(0, 76, 255, 0.08);
+    ${(props) => !props.isLastElement && `border-bottom: 1px solid rgba(0, 76, 255, 0.08);`}
     border-top: 1px solid transparent;
 
     &:hover,
@@ -95,7 +95,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <SRoot>
             {children && children.length !== 0 ? (
-                children?.map((childrenEntity) => {
+                children?.map((childrenEntity, idx, array) => {
                     const myGrandChildren = grandChildren.filter((gc) => {
                         const childrenPathSplitted = childrenEntity.path.split('\\');
                         const childrenPath = childrenPathSplitted[childrenPathSplitted.length - 1].toString();
@@ -105,7 +105,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
                     });
 
                     return (
-                        <SCardResultContainer key={childrenEntity.id}>
+                        <SCardResultContainer key={childrenEntity.id} isLastElement={idx === array.length - 1}>
                             <Accordion
                                 key={childrenEntity.id}
                                 disabled={myGrandChildren.length === 0}
@@ -121,9 +121,13 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
                                 openButtonPosition="left"
                             >
                                 {myGrandChildren.length !== 0 &&
-                                    myGrandChildren.map((grandChildrenEntity) => {
+                                    myGrandChildren.map((grandChildrenEntity, idx2, array2) => {
                                         return (
-                                            <SCardResultContainer key={grandChildrenEntity.id} tabindex="-1">
+                                            <SCardResultContainer
+                                                key={grandChildrenEntity.id}
+                                                isLastElement={idx2 === array2.length - 1}
+                                                tabindex="-1"
+                                            >
                                                 <SSubEntityWrapper
                                                     key={grandChildrenEntity.id}
                                                     onClick={() => handleClick(grandChildrenEntity)}
