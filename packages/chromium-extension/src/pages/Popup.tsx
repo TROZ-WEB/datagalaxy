@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MemoryRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import { AccessToken } from '../../../shared/dist/shared';
+import { AccessToken } from 'shared';
 import App from '../App';
 import Layout from '../components/Layout';
 import LoadingScreen from '../components/LoadingScreen';

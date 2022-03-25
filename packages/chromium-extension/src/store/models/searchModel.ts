@@ -1,6 +1,6 @@
 import { Action, Thunk, Actions, thunk, action } from 'easy-peasy';
 import { search as searchAPI, EntityType, SearchResponse, TechnologyType, Filter, QuickFilters } from 'shared';
-import { enhancedEntitiesWithTechnologiesInfo, enhancedEntitiesWithUserInfo, resetModel } from './helper';
+import { enhancedEntitiesWithTechnologiesInfo, resetModel } from './helper';
 
 const EMPTY_ARGS = {
     term: '',
