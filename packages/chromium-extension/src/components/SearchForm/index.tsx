@@ -53,7 +53,8 @@ const SResultsTitleWrapper = styled.div`
 `;
 
 const SSearchCardResultContainer = styled.div`
-    ${(props) => !props.isLastElement && `border-bottom: 1px solid rgba(0, 76, 255, 0.08);`}
+    ${(props) =>
+        !props.isLastElement ? 'border-top: 1px solid transparent' : `border-bottom: 1px solid rgba(0, 76, 255, 0.08)`}
     border-top: 1px solid transparent;
 
     &:hover,
@@ -145,7 +146,7 @@ const SearchForm = () => {
             const value = filter.values[0];
             switch (filter.attributeKey) {
                 case 'TechnologyCode': {
-                    const tempEnhancedFilter = technologyFilters.find((item) => item.technologyCode === value);
+                    const tempEnhancedFilter = technologyFilters.find((item) => item?.technologyCode === value);
                     if (tempEnhancedFilter?.imageHash) {
                         enhancedFilter.icon = <FieldIcon hash={tempEnhancedFilter?.imageHash} />;
                     }

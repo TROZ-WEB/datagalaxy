@@ -26,7 +26,7 @@ const TechnologiesModal: FC = () => {
             icon?: React.ReactNode;
         }
         const t: field = {
-            id: technology.technologyCode,
+            id: technology?.technologyCode,
             label: technology.displayName,
         };
 

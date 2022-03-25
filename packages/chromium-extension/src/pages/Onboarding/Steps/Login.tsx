@@ -7,7 +7,7 @@ import Input from '../../../components/ui/Input';
 import { useStoreActions, useStoreState } from '../../../store/hooks';
 import { StepProps } from '../Stepper';
 
-declare const pendo: any;
+// declare const pendo: any;
 
 /* ---------- STYLES ---------- */
 
@@ -59,8 +59,8 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
     const { auth, onboarding } = useStoreActions((actions) => actions);
     const { onboarding: onboardingState } = useStoreState((state) => state);
 
-    const user = useStoreState((s) => s.auth.user);
-    const aT = useStoreState((s) => s.auth.getDecodedPat);
+    // const user = useStoreState((s) => s.auth.user);
+    // const aT = useStoreState((s) => s.auth.getDecodedPat);
 
     const {
         register,
@@ -100,11 +100,11 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
     const onSubmit = handleSubmit(async (values) => {
         try {
             await auth.loginWithPAT(values);
-            await auth.fetchTags();
-            await auth.fetchWorkspaces();
-            await auth.fetchUser();
-            await auth.fetchTechnologies();
-            await auth.fetchUser();
+            auth.fetchTags();
+            auth.fetchWorkspaces();
+            auth.fetchUser();
+            auth.fetchTechnologies();
+            auth.fetchUser();
 
             onboarding.resetModel();
         } catch (error) {
