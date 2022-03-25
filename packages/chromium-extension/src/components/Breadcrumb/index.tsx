@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { formatBreadcrumb, Workspace } from 'shared';
 import styled from 'styled-components';
 import { useStoreState } from '../../store/hooks';
+import WorkspaceIconPlaceholder from '../WorkspaceIconPlaceholder';
 
 /* ---------- STYLES ---------- */
 
@@ -57,16 +58,18 @@ const Breadcrumb = ({ path, workspace }: { path: string[]; workspace: Workspace 
         <div>
             {formattedPath && (
                 <SRoot title={path.join(' > ')}>
-                    {workspace?.iconHash && (
+                    {workspace?.iconHash ? (
                         <SWorkspaceImage
                             alt="workspace-image"
                             src={`${url}/image?hash=${encodeURIComponent(workspace?.iconHash)}`}
                             title={workspace?.name}
                         />
+                    ) : (
+                        <WorkspaceIconPlaceholder workspaceTrigram={workspace?.trigram} />
                     )}
                     {formattedPath && formattedPath.shorten.length !== 0 ? (
                         <SFormatted>
-                            {workspace?.iconHash && <SChevron></SChevron>}
+                            <SChevron></SChevron>
                             {formatText(formattedPath)}
                         </SFormatted>
                     ) : (

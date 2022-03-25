@@ -2,7 +2,7 @@ import { format, isValid, parseISO } from 'date-fns';
 import { enGB, enUS, fr } from 'date-fns/locale';
 
 import React, { useEffect, useState } from 'react';
-import { DataTypeMapping, EntityType, ScreenConfiguration } from 'shared';
+import { EntityType, ScreenConfiguration } from 'shared';
 import styled, { css } from 'styled-components';
 import Tags from '../../../../components/Entity/Tags';
 import UserProfile from '../../../../components/Entity/UserProfile';
@@ -196,6 +196,14 @@ const computeData = (data: any, i: number) => {
 };
 
 const computeTitle = (r: any, key: string) => {
+    if (key === 'childrenCount') {
+        return chrome.i18n.getMessage(`LogicalChildrenCount`);
+    }
+
+    if (key === 'allLevelChildrenCount') {
+        return chrome.i18n.getMessage(`LogicalAllLevelChildrenCount`);
+    }
+
     return chrome.i18n.getMessage(`attribute_key_${key}`) || r[key].name || key;
 };
 
@@ -211,7 +219,7 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
             !rest[attribute.name].trend &&
             !isEmptyObject(rest[attribute.name]) &&
             reservedKeys.indexOf(attribute.name) === -1 &&
-            !rest[attribute.name].entries
+            !rest[attribute.name].lastEntry
         );
     };
 
@@ -248,7 +256,7 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                         </Details.SubInfo>
                         <Details.Separator />
                         <Details.SubInfo title="">
-                            {tags?.length !== 0 ? (
+                            {tags && tags?.length !== 0 ? (
                                 <Tags>
                                     {tags?.map((tag, i) => (
                                         /* eslint-disable-next-line */
@@ -261,7 +269,7 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                                 </SPreviewEmptyField>
                             )}
                         </Details.SubInfo>
-                        {entity.dataType && entity.dataType === DataTypeMapping.Usage && externalUrl?.url && (
+                        {entity.dataType && externalUrl?.url && (
                             <>
                                 <Details.Separator />
                                 <Details.SubInfo title="">

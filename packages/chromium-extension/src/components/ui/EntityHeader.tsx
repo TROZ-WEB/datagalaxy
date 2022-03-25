@@ -45,7 +45,7 @@ const SEntityName = styled.span`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 180px;
+    max-width: 250px;
     ${(props) =>
         props.bold &&
         css`
@@ -197,14 +197,14 @@ const EntityHeader: FC<EntityHeaderProps> = ({
     const [isMoreActionShown, setIsMoreActionsShown] = useState(false);
     const [displayMoreAttributes, setDisplayMoreAttributes] = useState(false);
 
-    const [entityPathAsStringArray, setEntityPathAsStringArray] = useState();
+    const [entityPathAsStringArray, setEntityPathAsStringArray] = useState<string[]>([]);
 
     const workspaces = useStoreState((state) => state.auth.workspaces);
 
     const [workspace, setWorkspace] = useState<Workspace>();
 
     useEffect(() => {
-        if (entity && displayPath) {
+        if (entity && displayPath && entity.path) {
             const pathAsStringArray = entity.path.trim().split('\\').slice(0, -1).filter(Boolean);
             if (currentWorkspace) {
                 pathAsStringArray.unshift(currentWorkspace);
@@ -214,9 +214,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
             const workspaceResult = workspaces.find((w) => workspaceName === w.name);
             setWorkspace(workspaceResult);
 
-            if (workspaceResult?.iconHash) {
-                pathAsStringArray.shift(); // remove workspace part
-            }
+            pathAsStringArray.shift(); // remove workspace part
 
             setEntityPathAsStringArray(pathAsStringArray);
         }
@@ -225,7 +223,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
-            {entity && (
+            {entity && entity.path && (
                 <SRoot
                     cardExpanded={isCardExpanded}
                     cursorPointer={!!onClick}

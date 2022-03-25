@@ -2,11 +2,9 @@ import React, { useEffect, FC, useState, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { EntityType } from 'shared';
 import styled from 'styled-components';
-import HorizontalSeparator from '../../../components/HorizontalSeparator';
 import LoadingScreen from '../../../components/LoadingScreen';
 import Accordion from '../../../components/ui/Accordion';
 import EntityHeader from '../../../components/ui/EntityHeader';
-import Spinner from '../../../components/ui/Spinner';
 import { useStoreState, useStoreActions } from '../../../store/hooks';
 
 /* ---------- STYLES ---------- */
@@ -23,14 +21,6 @@ const SEntityWrapper = styled.span`
     padding-top: 6px;
 `;
 
-const SSpinnerWrapper = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 16px 0px;
-`;
-
 const SSubEntityWrapper = styled.span`
     width: 100%;
     display: flex;
@@ -44,6 +34,16 @@ const SSubEntityWrapper = styled.span`
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;
+`;
+
+const SCardResultContainer = styled.div`
+    ${(props) => !props.isLastElement && `border-bottom: 1px solid rgba(0, 76, 255, 0.08);`}
+    border-top: 1px solid transparent;
+
+    &:hover,
+    &:focus {
+        background: rgba(0, 76, 255, 0.08);
+    }
 `;
 
 /* ---------- COMPONENT ---------- */
@@ -95,7 +95,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <SRoot>
             {children && children.length !== 0 ? (
-                children?.map((childrenEntity) => {
+                children?.map((childrenEntity, idx, array) => {
                     const myGrandChildren = grandChildren.filter((gc) => {
                         const childrenPathSplitted = childrenEntity.path.split('\\');
                         const childrenPath = childrenPathSplitted[childrenPathSplitted.length - 1].toString();
@@ -105,10 +105,10 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
                     });
 
                     return (
-                        <React.Fragment key={childrenEntity.id}>
+                        <SCardResultContainer key={childrenEntity.id} isLastElement={idx === array.length - 1}>
                             <Accordion
                                 key={childrenEntity.id}
-                                disabled={childrenEntity.childrenCount === 0}
+                                disabled={myGrandChildren.length === 0}
                                 header={
                                     <SEntityWrapper onClick={() => handleClick(childrenEntity)}>
                                         <EntityHeader
@@ -120,14 +120,18 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
                                 }
                                 openButtonPosition="left"
                             >
-                                {myGrandChildren.length > 0 ? (
-                                    myGrandChildren.map((grandChildrenEntity) => {
+                                {myGrandChildren.length !== 0 &&
+                                    myGrandChildren.map((grandChildrenEntity, idx2, array2) => {
                                         return (
-                                            <React.Fragment key={grandChildrenEntity.id}>
-                                                <HorizontalSeparator />
+                                            <SCardResultContainer
+                                                key={grandChildrenEntity.id}
+                                                isLastElement={idx2 === array2.length - 1}
+                                                tabindex="-1"
+                                            >
                                                 <SSubEntityWrapper
                                                     key={grandChildrenEntity.id}
                                                     onClick={() => handleClick(grandChildrenEntity)}
+                                                    tabindex="-1"
                                                 >
                                                     <EntityHeader
                                                         displayPath={false}
@@ -135,17 +139,11 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
                                                         id={`entityHeader${grandChildrenEntity.id}`}
                                                     />
                                                 </SSubEntityWrapper>
-                                            </React.Fragment>
+                                            </SCardResultContainer>
                                         );
-                                    })
-                                ) : (
-                                    <SSpinnerWrapper>
-                                        <Spinner />
-                                    </SSpinnerWrapper>
-                                )}
+                                    })}
                             </Accordion>
-                            <HorizontalSeparator />
-                        </React.Fragment>
+                        </SCardResultContainer>
                     );
                 })
             ) : (

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import HorizontalSeparator from '../../../components/HorizontalSeparator';
 import Accordion from '../../../components/ui/Accordion';
 import EntityHeader from '../../../components/ui/EntityHeader';
 import { useStoreActions, useStoreState } from '../../../store/hooks';
@@ -21,6 +20,16 @@ const SEntityWrapper = styled.div`
 const STitle = styled.div`
     font-weight: 700;
     font-size: 14px;
+`;
+
+const SCardResultContainer = styled.div`
+    ${(props) => !props.isLastElement && `border-bottom: 1px solid rgba(0, 76, 255, 0.08);`}
+    border-top: 1px solid transparent;
+
+    &:hover,
+    &:focus {
+        background: rgba(0, 76, 255, 0.08);
+    }
 `;
 
 /* ---------- COMPONENT ---------- */
@@ -51,15 +60,16 @@ const LinkedObjects = () => {
                     >
                         {linkedObjects[key].map((linkedObject, idx, array) => (
                             <div key={linkedObject.id}>
-                                <SEntityWrapper onClick={() => handleClick(linkedObject)}>
-                                    <EntityHeader
-                                        currentWorkspace={currentWorkspace}
-                                        entity={linkedObject}
-                                        id={`entityHeader${idx}`}
-                                        alwaysExpanded
-                                    />
-                                </SEntityWrapper>
-                                {idx !== array.length - 1 && <HorizontalSeparator />}
+                                <SCardResultContainer isLastElement={idx === array.length - 1}>
+                                    <SEntityWrapper onClick={() => handleClick(linkedObject)}>
+                                        <EntityHeader
+                                            currentWorkspace={currentWorkspace}
+                                            entity={linkedObject}
+                                            id={`entityHeader${idx}`}
+                                            alwaysExpanded
+                                        />
+                                    </SEntityWrapper>
+                                </SCardResultContainer>
                             </div>
                         ))}
                     </SAccordion>

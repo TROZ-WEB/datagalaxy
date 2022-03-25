@@ -53,7 +53,7 @@ const SResultsTitleWrapper = styled.div`
 `;
 
 const SSearchCardResultContainer = styled.div`
-    border-bottom: 1px solid rgba(0, 76, 255, 0.08);
+    ${(props) => !props.isLastElement && `border-bottom: 1px solid rgba(0, 76, 255, 0.08);`}
     border-top: 1px solid transparent;
 
     &:hover,
@@ -299,7 +299,7 @@ const SearchForm = () => {
                             {hasExactMatches && (
                                 <SExactMatchsContainer>
                                     <SSearchCardsResultWrapper>
-                                        {exactMatchesEntitiesToDisplay.map((entity, idx) => {
+                                        {exactMatchesEntitiesToDisplay.map((entity, idx, array) => {
                                             const exactMatchAttributes = entity.exactMatchAttributes.sort((a, b) => {
                                                 if (
                                                     AttributesWeight[a.attributeKey] &&
@@ -329,7 +329,10 @@ const SearchForm = () => {
                                             });
 
                                             return (
-                                                <SSearchCardResultContainer key={entity.id}>
+                                                <SSearchCardResultContainer
+                                                    key={entity.id}
+                                                    isLastElement={idx === array.length - 1}
+                                                >
                                                     <SSearchCardResultWrapper>
                                                         <EntityHeader
                                                             entity={entity}
@@ -381,8 +384,11 @@ const SearchForm = () => {
                             )}
                             {hasSearchResults && (
                                 <SSearchCardsResultWrapper>
-                                    {searchResults?.result?.entities.map((entity, idx) => (
-                                        <SSearchCardResultContainer key={entity.id}>
+                                    {searchResults?.result?.entities.map((entity, idx, array) => (
+                                        <SSearchCardResultContainer
+                                            key={entity.id}
+                                            isLastElement={idx === array.length - 1}
+                                        >
                                             <SSearchCardResultWrapper>
                                                 <EntityHeader
                                                     entity={entity}
