@@ -6,7 +6,6 @@ import HorizontalSeparator from '../../../components/HorizontalSeparator';
 import LoadingScreen from '../../../components/LoadingScreen';
 import Accordion from '../../../components/ui/Accordion';
 import EntityHeader from '../../../components/ui/EntityHeader';
-import Spinner from '../../../components/ui/Spinner';
 import { useStoreState, useStoreActions } from '../../../store/hooks';
 
 /* ---------- STYLES ---------- */
@@ -21,14 +20,6 @@ const SEntityWrapper = styled.span`
     align-items: center;
     padding-bottom: 6px;
     padding-top: 6px;
-`;
-
-const SSpinnerWrapper = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 16px 0px;
 `;
 
 const SSubEntityWrapper = styled.span`
@@ -108,7 +99,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
                         <React.Fragment key={childrenEntity.id}>
                             <Accordion
                                 key={childrenEntity.id}
-                                disabled={childrenEntity.childrenCount === 0}
+                                disabled={myGrandChildren.length === 0}
                                 header={
                                     <SEntityWrapper onClick={() => handleClick(childrenEntity)}>
                                         <EntityHeader
@@ -120,7 +111,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
                                 }
                                 openButtonPosition="left"
                             >
-                                {myGrandChildren.length > 0 ? (
+                                {myGrandChildren.length !== 0 &&
                                     myGrandChildren.map((grandChildrenEntity) => {
                                         return (
                                             <React.Fragment key={grandChildrenEntity.id}>
@@ -137,12 +128,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
                                                 </SSubEntityWrapper>
                                             </React.Fragment>
                                         );
-                                    })
-                                ) : (
-                                    <SSpinnerWrapper>
-                                        <Spinner />
-                                    </SSpinnerWrapper>
-                                )}
+                                    })}
                             </Accordion>
                             <HorizontalSeparator />
                         </React.Fragment>
