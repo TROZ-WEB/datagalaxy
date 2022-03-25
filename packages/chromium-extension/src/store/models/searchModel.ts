@@ -1,10 +1,19 @@
 import { Action, Thunk, Actions, thunk, action } from 'easy-peasy';
-import { search as searchAPI, EntityType, SearchResponse, TechnologyType, Filter, QuickFilters } from 'shared';
-import { enhancedEntitiesWithTechnologiesInfo, resetModel } from './helper';
+import {
+    search as searchAPI,
+    EntityType,
+    SearchResponse,
+    TechnologyType,
+    Filter,
+    QuickFilters,
+    AttributeDefinitionType,
+} from 'shared';
+import { enhancedEntitiesWithTechnologiesInfo, enhancedEntitiesWithAttributesInfo, resetModel } from './helper';
 
 const EMPTY_ARGS = {
     term: '',
     technologies: null,
+    attributes: null,
 };
 
 const EMPTY_RESPONSE: SearchResponse = {
@@ -18,6 +27,7 @@ const EMPTY_RESPONSE: SearchResponse = {
 interface SearchedArgs {
     term?: string;
     technologies: TechnologyType[];
+    attributes: AttributeDefinitionType[];
     filters?: Filter[];
     versionId?: string;
     limit?: number;
@@ -75,6 +85,10 @@ const search = thunk(async (actions: Actions<SearchModel>, searchedArgs: Searche
         if (enhancedResults?.result) {
             enhancedResults.result.entities = await enhancedEntitiesWithTechnologiesInfo(
                 searchedArgs.technologies,
+                enhancedResults.result.entities,
+            );
+            enhancedResults.result.entities = await enhancedEntitiesWithAttributesInfo(
+                searchedArgs.attributes,
                 enhancedResults.result.entities,
             );
         }

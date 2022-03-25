@@ -1,7 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { computed } from 'easy-peasy';
-import { decodeJWT, EntityType, getUsersByEmailsAndRole, TechnologyType } from 'shared';
-import { useStoreState } from '../hooks';
+import { AttributeDefinitionType, decodeJWT, EntityType, getUsersByEmailsAndRole, TechnologyType } from 'shared';
 
 const resetModel = (initialState) => (state) => {
     /* eslint-disable-next-line no-restricted-syntax */
@@ -70,4 +69,34 @@ const enhancedEntitiesWithTechnologiesInfo = async (
     });
 };
 
-export { enhancedEntitiesWithUserInfo, enhancedEntitiesWithTechnologiesInfo, resetModel, getDecodedPAT };
+const enhancedEntitiesWithAttributesInfo = async (
+    attributes: AttributeDefinitionType[],
+    rawEntities: EntityType[],
+): Promise<EntityType[]> => {
+    return rawEntities.map((result) => {
+        if (result.exactMatchAttributes) {
+            const newExactMatches = result.exactMatchAttributes.map((ema) => {
+                const fullAttribute =
+                    attributes.find((a) => a.attributeKey === ema.attributeKey && a.dataType === result.dataType) ||
+                    attributes.find((a) => a.attributeKey === ema.attributeKey && a.dataType === 'Common') ||
+                    ema;
+
+                return {
+                    ...fullAttribute,
+                    value: ema.value,
+                };
+            });
+            result.exactMatchAttributes = newExactMatches;
+        }
+
+        return result;
+    });
+};
+
+export {
+    enhancedEntitiesWithUserInfo,
+    enhancedEntitiesWithTechnologiesInfo,
+    enhancedEntitiesWithAttributesInfo,
+    resetModel,
+    getDecodedPAT,
+};

@@ -1,3 +1,4 @@
+import { AttributeDefinitionType } from '../Attributes/types';
 import { TechnologyType } from '../Technologies';
 
 /* eslint-disable camelcase */
@@ -38,7 +39,7 @@ export interface EntityType {
     childrenObjects: EntityType[];
     versionId: string;
     isExactMatch: boolean;
-    exactMatchAttributes: ExactMatch[];
+    exactMatchAttributes: AttributeDefinitionType[];
     objectUrl: string;
     exactMatchOccuredOnName: boolean;
     technology: TechnologyType;

@@ -105,6 +105,7 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
             auth.fetchUser();
             auth.fetchTechnologies();
             auth.fetchUser();
+            auth.fetchAttributes();
 
             onboarding.resetModel();
         } catch (error) {

@@ -46,7 +46,8 @@ const Popup = () => {
                 // Refresh accessToken at the extension launch
                 const accessTokenSingleton = AccessToken.getInstance();
                 await accessTokenSingleton.init(pat);
-                // Fetch all available tags
+                // Fetch all available
+                dispatch.auth.fetchAttributes();
                 dispatch.auth.fetchTags();
                 dispatch.auth.fetchWorkspaces();
                 dispatch.auth.fetchUser();

@@ -17,4 +17,5 @@ export interface AttributeDefinitionType {
     isEditable: boolean;
     isMandatory: boolean;
     name: string;
+    value: string;
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { EntityType, entitiesTypeRelatedInfos, EnhancedFilter } from 'shared';
+import { EntityType, entitiesTypeRelatedInfos, EnhancedFilter, AttributeDefinitionType, TechnologyType } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../store/hooks';
 import keyListener from '../../utils';
@@ -211,6 +211,8 @@ const SearchForm = () => {
 
     const technologies = useStoreState((state) => state.auth.technologies);
 
+    const attributes = useStoreState((state) => state.auth.attributes);
+
     const searchPickedFilters = pickedFilters
         .map((item) => item.filter)
         .filter((item) => item.attributeKey !== 'Workspace');
@@ -218,15 +220,17 @@ const SearchForm = () => {
     const debounceOnChange = async ({ value }) => {
         interface Payload {
             term: string;
-            technologies: any[];
+            technologies: TechnologyType[];
             filters: any[];
             limit?: number;
             versionId?: string;
+            attributes: AttributeDefinitionType[];
         }
         const payload: Payload = {
             term: value,
             technologies,
             filters: searchPickedFilters,
+            attributes,
         };
 
         if (!value && pickedFilters.length === 0) {

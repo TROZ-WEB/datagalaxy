@@ -10,9 +10,11 @@ import {
     fetchTags as fetchTagsApi,
     fetchWorkspaces as fetchWorkspacesApi,
     fetchTechnologies as fetchTechnologiesApi,
+    fetchAttributes as fetchAttributesApi,
     UserType,
     getUserByEmail,
     DecodedJWT,
+    AttributeDefinitionType,
 } from 'shared';
 import { StoreModel } from '../types';
 import { getDecodedPAT, resetModel } from './helper';
@@ -28,6 +30,7 @@ const initialState = {
     technologies: [],
     user: null,
     showMoreDetails: false,
+    attributes: [],
 };
 export interface AuthModel {
     /* State */
@@ -41,6 +44,7 @@ export interface AuthModel {
     technologies: TechnologyType[];
     user: UserType;
     showMoreDetails: boolean;
+    attributes: AttributeDefinitionType[];
     /* Computed properties */
     getDecodedPat: Computed<AuthModel, DecodedJWT>;
     /* Actions */
@@ -55,12 +59,14 @@ export interface AuthModel {
     updateTechnologies: Action<AuthModel, TechnologyType[]>;
     updateUser: Action<AuthModel, UserType>;
     updateShowMoreDetails: Action<AuthModel, boolean>;
+    updateAttributes: Action<AuthModel, AttributeDefinitionType[]>;
     /* Thunks */
     loginWithPAT: Thunk<AuthModel, { pat: string; email: string }>;
     fetchTags: Thunk<AuthModel>;
     fetchTechnologies: Thunk<AuthModel>;
     fetchWorkspaces: Thunk<AuthModel>;
     fetchUser: Thunk<AuthModel>;
+    fetchAttributes: Thunk<AuthModel>;
     logout: Thunk<AuthModel, Store>;
     updatePATThunk: Thunk<AuthModel, string>;
 }
@@ -97,6 +103,13 @@ const loginWithPAT = thunk(async (actions: Actions<AuthModel>, payload: { pat: s
     // Init accessToken singleton
     const accessTokenHandler = AccessToken.getInstance();
     await accessTokenHandler.init(btoa(payload.pat));
+});
+
+const fetchAttributes = thunk(async (actions: Actions<AuthModel>, _, { getStoreState }) => {
+    const url = (getStoreState() as any).auth.pubapi;
+    const attributes: AttributeDefinitionType[] = await fetchAttributesApi(url);
+
+    actions.updateAttributes(attributes);
 });
 
 const fetchTags = thunk(async (actions: Actions<AuthModel>, _, { getStoreState }) => {
@@ -228,6 +241,9 @@ const authModel = async (): Promise<AuthModel> => {
         updateUser: action((state, payload: UserType) => {
             state.user = payload;
         }),
+        updateAttributes: action((state, payload: AttributeDefinitionType[]) => {
+            state.attributes = payload;
+        }),
         updateShowMoreDetails: action((state, payload: boolean) => {
             state.showMoreDetails = payload;
         }),
@@ -239,6 +255,7 @@ const authModel = async (): Promise<AuthModel> => {
         fetchUser,
         fetchWorkspaces,
         fetchTechnologies,
+        fetchAttributes,
         logout,
         updatePATThunk,
     };
