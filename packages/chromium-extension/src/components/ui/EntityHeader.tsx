@@ -1,5 +1,5 @@
 import React, { useState, FC, useEffect } from 'react';
-import { ExactMatch, Workspace } from 'shared';
+import { AttributeDefinitionType, Workspace } from 'shared';
 import styled, { css } from 'styled-components';
 import { useStoreState } from '../../store/hooks';
 import Breadcrumb from '../Breadcrumb';
@@ -176,7 +176,7 @@ interface EntityHeaderProps {
     entity: any;
     entityPage?: boolean;
     onClick?: () => void;
-    exactMatches?: ExactMatch[];
+    exactMatches?: AttributeDefinitionType[];
     searchQuery?: string;
     displayPath?: boolean;
     currentWorkspace?: string;
@@ -271,7 +271,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                                                     ? `${chrome.i18n.getMessage(
                                                           `attribute_key_${exactMatch.attributeKey}`,
                                                       )} : `
-                                                    : `${exactMatch.attributeKey} : `}
+                                                    : `${exactMatch.name || exactMatch.attributeKey} : `}
                                             </SAttributeKey>
                                             <SMatchString>{searchQuery}</SMatchString>
                                             {index === 0 && exactMatches.length > 1 && !displayMoreAttributes && (

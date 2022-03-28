@@ -7,7 +7,7 @@ import LoadingScreen from '../components/LoadingScreen';
 import { useStoreDispatch, useStoreState } from '../store/hooks';
 import Onboarding from './Onboarding';
 
-declare const pendo: any;
+// declare const pendo: any;
 
 enum AppInitialLoadingStatus {
     Loading,
@@ -37,8 +37,8 @@ const Popup = () => {
     const [isAppReady, setIsAppReady] = useState<boolean>(false);
     const [globalError, setGlobalError] = useState<boolean>(null);
 
-    const user = useStoreState((s) => s.auth.user);
-    const aT = useStoreState((s) => s.auth.getDecodedPat);
+    // const user = useStoreState((s) => s.auth.user);
+    // const aT = useStoreState((s) => s.auth.getDecodedPat);
 
     useEffect(() => {
         const initApp = async () => {
@@ -46,11 +46,12 @@ const Popup = () => {
                 // Refresh accessToken at the extension launch
                 const accessTokenSingleton = AccessToken.getInstance();
                 await accessTokenSingleton.init(pat);
-                // Fetch all available tags
-                await dispatch.auth.fetchTags();
-                await dispatch.auth.fetchWorkspaces();
-                await dispatch.auth.fetchUser();
-                await dispatch.auth.fetchTechnologies();
+                // Fetch all available
+                dispatch.auth.fetchAttributes();
+                dispatch.auth.fetchTags();
+                dispatch.auth.fetchWorkspaces();
+                dispatch.auth.fetchUser();
+                dispatch.auth.fetchTechnologies();
 
                 setIsAppReady(true);
             } catch (error) {

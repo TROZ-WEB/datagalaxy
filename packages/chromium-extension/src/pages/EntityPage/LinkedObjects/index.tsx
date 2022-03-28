@@ -23,7 +23,8 @@ const STitle = styled.div`
 `;
 
 const SCardResultContainer = styled.div`
-    ${(props) => !props.isLastElement && `border-bottom: 1px solid rgba(0, 76, 255, 0.08);`}
+    ${(props) =>
+        !props.isLastElement ? 'border-top: 1px solid transparent' : `border-bottom: 1px solid rgba(0, 76, 255, 0.08)`}
     border-top: 1px solid transparent;
 
     &:hover,
