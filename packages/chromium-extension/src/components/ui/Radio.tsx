@@ -73,43 +73,41 @@ const SIconContainer = styled.span`
 /* ---------- COMPONENT ---------- */
 
 interface Props {
-    label: string;
-    icon?: React.ReactNode;
-    id: string;
+    field: {
+        label: string;
+        icon?: React.ReactNode;
+        checked?: boolean;
+        id: string;
+    };
     className?: string;
-    checked?: boolean;
     bold?: boolean;
-    onChange?: (params) => void;
+    onChange?: () => void;
     setIsOpen?: Dispatch<SetStateAction<boolean>>;
     name: string;
 }
 
-const Radio: React.FC<Props> = ({
-    label,
-    icon,
-    id,
-    className,
-    checked = false,
-    bold = false,
-    onChange,
-    setIsOpen,
-    name,
-    ...props
-}) => {
+const Radio: React.FC<Props> = ({ field, className, bold = false, onChange, setIsOpen, name, ...props }) => {
     const handleChange = () => {
-        onChange(id);
+        onChange();
         // eslint-disable-next-line no-unused-expressions
         setIsOpen && setIsOpen(false);
     };
 
     return (
-        <RadioContainer className={className} htmlFor={id}>
-            <HiddenRadio checked={checked} id={id} name={name} onChange={handleChange} type="radio" {...props} />
-            <StyledRadio checked={checked}>
+        <RadioContainer className={className} htmlFor={field?.id}>
+            <HiddenRadio
+                checked={field?.checked}
+                id={field?.id}
+                name={name}
+                onChange={handleChange}
+                type="radio"
+                {...props}
+            />
+            <StyledRadio checked={field?.checked}>
                 <SCheck />
             </StyledRadio>
             <SLabel bold={bold}>
-                {icon && <SIconContainer>{icon}</SIconContainer>} {label}
+                {field?.icon && <SIconContainer>{field?.icon}</SIconContainer>} {field?.label}
             </SLabel>
         </RadioContainer>
     );

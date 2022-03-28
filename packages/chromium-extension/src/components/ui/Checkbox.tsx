@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Glyph from './Glyph';
 
@@ -65,27 +65,25 @@ const SIconContainer = styled.span`
 /* ---------- COMPONENT ---------- */
 
 interface Props {
-    label: string;
-    icon: React.ReactNode;
-    id: string;
+    field: {
+        label: string;
+        icon: React.ReactNode;
+        id: string;
+        checked?: boolean;
+    };
     className?: string;
-    checked?: boolean;
-    onChange?: (id) => void;
+    onChange?: (params) => void;
 }
 
-const Checkbox: React.FC<Props> = ({ label, icon, id, className, checked = false, onChange, ...props }) => {
-    const handleChange = () => {
-        onChange(id);
-    };
-
+const Checkbox: React.FC<Props> = ({ field, className, onChange, ...props }) => {
     return (
-        <CheckboxContainer className={className} htmlFor={id}>
-            <HiddenCheckbox checked={checked} id={id} onChange={handleChange} type="checkbox" {...props} />
-            <StyledCheckbox checked={checked}>
+        <CheckboxContainer className={className} htmlFor={field?.id}>
+            <HiddenCheckbox checked={field?.checked} id={field?.id} onChange={onChange} type="checkbox" {...props} />
+            <StyledCheckbox checked={field?.checked}>
                 <SGlyph icon="Check" />
             </StyledCheckbox>
             <SLabel>
-                {icon && <SIconContainer>{icon}</SIconContainer>} {label}
+                {field?.icon && <SIconContainer>{field?.icon}</SIconContainer>} {field?.label}
             </SLabel>
         </CheckboxContainer>
     );

@@ -1,6 +1,6 @@
 {
     "name": "chromium-extension",
-    "version": "1.0.21",
+    "version": "1.0.22",
     "description": "Chromium extension for Datagalaxy",
     "main": "index.js",
     "repository": "git@ssh.dev.azure.com:v3/datagalaxy/Plugins%20Externes/Plugins%20Externes",
@@ -30,7 +30,6 @@
         "eslint-plugin-jsx-a11y": "~6.4.1",
         "eslint-plugin-prettier": "^3.4.0",
         "eslint-plugin-react": "~7.24.0",
-        "eslint-plugin-react-hooks": "~4.2.0",
         "prettier": "^2.3.2",
         "style-loader": "^3.0.0",
         "ts-loader": "^9.2.3",

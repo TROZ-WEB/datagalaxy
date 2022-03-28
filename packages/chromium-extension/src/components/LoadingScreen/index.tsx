@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Layout from '../Layout';
 import Spinner from '../ui/Spinner';
 
 /* ---------- STYLES ---------- */
@@ -17,11 +16,9 @@ const SCenter = styled.div`
 
 const LoadingScreen = () => {
     return (
-        <Layout>
-            <SCenter>
-                <Spinner size="xl" />
-            </SCenter>
-        </Layout>
+        <SCenter>
+            <Spinner size="xl" />
+        </SCenter>
     );
 };
 

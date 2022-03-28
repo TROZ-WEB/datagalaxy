@@ -34,6 +34,23 @@ const SRoundButton = styled(RoundButton)`
 
 const STextContainer = styled.div`
     overflow: hidden;
+    display: flex;
+`;
+
+const SOperator = styled.div`
+    padding-right: 2px;
+    padding-left: 2px;
+    border-radius: 3px;
+    background-color: #5a5e86;
+    color: #fff;
+    font-size: 8px;
+    line-height: 12px;
+    height: 12px;
+    font-weight: 700;
+    margin-left: 3px;
+    margin-right: 3px;
+    text-transform: uppercase;
+    display: inline;
 `;
 
 const SValue = styled.div`
@@ -69,13 +86,20 @@ const FilterTag = React.forwardRef(({ filter, onClick }: Props, ref) => {
         <SRoot
             ref={ref}
             onClick={onClick}
-            title={`${chrome.i18n.getMessage(
-                `attribute_key_${filter?.filter?.attributeKey}`,
-            )} : ${filter?.filter?.values?.join(', ')}`}
+            title={`${chrome.i18n.getMessage(`attribute_key_${filter?.filter?.attributeKey}`)} : ${filter?.label?.join(
+                ', ',
+            )}`}
         >
-            <SImageContainer>{filter?.icon?.$$typeof && filter?.icon}</SImageContainer>
+            <SImageContainer>{filter?.icon?.map((icon) => icon)}</SImageContainer>
             <STextContainer>
-                <SValue>{chrome.i18n.getMessage(`attribute_key_${filter?.filter?.attributeKey}`)}</SValue>
+                <SValue>{filter?.label?.map((label) => label)}</SValue>
+                {filter?.label?.length > 1 && (
+                    <SOperator>
+                        {filter?.filter?.operator === 'contains'
+                            ? chrome.i18n.getMessage(`operator_or`)
+                            : chrome.i18n.getMessage(`operator_and`)}
+                    </SOperator>
+                )}
             </STextContainer>
             <SRoundButton icon="Cancelsearch" onClick={(e) => handleDeleteFilter(e)} size="XS" />
         </SRoot>

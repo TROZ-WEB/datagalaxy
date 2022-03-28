@@ -1,10 +1,11 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import { useStoreActions, useStoreState } from '../../../store/hooks';
 import keyListener from '../../../utils';
 import Checkbox from '../../ui/Checkbox';
 import Glyph from '../../ui/Glyph';
 import Radio from '../../ui/Radio';
+// import { handleToggleFilter } from './Modals/utils';
 
 /* ---------- STYLES ---------- */
 
@@ -43,7 +44,7 @@ const SInput = styled.input`
     }
 `;
 
-const SIntersection = styled.div`
+const SOperator = styled.div`
     margin-top: 24px;
     display: flex;
 `;
@@ -85,22 +86,22 @@ const SFieldsContainer = styled.div`
 /* ---------- COMPONENT ---------- */
 
 interface ModalBaseProps {
-    label: string;
     multiselect?: boolean;
     fields: any[];
-    intersectionLogic?: string;
-    handleChangeIntersectionLogic?: (params: string) => void;
-    onChange?: (id: string) => void;
+    operator?: string;
+    setOperator?: Dispatch<SetStateAction<string>>;
+    handleChange?: (field) => void;
+    attributeKey: string;
     isOpen: boolean;
 }
 
 const ModalBase: FC<ModalBaseProps> = ({
-    label,
     multiselect = false,
     fields,
-    intersectionLogic,
-    handleChangeIntersectionLogic,
-    onChange,
+    operator,
+    setOperator,
+    handleChange,
+    attributeKey,
     isOpen,
 }) => {
     const [searchValue, setsearchValue] = useState('');
@@ -113,7 +114,7 @@ const ModalBase: FC<ModalBaseProps> = ({
         setFiteredFields(fields);
     }, [fields]);
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         const newFields = fieldsCopy.filter((item) => item.label.toLowerCase().includes(value.toLowerCase()));
         setsearchValue(value);
@@ -123,6 +124,55 @@ const ModalBase: FC<ModalBaseProps> = ({
 
     const handleClose = () => {
         resetModalState();
+    };
+
+    const { pickedFilters } = useStoreState((state) => state.filters);
+    const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
+
+    const handleToggleFilter = (field) => {
+        const newPickedFilters = [...pickedFilters];
+        const filterIndex = newPickedFilters?.findIndex((item) => item?.filter?.attributeKey === attributeKey);
+        const newOperator = operator === 'or' ? 'contains' : 'matchAll';
+        if (filterIndex === -1) {
+            const filter = {
+                icon: [field.icon],
+                label: [field.label],
+                filter: { attributeKey, operator: newOperator, values: [field.id] },
+            };
+            newPickedFilters.push(filter);
+        } else {
+            const { icon, label, filter } = newPickedFilters[filterIndex];
+            newPickedFilters[filterIndex].filter.operator = newOperator;
+            const idIndex = filter.values?.findIndex((item) => item === field.id);
+
+            if (idIndex === -1) {
+                filter.values.push(field.id);
+                icon.push(field.icon);
+                label.push(field.label);
+            } else {
+                filter.values.splice(idIndex, 1);
+                icon.splice(idIndex, 1);
+                label.splice(idIndex, 1);
+            }
+
+            if (filter.values.length === 0) {
+                newPickedFilters.splice(filterIndex, 1);
+            }
+        }
+
+        updatePickedFilters(newPickedFilters);
+    };
+
+    const handleChangeOperator = (params) => {
+        setOperator(params);
+        const newPickedFilters = [...pickedFilters];
+        const filterIndex = newPickedFilters?.findIndex((item) => item?.filter?.attributeKey === attributeKey);
+        const newOperator = params === 'or' ? 'contains' : 'matchAll';
+        if (filterIndex !== -1) {
+            newPickedFilters[filterIndex].filter.operator = newOperator;
+        }
+
+        updatePickedFilters(newPickedFilters);
     };
 
     return (
@@ -138,7 +188,7 @@ const ModalBase: FC<ModalBaseProps> = ({
                                 window.removeEventListener('keydown', keyListener, true);
                                 window.removeEventListener('keyup', keyListener, true);
                             }}
-                            onChange={handleChange}
+                            onChange={handleSearch}
                             onFocus={() => {
                                 window.addEventListener('keypress', keyListener, true);
                                 window.addEventListener('keydown', keyListener, true);
@@ -151,24 +201,28 @@ const ModalBase: FC<ModalBaseProps> = ({
                     </SInputContainer>
                     <SForm>
                         {multiselect && (
-                            <SIntersection>
+                            <SOperator>
                                 <SRadio
-                                    checked={intersectionLogic === 'or'}
-                                    id="or"
-                                    label={chrome.i18n.getMessage(`intersection_or`)}
-                                    name="intersectionLogic"
-                                    onChange={handleChangeIntersectionLogic}
+                                    field={{
+                                        id: 'or',
+                                        label: chrome.i18n.getMessage(`operator_or`),
+                                        checked: operator === 'or',
+                                    }}
+                                    name="operator"
+                                    onChange={() => handleChangeOperator('or')}
                                     bold
                                 />
                                 <SRadio
-                                    checked={intersectionLogic === 'and'}
-                                    id="and"
-                                    label={chrome.i18n.getMessage(`intersection_and`)}
-                                    name="intersectionLogic"
-                                    onChange={handleChangeIntersectionLogic}
+                                    field={{
+                                        id: 'and',
+                                        label: chrome.i18n.getMessage(`operator_and`),
+                                        checked: operator === 'and',
+                                    }}
+                                    name="operator"
+                                    onChange={() => handleChangeOperator('and')}
                                     bold
                                 />
-                            </SIntersection>
+                            </SOperator>
                         )}
                         <SFieldsContainer>
                             {
@@ -178,23 +232,25 @@ const ModalBase: FC<ModalBaseProps> = ({
                                         filteredFields?.map((field) => (
                                             <Checkbox
                                                 key={field.id}
-                                                checked={field.checked}
-                                                icon={field.icon}
-                                                id={field.id}
-                                                label={field.label}
-                                                onChange={onChange}
+                                                field={field}
+                                                onChange={
+                                                    handleChange
+                                                        ? () => handleChange(field)
+                                                        : () => handleToggleFilter(field)
+                                                }
                                             />
                                         ))
                                     ) : (
                                         filteredFields?.map((field) => (
                                             <Radio
                                                 key={field.id}
-                                                checked={field.checked}
-                                                icon={field.icon}
-                                                id={field.id}
-                                                label={field.label}
-                                                name={label}
-                                                onChange={onChange}
+                                                field={field}
+                                                name={attributeKey}
+                                                onChange={
+                                                    handleChange
+                                                        ? () => handleChange(field)
+                                                        : () => handleToggleFilter(field)
+                                                }
                                                 setIsOpen={handleClose}
                                             />
                                         ))

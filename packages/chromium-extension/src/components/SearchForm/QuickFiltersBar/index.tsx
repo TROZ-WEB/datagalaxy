@@ -1,8 +1,14 @@
-import React, { FC, useEffect, useState, useRef } from 'react';
-import { EnhancedFilter } from 'shared';
+import React, { FC, useState, useRef } from 'react';
+import { QuickFilters, EnhancedFilter, entitiesTypeRelatedInfos } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/hooks';
+import Avatar from '../../Avatar/index';
+import Status from '../../Entity/Status';
+import ColorPoint from '../../ui/ColorPoint';
+import DGGlyph from '../../ui/DGGlyph';
 import Glyph from '../../ui/Glyph';
+import FieldIcon from '../SearchInput/Modals/FieldIcon';
+import { moduleFields } from '../SearchInput/Modals/utils';
 import QuickFilter from './QuickFilter';
 
 /* ---------- STYLES ---------- */
@@ -103,12 +109,13 @@ const SScrollContainer = styled.div`
 /* ---------- COMPONENT ---------- */
 
 interface Props {
-    quickFilters: EnhancedFilter[];
+    quickFilters: QuickFilters;
     search: string;
 }
 
 const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
-    const QuickFiltersArray = quickFilters.slice(0, 12);
+    const QuickFiltersArray = quickFilters?.quickFilters?.slice(0, 12);
+    const { technologies, domains, users, status, workspaces } = useStoreState((state) => state.filters);
 
     const [scrollValue, setScrollValue] = useState(0);
     const shadowRoot = document.getElementById('datagalaxy_shadow_root');
@@ -127,46 +134,173 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
         scrollContainer.scrollLeft += 325;
     };
 
-    const pickedFilters = useStoreState((state) => state.filters.pickedFilters);
+    const { pickedFilters } = useStoreState((state) => state.filters);
     const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
-
-    useEffect(() => {
-        updatePickedFilters([]);
-    }, []);
 
     const { updateModalState, updateModalTop } = useStoreActions((actions) => actions.modal);
 
     const filtersModal = useRef(null);
     const modalTop = filtersModal?.current?.getBoundingClientRect()?.bottom;
 
-    const handleClick = (filter) => {
-        if (filter?.values?.length === 1) {
-            updatePickedFilters([...pickedFilters, { icon: null, filter }]);
+    const handleAddFilter = (f) => {
+        if (f?.filter?.values?.length === 1) {
+            // Closed filter
+            const newPickedFilters = [...pickedFilters];
+            const filterIndex = newPickedFilters?.findIndex(
+                (item) => item?.filter?.attributeKey === f?.filter?.attributeKey,
+            );
+            if (filterIndex === -1) {
+                const filter = {
+                    icon: [f.icon],
+                    label: [f.label],
+                    filter: f.filter,
+                };
+                newPickedFilters.push(filter);
+            } else {
+                const { icon, label, filter } = newPickedFilters[filterIndex];
+                filter.values.push(f.id);
+                icon.push(f.icon);
+                label.push(f.label);
+            }
+
+            updatePickedFilters(newPickedFilters);
         } else {
+            // Open filter
             updateModalTop(modalTop);
             updateModalState({ modal: 'Overlay', isOpen: true });
-            updateModalState({ modal: filter?.attributeKey, isOpen: true });
+            updateModalState({ modal: f?.attributeKey, isOpen: true });
         }
     };
+
+    const enhancedQuickFilters = [];
+
+    QuickFiltersArray?.forEach(({ filter }) => {
+        if (filter.values.length > 0) {
+            const enhancedFilter: EnhancedFilter = {
+                filter,
+            };
+            const value = filter.values[0];
+            switch (filter.attributeKey) {
+                case 'Workspace': {
+                    const tempEnhancedFilter = workspaces?.find((item) => item.defaultVersionId === value);
+                    if (tempEnhancedFilter) {
+                        if (tempEnhancedFilter?.imageHash) {
+                            enhancedFilter.icon = <FieldIcon hash={tempEnhancedFilter?.imageHash} />;
+                        }
+                        enhancedFilter.label = tempEnhancedFilter?.name;
+                        enhancedQuickFilters.push(enhancedFilter);
+                    } else {
+                        enhancedQuickFilters.push({ label: filter.values[0], filter });
+                    }
+                    break;
+                }
+                case 'TechnologyCode': {
+                    const tempEnhancedFilter = technologies?.find((item) => item.technologyCode === value);
+                    if (tempEnhancedFilter) {
+                        if (tempEnhancedFilter?.imageHash) {
+                            enhancedFilter.icon = <FieldIcon hash={tempEnhancedFilter?.imageHash} />;
+                        }
+                        enhancedFilter.label = tempEnhancedFilter?.displayName;
+                        enhancedQuickFilters.push(enhancedFilter);
+                    } else {
+                        enhancedQuickFilters.push({ label: filter.values[0], filter });
+                    }
+                    break;
+                }
+                case 'Module': {
+                    const tempEnhancedFilter = moduleFields?.find((item) => item.id === value);
+                    if (tempEnhancedFilter) {
+                        enhancedFilter.icon = tempEnhancedFilter.icon;
+                        enhancedFilter.label = tempEnhancedFilter.label;
+                        enhancedQuickFilters.push(enhancedFilter);
+                    } else {
+                        enhancedQuickFilters.push({ label: filter.values[0], filter });
+                    }
+                    break;
+                }
+                case 'EntityType': {
+                    enhancedFilter.icon = (
+                        <DGGlyph
+                            icon={entitiesTypeRelatedInfos[value].glyph}
+                            kind={entitiesTypeRelatedInfos[value].kind.toLocaleLowerCase()}
+                        />
+                    );
+                    enhancedFilter.label = chrome.i18n.getMessage(`entity_label_full_${value}`);
+
+                    enhancedQuickFilters.push(enhancedFilter);
+
+                    break;
+                }
+                case 'Domains': {
+                    const tempEnhancedFilter = domains?.find((item) => item.id === value);
+                    if (tempEnhancedFilter) {
+                        enhancedFilter.icon = <ColorPoint color={tempEnhancedFilter?.color} />;
+                        enhancedFilter.label = tempEnhancedFilter?.label;
+                        enhancedQuickFilters.push(enhancedFilter);
+                    } else {
+                        enhancedQuickFilters.push({ label: filter.values[0], filter });
+                    }
+                    break;
+                }
+                case 'DataOwners': {
+                    const tempEnhancedFilter = users?.owners?.find((item) => item.userId === value);
+                    if (tempEnhancedFilter) {
+                        enhancedFilter.icon = <Avatar size="mini" user={tempEnhancedFilter} />;
+                        enhancedFilter.label = `${tempEnhancedFilter.firstName} ${tempEnhancedFilter.lastName}`;
+                        enhancedQuickFilters.push(enhancedFilter);
+                    } else {
+                        enhancedQuickFilters.push({ label: filter.values[0], filter });
+                    }
+                    break;
+                }
+                case 'DataStewards': {
+                    const tempEnhancedFilter = users?.stewards?.find((item) => item.userId === value);
+                    if (tempEnhancedFilter) {
+                        enhancedFilter.icon = <Avatar size="mini" user={tempEnhancedFilter} />;
+                        enhancedFilter.label = `${tempEnhancedFilter.firstName} ${tempEnhancedFilter.lastName}`;
+                        enhancedQuickFilters.push(enhancedFilter);
+                    } else {
+                        enhancedQuickFilters.push({ label: filter.values[0], filter });
+                    }
+                    break;
+                }
+                case 'EntityStatus': {
+                    const tempEnhancedFilter = status?.find((item) => item.key === value);
+                    if (tempEnhancedFilter) {
+                        enhancedFilter.icon = <Status status={tempEnhancedFilter.value} hideLabel />;
+                        enhancedFilter.label = chrome.i18n.getMessage(`entity_status_${tempEnhancedFilter.value}`);
+                        enhancedQuickFilters.push(enhancedFilter);
+                    } else {
+                        enhancedQuickFilters.push({ label: filter.values[0], filter });
+                    }
+                    break;
+                }
+                default:
+                    enhancedQuickFilters.push({ label: filter.values[0], filter });
+            }
+        } else {
+            enhancedQuickFilters.push({ filter });
+        }
+    });
 
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
-            {(search?.length > 0 || QuickFiltersArray?.length > 0) && (
+            {(search?.length > 0 || enhancedQuickFilters?.length > 0) && (
                 <SRoot>
-                    {QuickFiltersArray?.length > 0 ? (
+                    {enhancedQuickFilters?.length > 0 ? (
                         <SScrollContainer id="quickFilters" onScroll={handleScroll}>
                             <SLeftButton disabled={scrollValue === 0} onClick={handleScrollLeft}>
                                 <SGlyph icon="ArrowDropRight" />
                             </SLeftButton>
                             <SQuickFiltersContainer>
-                                {QuickFiltersArray?.map((filter, i) => (
+                                {enhancedQuickFilters?.map((filter, i) => (
                                     <QuickFilter
                                         // eslint-disable-next-line react/no-array-index-key
                                         key={i}
                                         ref={filtersModal}
                                         filter={filter}
-                                        onClick={() => handleClick(filter)}
+                                        onClick={() => handleAddFilter(filter)}
                                     />
                                 ))}
                             </SQuickFiltersContainer>

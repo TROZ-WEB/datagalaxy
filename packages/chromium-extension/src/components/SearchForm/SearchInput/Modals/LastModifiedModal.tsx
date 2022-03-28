@@ -26,31 +26,32 @@ const LastModifiedModal: FC = () => {
         { id: 'last365days', label: chrome.i18n.getMessage(`last_modified_last365days`) },
     ];
 
-    const handleChange = (id) => {
+    const handleChange = (field) => {
         const date = new Date().toString();
         const newPickedFilters = [...pickedFilters];
         const filterIndex = newPickedFilters?.findIndex(
             (item) => item?.filter?.attributeKey === 'LastModificationTime',
         );
-        if (filterIndex === -1) {
-            const filter = {
-                icon: null,
-                filter: { attributeKey: 'LastModificationTime', operator: id, values: [date] },
-            };
-            newPickedFilters.push(filter);
-        } else {
-            newPickedFilters[filterIndex].filter.values = [id];
+        if (filterIndex !== -1) {
+            newPickedFilters.splice(filterIndex, 1);
         }
+
+        const filter = {
+            icon: null,
+            label: [field.label],
+            filter: { attributeKey: 'LastModificationTime', operator: field.id, values: [date] },
+        };
+        newPickedFilters.push(filter);
 
         updatePickedFilters(newPickedFilters);
     };
 
     return (
         <ModalBase
+            attributeKey="LastModificationTime"
             fields={fields}
+            handleChange={handleChange}
             isOpen={LastModificationTime}
-            label={chrome.i18n.getMessage(`attribute_key_LastModified`)}
-            onChange={handleChange}
         />
     );
 };

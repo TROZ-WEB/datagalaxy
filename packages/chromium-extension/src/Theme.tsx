@@ -42,7 +42,6 @@ export const Theme = {
 export const Fonts = createGlobalStyle`
     @font-face {
         font-family: 'datagalaxy';
-        src: url(${DatagalaxyGlyphEOT});
         src: url(${DatagalaxyGlyphEOT}) format('embedded-opentype'),
             url(${DatagalaxyGlyphTTF}) format('truetype'),
             url(${DatagalaxyGlyphWOFF}) format('woff'),

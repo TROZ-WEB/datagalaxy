@@ -1045,10 +1045,10 @@
     "preview_empty_field_4": {
         "message": "Aucun lien disponible."
     },
-    "intersection_or": {
+    "operator_or": {
         "message": "Ou"
     },
-    "intersection_and": {
+    "operator_and": {
         "message": "Et"
     },
     "form_send": {

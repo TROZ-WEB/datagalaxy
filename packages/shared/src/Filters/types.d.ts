@@ -14,6 +14,7 @@ export interface EnhancedFilter {
 }
 export interface PickedFilters {
     icon?: any;
+    label?: string[];
     filter: Filter;
 }
 export interface QuickFilters {

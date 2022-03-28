@@ -1045,10 +1045,10 @@
     "preview_empty_field_4": {
         "message": "No URL available."
     },
-    "intersection_or": {
+    "operator_or": {
         "message": "Or"
     },
-    "intersection_and": {
+    "operator_and": {
         "message": "And"
     },
     "form_send": {

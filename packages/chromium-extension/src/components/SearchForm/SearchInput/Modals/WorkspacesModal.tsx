@@ -19,15 +19,20 @@ const WorkspacesModal: FC = () => {
         fetchWorkspacesAPI();
     }, [dispatch]);
 
+    const index = pickedFilters?.findIndex((item) => item?.filter?.attributeKey === 'Workspace');
+
     const workspacesFields = workspaces?.map((workspace) => {
         interface field {
             id: string;
             label: string;
             icon?: React.ReactNode;
+            checked: boolean;
         }
+
         const w: field = {
             id: workspace.defaultVersionId,
             label: workspace.name,
+            checked: !!pickedFilters?.[index]?.filter?.values?.includes(workspace.defaultVersionId),
         };
 
         if (workspace.iconHash) {
@@ -38,33 +43,31 @@ const WorkspacesModal: FC = () => {
         return w;
     });
 
-    workspacesFields?.unshift({ id: null, label: chrome.i18n.getMessage(`all_workspaces`) });
+    workspacesFields?.unshift({ id: null, label: chrome.i18n.getMessage(`all_workspaces`), checked: index === -1 });
 
-    const handleChange = (id) => {
-        updateVersionId(id);
+    const handleChange = (field) => {
+        updateVersionId(field.id);
         const newPickedFilters = [...pickedFilters];
         const filterIndex = newPickedFilters?.findIndex((item) => item?.filter?.attributeKey === 'Workspace');
-        if (filterIndex === -1) {
+
+        if (filterIndex !== -1) {
+            newPickedFilters.splice(filterIndex, 1);
+        }
+
+        if (field.id) {
             const filter = {
-                icon: workspacesFields.find((item) => item.id === id).icon,
-                filter: { attributeKey: 'Workspace', operator: 'contains', values: [id] },
+                icon: [workspacesFields.find((item) => item.id === field.id).icon],
+                label: [field.label],
+                filter: { attributeKey: 'Workspace', operator: 'contains', values: [field.id] },
             };
             newPickedFilters.push(filter);
-        } else {
-            newPickedFilters[filterIndex].filter.values = [id];
-            newPickedFilters[filterIndex].icon = workspacesFields.find((item) => item.id === id).icon;
         }
 
         updatePickedFilters(newPickedFilters);
     };
 
     return (
-        <ModalBase
-            fields={workspacesFields}
-            isOpen={Workspace}
-            label={chrome.i18n.getMessage(`attribute_key_Workspace`)}
-            onChange={handleChange}
-        />
+        <ModalBase attributeKey="Workspace" fields={workspacesFields} handleChange={handleChange} isOpen={Workspace} />
     );
 };
 

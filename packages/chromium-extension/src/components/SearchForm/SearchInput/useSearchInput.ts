@@ -1,5 +1,6 @@
 import { useReducer, useCallback, ChangeEvent, useEffect } from 'react';
 import useDebounce from '../../../hooks/useDebounce';
+import { useStoreActions } from '../../../store/hooks';
 
 interface IState {
     value: string;
@@ -72,9 +73,10 @@ export const useSearchInput = ({
         [dispatch],
     );
 
+    const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
     const onClearSearch = useCallback(() => {
+        updatePickedFilters([]);
         dispatch({ type: 'CHANGE', value: '' });
-
         if (debounceOnChange) {
             debounceOnChange({ value: '' });
         }

@@ -127,7 +127,7 @@ const SearchInput = forwardRef<HTMLInputElement, IProps>(
                 <SFilterTagsContainer>
                     {pickedFilters?.map((filter) => (
                         <FilterTag
-                            key={filter?.filter?.values?.[0]}
+                            key={filter?.filter?.attributeKey}
                             ref={filtersModal}
                             filter={filter}
                             onClick={() => handleClick(filter?.filter?.attributeKey)}

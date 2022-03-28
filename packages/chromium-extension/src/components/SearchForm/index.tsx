@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { EntityType, entitiesTypeRelatedInfos, EnhancedFilter, AttributeDefinitionType, TechnologyType } from 'shared';
+import { EntityType } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../store/hooks';
 import keyListener from '../../utils';
 import LoadingScreen from '../LoadingScreen';
-import DGGlyph from '../ui/DGGlyph';
 import EntityHeader from '../ui/EntityHeader';
 import Title from '../ui/Title';
 import QuickFiltersBar from './QuickFiltersBar';
 import SearchInput from './SearchInput';
 import DomainsModal from './SearchInput/Modals/DomainsModal';
 import EntityTypeModal from './SearchInput/Modals/EntityTypeModal';
-import FieldIcon from './SearchInput/Modals/FieldIcon';
 import LastModifiedModal from './SearchInput/Modals/LastModifiedModal';
 import ModuleModal from './SearchInput/Modals/ModuleModal';
 import OwnersModal from './SearchInput/Modals/OwnersModal';
 import StatusModal from './SearchInput/Modals/StatusModal';
 import StewardsModal from './SearchInput/Modals/StewardsModal';
 import TechnologiesModal from './SearchInput/Modals/TechnologiesModal';
-import { moduleFields } from './SearchInput/Modals/usages';
 import WorkspacesModal from './SearchInput/Modals/WorkspacesModal';
 import { useSearchInput } from './SearchInput/useSearchInput';
 import useExactMatches from './useExactMatches';
@@ -53,8 +50,7 @@ const SResultsTitleWrapper = styled.div`
 `;
 
 const SSearchCardResultContainer = styled.div`
-    ${(props) =>
-        !props.isLastElement ? 'border-top: 1px solid transparent' : `border-bottom: 1px solid rgba(0, 76, 255, 0.08)`}
+    ${(props) => !props.isLastElement && `border-bottom: 1px solid rgba(0, 76, 255, 0.08);`}
     border-top: 1px solid transparent;
 
     &:hover,
@@ -131,60 +127,9 @@ enum AttributesWeight {
 const SearchForm = () => {
     const dispatch = useStoreDispatch();
     const { pickedFilters, versionId } = useStoreState((state) => state.filters);
-    const technologyFilters = useStoreState((state) => state.filters.technologies);
     const { searchedArgs, searchResults, exactMatches, quickFilters } = useStoreState((state) => state.search);
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
-
-    const enhancedQuickFilters = [];
-
-    quickFilters?.quickFilters?.forEach(({ filter }) => {
-        if (filter.values.length > 0) {
-            const enhancedFilter: EnhancedFilter = {
-                filter,
-            };
-            const value = filter.values[0];
-            switch (filter.attributeKey) {
-                case 'TechnologyCode': {
-                    const tempEnhancedFilter = technologyFilters.find((item) => item?.technologyCode === value);
-                    if (tempEnhancedFilter?.imageHash) {
-                        enhancedFilter.icon = <FieldIcon hash={tempEnhancedFilter?.imageHash} />;
-                    }
-                    enhancedFilter.label = tempEnhancedFilter?.displayName;
-
-                    enhancedQuickFilters.push(enhancedFilter);
-
-                    break;
-                }
-                case 'EntityType': {
-                    enhancedFilter.icon = (
-                        <DGGlyph
-                            icon={entitiesTypeRelatedInfos[value].glyph}
-                            kind={entitiesTypeRelatedInfos[value].kind.toLocaleLowerCase()}
-                        />
-                    );
-                    enhancedFilter.label = chrome.i18n.getMessage(`entity_label_full_${value}`);
-
-                    enhancedQuickFilters.push(enhancedFilter);
-
-                    break;
-                }
-                case 'Module': {
-                    const tempEnhancedFilter = moduleFields.find((item) => item.id === value);
-                    enhancedFilter.icon = tempEnhancedFilter.icon;
-                    enhancedFilter.label = tempEnhancedFilter.label;
-
-                    enhancedQuickFilters.push(enhancedFilter);
-
-                    break;
-                }
-                default:
-                    enhancedQuickFilters.push({ label: filter.values[0], filter });
-            }
-        } else {
-            enhancedQuickFilters.push({ filter });
-        }
-    });
 
     const history = useHistory();
 
@@ -208,10 +153,7 @@ const SearchForm = () => {
     }, [searchedArgs.term]);
 
     const { updateIsLoaded, updateCurrentWorkspace } = useStoreActions((actions) => actions.entity);
-
-    const technologies = useStoreState((state) => state.auth.technologies);
-
-    const attributes = useStoreState((state) => state.auth.attributes);
+    const { technologies } = useStoreState((state) => state.auth);
 
     const searchPickedFilters = pickedFilters
         .map((item) => item.filter)
@@ -220,33 +162,36 @@ const SearchForm = () => {
     const debounceOnChange = async ({ value }) => {
         interface Payload {
             term: string;
-            technologies: TechnologyType[];
+            technologies: any[];
             filters: any[];
             limit?: number;
             versionId?: string;
-            attributes: AttributeDefinitionType[];
         }
+
         const payload: Payload = {
             term: value,
             technologies,
             filters: searchPickedFilters,
-            attributes,
         };
 
         if (!value && pickedFilters.length === 0) {
             payload.limit = 0;
+            setSuccess(false);
         }
+
+        setLoading(true);
 
         if (versionId) {
             payload.versionId = versionId;
         }
 
-        setLoading(true);
-
         await dispatch.search.search(payload);
 
         setLoading(false);
-        setSuccess(true);
+
+        if (value || pickedFilters.length > 0) {
+            setSuccess(true);
+        }
     };
 
     useEffect(() => {
@@ -290,7 +235,7 @@ const SearchForm = () => {
                         placeholder={chrome.i18n.getMessage('search')}
                         success={success}
                     />
-                    <QuickFiltersBar quickFilters={enhancedQuickFilters} search={searchedArgs.term} />
+                    <QuickFiltersBar quickFilters={quickFilters} search={searchedArgs.term} />
                     {loading ? (
                         <LoadingScreen />
                     ) : (

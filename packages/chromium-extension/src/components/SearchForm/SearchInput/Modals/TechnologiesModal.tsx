@@ -1,5 +1,5 @@
-import React, { useEffect, FC } from 'react';
-import { useStoreState, useStoreDispatch, useStoreActions } from '../../../../store/hooks';
+import React, { useEffect, useState, FC } from 'react';
+import { useStoreState, useStoreDispatch } from '../../../../store/hooks';
 import ModalBase from '../ModalBase';
 import FieldIcon from './FieldIcon';
 
@@ -7,9 +7,9 @@ import FieldIcon from './FieldIcon';
 
 const TechnologiesModal: FC = () => {
     const dispatch = useStoreDispatch();
-    const { pickedFilters, technologies } = useStoreState((state) => state.filters);
-    const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
+    const { technologies } = useStoreState((state) => state.filters);
     const { TechnologyCode } = useStoreState((state) => state.modal);
+    const [operator, setOperator] = useState('or');
 
     useEffect(() => {
         const fetchTechnologiesAPI = async () => {
@@ -38,29 +38,14 @@ const TechnologiesModal: FC = () => {
         return t;
     });
 
-    const handleChange = (id) => {
-        const newPickedFilters = [...pickedFilters];
-        const filterIndex = newPickedFilters?.findIndex((item) => item?.filter?.attributeKey === 'TechnologyCode');
-        if (filterIndex === -1) {
-            const filter = {
-                icon: technologiesFields.find((item) => item.id === id).icon,
-                filter: { attributeKey: 'TechnologyCode', operator: 'contains', values: [id] },
-            };
-            newPickedFilters.push(filter);
-        } else {
-            newPickedFilters[filterIndex].filter.values = [id];
-            newPickedFilters[filterIndex].icon = technologiesFields.find((item) => item.id === id).icon;
-        }
-
-        updatePickedFilters(newPickedFilters);
-    };
-
     return (
         <ModalBase
+            attributeKey="TechnologyCode"
             fields={technologiesFields}
             isOpen={TechnologyCode}
-            label={chrome.i18n.getMessage(`attribute_key_TechnologyCode`)}
-            onChange={handleChange}
+            operator={operator}
+            setOperator={setOperator}
+            multiselect
         />
     );
 };
