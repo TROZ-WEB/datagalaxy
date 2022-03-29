@@ -126,15 +126,14 @@ enum AttributesWeight {
 
 const SearchForm = () => {
     const dispatch = useStoreDispatch();
+    const history = useHistory();
     const { pickedFilters, versionId } = useStoreState((state) => state.filters);
     const { searchedArgs, searchResults, exactMatches, quickFilters } = useStoreState((state) => state.search);
+    const { updateIsLoaded, updateCurrentWorkspace } = useStoreActions((actions) => actions.entity);
+    const { technologies } = useStoreState((state) => state.auth);
+    const { filteredExactMatches } = useExactMatches(exactMatches);
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
-
-    const history = useHistory();
-
-    const { filteredExactMatches } = useExactMatches(exactMatches);
-
     const [displayMoreExactMatches, setDisplayMoreExactMatches] = useState(false);
     const [exactMatchesEntitiesToDisplay, setExactMatchesEntitiesToDisplay] = useState<EntityType[]>([]);
 
@@ -151,9 +150,6 @@ const SearchForm = () => {
     useEffect(() => {
         setDisplayMoreExactMatches(false);
     }, [searchedArgs.term]);
-
-    const { updateIsLoaded, updateCurrentWorkspace } = useStoreActions((actions) => actions.entity);
-    const { technologies } = useStoreState((state) => state.auth);
 
     const searchPickedFilters = pickedFilters
         .map((item) => item.filter)
@@ -235,131 +231,138 @@ const SearchForm = () => {
                         placeholder={chrome.i18n.getMessage('search')}
                         success={success}
                     />
-                    <QuickFiltersBar quickFilters={quickFilters} search={searchedArgs.term} />
+                    <QuickFiltersBar
+                        pickedFilters={pickedFilters}
+                        quickFilters={quickFilters}
+                        search={searchedArgs.term}
+                    />
                     {loading ? (
                         <LoadingScreen />
                     ) : (
                         <>
-                            {searchedArgs.term !== '' && hasExactMatches && (
-                                <SResultsTitleWrapper>
-                                    <Title>{chrome.i18n.getMessage('exact_matches')}</Title>
-                                    <STagResultCount>{exactMatches?.total}</STagResultCount>
-                                </SResultsTitleWrapper>
-                            )}
                             {hasExactMatches && (
-                                <SExactMatchsContainer>
+                                <>
+                                    <SResultsTitleWrapper>
+                                        <Title>{chrome.i18n.getMessage('exact_matches')}</Title>
+                                        <STagResultCount>{exactMatches?.total}</STagResultCount>
+                                    </SResultsTitleWrapper>
+                                    <SExactMatchsContainer>
+                                        <SSearchCardsResultWrapper>
+                                            {exactMatchesEntitiesToDisplay.map((entity, idx, array) => {
+                                                const exactMatchAttributes = entity.exactMatchAttributes.sort(
+                                                    (a, b) => {
+                                                        if (
+                                                            AttributesWeight[a.attributeKey] &&
+                                                            !AttributesWeight[b.attributeKey]
+                                                        ) {
+                                                            return 1;
+                                                        }
+
+                                                        if (
+                                                            !AttributesWeight[a.attributeKey] &&
+                                                            AttributesWeight[b.attributeKey]
+                                                        ) {
+                                                            return -1;
+                                                        }
+
+                                                        if (
+                                                            !AttributesWeight[a.attributeKey] &&
+                                                            !AttributesWeight[b.attributeKey]
+                                                        ) {
+                                                            return a.attributeKey.localeCompare(b.attributeKey);
+                                                        }
+
+                                                        return AttributesWeight[a.attributeKey] <
+                                                            AttributesWeight[b.attributeKey]
+                                                            ? -1
+                                                            : 1;
+                                                    },
+                                                );
+
+                                                return (
+                                                    <SSearchCardResultContainer
+                                                        key={entity.id}
+                                                        isLastElement={idx === array.length - 1}
+                                                    >
+                                                        <SSearchCardResultWrapper>
+                                                            <EntityHeader
+                                                                entity={entity}
+                                                                entityPage={false}
+                                                                exactMatches={exactMatchAttributes}
+                                                                id={`entityHeader${idx}`}
+                                                                onClick={() => {
+                                                                    updateCurrentWorkspace(entity.path.split('\\')[1]);
+
+                                                                    updateIsLoaded(false);
+                                                                    const URLLocation = entity.location.replace(
+                                                                        new RegExp('/', 'g'),
+                                                                        '.',
+                                                                    ); // Replace "/" by "." in url
+                                                                    history.push(`/app/entities/${URLLocation}/`);
+                                                                }}
+                                                                searchQuery={searchedArgs.term}
+                                                                alwaysExpanded
+                                                            />
+                                                        </SSearchCardResultWrapper>
+                                                    </SSearchCardResultContainer>
+                                                );
+                                            })}
+                                        </SSearchCardsResultWrapper>
+
+                                        {displayShowMoreButton && !displayMoreExactMatches && (
+                                            <SMore onClick={() => setDisplayMoreExactMatches(true)}>
+                                                {chrome.i18n.getMessage('showMore')}
+                                            </SMore>
+                                        )}
+                                    </SExactMatchsContainer>
+                                </>
+                            )}
+
+                            {hasSearchResults && (
+                                <>
+                                    <SResultsTitleWrapper>
+                                        <Title>
+                                            {hasExactMatches
+                                                ? chrome.i18n.getMessage('more_results')
+                                                : chrome.i18n.getMessage('search_results')}
+                                        </Title>
+                                        <STagResultCount>{searchResults.total}</STagResultCount>
+                                    </SResultsTitleWrapper>
                                     <SSearchCardsResultWrapper>
-                                        {exactMatchesEntitiesToDisplay.map((entity, idx, array) => {
-                                            const exactMatchAttributes = entity.exactMatchAttributes.sort((a, b) => {
-                                                if (
-                                                    AttributesWeight[a.attributeKey] &&
-                                                    !AttributesWeight[b.attributeKey]
-                                                ) {
-                                                    return 1;
-                                                }
+                                        {searchResults?.result?.entities.map((entity, idx, array) => (
+                                            <SSearchCardResultContainer
+                                                key={entity.id}
+                                                isLastElement={idx === array.length - 1}
+                                            >
+                                                <SSearchCardResultWrapper>
+                                                    <EntityHeader
+                                                        entity={entity}
+                                                        entityPage={false}
+                                                        id={`entityHeader${idx}`}
+                                                        onClick={() => {
+                                                            updateCurrentWorkspace(entity.path.split('\\')[1]);
 
-                                                if (
-                                                    !AttributesWeight[a.attributeKey] &&
-                                                    AttributesWeight[b.attributeKey]
-                                                ) {
-                                                    return -1;
-                                                }
-
-                                                if (
-                                                    !AttributesWeight[a.attributeKey] &&
-                                                    !AttributesWeight[b.attributeKey]
-                                                ) {
-                                                    return a.attributeKey.localeCompare(b.attributeKey);
-                                                }
-
-                                                return AttributesWeight[a.attributeKey] <
-                                                    AttributesWeight[b.attributeKey]
-                                                    ? -1
-                                                    : 1;
-                                            });
-
-                                            return (
-                                                <SSearchCardResultContainer
-                                                    key={entity.id}
-                                                    isLastElement={idx === array.length - 1}
-                                                >
-                                                    <SSearchCardResultWrapper>
-                                                        <EntityHeader
-                                                            entity={entity}
-                                                            entityPage={false}
-                                                            exactMatches={exactMatchAttributes}
-                                                            id={`entityHeader${idx}`}
-                                                            onClick={() => {
-                                                                updateCurrentWorkspace(entity.path.split('\\')[1]);
-
-                                                                updateIsLoaded(false);
-                                                                const URLLocation = entity.location.replace(
-                                                                    new RegExp('/', 'g'),
-                                                                    '.',
-                                                                ); // Replace "/" by "." in url
-                                                                history.push(`/app/entities/${URLLocation}/`);
-                                                            }}
-                                                            searchQuery={searchedArgs.term}
-                                                            alwaysExpanded
-                                                        />
-                                                    </SSearchCardResultWrapper>
-                                                </SSearchCardResultContainer>
-                                            );
-                                        })}
+                                                            updateIsLoaded(false);
+                                                            const URLLocation = entity.location.replace(
+                                                                new RegExp('/', 'g'),
+                                                                '.',
+                                                            ); // Replace "/" by "." in url
+                                                            history.push(`/app/entities/${URLLocation}/`);
+                                                        }}
+                                                        alwaysExpanded
+                                                    />
+                                                </SSearchCardResultWrapper>
+                                            </SSearchCardResultContainer>
+                                        ))}
                                     </SSearchCardsResultWrapper>
-
-                                    {displayShowMoreButton && !displayMoreExactMatches && (
-                                        <SMore onClick={() => setDisplayMoreExactMatches(true)}>
-                                            {chrome.i18n.getMessage('showMore')}
-                                        </SMore>
-                                    )}
-                                </SExactMatchsContainer>
+                                </>
                             )}
 
-                            {searchedArgs.term !== '' && (
-                                <SResultsTitleWrapper>
-                                    <Title>
-                                        {hasExactMatches
-                                            ? chrome.i18n.getMessage('more_results')
-                                            : chrome.i18n.getMessage('search_results')}
-                                    </Title>
-                                    <STagResultCount>{searchResults.total}</STagResultCount>
-                                </SResultsTitleWrapper>
-                            )}
                             {!hasSearchResults && !hasExactMatches && (
                                 <SBlankSearch>
                                     <SBlankSearchImage alt="empty result" src={BlankSearch} />
                                     <p>{chrome.i18n.getMessage('search_blank_search')}</p>
                                 </SBlankSearch>
-                            )}
-                            {hasSearchResults && (
-                                <SSearchCardsResultWrapper>
-                                    {searchResults?.result?.entities.map((entity, idx, array) => (
-                                        <SSearchCardResultContainer
-                                            key={entity.id}
-                                            isLastElement={idx === array.length - 1}
-                                        >
-                                            <SSearchCardResultWrapper>
-                                                <EntityHeader
-                                                    entity={entity}
-                                                    entityPage={false}
-                                                    id={`entityHeader${idx}`}
-                                                    onClick={() => {
-                                                        updateCurrentWorkspace(entity.path.split('\\')[1]);
-
-                                                        updateIsLoaded(false);
-                                                        const URLLocation = entity.location.replace(
-                                                            new RegExp('/', 'g'),
-                                                            '.',
-                                                        ); // Replace "/" by "." in url
-                                                        history.push(`/app/entities/${URLLocation}/`);
-                                                    }}
-                                                    alwaysExpanded
-                                                />
-                                            </SSearchCardResultWrapper>
-                                        </SSearchCardResultContainer>
-                                    ))}
-                                </SSearchCardsResultWrapper>
                             )}
                         </>
                     )}

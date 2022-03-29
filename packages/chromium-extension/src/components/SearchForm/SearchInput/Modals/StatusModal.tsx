@@ -2,6 +2,7 @@ import React, { useEffect, useState, FC } from 'react';
 import { useStoreState, useStoreDispatch } from '../../../../store/hooks';
 import Status from '../../../Entity/Status';
 import ModalBase from '../ModalBase';
+import { useSortArray } from './utils';
 
 /* ---------- COMPONENT ---------- */
 
@@ -12,6 +13,7 @@ const StatusModal: FC = () => {
     const [operator, setOperator] = useState('or');
     const [statusFields, setStatusFields] = useState([]);
     const { EntityStatus } = useStoreState((state) => state.modal);
+    const { sortArray } = useSortArray();
 
     useEffect(() => {
         const fetchStatusAPI = async () => {
@@ -33,6 +35,8 @@ const StatusModal: FC = () => {
         });
         setStatusFields(formatedStatusFields);
     }, [status, pickedFilters]);
+
+    sortArray(statusFields);
 
     return (
         <ModalBase

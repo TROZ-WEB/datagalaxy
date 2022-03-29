@@ -2,6 +2,7 @@ import React, { useEffect, FC } from 'react';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../../../store/hooks';
 import ModalBase from '../ModalBase';
 import FieldIcon from './FieldIcon';
+import { useSortArray } from './utils';
 
 /* ---------- COMPONENT ---------- */
 
@@ -10,6 +11,7 @@ const WorkspacesModal: FC = () => {
     const { workspaces, pickedFilters } = useStoreState((state) => state.filters);
     const { updateVersionId, updatePickedFilters } = useStoreActions((actions) => actions.filters);
     const { Workspace } = useStoreState((state) => state.modal);
+    const { sortArray } = useSortArray();
 
     useEffect(() => {
         const fetchWorkspacesAPI = async () => {
@@ -42,6 +44,8 @@ const WorkspacesModal: FC = () => {
 
         return w;
     });
+
+    sortArray(workspacesFields);
 
     workspacesFields?.unshift({ id: null, label: chrome.i18n.getMessage(`all_workspaces`), checked: index === -1 });
 

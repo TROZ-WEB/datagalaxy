@@ -1,5 +1,5 @@
 import React, { FC, useState, useRef } from 'react';
-import { QuickFilters, EnhancedFilter, entitiesTypeRelatedInfos } from 'shared';
+import { QuickFilters, EnhancedFilter, entitiesTypeRelatedInfos, PickedFilters } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/hooks';
 import Avatar from '../../Avatar/index';
@@ -70,6 +70,7 @@ const SText = styled.p`
     text-align: center;
     font-weight: 700;
     color: #989cd9;
+    margin: 0;
 `;
 
 const SScrollContainer = styled.div`
@@ -111,6 +112,7 @@ const SScrollContainer = styled.div`
 interface Props {
     quickFilters: QuickFilters;
     search: string;
+    pickedFilters: PickedFilters[];
 }
 
 const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
@@ -168,7 +170,7 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
             // Open filter
             updateModalTop(modalTop);
             updateModalState({ modal: 'Overlay', isOpen: true });
-            updateModalState({ modal: f?.attributeKey, isOpen: true });
+            updateModalState({ modal: f?.filter?.attributeKey, isOpen: true });
         }
     };
 
@@ -286,7 +288,7 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
-            {(search?.length > 0 || enhancedQuickFilters?.length > 0) && (
+            {(pickedFilters?.length > 0 || search?.length > 0 || enhancedQuickFilters?.length > 0) && (
                 <SRoot>
                     {enhancedQuickFilters?.length > 0 ? (
                         <SScrollContainer id="quickFilters" onScroll={handleScroll}>

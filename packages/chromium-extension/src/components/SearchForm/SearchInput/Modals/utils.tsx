@@ -25,3 +25,16 @@ export const moduleFields = [
 ];
 
 export const test = [];
+
+export const useSortArray = () => {
+    const sortArray = (array) => {
+        array?.sort((a, b) => {
+            if (a.label < b.label) return -1;
+            if (a.label > b.label) return 1;
+
+            return 0;
+        });
+    };
+
+    return { sortArray };
+};

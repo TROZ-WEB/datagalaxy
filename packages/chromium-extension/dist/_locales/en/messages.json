@@ -229,6 +229,9 @@
     "entity_label_short_Use": {
         "message": "Usage"
     },
+    "entity_label_short_Usage": {
+        "message": "Usage"
+    },
     "entity_label_short_Process": {
         "message": "Process"
     },

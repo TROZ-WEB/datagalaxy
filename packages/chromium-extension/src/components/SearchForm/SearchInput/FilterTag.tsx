@@ -5,8 +5,18 @@ import RoundButton from '../../ui/RoundButton';
 
 /* ---------- STYLES ---------- */
 
+const SEllipse = styled.span`
+    color: #1035b1;
+    font-size: 10px;
+    margin: 0px 2px;
+    background: #f3f6ff;
+    padding: 2px;
+    border-radius: 3px;
+    font-weight: bold;
+    width: 16px;
+`;
+
 const SImageContainer = styled.div`
-    margin-right: 5px;
     align-items: center;
     display: flex;
 `;
@@ -15,7 +25,6 @@ const SRoot = styled.div`
     background: #ffffff;
     height: 26px;
     padding: 4px 8px;
-    max-width: 110px;
     border: none;
     border-radius: 3px;
     cursor: pointer;
@@ -37,7 +46,7 @@ const STextContainer = styled.div`
     display: flex;
 `;
 
-const SOperator = styled.div`
+const SOperator = styled.span`
     padding-right: 2px;
     padding-left: 2px;
     border-radius: 3px;
@@ -45,7 +54,6 @@ const SOperator = styled.div`
     color: #fff;
     font-size: 8px;
     line-height: 12px;
-    height: 12px;
     font-weight: 700;
     margin-left: 3px;
     margin-right: 3px;
@@ -59,6 +67,7 @@ const SValue = styled.div`
     max-width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-left: 5px;
 `;
 
 /* ---------- COMPONENT ---------- */
@@ -90,9 +99,10 @@ const FilterTag = React.forwardRef(({ filter, onClick }: Props, ref) => {
                 ', ',
             )}`}
         >
-            <SImageContainer>{filter?.icon?.map((icon) => icon)}</SImageContainer>
+            <SImageContainer>{filter?.icon?.slice(0, 2)?.map((icon) => icon)}</SImageContainer>
+            {filter?.label?.length > 2 && <SEllipse>{`+ ${filter?.icon.length - 2}`}</SEllipse>}
             <STextContainer>
-                <SValue>{filter?.label?.map((label) => label)}</SValue>
+                {filter?.label?.length === 1 && <SValue>{filter?.label?.map((label) => label)}</SValue>}
                 {filter?.label?.length > 1 && (
                     <SOperator>
                         {filter?.filter?.operator === 'contains'

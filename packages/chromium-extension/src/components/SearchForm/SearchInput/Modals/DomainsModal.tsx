@@ -2,6 +2,7 @@ import React, { useEffect, useState, FC } from 'react';
 import { useStoreState, useStoreDispatch } from '../../../../store/hooks';
 import ColorPoint from '../../../ui/ColorPoint';
 import ModalBase from '../ModalBase';
+import { useSortArray } from './utils';
 
 /* ---------- COMPONENT ---------- */
 
@@ -12,6 +13,7 @@ const DomainsModal: FC = () => {
     const { Domains } = useStoreState((state) => state.modal);
     const [operator, setOperator] = useState('or');
     const [domainsFields, setDomainsFields] = useState([]);
+    const { sortArray } = useSortArray();
 
     useEffect(() => {
         const fetchDomainsAPI = async () => {
@@ -33,6 +35,8 @@ const DomainsModal: FC = () => {
         });
         setDomainsFields(formatedDomainsFields);
     }, [domains, pickedFilters]);
+
+    sortArray(domainsFields);
 
     return (
         <ModalBase

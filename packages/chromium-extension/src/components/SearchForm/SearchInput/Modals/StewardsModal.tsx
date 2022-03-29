@@ -2,6 +2,7 @@ import React, { useEffect, useState, FC } from 'react';
 import { useStoreState, useStoreDispatch } from '../../../../store/hooks';
 import Avatar from '../../../Avatar';
 import ModalBase from '../ModalBase';
+import { useSortArray } from './utils';
 
 /* ---------- COMPONENT ---------- */
 
@@ -12,6 +13,7 @@ const StewardsModal: FC = () => {
     const [operator, setOperator] = useState('or');
     const [usersFields, setUsersFields] = useState([]);
     const { DataStewards } = useStoreState((state) => state.modal);
+    const { sortArray } = useSortArray();
 
     useEffect(() => {
         const fetchUsersAPI = async () => {
@@ -33,6 +35,8 @@ const StewardsModal: FC = () => {
         });
         setUsersFields(formatedUsersFields);
     }, [users, pickedFilters]);
+
+    sortArray(usersFields);
 
     return (
         <ModalBase

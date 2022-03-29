@@ -23,7 +23,7 @@ const getDecodedPAT = (patAttributeName: string) =>
  * From array of entities it will enhanced each one with owner/steward information
  */
 const enhancedEntitiesWithUserInfo = async (rawEntities: EntityType[], url): Promise<EntityType[]> => {
-    const emails: { owners: string[]; stewards: string[] } = rawEntities.reduce(
+    const emails: { owners: string[]; stewards: string[] } = rawEntities?.reduce(
         (acc, rawEntity) => {
             return {
                 owners: rawEntity?.attributes?.owners
@@ -45,10 +45,10 @@ const enhancedEntitiesWithUserInfo = async (rawEntities: EntityType[], url): Pro
         return {
             ...result,
             owners: result?.attributes?.owners?.map((email) => {
-                return usersInfos.owners.find(({ email: emailToFind }) => emailToFind === email);
+                return usersInfos.owners?.find(({ email: emailToFind }) => emailToFind === email);
             }),
             stewards: result?.attributes?.stewards?.map((email) => {
-                return usersInfos.stewards.find(({ email: emailToFind }) => emailToFind === email);
+                return usersInfos.stewards?.find(({ email: emailToFind }) => emailToFind === email);
             }),
         };
     });
@@ -58,9 +58,9 @@ const enhancedEntitiesWithTechnologiesInfo = async (
     technologies: TechnologyType[],
     rawEntities: EntityType[],
 ): Promise<EntityType[]> => {
-    return rawEntities.map((result) => {
-        const { technologyCode } = result.attributes;
-        const fullTechnology = technologies.find((t) => t.technologyCode === technologyCode);
+    return rawEntities?.map((result) => {
+        const { technologyCode } = result?.attributes;
+        const fullTechnology = technologies?.find((t) => t.technologyCode === technologyCode);
 
         return {
             ...result,
@@ -73,12 +73,12 @@ const enhancedEntitiesWithAttributesInfo = async (
     attributes: AttributeDefinitionType[],
     rawEntities: EntityType[],
 ): Promise<EntityType[]> => {
-    return rawEntities.map((result) => {
+    return rawEntities?.map((result) => {
         if (result.exactMatchAttributes) {
             const newExactMatches = result.exactMatchAttributes.map((ema) => {
                 const fullAttribute =
-                    attributes.find((a) => a.attributeKey === ema.attributeKey && a.dataType === result.dataType) ||
-                    attributes.find((a) => a.attributeKey === ema.attributeKey && a.dataType === 'Common') ||
+                    attributes?.find((a) => a.attributeKey === ema.attributeKey && a.dataType === result.dataType) ||
+                    attributes?.find((a) => a.attributeKey === ema.attributeKey && a.dataType === 'Common') ||
                     ema;
 
                 return {

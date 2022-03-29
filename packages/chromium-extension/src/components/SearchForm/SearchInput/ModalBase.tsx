@@ -38,6 +38,7 @@ const SInput = styled.input`
     padding: 4px;
     font-size: 14px;
     height: 32px;
+    font-family: 'Montserrat', sans-serif;
 
     &:focus-visible {
         outline: -webkit-focus-ring-color auto 0px;

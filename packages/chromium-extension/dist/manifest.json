@@ -10,6 +10,9 @@
     "background": {
         "service_worker": "background.js"
     },
+    "chrome_url_overrides": {
+        "PAGE_TO_OVERRIDE": "https://dev-uat.datagalaxy.com/"
+    },
     "content_scripts": [
         {
             "matches": [

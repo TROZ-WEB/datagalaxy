@@ -39,6 +39,55 @@ vert foncé pour le type ‘usage’
 
 Certains objets possèdent un logo technique qui sera récupéré depuis l’API (TO DO)
 
+# Filters :
+
+Pour chaque famille de filtres, on récupère toutes les valeurs possibles depuis l'API ou depuis un objet créé en front, afin d'afficher les checkbox ou boutons radios correspondants. On complète ensuite ces valeurs par l'icône et le label traduit correspondants. On obtient donc un objet :
+
+```
+fields = [
+	{
+		id: string;
+		label: string;
+		icon?: React.ReactNode;
+	},
+	...
+]
+```
+
+Quand on coche une checkbox, on utilise ces informations afin de créer un filtre qu'on ajoute aux pickedFilters, du type :
+
+```
+filter = [
+	{
+		icon: [React.ReactNode],
+		label: [string],
+		filter: { attributeKey: string, operator: string, values: [string] },
+	},
+	...
+]
+```
+
+L'opérateur est géré individuellement par un state propre à chaque famille de filtre.
+Une fois ces filtres ajoutés à pickedFilters, on les affiche dans la barre de recherche et on les ajoute à la recherche. 
+
+Au clic sur la croix de la barre de recherche, les filtres sont réinitialisés.
+
+# Quick filters :
+
+On récupère les filtres à afficher en quick filters grâce à une recherche vide (query = '', limit = 0) à l'initialisation de l'app, puis à chaque nouvelle recherche. Pour chaque quick filter, selon la valeur de l'attribute key, on cherche dans les valeurs récupérées pour les filtres (voir ci-dessus) de quel filtre il s'agit , puis on récupère son icône, son label et son filtre. Si le quick filter ne fait pas partie des familles de filtres connues, on l'ajoute tel quel. On crée ainsi un array enhancedQuickFilters :
+
+```
+enhancedQuickFilters = [
+	{
+		icon: React.ReactNode,
+		label: string,
+		filter: { attributeKey: string, operator: string, values: [string] },
+	},
+	...
+]
+```
+
+Si le filtre n'a aucune valeurs, c'est un filtre ouvert. On affiche alors la modal de la famille du filtre. Sinon, c'est un filtre fermé qu'on ajoute directement a pickedFilters.
 
 
 
