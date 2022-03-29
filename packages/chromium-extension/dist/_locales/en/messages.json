@@ -637,6 +637,9 @@
     "attribute_key_LinkShortcutUniverseId": {
         "message": "Universe"
     },
+    "attribute_key_LinkShortcutDomainIds": {
+        "message": "Domain"
+    },
     "attribute_key_LinkShortcutDimensionIds": {
         "message": "Dimension"
     },
@@ -869,10 +872,10 @@
         "message": "Logout"
     },
     "account_update_pat": {
-        "message": "Update your access key"
+        "message": "My access key"
     },
     "account_update_pat_button": {
-        "message": "Update your PAT"
+        "message": "Update my key"
     },
     "account_update_pat_successful": {
         "message": "Your access key has been updated successfully"
@@ -1049,10 +1052,10 @@
         "message": "No URL available."
     },
     "operator_or": {
-        "message": "Or"
+        "message": "Any"
     },
     "operator_and": {
-        "message": "And"
+        "message": "All"
     },
     "form_send": {
         "message": "Send"
@@ -1122,5 +1125,11 @@
     },
     "all_workspaces": {
         "message": "All workspaces"
+    },
+    "help_center": {
+        "message": "Help center"
+    },
+    "help_center_button": {
+        "message": "Connect to help center"
     }
 }

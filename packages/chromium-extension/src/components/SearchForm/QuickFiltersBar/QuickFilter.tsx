@@ -22,12 +22,12 @@ const SRoot = styled.div`
     background: #ffffff;
     height: 34px;
     padding: 4px 8px;
-    max-width: 110px;
+    width: 108px;
     border-radius: 3px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: start;
     color: #001030;
     box-sizing: border-box;
 

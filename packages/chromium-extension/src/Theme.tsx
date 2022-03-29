@@ -70,7 +70,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background-image: linear-gradient(100deg,#001aff,#17aeff)!important
+        background-image: linear-gradient(100deg,#1035b1,#1035b1)!important
     }
 
     ::-webkit-scrollbar {

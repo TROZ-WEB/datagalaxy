@@ -10,7 +10,7 @@ const SStepNumber = styled.span`
     justify-content: center;
     align-items: center;
     color: #084eff;
-    background-color: #f3f6ff;
+    background-color: rgba(2, 42, 142, 0.1);
     border-radius: 50%;
     line-height: 10px;
     font-size: 10px;
@@ -23,7 +23,7 @@ const SStepNumber = styled.span`
 const SStepTrait = styled.span`
     height: 1px;
     width: 23px;
-    background-color: #f3f6ff;
+    background-color: rgba(2, 42, 142, 0.1);
 
     ${(props) => props.activeTrait && `background-color: #084eff`}
 `;

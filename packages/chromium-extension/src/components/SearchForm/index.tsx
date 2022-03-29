@@ -20,7 +20,7 @@ import TechnologiesModal from './SearchInput/Modals/TechnologiesModal';
 import WorkspacesModal from './SearchInput/Modals/WorkspacesModal';
 import { useSearchInput } from './SearchInput/useSearchInput';
 import useExactMatches from './useExactMatches';
-import BlankSearch from '../../../assets/blank-search.svg';
+import BlankSearch from '../../../assets/placeholder-plugin.svg';
 
 /* ---------- STYLES ---------- */
 
@@ -361,7 +361,6 @@ const SearchForm = () => {
                             {!hasSearchResults && !hasExactMatches && (
                                 <SBlankSearch>
                                     <SBlankSearchImage alt="empty result" src={BlankSearch} />
-                                    <p>{chrome.i18n.getMessage('search_blank_search')}</p>
                                 </SBlankSearch>
                             )}
                         </>

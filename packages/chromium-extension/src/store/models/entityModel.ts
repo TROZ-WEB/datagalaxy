@@ -139,6 +139,27 @@ const fetchEntity = thunk(async (actions: Actions<EntityModel>, payload: FetchEn
                                 val.label === enhancedEntity.attributes[key][valueKey],
                         ) || enhancedEntity.attributes[key][valueKey];
                 }
+                enhancedEntity.attributes[key] = enhancedEntity.attributes[key].sort((a, b) => {
+                    if (a?.firstName) {
+                        // Persons
+                        if (a?.firstName < b?.firstName) {
+                            return -1;
+                        }
+                        if (a?.firstName > b?.firstName) {
+                            return 1;
+                        }
+                    }
+                    if (a?.label) {
+                        if (a?.label < b?.label) {
+                            return -1;
+                        }
+                        if (a?.label > b?.label) {
+                            return 1;
+                        }
+                    }
+
+                    return 0;
+                });
             }
         }
 

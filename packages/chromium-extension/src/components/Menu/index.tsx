@@ -71,7 +71,7 @@ const SRoot = styled.div`
     top: 0;
     height: 63px;
     width: 400px;
-    background-color: #001030;
+    background: linear-gradient(90deg, rgba(119, 94, 243, 1) 0%, rgba(122, 172, 238, 1) 100%);
     color: #ffffff;
     display: flex;
     flex-direction: row;
@@ -82,6 +82,11 @@ const SRoot = styled.div`
 const SSearch = styled(Search)`
     width: 20px;
     height: 20px;
+`;
+
+const SWrapper = styled.div`
+    background-color: white;
+    border-radius: 50px;
 `;
 
 /* ---------- COMPONENT ---------- */
@@ -130,7 +135,11 @@ const Menu = () => {
         //     path: '/app/notifications',
         // },
         {
-            icon: <Avatar size="mini" user={user} />,
+            icon: (
+                <SWrapper>
+                    <Avatar size="mini" user={user} />
+                </SWrapper>
+            ),
             path: '/app/account',
         },
     ];

@@ -10,6 +10,8 @@ import Button from '../../components/ui/Button';
 import FormLabel from '../../components/ui/FormLabel';
 import Input from '../../components/ui/Input';
 import { useStoreActions, useStoreState, useStoreDispatch } from '../../store/hooks';
+import HelpCenterWhiteButton from '../../../assets/icons/help-center-white.svg';
+import HelpCenterButton from '../../../assets/icons/help-center.svg';
 import LogoutIcon from '../../../assets/icons/logout.svg';
 
 /* ---------- STYLES ---------- */
@@ -39,9 +41,14 @@ const SLogoutButton = styled.div`
 
 const SLogoutIcon = styled.img`
     margin-right: 8px;
-    color: #001030;
-    width: 16px;
-    height: 16px;
+    color: #ffffff;
+    width: 12px;
+    height: 12px;
+`;
+
+const SHelpCenterIcon = styled.img`
+    margin-bottom: 1px;
+    margin-right: 8px;
 `;
 
 const SRoot = styled.div`
@@ -69,6 +76,11 @@ const SSignoutDiv = styled.div`
     bottom: 0;
     left: 50%;
     transform: translate(-50%, -50%);
+`;
+
+const SButtonWrapper = styled.div`
+    display: flex;
+    justify-content: center;
 `;
 
 /* ---------- COMPONENT ---------- */
@@ -100,6 +112,8 @@ const Account: FC = () => {
 
     const [isAlertSuccessVisible, setIsAlertSuccessVisible] = useState<boolean>(false);
     const [isPATError, setIsPATError] = useState<boolean>(isGlobalError);
+
+    const [buttonHovered, setButtonHovered] = useState(false);
 
     const {
         register,
@@ -162,9 +176,41 @@ const Account: FC = () => {
                     <Alert type="success">{chrome.i18n.getMessage('account_update_pat_successful')}</Alert>
                 )}
                 <br />
-                <div>
+                <SButtonWrapper>
                     <Button id="updatePatButton" type="submit">
                         {chrome.i18n.getMessage('account_update_pat_button')}
+                    </Button>
+                </SButtonWrapper>
+                <br />
+                <STitle>{chrome.i18n.getMessage('help_center')}</STitle>
+                <div
+                    onFocus={() => {
+                        setButtonHovered(true);
+                    }}
+                    onMouseLeave={() => {
+                        setButtonHovered(false);
+                    }}
+                    onMouseOver={() => {
+                        setButtonHovered(true);
+                    }}
+                >
+                    <Button
+                        id="helpCenterButton"
+                        onClick={() => {
+                            if (chrome.runtime.getManifest().current_locale.startsWith('fr')) {
+                                window.open('https://datagalaxy.freshdesk.com/fr/support/home');
+                            } else {
+                                window.open('https://datagalaxy.freshdesk.com/en/support/home');
+                            }
+                        }}
+                        type="button"
+                        variant="outlined"
+                    >
+                        <SHelpCenterIcon
+                            alt="Help center icon"
+                            src={buttonHovered ? HelpCenterWhiteButton : HelpCenterButton}
+                        />
+                        <span>{chrome.i18n.getMessage('help_center_button')}</span>
                     </Button>
                 </div>
             </form>
@@ -179,7 +225,6 @@ const Account: FC = () => {
                             history.push('/onboarding');
                         }}
                         type="button"
-                        variant="outlined"
                     >
                         <SLogoutIcon alt="Logout icon" src={LogoutIcon} />
                         <span>{chrome.i18n.getMessage('account_logout')}</span>

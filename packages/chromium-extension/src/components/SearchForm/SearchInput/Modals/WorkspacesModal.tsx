@@ -1,8 +1,14 @@
 import React, { useEffect, FC } from 'react';
+import styled from 'styled-components';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../../../store/hooks';
+import WorkspaceIconPlaceholder from '../../../WorkspaceIconPlaceholder';
 import ModalBase from '../ModalBase';
-import FieldIcon from './FieldIcon';
 import { useSortArray } from './utils';
+import WorkspaceIcon from './WorkspaceIcon';
+
+const SWorkspaceWrapper = styled.div`
+    margin-top: 2px;
+`;
 
 /* ---------- COMPONENT ---------- */
 
@@ -37,10 +43,23 @@ const WorkspacesModal: FC = () => {
             checked: !!pickedFilters?.[index]?.filter?.values?.includes(workspace.defaultVersionId),
         };
 
+        let newIcon;
+
         if (workspace.iconHash) {
-            const newIcon = <FieldIcon hash={workspace.iconHash} />;
-            w.icon = newIcon;
+            newIcon = (
+                <SWorkspaceWrapper>
+                    <WorkspaceIcon hash={workspace.iconHash} />
+                </SWorkspaceWrapper>
+            );
+        } else {
+            newIcon = (
+                <SWorkspaceWrapper>
+                    <WorkspaceIconPlaceholder workspaceTrigram={workspace?.trigram} />
+                </SWorkspaceWrapper>
+            );
         }
+
+        w.icon = newIcon;
 
         return w;
     });

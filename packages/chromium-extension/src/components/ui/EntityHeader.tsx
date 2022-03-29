@@ -45,7 +45,7 @@ const SEntityName = styled.span`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 250px;
+    max-width: 230px;
     ${(props) =>
         props.bold &&
         css`

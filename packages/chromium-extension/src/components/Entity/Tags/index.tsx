@@ -64,14 +64,25 @@ Tags.Item = ({
     const foundTag = tags?.find(({ label }) => label === t);
     const defaultColor = foundTag?.color;
 
-    return (
+    return title ? (
+        <SRootItem title={title}>
+            {(defaultColor || color) && (
+                <SColorPoint
+                    style={{
+                        backgroundColor: color || defaultColor,
+                    }}
+                    withBorder={color === 'white' || defaultColor === 'white'}
+                />
+            )}
+            {!hideLabel && <STagLabel>{tag}</STagLabel>}
+        </SRootItem>
+    ) : (
         <SRootItem>
             {(defaultColor || color) && (
                 <SColorPoint
                     style={{
                         backgroundColor: color || defaultColor,
                     }}
-                    title={title || tag}
                     withBorder={color === 'white' || defaultColor === 'white'}
                 />
             )}

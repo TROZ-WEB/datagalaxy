@@ -4,15 +4,12 @@ import styled from 'styled-components';
 import Button from '../../../components/ui/Button';
 import { useStoreActions } from '../../../store/hooks';
 import { StepProps } from '../Stepper';
-import CheckIcon from '../../../../assets/icons/check-circle-filled.svg';
+import RocketIcon from '../../../../assets/icons/rocket.svg';
 
 /* ---------- STYLES ---------- */
 
-const SCheckIcon = styled.img`
+const SRocketIcon = styled.img`
     margin-top: 30px;
-    height: 26px;
-    width: 26px;
-    color: #155724;
 `;
 
 const SRoot = styled.div`
@@ -30,7 +27,7 @@ const SStepTitle = styled.p`
     margin-bottom: 21px;
     font-weight: 700;
     font-size: 16px;
-    line-height: 17px;
+    line-height: 20px;
     text-align: center;
 `;
 
@@ -52,14 +49,16 @@ const StepFinal: React.FC<StepProps> = ({ currentStep, step }) => {
 
     return (
         <SRoot>
-            <SCheckIcon alt="Check circle filled" src={CheckIcon} />
+            <SRocketIcon alt="Check circle filled" src={RocketIcon} />
             <SStepTitle>
                 {chrome.i18n.getMessage('onboarding_final_stepTitle1')}
                 <br />
                 {chrome.i18n.getMessage('onboarding_final_stepTitle2')}
             </SStepTitle>
             <SSkipButtonWrapper>
-                <Button id='onboardingSkipButton' onClick={onClick}>{chrome.i18n.getMessage('onboarding_final_skipButton')}</Button>
+                <Button id="onboardingSkipButton" onClick={onClick}>
+                    {chrome.i18n.getMessage('onboarding_final_skipButton')}
+                </Button>
             </SSkipButtonWrapper>
         </SRoot>
     );

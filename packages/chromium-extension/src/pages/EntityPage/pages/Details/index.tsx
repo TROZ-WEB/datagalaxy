@@ -76,7 +76,7 @@ const SFieldsContainer = styled.div`
     padding-left: 20px;
     padding-right: 20px;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 14px;
 `;
 
 const SPreviewEmptyField = styled.div`
@@ -102,19 +102,26 @@ const SDisplayMoreDetailsButton = styled.button`
 `;
 
 const SDrop = styled.img`
-    width: 10px;
-    height: 10px;
+    width: 16px;
+    height: 16px;
 
     ${(props) =>
-        props.arrowDropDown &&
-        css`
-            transform: rotate(180deg);
-        `}
+        props.arrowDropDown
+            ? css`
+                  transform: rotate(180deg);
+              `
+            : css`
+                  transform: rotate(90deg);
+              `}
 `;
 
 const SDisplayMoreButtonContainer = styled.div`
     position: relative;
     height: 15px;
+`;
+
+const SMoreDetailsText = styled.span`
+    margin-bottom: 2px;
 `;
 
 /* ---------- COMPONENT ---------- */
@@ -152,7 +159,7 @@ const computeData = (data: any, i: number) => {
 
     if (isValid(parseISO(data))) {
         switch (chrome.runtime.getManifest().current_locale) {
-            case 'en-US':
+            case 'en_US':
                 return format(parseISO(data), 'MMM d, yyyy', { locale: enUS });
             case 'fr':
                 return format(parseISO(data), 'dd MMM yyyy', { locale: fr });
@@ -233,6 +240,18 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
         setDisplayMoreDetails(showMoreDetails);
     }, [showMoreDetails]);
 
+    const [shouldDisplayMoreDetailsButton, setShouldDisplayMoreDetailsButton] = useState(false);
+
+    useEffect(() => {
+        let filteredAttributes = [];
+        screenConfiguration?.categories?.forEach((category) => {
+            filteredAttributes = filteredAttributes.concat(
+                category.attributes.filter((att) => shouldDisplayAttribute(att)),
+            );
+        });
+        setShouldDisplayMoreDetailsButton(filteredAttributes.length !== 0);
+    }, [screenConfiguration]);
+
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
@@ -287,21 +306,23 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                             </>
                         )}
                     </SBasicFieldsContainer>
-                    <SDisplayMoreButtonContainer>
-                        <SDisplayMoreDetailsButton
-                            onClick={() => {
-                                updateShowMoreDetails(!showMoreDetails);
-                            }}
-                            type="button"
-                        >
-                            {chrome.i18n.getMessage(`moreDetails`)}
-                            <SDrop alt="Arrow icon" arrowDropDown={displayMoreDetails} src={ArrowDrop} />
-                        </SDisplayMoreDetailsButton>
-                    </SDisplayMoreButtonContainer>
+                    {shouldDisplayMoreDetailsButton && (
+                        <SDisplayMoreButtonContainer>
+                            <SDisplayMoreDetailsButton
+                                onClick={() => {
+                                    updateShowMoreDetails(!showMoreDetails);
+                                }}
+                                type="button"
+                            >
+                                <SMoreDetailsText>{chrome.i18n.getMessage(`moreDetails`)}</SMoreDetailsText>
+                                <SDrop alt="Arrow icon" arrowDropDown={displayMoreDetails} src={ArrowDrop} />
+                            </SDisplayMoreDetailsButton>
+                        </SDisplayMoreButtonContainer>
+                    )}
 
                     {displayMoreDetails &&
-                        screenConfiguration.categories.length !== 0 &&
-                        screenConfiguration.categories.map((category) => {
+                        screenConfiguration?.categories?.length !== 0 &&
+                        screenConfiguration?.categories?.map((category) => {
                             const filteredAttributes = category.attributes.filter((att) => shouldDisplayAttribute(att));
 
                             return (
@@ -309,7 +330,11 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                                 <>
                                     {filteredAttributes.length !== 0 && (
                                         <SFieldsContainer>
-                                            <Accordion header={<STitle>{category.name}</STitle>} initialOpen>
+                                            <Accordion
+                                                header={<STitle>{category.name}</STitle>}
+                                                openButtonPosition="left"
+                                                initialOpen
+                                            >
                                                 {filteredAttributes.map((attribute, i) => {
                                                     return (
                                                         <>

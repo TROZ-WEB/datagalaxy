@@ -872,10 +872,10 @@
         "message": "Déconnexion"
     },
     "account_update_pat": {
-        "message": "Mettre à jour votre clé d'accès"
+        "message": "Ma clé d'accès"
     },
     "account_update_pat_button": {
-        "message": "Mettre à jour votre PAT"
+        "message": "Mettre ma clé à jour"
     },
     "account_update_pat_successful": {
         "message": "Votre clé d'accès a été mise à jour correctement"
@@ -1122,5 +1122,11 @@
     },
     "all_workspaces": {
         "message": "Tous les espaces"
+    },
+    "help_center": {
+        "message": "Aide en ligne"
+    },
+    "help_center_button": {
+        "message": "Se connecter à l’aide en ligne"
     }
 }

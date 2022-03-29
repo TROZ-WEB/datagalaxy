@@ -14,7 +14,7 @@ const SAccordion = styled(Accordion)`
 const SEntityWrapper = styled.div`
     width: 100%;
     cursor: pointer;
-    padding: 6px 0px;
+    padding: 6px 0px 6px 10px;
 `;
 
 const STitle = styled.div`

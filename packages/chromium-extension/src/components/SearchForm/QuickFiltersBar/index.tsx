@@ -78,6 +78,8 @@ const SScrollContainer = styled.div`
     scroll-behavior: smooth;
     display: flex;
     padding: 12px;
+    padding-left: 8px;
+    padding-right: 8px;
 
     &::-webkit-scrollbar-track {
         display: none;
@@ -129,11 +131,11 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
     };
 
     const handleScrollLeft = () => {
-        scrollContainer.scrollLeft -= 325;
+        scrollContainer.scrollLeft -= 348;
     };
 
     const handleScrollRight = () => {
-        scrollContainer.scrollLeft += 325;
+        scrollContainer.scrollLeft += 348;
     };
 
     const { pickedFilters } = useStoreState((state) => state.filters);

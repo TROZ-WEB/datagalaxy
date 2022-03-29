@@ -55,7 +55,7 @@ const RadioContainer = styled.label`
 `;
 
 const SLabel = styled.span`
-    margin-left: 13px;
+    margin-left: 9px;
     font-size: 13px;
     white-space: nowrap;
     overflow: hidden;

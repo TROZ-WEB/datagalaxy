@@ -16,7 +16,7 @@ const SRoot = styled.button`
     ${(props) =>
         props.variant === 'contained' &&
         css`
-            background: linear-gradient(71.97deg, #001aff 11.94%, #084eff 37.82%, #17aeff 85.88%);
+            background: #1035b1;
             color: #ffffff;
             border: none;
         `}
@@ -25,7 +25,7 @@ const SRoot = styled.button`
         css`
             &:hover,
             &:focus {
-                background: linear-gradient(90deg, #0016d7, #0297e6);
+                background: #1035b1;
             }
         `}
 
@@ -41,7 +41,8 @@ const SRoot = styled.button`
         css`
             &:hover,
             &:focus {
-                background: linear-gradient(71.97deg, #001aff 11.94%, #084eff 37.82%, #17aeff 85.88%);
+                color: white;
+                background: #1035b1;
             }
         `}
 `;

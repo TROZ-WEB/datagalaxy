@@ -46,7 +46,7 @@ const SInput = styled.input`
 `;
 
 const SOperator = styled.div`
-    margin-top: 24px;
+    margin-top: 18px;
     display: flex;
 `;
 
@@ -81,7 +81,7 @@ const SFieldsContainer = styled.div`
     overflow-x: hidden;
     margin-top: 16px;
     height: 100%;
-    width: 100%;
+    width: 103%;
 `;
 
 /* ---------- COMPONENT ---------- */
