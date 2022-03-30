@@ -58,12 +58,12 @@ const enhancedEntitiesWithTechnologiesInfo = async (
     technologies: TechnologyType[],
     rawEntities: EntityType[],
 ): Promise<EntityType[]> => {
-    return rawEntities?.map((result) => {
-        const { technologyCode } = result?.attributes;
+    return rawEntities?.map((rawEntity) => {
+        const { technologyCode } = rawEntity?.attributes;
         const fullTechnology = technologies?.find((t) => t.technologyCode === technologyCode);
 
         return {
-            ...result,
+            ...rawEntity,
             technology: fullTechnology,
         };
     });
@@ -73,11 +73,11 @@ const enhancedEntitiesWithAttributesInfo = async (
     attributes: AttributeDefinitionType[],
     rawEntities: EntityType[],
 ): Promise<EntityType[]> => {
-    return rawEntities?.map((result) => {
-        if (result.exactMatchAttributes) {
-            const newExactMatches = result.exactMatchAttributes.map((ema) => {
+    return rawEntities?.map((rawEntity) => {
+        if (rawEntity.exactMatchAttributes) {
+            const newExactMatches = rawEntity.exactMatchAttributes.map((ema) => {
                 const fullAttribute =
-                    attributes?.find((a) => a.attributeKey === ema.attributeKey && a.dataType === result.dataType) ||
+                    attributes?.find((a) => a.attributeKey === ema.attributeKey && a.dataType === rawEntity.dataType) ||
                     attributes?.find((a) => a.attributeKey === ema.attributeKey && a.dataType === 'Common') ||
                     ema;
 
@@ -86,10 +86,10 @@ const enhancedEntitiesWithAttributesInfo = async (
                     value: ema.value,
                 };
             });
-            result.exactMatchAttributes = newExactMatches;
+            rawEntity.exactMatchAttributes = newExactMatches;
         }
 
-        return result;
+        return rawEntity;
     });
 };
 

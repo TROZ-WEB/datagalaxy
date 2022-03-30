@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { EntityType, PickedFilters } from 'shared';
+import { AttributeDefinitionType, EntityType, Filter, PickedFilters, TechnologyType } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../store/hooks';
 import keyListener from '../../utils';
@@ -130,7 +130,7 @@ const SearchForm = () => {
     const { pickedFilters, versionId } = useStoreState((state) => state.filters);
     const { searchedArgs, searchResults, exactMatches, quickFilters } = useStoreState((state) => state.search);
     const { updateIsLoaded, updateCurrentWorkspace } = useStoreActions((actions) => actions.entity);
-    const { technologies } = useStoreState((state) => state.auth);
+    const { technologies, attributes } = useStoreState((state) => state.auth);
     const { filteredExactMatches } = useExactMatches(exactMatches);
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -164,16 +164,18 @@ const SearchForm = () => {
 
         interface Payload {
             term: string;
-            technologies: any[];
-            filters: any[];
+            technologies: TechnologyType[];
+            filters: Filter[];
             limit?: number;
             versionId?: string;
+            attributes: AttributeDefinitionType[];
         }
 
         const payload: Payload = {
             term: value,
             technologies,
             filters: searchPicked,
+            attributes,
         };
 
         if (!value && pickedFilters.length === 0) {
