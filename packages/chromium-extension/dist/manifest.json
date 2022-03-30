@@ -44,6 +44,5 @@
                 "enabled": true
             }
         ]
-    },
-    "host_permissions": ["https://data.eu.pendo.io", "*://*/*"]
+    }
 }

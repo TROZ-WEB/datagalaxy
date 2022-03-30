@@ -355,6 +355,9 @@
     "entity_label_full_Use": {
         "message": "Usage"
     },
+    "entity_label_full_Usage": {
+        "message": "Usage"
+    },
     "entity_label_full_Process": {
         "message": "Process"
     },

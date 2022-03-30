@@ -70,7 +70,7 @@ enum CustomColors {
 }
 
 const getBackgroundColor = (firstLetter) => {
-    switch (firstLetter) {
+    switch (firstLetter.toLowerCase()) {
         case 'a':
         case 's':
             return 'OrangeD';

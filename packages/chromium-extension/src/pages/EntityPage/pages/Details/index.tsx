@@ -222,7 +222,7 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
 
     const shouldDisplayAttribute = (attribute: any) => {
         return (
-            (rest[attribute.name] || rest[attribute.name] === false) &&
+            (rest[attribute.name] || rest[attribute.name] === false || rest[attribute.name] === 0) &&
             !rest[attribute.name].trend &&
             !isEmptyObject(rest[attribute.name]) &&
             reservedKeys.indexOf(attribute.name) === -1 &&

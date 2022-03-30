@@ -8,6 +8,14 @@ import FilterTag from './FilterTag';
 
 /* ---------- STYLES ---------- */
 
+const SIconLoadingWrapper = styled.div`
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
 const SIconLoading = styled(Refresh)`
     @keyframes Rotate {
         from {
@@ -59,6 +67,9 @@ const SLeft = styled.div`
 const SRight = styled.div`
     margin-right: 4px;
     white-space: nowrap;
+    position: absolute;
+    top: 6px;
+    right: 0px;
 
     & svg {
         font-size: 16px;
@@ -74,6 +85,7 @@ const SRight = styled.div`
 const SRoot = styled.div`
     border: 1px solid rgba(2, 42, 142, 0.1);
     border-radius: 3px;
+    position: relative;
 `;
 
 const SSearchInputContainer = styled.div`
@@ -86,7 +98,7 @@ const SSearchInputContainer = styled.div`
 
 const SFilterTagsContainer = styled.div`
     display: flex;
-    width: 100%;
+    width: 90%;
     flex-wrap: wrap;
     justify-content: flex-start;
 `;
@@ -105,7 +117,11 @@ const SearchInput = forwardRef<HTMLInputElement, IProps>(
         let rightElement: ReactElement = null;
 
         if (loading) {
-            rightElement = <SIconLoading />;
+            rightElement = (
+                <SIconLoadingWrapper>
+                    <SIconLoading />
+                </SIconLoadingWrapper>
+            );
         } else if (success) {
             rightElement = <RoundButton icon="Cancelsearch" onClick={onClearSearch} />;
         } else {
