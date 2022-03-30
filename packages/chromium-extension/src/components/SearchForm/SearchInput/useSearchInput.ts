@@ -1,4 +1,5 @@
 import { useReducer, useCallback, ChangeEvent, useEffect } from 'react';
+import { PickedFilters } from 'shared';
 import useDebounce from '../../../hooks/useDebounce';
 import { useStoreActions } from '../../../store/hooks';
 
@@ -42,7 +43,7 @@ export const reducer = (state: IState = initialState, action: TActionsEnum) => {
 export interface IUseSearchInputParams {
     initialState?: Partial<IState>;
     debounceDuration?: number;
-    debounceOnChange?: (result: { value: string }) => void;
+    debounceOnChange?: (result: { value: string; pf?: PickedFilters[] }) => void;
     isNewFilter?: boolean;
 }
 
@@ -78,7 +79,7 @@ export const useSearchInput = ({
         updatePickedFilters([]);
         dispatch({ type: 'CHANGE', value: '' });
         if (debounceOnChange) {
-            debounceOnChange({ value: '' });
+            debounceOnChange({ value: '', pf: [] });
         }
     }, [dispatch, debounceOnChange]);
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { EntityType } from 'shared';
+import { EntityType, PickedFilters } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../store/hooks';
 import keyListener from '../../utils';
@@ -155,7 +155,13 @@ const SearchForm = () => {
         .map((item) => item.filter)
         .filter((item) => item.attributeKey !== 'Workspace');
 
-    const debounceOnChange = async ({ value }) => {
+    const debounceOnChange = async ({ value, pf }: { value: string; pf?: PickedFilters[] }) => {
+        let spf;
+        if (pf) {
+            spf = pickedFilters.map((item) => item.filter).filter((item) => item.attributeKey !== 'Workspace');
+        }
+        const searchPicked = spf || searchPickedFilters;
+
         interface Payload {
             term: string;
             technologies: any[];
@@ -167,7 +173,7 @@ const SearchForm = () => {
         const payload: Payload = {
             term: value,
             technologies,
-            filters: searchPickedFilters,
+            filters: searchPicked,
         };
 
         if (!value && pickedFilters.length === 0) {
