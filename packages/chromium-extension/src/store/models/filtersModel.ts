@@ -16,16 +16,6 @@ import {
 } from 'shared';
 import { resetModel } from './helper';
 
-const EMPTY_RESPONSE: QuickFilters = {
-    total: 0,
-    total_sum: 0,
-    result: {
-        filteredViews: [],
-        entities: [],
-    },
-    quickFilters: [],
-};
-
 const initialState = {
     pickedFilters: [],
     workspaces: null,
