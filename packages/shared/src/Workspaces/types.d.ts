@@ -6,6 +6,7 @@ export interface Workspace {
     imageHash: string;
     iconHash: string;
     trigram: string;
+    versions: string[];
 }
 
 export interface Workspaces {

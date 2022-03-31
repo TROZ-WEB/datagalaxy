@@ -148,13 +148,27 @@ const SearchForm = () => {
     const { updateIsLoaded, updateCurrentWorkspace } = useStoreActions((actions) => actions.entity);
     const { technologies, attributes } = useStoreState((state) => state.auth);
     const { filteredExactMatches } = useExactMatches(exactMatches);
+    const { workspaces } = useStoreState((state) => state.auth);
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [displayMoreExactMatches, setDisplayMoreExactMatches] = useState(false);
     const [exactMatchesEntitiesToDisplay, setExactMatchesEntitiesToDisplay] = useState<EntityType[]>([]);
 
-    console.info('RECENTLY ACCESSED OBJECTS ARE : ');
-    console.info(recentlyAccessedObjects);
+    const [enhancedRecentlyAccessedObjects, setEnhancedRecentlyAccessedObjects] = useState<EntityType[]>();
+
+    useEffect(() => {
+        if (recentlyAccessedObjects) {
+            const enhanced = recentlyAccessedObjects.map((rao) => {
+                const r = rao;
+                const vid = rao.versionId;
+                const linkedWorkspace = workspaces.find((workspace) => workspace.versions?.indexOf(vid) !== -1);
+                r.path = rao.path.replace(/^/, `\\${linkedWorkspace.name}`);
+
+                return r;
+            });
+            setEnhancedRecentlyAccessedObjects(enhanced);
+        }
+    }, [recentlyAccessedObjects]);
 
     useEffect(() => {
         if (filteredExactMatches) {
@@ -219,7 +233,7 @@ const SearchForm = () => {
 
     const hasSearchResults = searchResults.result.entities.length !== 0;
     const hasExactMatches = filteredExactMatches?.result.entities.length !== 0;
-    const hasRecentlyAccessedObjects = recentlyAccessedObjects?.length !== 0;
+    const hasRecentlyAccessedObjects = enhancedRecentlyAccessedObjects?.length !== 0;
     const displayShowMoreButton = filteredExactMatches?.result.entities.length > 4;
 
     const { Overlay } = useStoreState((state) => state.modal);
@@ -387,7 +401,7 @@ const SearchForm = () => {
                                                 <Title>{chrome.i18n.getMessage('recently_accessed_objects')}</Title>
                                             </SResultsTitleContainerWrapper>
                                             <SSearchCardsResultWrapper>
-                                                {recentlyAccessedObjects?.map((entity, idx, array) => (
+                                                {enhancedRecentlyAccessedObjects?.map((entity, idx, array) => (
                                                     <SSearchCardResultContainer
                                                         key={entity.id}
                                                         isLastElement={idx === array.length - 1}

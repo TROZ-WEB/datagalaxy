@@ -4,3 +4,8 @@
 | API Workaround 2 | Api return 'Finance' tag in entities, but 'FINANCE' in tags list, so we cast Finance tag to FINANCE |
 | API Workaround 3 |  Samme as API Workaround 1  |
 | API Workaround 4 |  API does not provide linked objects size, so we need to fetch all linked objects, then count  |
+| API Workaround 5 | Workspace is not present in path for lastAccessObjects and object page. So we need to ->
+1) Get all workspaces
+2) Get all workspaces version for each workspace
+3) Find, with versionId of an object, which workspace is linked to
+4) Reconstitute the object path with the worskpace name |
