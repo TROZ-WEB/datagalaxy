@@ -30,10 +30,10 @@
         "message": "Vos dernières recherches et derniers objets consultés s’afficheront ici, vous pourrez y accéder rapidement."
     },
     "global_error": {
-        "message": "Nous rencontrons des difficultés pour vous connecter, vérifiez vos informations de connexion."
+        "message": "Nous rencontrons des difficultés pour vous connecter. Veuillez vérifier vos informations de connexion."
     },
     "error_pat": {
-        "message": "Clé d'accès non reconnue, vérifiez les chiffres entrés ou envoyez un message à votre administrateur"
+        "message": "Clé d'accès non reconnue. Veuillez entrer une clé valide. Si le problème persiste, contactez votre administrateur"
     },
     "error_pat_email": {
         "message": "L'identifiant ne correspond pas à la clé d'accès. Veuillez vérifier que la clé d'accès correspond à l'identifiant renseigné ci-dessus."
@@ -66,13 +66,13 @@
         "message": "Où trouver ma clé d'accès ?"
     },
     "onboarding_login_submitForm": {
-        "message": "Se connecter"
+        "message": "Me connecter"
     },
     "onboarding_final_stepTitle1": {
         "message": "Bravo !"
     },
     "onboarding_final_stepTitle2": {
-        "message": "Vous êtes désormais connecté"
+        "message": "Vous êtes maintenant connecté"
     },
     "onboarding_final_discoverFeaturesButton": {
         "message": "Découvrir les fonctionnalités clés"
@@ -158,7 +158,7 @@
         "message": "Valeur"
     },
     "entity_label_short_Dimension": {
-        "message": "Dimens."
+        "message": "Dim"
     },
     "entity_label_short_BusinessDomain": {
         "message": "Domaine"
@@ -185,7 +185,7 @@
         "message": "Modèle"
     },
     "entity_label_short_Directory": {
-        "message": "Répert"
+        "message": "Répert."
     },
     "entity_label_short_Table": {
         "message": "Table"
@@ -224,7 +224,7 @@
         "message": "Elt.Traitm"
     },
     "entity_label_short_Application": {
-        "message": "Applic."
+        "message": "App"
     },
     "entity_label_short_Use": {
         "message": "Usage"
@@ -257,7 +257,7 @@
         "message": "OpenDS"
     },
     "entity_label_short_Algorithm": {
-        "message": "Algorith."
+        "message": "Algo"
     },
     "entity_label_short_UsageComponent": {
         "message": "CompUs"
@@ -266,37 +266,37 @@
         "message": "Univers"
     },
     "entity_label_full_Concept": {
-        "message": "Concept "
+        "message": "Concept"
     },
     "entity_label_full_ReferenceData": {
-        "message": "Nomenclature "
+        "message": "Nomenclature"
     },
     "entity_label_full_IndicatorGroup": {
-        "message": "Groupe d'indicateurs "
+        "message": "Groupe d'indicateurs"
     },
     "entity_label_full_BusinessTerm": {
-        "message": "Terme métier "
+        "message": "Terme métier"
     },
     "entity_label_full_Indicator": {
-        "message": "Indicateur "
+        "message": "Indicateur"
     },
     "entity_label_full_ReferenceDataValue": {
         "message": "Valeur de nomenclature"
     },
     "entity_label_full_Dimension": {
-        "message": "Dimension "
+        "message": "Dimension"
     },
     "entity_label_full_BusinessDomain": {
-        "message": "Domaine "
+        "message": "Domaine"
     },
     "entity_label_full_DimensionGroup": {
-        "message": "Groupe de dimensions "
+        "message": "Groupe de dimensions"
     },
     "entity_label_full_BusinessDomainGroup": {
         "message": "Groupe de domaines"
     },
     "entity_label_full_Relational": {
-        "message": "DataBase"
+        "message": "Base de données"
     },
     "entity_label_full_NonRelational": {
         "message": "FileStore"
@@ -308,34 +308,34 @@
         "message": "Source TagBase"
     },
     "entity_label_full_Model": {
-        "message": "Modèle "
+        "message": "Modèle"
     },
     "entity_label_full_Directory": {
-        "message": "Répertoire "
+        "message": "Répertoire"
     },
     "entity_label_full_Table": {
-        "message": "Table "
+        "message": "Table"
     },
     "entity_label_full_View": {
-        "message": "Vue "
+        "message": "Vue"
     },
     "entity_label_full_Column": {
-        "message": "Colonne "
+        "message": "Colonne"
     },
     "entity_label_full_Field": {
-        "message": "Champ "
+        "message": "Champ"
     },
     "entity_label_full_SubStructure": {
-        "message": "Sous-structure "
+        "message": "Sous-structure"
     },
     "entity_label_full_File": {
         "message": "Fichier"
     },
     "entity_label_full_Document": {
-        "message": "Document "
+        "message": "Document"
     },
     "entity_label_full_Equipment": {
-        "message": "Equipement "
+        "message": "Equipement"
     },
     "entity_label_full_Tag": {
         "message": "Tag"
@@ -350,7 +350,7 @@
         "message": "Elément de traitement de données"
     },
     "entity_label_full_Application": {
-        "message": "Application "
+        "message": "Application"
     },
     "entity_label_full_Use": {
         "message": "Usage"
@@ -365,22 +365,22 @@
         "message": "Champ usage"
     },
     "entity_label_full_Feature": {
-        "message": "Fonctionnalité "
+        "message": "Fonctionnalité"
     },
     "entity_label_full_Screen": {
-        "message": "Ecran "
+        "message": "Écran"
     },
     "entity_label_full_Dashboard": {
-        "message": "Tableau de bord "
+        "message": "Tableau de bord"
     },
     "entity_label_full_Report": {
-        "message": "Rapport "
+        "message": "Rapport"
     },
     "entity_label_full_DataSet": {
         "message": "DataSet"
     },
     "entity_label_full_OpenDataSet": {
-        "message": "OpenDataSet"
+        "message": "Open DataSet"
     },
     "entity_label_full_Algorithm": {
         "message": "Algorithme"
@@ -542,7 +542,7 @@
         "message": "Exception consentement"
     },
     "attribute_key_GdprDataRetentionPolicy": {
-        "message": "Durée conservation des données"
+        "message": "Durée de conservation des données"
     },
     "attribute_key_GdprImpactAnalysisType": {
         "message": "Besoin PIA"
@@ -575,7 +575,7 @@
         "message": "Nature de l'usage"
     },
     "attribute_key_GdprUsageStartDate": {
-        "message": "Date de début"
+        "message": "Date de début d'usage"
     },
     "attribute_key_Text": {
         "message": "Texte"
@@ -584,7 +584,7 @@
         "message": "Parent"
     },
     "attribute_key_LogicalParentId": {
-        "message": "Parent Id"
+        "message": "Identifiant du parent"
     },
     "attribute_key_LogicalPathString": {
         "message": "Path (texte)"
@@ -659,10 +659,10 @@
         "message": "Système d'enregistrement"
     },
     "attribute_key_DataFillPercentage": {
-        "message": "Taux de Remplissage"
+        "message": "Taux de remplissage"
     },
     "attribute_key_RecommendedDataFillPercentage": {
-        "message": "Taux de Complétude"
+        "message": "Taux de complétude"
     },
     "attribute_key_PrimaryKeyTechnicalName": {
         "message": "Libellé technique de la clé primaire"
@@ -737,7 +737,7 @@
         "message": "Identifiant externe"
     },
     "attribute_key_ExternalDataRefreshTime": {
-        "message": "Date du dernier refresh des données"
+        "message": "Date du dernier rafraîchissement des données"
     },
     "attribute_key_ExternalModificationTime": {
         "message": "Date de la dernière modification"
@@ -755,10 +755,10 @@
         "message": "Utilisateur ayant effectué la dernière modification"
     },
     "attribute_key_ExternalExecutionTime": {
-        "message": "Date derniere exécution"
+        "message": "Date de la dernière exécution"
     },
     "attribute_key_ExternalLastExecutionStatus": {
-        "message": "Statut de la derniére exécution"
+        "message": "Statut de la dernière exécution"
     },
     "attribute_key_ExternalTechnology": {
         "message": "Technologie"
@@ -773,19 +773,19 @@
         "message": "Nombre d'enregistrements historique"
     },
     "attribute_key_CurrentNumberOfRecords": {
-        "message": "Nombre d'enregistrements"
+        "message": "Nombre d'enregistrements actuel"
     },
     "attribute_key_HistoricalStorageSize": {
-        "message": "Taille du stockage historique"
+        "message": "Taille de stockage historique"
     },
     "attribute_key_CurrentStorageSize": {
-        "message": "Taille du stockage actuel"
+        "message": "Taille de stockage actuelle"
     },
     "attribute_key_StorageSizeUnit": {
         "message": "Unité de stockage"
     },
     "attribute_key_ExternalLastAccessTime": {
-        "message": "Date dernier accès"
+        "message": "Date de dernier accès"
     },
     "attribute_key_ExternalTopUsers": {
         "message": "Principaux utilisateurs"
@@ -821,13 +821,13 @@
         "message": "Nombre de valeurs distinctes historique"
     },
     "attribute_key_CurrentDistinctValueCount": {
-        "message": "Nombre de valeurs distinctes"
+        "message": "Nombre de valeurs distinctes actuel"
     },
     "attribute_key_HistoricalEmptyValueCount": {
         "message": "Nombre de valeurs vides historique"
     },
     "attribute_key_CurrentEmptyValueCount": {
-        "message": "Nombre de valeurs vides"
+        "message": "Nombre de valeurs vides actuel"
     },
     "attribute_key_ExternalUrl": {
         "message": "URL"
@@ -872,7 +872,7 @@
         "message": "Mon profil"
     },
     "account_logout": {
-        "message": "Déconnexion"
+        "message": "Me déconnecter"
     },
     "account_update_pat": {
         "message": "Ma clé d'accès"
@@ -881,7 +881,7 @@
         "message": "Mettre ma clé à jour"
     },
     "account_update_pat_successful": {
-        "message": "Votre clé d'accès a été mise à jour correctement"
+        "message": "Votre clé d'accès a été mise à jour."
     },
     "navigation_back": {
         "message": "Retour"
@@ -1130,6 +1130,6 @@
         "message": "Aide en ligne"
     },
     "help_center_button": {
-        "message": "Se connecter à l’aide en ligne"
+        "message": "Me connecter à l’aide en ligne"
     }
 }

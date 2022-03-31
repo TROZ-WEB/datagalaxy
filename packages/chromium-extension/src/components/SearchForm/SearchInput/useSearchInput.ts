@@ -1,7 +1,7 @@
-import { useReducer, useCallback, ChangeEvent, useEffect } from 'react';
+import { useReducer, useCallback, ChangeEvent, useEffect, useState } from 'react';
 import { PickedFilters } from 'shared';
 import useDebounce from '../../../hooks/useDebounce';
-import { useStoreActions } from '../../../store/hooks';
+import { useStoreActions, useStoreState } from '../../../store/hooks';
 
 interface IState {
     value: string;
@@ -57,6 +57,10 @@ export const useSearchInput = ({
         ...partialInitialState,
     });
 
+    const { pickedFilters, versionId } = useStoreState((state) => state.filters);
+    const [clearing, setClearing] = useState(false);
+    const [alreadyDebounced, setAlreadyDebounced] = useState(false);
+
     const debouncedvalue = useDebounce(value, debounceDuration);
 
     const onBlur = useCallback(() => {
@@ -75,19 +79,26 @@ export const useSearchInput = ({
     );
 
     const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
-    const onClearSearch = useCallback(() => {
+
+    const onClearSearch = useCallback(async () => {
         updatePickedFilters([]);
         dispatch({ type: 'CHANGE', value: '' });
-        if (debounceOnChange) {
-            debounceOnChange({ value: '', pf: [] });
-        }
-    }, [dispatch, debounceOnChange]);
+        setClearing(true);
+    }, [dispatch]);
 
     useEffect(() => {
         if (debounceOnChange) {
-            debounceOnChange({ value: debouncedvalue });
+            if (clearing) {
+                setAlreadyDebounced(true);
+            }
+            if (!alreadyDebounced) {
+                debounceOnChange({ value: clearing ? '' : debouncedvalue });
+            } else {
+                setAlreadyDebounced(false);
+            }
         }
-    }, [debouncedvalue]);
+        setClearing(false);
+    }, [debouncedvalue, pickedFilters, versionId]);
 
     return {
         focused,

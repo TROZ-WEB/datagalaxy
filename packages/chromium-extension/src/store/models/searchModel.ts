@@ -81,6 +81,7 @@ const search = thunk(async (actions: Actions<SearchModel>, searchedArgs: Searche
             searchedArgs.versionId,
             searchedArgs.limit,
         );
+
         // Load additional user information about entities
         if (enhancedResults?.result) {
             enhancedResults.result.entities = await enhancedEntitiesWithTechnologiesInfo(
@@ -131,6 +132,7 @@ const searchModel = async (): Promise<SearchModel> => {
                     entities: exactMatches,
                 },
             };
+
             state.searchResults = {
                 total: searchResults.length,
                 total_sum: payload?.total_sum,

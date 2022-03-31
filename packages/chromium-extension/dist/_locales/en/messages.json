@@ -30,13 +30,13 @@
         "message": "Your latest searches and viewed items will be displayed here, so you can access them quickly."
     },
     "global_error": {
-        "message": "We are having difficulty logging in, please verify your login information."
+        "message": "We are having difficulty logging you in. Please check your credentials."
     },
     "error_pat": {
-        "message": "Unrecognized access key, Check the digits entered or send a message to your administrator"
+        "message": "Unrecognized access key, please enter a valid key. If this problem re-occurs, contact your administrator."
     },
     "error_pat_email": {
-        "message": "Identifier doesn't match the access key. Please ensure that the access key match the identifier provided."
+        "message": "Your access key doesn't match the identifier provided. Please ensure that the access key and the identifier match."
     },
     "error_required_field": {
         "message": "This field is required"
@@ -266,10 +266,10 @@
         "message": "Universe"
     },
     "entity_label_full_Concept": {
-        "message": "Concept "
+        "message": "Concept"
     },
     "entity_label_full_ReferenceData": {
-        "message": "Reference Data "
+        "message": "Reference Data"
     },
     "entity_label_full_IndicatorGroup": {
         "message": "Indicator group"
@@ -278,7 +278,7 @@
         "message": "Business Term"
     },
     "entity_label_full_Indicator": {
-        "message": "Indicator "
+        "message": "Indicator"
     },
     "entity_label_full_ReferenceDataValue": {
         "message": "Reference Data Value"
@@ -392,7 +392,7 @@
         "message": "Filter by"
     },
     "attribute_key_DisplayName": {
-        "message": "Functional Label"
+        "message": "Business Label"
     },
     "attribute_key_Workspace": {
         "message": "Workspace"
@@ -485,7 +485,7 @@
         "message": "Creation Date"
     },
     "attribute_key_LastModificationTime": {
-        "message": "Last Modification Date"
+        "message": "Last Update Date"
     },
     "attribute_key_CreatedOn": {
         "message": "Created on"
@@ -494,10 +494,10 @@
         "message": "Created by"
     },
     "attribute_key_LastModified": {
-        "message": "Modified on"
+        "message": "Updated on"
     },
     "attribute_key_LastModifiedBy": {
-        "message": "Modified by"
+        "message": "Updated by"
     },
     "attribute_key_Technology": {
         "message": "Technology"
@@ -578,7 +578,7 @@
         "message": "Usage Duration"
     },
     "attribute_key_GdprUsageNature": {
-        "message": "Usage Nature"
+        "message": "Usage type"
     },
     "attribute_key_GdprUsageStartDate": {
         "message": "Usage Start Date"
@@ -626,7 +626,7 @@
         "message": "Size Required"
     },
     "attribute_key_FullDisplayName": {
-        "message": "Full Functional Label"
+        "message": "Full Business Label"
     },
     "attribute_key_FullTechnicalName": {
         "message": "Full Technical Label"
@@ -665,10 +665,10 @@
         "message": "Recording system"
     },
     "attribute_key_DataFillPercentage": {
-        "message": "Filling"
+        "message": "Fill rate"
     },
     "attribute_key_RecommendedDataFillPercentage": {
-        "message": "Completion"
+        "message": "Completion rate"
     },
     "attribute_key_PrimaryKeyTechnicalName": {
         "message": "Primary Key Technical Label"
@@ -677,7 +677,7 @@
         "message": "Technical Comments"
     },
     "attribute_key_TableDisplayName": {
-        "message": "Structure Functional Label"
+        "message": "Structure Business Label"
     },
     "attribute_key_TableTechnicalName": {
         "message": "Structure Technical Label"
@@ -731,10 +731,10 @@
         "message": "Personal data class"
     },
     "attribute_key_LocalSynonymsNames": {
-        "message": "Local synonym"
+        "message": "Local Synonym"
     },
     "attribute_key_LocalSynonym": {
-        "message": "Local synonym"
+        "message": "Local Synonym"
     },
     "attribute_key_ExternalId": {
         "message": "External Id"
@@ -743,94 +743,94 @@
         "message": "Last Data Refresh"
     },
     "attribute_key_ExternalModificationTime": {
-        "message": "Last modification date"
+        "message": "Last update date"
     },
     "attribute_key_ExternalCreationTime": {
-        "message": "Creation date of the source object"
+        "message": "Source Object Creation Date"
     },
     "attribute_key_ExternalDeletionTime": {
-        "message": "Deletion date of the source object"
+        "message": "Source Object Deletion Date"
     },
     "attribute_key_ExternalExpirationTime": {
-        "message": "Expiration date of the source object"
+        "message": "Source object Expiration Date"
     },
     "attribute_key_ExternalModificationUser": {
-        "message": "Last modified by"
+        "message": "Last Updated By"
     },
     "attribute_key_ExternalExecutionTime": {
-        "message": "Last execution"
+        "message": "Last Execution Date"
     },
     "attribute_key_ExternalLastExecutionStatus": {
-        "message": "Last execution status"
+        "message": "Last Execution Status"
     },
     "attribute_key_ExternalTechnology": {
         "message": "Technology"
     },
     "attribute_key_ExternalTechnologyType": {
-        "message": "Technical type"
+        "message": "Technical Type"
     },
     "attribute_key_LastSynchronizationTime": {
-        "message": "Last synchronization date"
+        "message": "Last Synchronization Date"
     },
     "attribute_key_HistoricalNumberOfRecords": {
-        "message": "Historical number of records"
+        "message": "Historical Number of Records"
     },
     "attribute_key_CurrentNumberOfRecords": {
-        "message": "Number of records"
+        "message": "Number of Records"
     },
     "attribute_key_HistoricalStorageSize": {
-        "message": "Historical storage size"
+        "message": "Historical Storage Size"
     },
     "attribute_key_CurrentStorageSize": {
-        "message": "Current storage size"
+        "message": "Current Storage Size"
     },
     "attribute_key_StorageSizeUnit": {
-        "message": "Storage unit"
+        "message": "Storage Unit"
     },
     "attribute_key_ExternalLastAccessTime": {
-        "message": "Last access date"
+        "message": "Last Access Date"
     },
     "attribute_key_ExternalTopUsers": {
-        "message": "Top users"
+        "message": "Top Users"
     },
     "attribute_key_ExternalAccessCount": {
-        "message": "Access count"
+        "message": "Access Count"
     },
     "attribute_key_ExternalWriteAccessCount": {
-        "message": "Write access count"
+        "message": "Write Access Count"
     },
     "attribute_key_ExternalReadAccessCount": {
-        "message": "Read access count"
+        "message": "Read Access Count"
     },
     "attribute_key_ExternalDeniedAccessCount": {
-        "message": "Denied access count"
+        "message": "Denied Access Count"
     },
     "attribute_key_ExternalUserAccessCount": {
-        "message": "User access count"
+        "message": "User Access Count"
     },
     "attribute_key_ExternalUserWriteAccessCount": {
-        "message": "User write access count"
+        "message": "User Write Access Count"
     },
     "attribute_key_ExternalUserReadAccessCount": {
-        "message": "User read access count"
+        "message": "User Read Access Count"
     },
     "attribute_key_ExternalUserDeniedAccessCount": {
-        "message": "User denied access count"
+        "message": "User Denied Access Count"
     },
     "attribute_key_DataSample": {
-        "message": "Data sample"
+        "message": "Sample Data"
     },
     "attribute_key_HistoricalDistinctValueCount": {
-        "message": "Historical distinct value count"
+        "message": "Historical Distinct Values Count"
     },
     "attribute_key_CurrentDistinctValueCount": {
-        "message": "Current distinct value count"
+        "message": "Current Distinct Values Count"
     },
     "attribute_key_HistoricalEmptyValueCount": {
-        "message": "Historical empty value count"
+        "message": "Historical Empty Values Count"
     },
     "attribute_key_CurrentEmptyValueCount": {
-        "message": "Current empty value count"
+        "message": "Current Empty Values Count"
     },
     "attribute_key_ExternalUrl": {
         "message": "URL"
@@ -851,13 +851,13 @@
         "message": "Calculated"
     },
     "attribute_key_IsAggregatable": {
-        "message": "Aggregatable"
+        "message": "Aggregable"
     },
     "attribute_key_ExternalSourceConnection": {
-        "message": "Link to source"
+        "message": "Link to Source"
     },
     "attribute_key_IsRequiredFilter": {
-        "message": "Required filter"
+        "message": "Required Filter"
     },
     "attribute_key_IsPartitioned": {
         "message": "Partitionned"
@@ -881,7 +881,7 @@
         "message": "Update my key"
     },
     "account_update_pat_successful": {
-        "message": "Your access key has been updated successfully"
+        "message": "Your access key has been updated."
     },
     "navigation_back": {
         "message": "Back"
@@ -968,7 +968,7 @@
         "message": "has for Reference Data"
     },
     "IsDeclinedAccordingToDimension": {
-        "message": "is declined according to the dimension"
+        "message": "is declined according to Dimension"
     },
     "Declines": {
         "message": "declines"
@@ -1010,16 +1010,16 @@
         "message": "has for recording system"
     },
     "HasForUsageSource": {
-        "message": "has for usage source"
+        "message": "has for source Usage"
     },
     "IsUsageSourceFor": {
-        "message": "is usage source for"
+        "message": "is source Usage for"
     },
     "HasForUsageDestination": {
-        "message": "has for usage destination"
+        "message": "has for Usage Destination"
     },
     "IsUsageDestinationFor": {
-        "message": "is usage destination for"
+        "message": "is Usage Destination for"
     },
     "IsCalledBy": {
         "message": "is called by"
@@ -1127,12 +1127,12 @@
         "message": "Uses"
     },
     "all_workspaces": {
-        "message": "All workspaces"
+        "message": "All Workspaces"
     },
     "help_center": {
-        "message": "Help center"
+        "message": "Help Center"
     },
     "help_center_button": {
-        "message": "Connect to help center"
+        "message": "Connect to online help"
     }
 }

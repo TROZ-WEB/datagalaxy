@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { AttributeDefinitionType, EntityType, Filter, PickedFilters, TechnologyType } from 'shared';
+import { AttributeDefinitionType, EntityType, Filter, TechnologyType } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../store/hooks';
 import keyListener from '../../utils';
@@ -155,13 +155,7 @@ const SearchForm = () => {
         .map((item) => item.filter)
         .filter((item) => item.attributeKey !== 'Workspace');
 
-    const debounceOnChange = async ({ value, pf }: { value: string; pf?: PickedFilters[] }) => {
-        let spf;
-        if (pf) {
-            spf = pickedFilters.map((item) => item.filter).filter((item) => item.attributeKey !== 'Workspace');
-        }
-        const searchPicked = spf || searchPickedFilters;
-
+    const debounceOnChange = async ({ value }: { value: string }) => {
         interface Payload {
             term: string;
             technologies: TechnologyType[];
@@ -174,11 +168,11 @@ const SearchForm = () => {
         const payload: Payload = {
             term: value,
             technologies,
-            filters: searchPicked,
+            filters: searchPickedFilters,
             attributes,
         };
 
-        if (!value && pickedFilters.length === 0) {
+        if (!value && searchPickedFilters.length === 0) {
             payload.limit = 0;
             setSuccess(false);
         }
@@ -197,10 +191,6 @@ const SearchForm = () => {
             setSuccess(true);
         }
     };
-
-    useEffect(() => {
-        debounceOnChange({ value: searchedArgs.term });
-    }, [dispatch, versionId, pickedFilters]);
 
     const searchInputProps = useSearchInput({
         debounceDuration: 1000,
