@@ -4,6 +4,7 @@ import {
     fetchLinkedObjects as fetchLinkedObjectsAPI,
     fetchChildrenObjects as fetchChildrenObjectsAPI,
     fetchScreenConfiguration as fetchScreenConfigurationAPI,
+    fetchRecentlyAccessedObjects as fetchRecentlyAccessedObjectsAPI,
     EntityType,
     LinkedObjectsType,
     getUserByEmail,
@@ -28,6 +29,7 @@ const initialState = {
     childrenObjects: null,
     screenConfiguration: null,
     currentWorkspace: null,
+    recentlyAccessedObjects: null,
 };
 
 export interface EntityModel {
@@ -38,6 +40,7 @@ export interface EntityModel {
     childrenObjects: EntityType[];
     screenConfiguration: ScreenConfiguration;
     currentWorkspace: string;
+    recentlyAccessedObjects: EntityType[];
     /* Actions */
     resetModel: Action<EntityModel>;
     updateIsLoaded: Action<EntityModel, boolean>;
@@ -46,11 +49,13 @@ export interface EntityModel {
     updateChildrenObjects: Action<EntityModel, EntityType[]>;
     updateScreenConfiguration: Action<EntityModel, ScreenConfiguration>;
     updateCurrentWorkspace: Action<EntityModel, string>;
+    updateRecentlyAccessedObjects: Action<EntityModel, EntityType[]>;
     /* Thunks */
     fetchEntity: Thunk<EntityModel, FetchEntityArgs>;
     fetchLinkedObjects: Thunk<EntityModel, FetchLinkedObjectsParams>;
     fetchChildrenObjects: Thunk<EntityModel, FetchChildrenObjectsParams>;
     fetchScreenConfiguration: Thunk<EntityModel, FetchScreenConfigurationParams>;
+    fetchRecentlyAccessedObjects: Thunk<EntityModel, null>;
 }
 
 interface FetchLinkedObjectsParams {
@@ -182,6 +187,16 @@ const fetchLinkedObjects = thunk(
     },
 );
 
+const fetchRecentlyAccessedObjects = thunk(async (actions: Actions<EntityModel>, _payload, { getStoreState }) => {
+    try {
+        const url = (getStoreState() as any).auth.pubapi;
+        const recentlyAccessedObjects = await fetchRecentlyAccessedObjectsAPI(url, 4);
+        actions.updateRecentlyAccessedObjects(recentlyAccessedObjects);
+    } catch (err) {
+        console.error('error : ', err);
+    }
+});
+
 const fetchChildrenObjects = thunk(
     async (actions: Actions<EntityModel>, payload: FetchChildrenObjectsParams, { getStoreState }) => {
         const { parentId, dataType, versionId, technology } = payload;
@@ -268,11 +283,15 @@ const entityModel = async (): Promise<EntityModel> => {
         updateCurrentWorkspace: action((state, payload: string) => {
             state.currentWorkspace = payload;
         }),
+        updateRecentlyAccessedObjects: action((state, payload: any) => {
+            state.recentlyAccessedObjects = payload;
+        }),
         /* Thunks */
         fetchEntity,
         fetchLinkedObjects,
         fetchChildrenObjects,
         fetchScreenConfiguration,
+        fetchRecentlyAccessedObjects,
     };
 };
 

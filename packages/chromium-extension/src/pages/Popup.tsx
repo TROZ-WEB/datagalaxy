@@ -52,6 +52,7 @@ const Popup = () => {
                 dispatch.auth.fetchWorkspaces();
                 dispatch.auth.fetchUser();
                 dispatch.auth.fetchTechnologies();
+                dispatch.entity.fetchRecentlyAccessedObjects();
 
                 setIsAppReady(true);
             } catch (error) {

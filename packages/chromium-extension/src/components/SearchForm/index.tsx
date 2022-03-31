@@ -49,6 +49,10 @@ const SResultsTitleWrapper = styled.div`
     margin: 16px 0px 8px 0px;
 `;
 
+const SResultsTitleContainerWrapper = styled.div`
+    margin: 8px 0px 8px 0px;
+`;
+
 const SSearchCardResultContainer = styled.div`
     ${(props) => !props.isLastElement && `border-bottom: 1px solid rgba(0, 76, 255, 0.08);`}
     border-top: 1px solid transparent;
@@ -107,6 +111,16 @@ const SOverlay = styled.div`
     background: #00103033;
 `;
 
+const SContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 14px rgba(16, 53, 177, 0.12);
+    border-radius: 6px;
+    padding: 10px 16px 10px 16px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+`;
+
 /* ---------- COMPONENT ---------- */
 
 enum AttributesWeight {
@@ -130,6 +144,7 @@ const SearchForm = () => {
     const history = useHistory();
     const { pickedFilters, versionId } = useStoreState((state) => state.filters);
     const { searchedArgs, searchResults, exactMatches, quickFilters } = useStoreState((state) => state.search);
+    const { recentlyAccessedObjects } = useStoreState((state) => state.entity);
     const { updateIsLoaded, updateCurrentWorkspace } = useStoreActions((actions) => actions.entity);
     const { technologies, attributes } = useStoreState((state) => state.auth);
     const { filteredExactMatches } = useExactMatches(exactMatches);
@@ -201,6 +216,7 @@ const SearchForm = () => {
 
     const hasSearchResults = searchResults.result.entities.length !== 0;
     const hasExactMatches = filteredExactMatches?.result.entities.length !== 0;
+    const hasRecentlyAccessedObjects = recentlyAccessedObjects?.length !== 0;
     const displayShowMoreButton = filteredExactMatches?.result.entities.length > 4;
 
     const { Overlay } = useStoreState((state) => state.modal);
@@ -360,9 +376,47 @@ const SearchForm = () => {
                             )}
 
                             {!hasSearchResults && !hasExactMatches && (
-                                <SBlankSearch>
-                                    <SBlankSearchImage alt="empty result" src={BlankSearch} />
-                                </SBlankSearch>
+                                // eslint-disable-next-line react/jsx-no-useless-fragment
+                                <>
+                                    {hasRecentlyAccessedObjects ? (
+                                        <SContainer>
+                                            <SResultsTitleContainerWrapper>
+                                                <Title>{chrome.i18n.getMessage('recently_accessed_objects')}</Title>
+                                            </SResultsTitleContainerWrapper>
+                                            <SSearchCardsResultWrapper>
+                                                {recentlyAccessedObjects.map((entity, idx, array) => (
+                                                    <SSearchCardResultContainer
+                                                        key={entity.id}
+                                                        isLastElement={idx === array.length - 1}
+                                                    >
+                                                        <SSearchCardResultWrapper>
+                                                            <EntityHeader
+                                                                entity={entity}
+                                                                entityPage={false}
+                                                                id={`entityHeader${idx}`}
+                                                                onClick={() => {
+                                                                    updateCurrentWorkspace(entity.path.split('\\')[1]);
+
+                                                                    updateIsLoaded(false);
+                                                                    const URLLocation = entity.location.replace(
+                                                                        new RegExp('/', 'g'),
+                                                                        '.',
+                                                                    ); // Replace "/" by "." in url
+                                                                    history.push(`/app/entities/${URLLocation}/`);
+                                                                }}
+                                                                alwaysExpanded
+                                                            />
+                                                        </SSearchCardResultWrapper>
+                                                    </SSearchCardResultContainer>
+                                                ))}
+                                            </SSearchCardsResultWrapper>
+                                        </SContainer>
+                                    ) : (
+                                        <SBlankSearch>
+                                            <SBlankSearchImage alt="empty result" src={BlankSearch} />
+                                        </SBlankSearch>
+                                    )}
+                                </>
                             )}
                         </>
                     )}

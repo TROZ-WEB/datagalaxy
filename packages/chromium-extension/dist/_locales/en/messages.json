@@ -1158,5 +1158,8 @@
     },
     "docking_panel_related": {
         "message": "Related Objets"
+    },
+    "recently_accessed_objects": {
+        "message": "Recently viewed"
     }
 }
