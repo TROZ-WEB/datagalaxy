@@ -153,6 +153,9 @@ const SearchForm = () => {
     const [displayMoreExactMatches, setDisplayMoreExactMatches] = useState(false);
     const [exactMatchesEntitiesToDisplay, setExactMatchesEntitiesToDisplay] = useState<EntityType[]>([]);
 
+    console.info('RECENTLY ACCESSED OBJECTS ARE : ');
+    console.info(recentlyAccessedObjects);
+
     useEffect(() => {
         if (filteredExactMatches) {
             setExactMatchesEntitiesToDisplay(
@@ -384,7 +387,7 @@ const SearchForm = () => {
                                                 <Title>{chrome.i18n.getMessage('recently_accessed_objects')}</Title>
                                             </SResultsTitleContainerWrapper>
                                             <SSearchCardsResultWrapper>
-                                                {recentlyAccessedObjects.map((entity, idx, array) => (
+                                                {recentlyAccessedObjects?.map((entity, idx, array) => (
                                                     <SSearchCardResultContainer
                                                         key={entity.id}
                                                         isLastElement={idx === array.length - 1}
