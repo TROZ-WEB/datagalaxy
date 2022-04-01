@@ -27,9 +27,12 @@ const SIconLoading = styled(Refresh)`
     }
 
     animation: Rotate 1700ms cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: inherit;
     margin-right: 4px;
+    height: 30px;
 `;
 
 const SInput = styled.input`

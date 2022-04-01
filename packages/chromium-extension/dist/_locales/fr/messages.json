@@ -868,6 +868,9 @@
     "attribute_key_Technology_Code": {
         "message": "Technologie"
     },
+    "attribute_not_supported": {
+        "message": "Cet attribut sera prochainement supporté par le plugin"
+    },
     "account_title": {
         "message": "Mon profil"
     },

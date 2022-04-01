@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 /* ---------- STYLES ---------- */
 
@@ -29,16 +29,36 @@ const StyledRadio = styled.div`
     display: inline-block;
     width: 13px;
     height: 13px;
-    border-radius: 13px;
+    border-radius: 50px;
     background: '#ffffff';
     transition: all 150ms;
     border: 2px solid #1035b1;
     position: relative;
     flex: none;
+    margin: 3px;
 
     ${SCheck} {
         visibility: ${(props) => (props.checked ? 'visible' : 'hidden')};
     }
+`;
+
+const SLabel = styled.span`
+    margin-left: 9px;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+`;
+
+const SStyledRadioWrapper = styled.div`
+    border-radius: 50px;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 const RadioContainer = styled.label`
@@ -52,18 +72,23 @@ const RadioContainer = styled.label`
     &:focus {
         background-color: rgba(0, 26, 255, 0.08);
     }
-`;
 
-const SLabel = styled.span`
-    margin-left: 9px;
-    font-size: 13px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: flex;
-    align-items: center;
+    ${(props) =>
+        props.inline &&
+        css`
+            ${SLabel} {
+                font-weight: 700;
+            }
 
-    ${(props) => props.bold && `font-weight:700`}
+            &:hover,
+            &:focus {
+                background-color: transparent;
+
+                ${SStyledRadioWrapper} {
+                    background-color: rgba(0, 26, 255, 0.08);
+                }
+            }
+        `}
 `;
 
 const SIconContainer = styled.span`
@@ -80,13 +105,13 @@ interface Props {
         id: string;
     };
     className?: string;
-    bold?: boolean;
+    inline?: boolean;
     onChange?: () => void;
     setIsOpen?: Dispatch<SetStateAction<boolean>>;
     name: string;
 }
 
-const Radio: React.FC<Props> = ({ field, className, bold = false, onChange, setIsOpen, name, ...props }) => {
+const Radio: React.FC<Props> = ({ field, className, inline = false, onChange, setIsOpen, name, ...props }) => {
     const handleChange = () => {
         onChange();
         // eslint-disable-next-line no-unused-expressions
@@ -94,7 +119,7 @@ const Radio: React.FC<Props> = ({ field, className, bold = false, onChange, setI
     };
 
     return (
-        <RadioContainer className={className} htmlFor={field?.id}>
+        <RadioContainer className={className} htmlFor={field?.id} inline={inline}>
             <HiddenRadio
                 checked={field?.checked}
                 id={field?.id}
@@ -103,10 +128,12 @@ const Radio: React.FC<Props> = ({ field, className, bold = false, onChange, setI
                 type="radio"
                 {...props}
             />
-            <StyledRadio checked={field?.checked}>
-                <SCheck />
-            </StyledRadio>
-            <SLabel bold={bold}>
+            <SStyledRadioWrapper>
+                <StyledRadio checked={field?.checked}>
+                    <SCheck />
+                </StyledRadio>
+            </SStyledRadioWrapper>
+            <SLabel>
                 {field?.icon && <SIconContainer>{field?.icon}</SIconContainer>} {field?.label}
             </SLabel>
         </RadioContainer>

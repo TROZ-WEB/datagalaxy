@@ -43,7 +43,7 @@ export interface FiltersModel {
     domains: Domain[];
     status: Status[];
     /* Actions */
-    resetQuickFilters: Action<FiltersModel>;
+    resetFilters: Action<FiltersModel>;
     updatePickedFilters: Action<FiltersModel, any>;
     updateWorkspaces: Action<FiltersModel, any>;
     updateUsers: Action<FiltersModel, any>;
@@ -137,7 +137,7 @@ const filtersModel = async (): Promise<FiltersModel> => {
         /* State */
         ...initialState,
         /* Actions */
-        resetQuickFilters: action(resetModel(initialState)),
+        resetFilters: action(resetModel(initialState)),
         updatePickedFilters: action((state, payload) => {
             state.pickedFilters = payload;
         }),

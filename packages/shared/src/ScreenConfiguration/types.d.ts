@@ -1,5 +1,6 @@
 interface ScreenConfigurationAttribute {
     attributeKey: string;
+    format: string;
     name: string;
 }
 

@@ -52,6 +52,7 @@ const SResultsTitleWrapper = styled.div`
 const SSearchCardResultContainer = styled.div`
     ${(props) => !props.isLastElement && `border-bottom: 1px solid rgba(0, 76, 255, 0.08);`}
     border-top: 1px solid transparent;
+    padding-bottom: 3px;
 
     &:hover,
     &:focus {
@@ -93,7 +94,7 @@ const SMore = styled.div`
 `;
 
 const SExactMatchsContainer = styled.div`
-    margin-bottom: 35px;
+    margin-bottom: 32px;
 `;
 
 const SOverlay = styled.div`
@@ -289,7 +290,9 @@ const SearchForm = () => {
                                                                 exactMatches={exactMatchAttributes}
                                                                 id={`entityHeader${idx}`}
                                                                 onClick={() => {
-                                                                    updateCurrentWorkspace(entity.path.split('\\')[1]);
+                                                                    updateCurrentWorkspace(
+                                                                        entity?.path?.split('\\')[1],
+                                                                    );
 
                                                                     updateIsLoaded(false);
                                                                     const URLLocation = entity.location.replace(
@@ -338,7 +341,7 @@ const SearchForm = () => {
                                                         entityPage={false}
                                                         id={`entityHeader${idx}`}
                                                         onClick={() => {
-                                                            updateCurrentWorkspace(entity.path.split('\\')[1]);
+                                                            updateCurrentWorkspace(entity?.path?.split('\\')[1]);
 
                                                             updateIsLoaded(false);
                                                             const URLLocation = entity.location.replace(

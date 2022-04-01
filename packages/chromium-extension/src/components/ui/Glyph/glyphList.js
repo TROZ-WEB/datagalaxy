@@ -90,7 +90,6 @@ const glyphList = {
     Collapse: 'e7c2',
     Uncollapse: 'e7c3',
     Profile: 'e8e7',
-    Catalog: 'ec0f',
     Columnview: 'ec46',
     Referenceview: 'ec9f',
     Table: 'f120',

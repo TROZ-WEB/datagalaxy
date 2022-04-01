@@ -118,7 +118,9 @@ interface Props {
 }
 
 const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
-    const QuickFiltersArray = quickFilters?.quickFilters?.slice(0, 12);
+    const QuickFiltersArray = quickFilters?.quickFilters
+        ?.filter((f) => !f?.filter?.attributeKey.includes('ObjectLinks'))
+        ?.slice(0, 12);
     const { technologies, domains, users, status, workspaces } = useStoreState((state) => state.filters);
 
     const [scrollValue, setScrollValue] = useState(0);

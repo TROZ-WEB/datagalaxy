@@ -40,6 +40,7 @@ const SCardResultContainer = styled.div`
     ${(props) =>
         !props.isLastElement ? 'border-top: 1px solid transparent' : `border-bottom: 1px solid rgba(0, 76, 255, 0.08)`}
     border-top: 1px solid transparent;
+    padding-bottom: 3px;
 
     &:hover,
     &:focus {
@@ -62,9 +63,9 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
     const { updateEntity } = useStoreActions((actions) => actions.entity);
 
     const entityPath = useMemo<string>(() => {
-        const t = entity.path.split('\\');
+        const t = entity?.path?.split('\\');
 
-        return t[t.length - 1].toString();
+        return t?.[t.length - 1]?.toString();
     }, [entity]);
 
     useEffect(() => {
@@ -72,7 +73,7 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
         const gc = [];
         childrenObjects?.forEach((co) => {
             if (co) {
-                const pathSplited = co.path.split('\\');
+                const pathSplited = co?.path?.split('\\');
 
                 if (pathSplited[pathSplited.length - 2] === entityPath) {
                     c.push(co);
@@ -98,9 +99,9 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
             {children && children.length !== 0 ? (
                 children?.map((childrenEntity, idx, array) => {
                     const myGrandChildren = grandChildren.filter((gc) => {
-                        const childrenPathSplitted = childrenEntity.path.split('\\');
+                        const childrenPathSplitted = childrenEntity?.path?.split('\\');
                         const childrenPath = childrenPathSplitted[childrenPathSplitted.length - 1].toString();
-                        const grandChildrenPathSplited = gc.path.split('\\');
+                        const grandChildrenPathSplited = gc?.path?.split('\\');
 
                         return grandChildrenPathSplited[grandChildrenPathSplited.length - 2] === childrenPath;
                     });

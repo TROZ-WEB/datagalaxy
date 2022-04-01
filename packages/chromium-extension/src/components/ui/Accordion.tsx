@@ -1,6 +1,6 @@
 import React, { useState, FC } from 'react';
 import styled, { css } from 'styled-components';
-import ArrowDrop from '../../../../assets/icons/arrow-drop-up.svg';
+import ArrowDrop from '../../../assets/icons/arrow-drop-up.svg';
 
 /* ---------- STYLES ---------- */
 
@@ -24,6 +24,7 @@ const SArrowButton = styled.button`
     padding: 12px 0;
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
+    margin-left: -4px;
 
     &:disabled {
         visibility: hidden;

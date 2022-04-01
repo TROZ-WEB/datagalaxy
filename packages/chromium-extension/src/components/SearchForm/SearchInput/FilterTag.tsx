@@ -39,6 +39,7 @@ const SRoot = styled.div`
 
 const SRoundButton = styled(RoundButton)`
     margin-left: 2px;
+    color: #9b9db6;
 `;
 
 const STextContainer = styled.div`

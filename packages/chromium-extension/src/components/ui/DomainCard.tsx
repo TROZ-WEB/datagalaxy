@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { entitiesTypeRelatedInfos, EntityType } from 'shared';
 import styled, { css } from 'styled-components';
-import Glyph from '../Glyph';
+import Glyph from './Glyph';
 
 /* ---------- STYLES ---------- */
 

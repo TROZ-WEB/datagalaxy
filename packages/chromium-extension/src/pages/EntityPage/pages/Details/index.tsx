@@ -63,9 +63,9 @@ const SBasicFieldsContainer = styled.div`
     flex-direction: column;
     box-shadow: 0px 0px 14px rgba(16, 53, 177, 0.12);
     border-radius: 6px;
-    padding: 10px 16px 10px 16px;
+    padding: 10px 16px;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 14px;
 `;
 
 const SFieldsContainer = styled.div`
@@ -222,6 +222,7 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
 
     const shouldDisplayAttribute = (attribute: any) => {
         return (
+            attribute.name &&
             (rest[attribute.name] || rest[attribute.name] === false || rest[attribute.name] === 0) &&
             !rest[attribute.name].trend &&
             !isEmptyObject(rest[attribute.name]) &&
@@ -277,7 +278,7 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                         <Details.SubInfo title="">
                             {tags && tags?.length !== 0 ? (
                                 <Tags>
-                                    {tags?.map((tag, i) => (
+                                    {tags?.sort()?.map((tag, i) => (
                                         /* eslint-disable-next-line */
                                         <Tags.Item key={i} tag={tag} />
                                     ))}
@@ -324,6 +325,7 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                         screenConfiguration?.categories?.length !== 0 &&
                         screenConfiguration?.categories?.map((category) => {
                             const filteredAttributes = category.attributes.filter((att) => shouldDisplayAttribute(att));
+                            console.log('test : ', filteredAttributes);
 
                             return (
                                 /* eslint-disable-next-line react/jsx-no-useless-fragment */
@@ -339,7 +341,15 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                                                     return (
                                                         <>
                                                             <Details.SubInfo title={computeTitle(rest, attribute.name)}>
-                                                                {computeData(rest[attribute.name], i)}
+                                                                {attribute.format === 'TimeSeriesObject' ? (
+                                                                    <SPreviewEmptyField>
+                                                                        {chrome.i18n.getMessage(
+                                                                            `attribute_not_supported`,
+                                                                        )}
+                                                                    </SPreviewEmptyField>
+                                                                ) : (
+                                                                    computeData(rest[attribute.name], i)
+                                                                )}
                                                             </Details.SubInfo>
                                                             <Details.Separator />
                                                         </>

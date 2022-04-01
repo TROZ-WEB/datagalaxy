@@ -110,14 +110,14 @@ const EntityPage = () => {
 
     useEffect(() => {
         if (childrenObjects) {
-            const t = displayedEntity.path.split('\\');
+            const t = displayedEntity?.path?.split('\\');
 
-            const entityPath = t[t.length - 1].toString();
+            const entityPath = t?.[t.length - 1]?.toString();
 
             let count = 0;
             childrenObjects.forEach((co) => {
                 if (co) {
-                    const pathSplited = co.path.split('\\');
+                    const pathSplited = co?.path?.split('\\');
 
                     if (
                         pathSplited[pathSplited.length - 2] === entityPath ||

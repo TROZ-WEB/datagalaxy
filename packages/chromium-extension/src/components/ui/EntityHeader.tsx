@@ -40,12 +40,13 @@ const SEntityName = styled.span`
     font-size: 12px;
     color: #001030;
     text-decoration: none;
-    word-break: break-all;
-    width: fit-content;
+    width: 80%;
+    max-width: 245px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 230px;
+    margin-top: 4px;
+
     ${(props) =>
         props.bold &&
         css`
@@ -94,7 +95,7 @@ const SRoot = styled.div`
         css`
             padding: 0px 18px;
             box-shadow: 0px 0px 14px rgba(16, 53, 177, 0.1);
-            height: 96px;
+            height: 100px;
             box-sizing: border-box;
 
             ${SEntityName} {
@@ -204,8 +205,8 @@ const EntityHeader: FC<EntityHeaderProps> = ({
     const [workspace, setWorkspace] = useState<Workspace>();
 
     useEffect(() => {
-        if (entity && displayPath && entity.path) {
-            const pathAsStringArray = entity.path.trim().split('\\').slice(0, -1).filter(Boolean);
+        if (entity && displayPath && entity?.path) {
+            const pathAsStringArray = entity?.path?.trim().split('\\').slice(0, -1).filter(Boolean);
             if (currentWorkspace) {
                 pathAsStringArray.unshift(currentWorkspace);
             }
@@ -223,7 +224,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
-            {entity && entity.path && (
+            {entity && entity?.path && (
                 <SRoot
                     cardExpanded={isCardExpanded}
                     cursorPointer={!!onClick}

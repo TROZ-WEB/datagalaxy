@@ -46,7 +46,7 @@ const SInput = styled.input`
 `;
 
 const SOperator = styled.div`
-    margin-top: 18px;
+    margin-top: 8px;
     display: flex;
 `;
 
@@ -79,7 +79,6 @@ const SText = styled.p`
 
 const SFieldsContainer = styled.div`
     overflow-x: hidden;
-    margin-top: 16px;
     height: 100%;
     width: 103%;
 `;
@@ -211,7 +210,7 @@ const ModalBase: FC<ModalBaseProps> = ({
                                     }}
                                     name="operator"
                                     onChange={() => handleChangeOperator('or')}
-                                    bold
+                                    inline
                                 />
                                 <SRadio
                                     field={{
@@ -221,7 +220,7 @@ const ModalBase: FC<ModalBaseProps> = ({
                                     }}
                                     name="operator"
                                     onChange={() => handleChangeOperator('and')}
-                                    bold
+                                    inline
                                 />
                             </SOperator>
                         )}
