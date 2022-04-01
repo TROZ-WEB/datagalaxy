@@ -325,7 +325,6 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                         screenConfiguration?.categories?.length !== 0 &&
                         screenConfiguration?.categories?.map((category) => {
                             const filteredAttributes = category.attributes.filter((att) => shouldDisplayAttribute(att));
-                            console.log('test : ', filteredAttributes);
 
                             return (
                                 /* eslint-disable-next-line react/jsx-no-useless-fragment */

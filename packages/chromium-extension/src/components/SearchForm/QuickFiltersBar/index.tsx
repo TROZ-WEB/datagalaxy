@@ -1,5 +1,5 @@
 import React, { FC, useState, useRef } from 'react';
-import { QuickFilters, EnhancedFilter, entitiesTypeRelatedInfos, PickedFilters } from 'shared';
+import { EnhancedFilter, entitiesTypeRelatedInfos, PickedFilters, SearchResponse } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/hooks';
 import Avatar from '../../Avatar/index';
@@ -112,7 +112,7 @@ const SScrollContainer = styled.div`
 /* ---------- COMPONENT ---------- */
 
 interface Props {
-    quickFilters: QuickFilters;
+    quickFilters: SearchResponse;
     search: string;
     pickedFilters: PickedFilters[];
 }

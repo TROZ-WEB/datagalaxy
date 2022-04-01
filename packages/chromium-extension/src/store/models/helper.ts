@@ -1,6 +1,13 @@
 /* eslint-disable import/prefer-default-export */
 import { computed } from 'easy-peasy';
-import { AttributeDefinitionType, decodeJWT, EntityType, getUsersByEmailsAndRole, TechnologyType } from 'shared';
+import {
+    AttributeDefinitionType,
+    decodeJWT,
+    EntityType,
+    Filter,
+    getUsersByEmailsAndRole,
+    TechnologyType,
+} from 'shared';
 
 const resetModel = (initialState) => (state) => {
     /* eslint-disable-next-line no-restricted-syntax */
@@ -93,10 +100,40 @@ const enhancedEntitiesWithAttributesInfo = async (
     });
 };
 
+const enhancedQuickFiltersWithAttributesInfo = async (
+    attributes: AttributeDefinitionType[],
+    rawQuickFilters: { filter: Filter }[],
+): Promise<{ filter: Filter }[]> => {
+    return rawQuickFilters?.map(({ filter }) => {
+        const fullAttribute = attributes?.find((a) => a.attributeKey === filter?.attributeKey);
+        const supportedAttributeKeys = [
+            'Workspace',
+            'TechnologyCode',
+            'Module',
+            'EntityType',
+            'Domains',
+            'DataOwners',
+            'DataStewards',
+            'EntityStatus',
+        ];
+
+        return {
+            filter: {
+                attributeKey: supportedAttributeKeys.includes(filter?.attributeKey)
+                    ? filter?.attributeKey
+                    : fullAttribute?.name || filter?.attributeKey,
+                operator: filter?.operator,
+                values: filter?.values,
+            },
+        };
+    });
+};
+
 export {
     enhancedEntitiesWithUserInfo,
     enhancedEntitiesWithTechnologiesInfo,
     enhancedEntitiesWithAttributesInfo,
+    enhancedQuickFiltersWithAttributesInfo,
     resetModel,
     getDecodedPAT,
 };

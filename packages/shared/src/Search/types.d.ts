@@ -1,4 +1,5 @@
 import { EntityType } from '../Entities/types';
+import { Filter } from '../Filters/types';
 
 /* eslint-disable camelcase */
 export interface SearchResponse {
@@ -7,4 +8,5 @@ export interface SearchResponse {
     result: {
         entities: EntityType[];
     };
+    quickFilters: { filter: Filter }[];
 }

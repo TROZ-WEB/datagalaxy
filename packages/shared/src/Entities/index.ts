@@ -94,6 +94,7 @@ export const entitiesTypeRelatedInfos: customFieldAttr = {
     DataProcessingItem: { glyph: 'Processitem', kind: 'Processing' },
     /* Usage (fonctionnel) */
     Application: { glyph: 'SoftwareApplication', kind: 'Usage' },
+    Usage: { glyph: 'Software', kind: 'Usage' },
     Use: { glyph: 'Software', kind: 'Usage' },
     Process: { glyph: 'Process', kind: 'Usage' },
     UsageField: { glyph: 'UsageField', kind: 'Usage' },
