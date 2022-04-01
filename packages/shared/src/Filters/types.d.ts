@@ -10,11 +10,13 @@ export interface Filter {
 export interface EnhancedFilter {
     filter: Filter;
     icon?: any;
-    label?: string;
+    content?: string;
+    name?: string;
 }
 export interface PickedFilters {
     icon?: any;
-    label?: string[];
+    content?: string[];
+    name?: string;
     filter: Filter;
 }
 export interface QuickFilters {
