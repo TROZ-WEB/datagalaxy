@@ -100,40 +100,10 @@ const enhancedEntitiesWithAttributesInfo = async (
     });
 };
 
-const enhancedQuickFiltersWithAttributesInfo = async (
-    attributes: AttributeDefinitionType[],
-    rawQuickFilters: { filter: Filter }[],
-): Promise<{ filter: Filter }[]> => {
-    return rawQuickFilters?.map(({ filter }) => {
-        const fullAttribute = attributes?.find((a) => a.attributeKey === filter?.attributeKey);
-        const supportedAttributeKeys = [
-            'Workspace',
-            'TechnologyCode',
-            'Module',
-            'EntityType',
-            'Domains',
-            'DataOwners',
-            'DataStewards',
-            'EntityStatus',
-        ];
-
-        return {
-            filter: {
-                attributeKey: supportedAttributeKeys.includes(filter?.attributeKey)
-                    ? filter?.attributeKey
-                    : fullAttribute?.name || filter?.attributeKey,
-                operator: filter?.operator,
-                values: filter?.values,
-            },
-        };
-    });
-};
-
 export {
     enhancedEntitiesWithUserInfo,
     enhancedEntitiesWithTechnologiesInfo,
     enhancedEntitiesWithAttributesInfo,
-    enhancedQuickFiltersWithAttributesInfo,
     resetModel,
     getDecodedPAT,
 };

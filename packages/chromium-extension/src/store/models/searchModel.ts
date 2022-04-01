@@ -7,12 +7,7 @@ import {
     Filter,
     AttributeDefinitionType,
 } from 'shared';
-import {
-    enhancedEntitiesWithTechnologiesInfo,
-    enhancedEntitiesWithAttributesInfo,
-    enhancedQuickFiltersWithAttributesInfo,
-    resetModel,
-} from './helper';
+import { enhancedEntitiesWithTechnologiesInfo, enhancedEntitiesWithAttributesInfo, resetModel } from './helper';
 
 const EMPTY_ARGS = {
     term: '',
@@ -96,10 +91,6 @@ const search = thunk(async (actions: Actions<SearchModel>, searchedArgs: Searche
             enhancedResults.result.entities = await enhancedEntitiesWithAttributesInfo(
                 searchedArgs.attributes,
                 enhancedResults.result.entities,
-            );
-            enhancedResults.quickFilters = await enhancedQuickFiltersWithAttributesInfo(
-                searchedArgs.attributes,
-                enhancedResults.quickFilters,
             );
         }
     } catch (err) {

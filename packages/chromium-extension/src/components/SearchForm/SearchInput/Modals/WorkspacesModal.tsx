@@ -80,7 +80,8 @@ const WorkspacesModal: FC = () => {
         if (field.id) {
             const filter = {
                 icon: [workspacesFields.find((item) => item.id === field.id).icon],
-                label: [field.label],
+                content: [field.label],
+                name: chrome.i18n.getMessage(`attribute_key_Workspace`),
                 filter: { attributeKey: 'Workspace', operator: 'contains', values: [field.id] },
             };
             newPickedFilters.push(filter);

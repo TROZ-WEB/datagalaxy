@@ -96,25 +96,17 @@ const FilterTag = React.forwardRef(({ filter, onClick }: Props, ref) => {
         <SRoot
             ref={ref}
             onClick={onClick}
-            title={
-                filter?.label?.length < 3
-                    ? `${chrome.i18n.getMessage(
-                          `attribute_key_${filter?.filter?.attributeKey}`,
-                      )} : ${filter?.label?.join(', ')}`
-                    : undefined
-            }
+            title={filter?.content?.length < 3 ? `${filter?.name} : ${filter?.content?.join(', ')}` : undefined}
         >
             <SImageContainer>{filter?.icon?.slice(0, 2)?.map((icon) => icon)}</SImageContainer>
-            {filter?.label?.length > 2 && (
-                <SEllipse
-                    title={`${chrome.i18n.getMessage(
-                        `attribute_key_${filter?.filter?.attributeKey}`,
-                    )} : ${filter?.label?.join(', ')}`}
-                >{`+ ${filter?.icon.length - 2}`}</SEllipse>
+            {filter?.content?.length > 2 && (
+                <SEllipse title={`${filter?.name} : ${filter?.content?.join(', ')}`}>{`+ ${
+                    filter?.icon.length - 2
+                }`}</SEllipse>
             )}
             <STextContainer>
-                {filter?.label?.length === 1 && <SValue>{filter?.label?.map((label) => label)}</SValue>}
-                {filter?.label?.length > 1 && (
+                {filter?.content?.length === 1 && <SValue>{filter?.content?.map((content) => content)}</SValue>}
+                {filter?.content?.length > 1 && (
                     <SOperator>
                         {filter?.filter?.operator === 'contains'
                             ? chrome.i18n.getMessage(`operator_or`)

@@ -38,7 +38,8 @@ const LastModifiedModal: FC = () => {
 
         const filter = {
             icon: null,
-            label: [field.label],
+            content: [field.label],
+            name: chrome.i18n.getMessage(`attribute_key_LastModificationTime`),
             filter: { attributeKey: 'LastModificationTime', operator: field.id, values: [date] },
         };
         newPickedFilters.push(filter);

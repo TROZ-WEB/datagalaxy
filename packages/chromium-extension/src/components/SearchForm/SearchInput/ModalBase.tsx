@@ -136,23 +136,24 @@ const ModalBase: FC<ModalBaseProps> = ({
         if (filterIndex === -1) {
             const filter = {
                 icon: [field.icon],
-                label: [field.label],
+                content: [field.label],
+                name: field.name,
                 filter: { attributeKey, operator: newOperator, values: [field.id] },
             };
             newPickedFilters.push(filter);
         } else {
-            const { icon, label, filter } = newPickedFilters[filterIndex];
+            const { icon, content, filter } = newPickedFilters[filterIndex];
             newPickedFilters[filterIndex].filter.operator = newOperator;
             const idIndex = filter.values?.findIndex((item) => item === field.id);
 
             if (idIndex === -1) {
                 filter.values.push(field.id);
                 icon.push(field.icon);
-                label.push(field.label);
+                content.push(field.label);
             } else {
                 filter.values.splice(idIndex, 1);
                 icon.splice(idIndex, 1);
-                label.splice(idIndex, 1);
+                content.splice(idIndex, 1);
             }
 
             if (filter.values.length === 0) {

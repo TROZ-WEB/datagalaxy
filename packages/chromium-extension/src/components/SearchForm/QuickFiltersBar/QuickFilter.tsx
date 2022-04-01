@@ -67,17 +67,12 @@ const QuickFilter = React.forwardRef(({ filter, onClick, className }: Props, ref
             ref={ref}
             className={className}
             onClick={onClick}
-            title={`${
-                chrome.i18n.getMessage(`attribute_key_${filter?.filter?.attributeKey}`) || filter?.filter?.attributeKey
-            }${filter?.label ? ` : ${filter?.label}` : ''}`}
+            title={`${filter?.name}${filter?.content ? ` : ${filter?.content}` : ''}`}
         >
             {filter?.icon && <SImageContainer>{filter?.icon}</SImageContainer>}
             <STextContainer>
-                <SLabel>
-                    {chrome.i18n.getMessage(`attribute_key_${filter?.filter?.attributeKey}`) ||
-                        filter?.filter?.attributeKey}
-                </SLabel>
-                <SValue>{filter?.label ? filter?.label : '...'}</SValue>
+                <SLabel>{filter?.name}</SLabel>
+                <SValue>{filter?.content ? filter?.content : '...'}</SValue>
             </STextContainer>
         </SRoot>
     );

@@ -122,6 +122,7 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
         (f) => !f?.filter?.attributeKey.includes('ObjectLinks'),
     );
     const { technologies, domains, users, status, workspaces } = useStoreState((state) => state.filters);
+    const { searchedArgs } = useStoreState((state) => state.search);
 
     const [scrollValue, setScrollValue] = useState(0);
     const shadowRoot = document.getElementById('datagalaxy_shadow_root');
@@ -158,15 +159,16 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
             if (filterIndex === -1) {
                 const filter = {
                     icon: [f.icon],
-                    label: [f.label],
+                    name: f.name,
+                    content: [f.content],
                     filter: f.filter,
                 };
                 newPickedFilters.push(filter);
             } else {
-                const { icon, label, filter } = newPickedFilters[filterIndex];
+                const { icon, content, filter } = newPickedFilters[filterIndex];
                 filter.values.push(f.id);
                 icon.push(f.icon);
-                label.push(f.label);
+                content.push(f.content);
             }
 
             updatePickedFilters(newPickedFilters);
@@ -178,6 +180,16 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
         }
     };
 
+    const supportedAttributeKeys = [
+        'Workspace',
+        'TechnologyCode',
+        'Module',
+        'EntityType',
+        'Domains',
+        'DataOwners',
+        'DataStewards',
+        'EntityStatus',
+    ];
     const enhancedQuickFilters = [];
 
     QuickFiltersArray?.forEach(({ filter }) => {
@@ -195,10 +207,15 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                                 <FieldIcon hash={tempEnhancedFilter?.imageHash} title={tempEnhancedFilter?.name} />
                             );
                         }
-                        enhancedFilter.label = tempEnhancedFilter?.name;
+                        enhancedFilter.content = tempEnhancedFilter?.name;
+                        enhancedFilter.name = chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`);
                         enhancedQuickFilters.push(enhancedFilter);
                     } else {
-                        enhancedQuickFilters.push({ label: filter.values[0], filter });
+                        enhancedQuickFilters.push({
+                            name: chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`),
+                            content: filter.values[0],
+                            filter,
+                        });
                     }
                     break;
                 }
@@ -213,10 +230,15 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                                 />
                             );
                         }
-                        enhancedFilter.label = tempEnhancedFilter?.displayName;
+                        enhancedFilter.content = tempEnhancedFilter?.displayName;
+                        enhancedFilter.name = chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`);
                         enhancedQuickFilters.push(enhancedFilter);
                     } else {
-                        enhancedQuickFilters.push({ label: filter.values[0], filter });
+                        enhancedQuickFilters.push({
+                            name: chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`),
+                            content: filter.values[0],
+                            filter,
+                        });
                     }
                     break;
                 }
@@ -224,10 +246,15 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                     const tempEnhancedFilter = moduleFields?.find((item) => item.id === value);
                     if (tempEnhancedFilter) {
                         enhancedFilter.icon = tempEnhancedFilter.icon;
-                        enhancedFilter.label = tempEnhancedFilter.label;
+                        enhancedFilter.content = tempEnhancedFilter.label;
+                        enhancedFilter.name = chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`);
                         enhancedQuickFilters.push(enhancedFilter);
                     } else {
-                        enhancedQuickFilters.push({ label: filter.values[0], filter });
+                        enhancedQuickFilters.push({
+                            name: chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`),
+                            content: filter.values[0],
+                            filter,
+                        });
                     }
                     break;
                 }
@@ -239,8 +266,8 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                             title={chrome.i18n.getMessage(`entity_label_full_${value}`)}
                         />
                     );
-                    enhancedFilter.label = chrome.i18n.getMessage(`entity_label_full_${value}`);
-
+                    enhancedFilter.content = chrome.i18n.getMessage(`entity_label_full_${value}`);
+                    enhancedFilter.name = chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`);
                     enhancedQuickFilters.push(enhancedFilter);
 
                     break;
@@ -251,10 +278,15 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                         enhancedFilter.icon = (
                             <ColorPoint color={tempEnhancedFilter?.color} title={tempEnhancedFilter?.label} />
                         );
-                        enhancedFilter.label = tempEnhancedFilter?.label;
+                        enhancedFilter.content = tempEnhancedFilter?.label;
+                        enhancedFilter.name = chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`);
                         enhancedQuickFilters.push(enhancedFilter);
                     } else {
-                        enhancedQuickFilters.push({ label: filter.values[0], filter });
+                        enhancedQuickFilters.push({
+                            name: chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`),
+                            content: filter.values[0],
+                            filter,
+                        });
                     }
                     break;
                 }
@@ -262,10 +294,15 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                     const tempEnhancedFilter = users?.owners?.find((item) => item.userId === value);
                     if (tempEnhancedFilter) {
                         enhancedFilter.icon = <Avatar size="mini" user={tempEnhancedFilter} />;
-                        enhancedFilter.label = `${tempEnhancedFilter.firstName} ${tempEnhancedFilter.lastName}`;
+                        enhancedFilter.content = `${tempEnhancedFilter.firstName} ${tempEnhancedFilter.lastName}`;
+                        enhancedFilter.name = chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`);
                         enhancedQuickFilters.push(enhancedFilter);
                     } else {
-                        enhancedQuickFilters.push({ label: filter.values[0], filter });
+                        enhancedQuickFilters.push({
+                            name: chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`),
+                            content: filter.values[0],
+                            filter,
+                        });
                     }
                     break;
                 }
@@ -273,10 +310,15 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                     const tempEnhancedFilter = users?.stewards?.find((item) => item.userId === value);
                     if (tempEnhancedFilter) {
                         enhancedFilter.icon = <Avatar size="mini" user={tempEnhancedFilter} />;
-                        enhancedFilter.label = `${tempEnhancedFilter.firstName} ${tempEnhancedFilter.lastName}`;
+                        enhancedFilter.content = `${tempEnhancedFilter.firstName} ${tempEnhancedFilter.lastName}`;
+                        enhancedFilter.name = chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`);
                         enhancedQuickFilters.push(enhancedFilter);
                     } else {
-                        enhancedQuickFilters.push({ label: filter.values[0], filter });
+                        enhancedQuickFilters.push({
+                            name: chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`),
+                            content: filter.values[0],
+                            filter,
+                        });
                     }
                     break;
                 }
@@ -284,29 +326,32 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                     const tempEnhancedFilter = status?.find((item) => item.key === value);
                     if (tempEnhancedFilter) {
                         enhancedFilter.icon = <Status status={tempEnhancedFilter.value} hideLabel />;
-                        enhancedFilter.label = chrome.i18n.getMessage(`entity_status_${tempEnhancedFilter.value}`);
+                        enhancedFilter.content = chrome.i18n.getMessage(`entity_status_${tempEnhancedFilter.value}`);
+                        enhancedFilter.name = chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`);
                         enhancedQuickFilters.push(enhancedFilter);
                     } else {
-                        enhancedQuickFilters.push({ label: filter.values[0], filter });
+                        enhancedQuickFilters.push({
+                            name: chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`),
+                            content: filter.values[0],
+                            filter,
+                        });
                     }
                     break;
                 }
-                default:
-                    enhancedQuickFilters.push({ label: filter.values[0], filter });
+                default: {
+                    const fullAttribute = searchedArgs?.attributes?.find(
+                        (a) => a.attributeKey === filter?.attributeKey,
+                    );
+
+                    enhancedQuickFilters.push({
+                        name: fullAttribute?.name || filter.attributeKey,
+                        content: filter.values[0],
+                        filter,
+                    });
+                }
             }
-        } else {
-            const supportedAttributeKeys = [
-                'Workspace',
-                'TechnologyCode',
-                'Module',
-                'EntityType',
-                'Domains',
-                'DataOwners',
-                'DataStewards',
-                'EntityStatus',
-            ];
-            if (supportedAttributeKeys.includes(filter.attributeKey)) enhancedQuickFilters.push({ filter });
-        }
+        } else if (supportedAttributeKeys.includes(filter.attributeKey))
+            enhancedQuickFilters.push({ name: chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`), filter });
     });
 
     const enhancedQuickFiltersArray = enhancedQuickFilters?.slice(0, 12);
