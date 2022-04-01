@@ -1158,5 +1158,8 @@
     },
     "recently_accessed_objects": {
         "message": "Objets consultés récemment"
+    },
+    "recent_searches": {
+        "message": "Dernières recherches"
     }
 }

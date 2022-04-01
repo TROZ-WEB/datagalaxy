@@ -7,7 +7,6 @@ import {
     fetchStatus as fetchStatusAPI,
     Filter,
     PickedFilters,
-    QuickFilters,
     Workspace,
     UsersByRoleResponse,
     Domain,

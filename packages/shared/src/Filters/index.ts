@@ -2,7 +2,7 @@
 import { get } from '../Http';
 import { Domain, Status } from './types';
 
-export type { Filter, QuickFilters, Domain, Status, PickedFilters, EnhancedFilter } from './types';
+export type { Filter, Domain, Status, PickedFilters, EnhancedFilter } from './types';
 
 export const fetchDomains = async (apiUrl: string): Promise<Domain[]> => {
     try {

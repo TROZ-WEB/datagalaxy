@@ -1161,5 +1161,8 @@
     },
     "recently_accessed_objects": {
         "message": "Recently viewed"
+    },
+    "recent_searches": {
+        "message": "Recent searches"
     }
 }

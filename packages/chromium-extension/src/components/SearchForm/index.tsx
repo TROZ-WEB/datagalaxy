@@ -8,6 +8,7 @@ import LoadingScreen from '../LoadingScreen';
 import EntityHeader from '../ui/EntityHeader';
 import Title from '../ui/Title';
 import QuickFiltersBar from './QuickFiltersBar';
+import RecentSearchCard from './RecentSearchCard';
 import SearchInput from './SearchInput';
 import DomainsModal from './SearchInput/Modals/DomainsModal';
 import EntityTypeModal from './SearchInput/Modals/EntityTypeModal';
@@ -139,11 +140,23 @@ enum AttributesWeight {
     GdprUsageDuration = 1,
 }
 
+interface Payload {
+    term: string;
+    technologies: TechnologyType[];
+    filters: Filter[];
+    limit?: number;
+    versionId?: string;
+    attributes: AttributeDefinitionType[];
+    saveSearchPayload: boolean;
+}
+
 const SearchForm = () => {
     const dispatch = useStoreDispatch();
     const history = useHistory();
     const { pickedFilters, versionId } = useStoreState((state) => state.filters);
-    const { searchedArgs, searchResults, exactMatches, quickFilters } = useStoreState((state) => state.search);
+    const { searchedArgs, searchResults, exactMatches, quickFilters, recentSearches } = useStoreState(
+        (state) => state.search,
+    );
     const { recentlyAccessedObjects } = useStoreState((state) => state.entity);
     const { updateIsLoaded, updateCurrentWorkspace } = useStoreActions((actions) => actions.entity);
     const { technologies, attributes } = useStoreState((state) => state.auth);
@@ -153,7 +166,6 @@ const SearchForm = () => {
     const [success, setSuccess] = useState(false);
     const [displayMoreExactMatches, setDisplayMoreExactMatches] = useState(false);
     const [exactMatchesEntitiesToDisplay, setExactMatchesEntitiesToDisplay] = useState<EntityType[]>([]);
-
     const [enhancedRecentlyAccessedObjects, setEnhancedRecentlyAccessedObjects] = useState<EntityType[]>();
 
     useEffect(() => {
@@ -189,20 +201,12 @@ const SearchForm = () => {
         .filter((item) => item.attributeKey !== 'Workspace');
 
     const debounceOnChange = async ({ value }: { value: string }) => {
-        interface Payload {
-            term: string;
-            technologies: TechnologyType[];
-            filters: Filter[];
-            limit?: number;
-            versionId?: string;
-            attributes: AttributeDefinitionType[];
-        }
-
         const payload: Payload = {
             term: value,
             technologies,
             filters: searchPickedFilters,
             attributes,
+            saveSearchPayload: false,
         };
 
         if (!value && searchPickedFilters.length === 0) {
@@ -225,6 +229,17 @@ const SearchForm = () => {
         }
     };
 
+    const historizeSearch = async () => {
+        const payload: Payload = {
+            term: searchedArgs.term,
+            technologies,
+            filters: searchedArgs.filters,
+            attributes,
+            saveSearchPayload: true,
+        };
+        await dispatch.search.search(payload);
+    };
+
     const searchInputProps = useSearchInput({
         debounceDuration: 1000,
         debounceOnChange,
@@ -234,6 +249,7 @@ const SearchForm = () => {
     const hasSearchResults = searchResults.result.entities.length !== 0;
     const hasExactMatches = filteredExactMatches?.result.entities.length !== 0;
     const hasRecentlyAccessedObjects = enhancedRecentlyAccessedObjects?.length !== 0;
+    const hasRecentSearches = recentSearches?.length !== 0;
     const displayShowMoreButton = filteredExactMatches?.result.entities.length > 4;
 
     const { Overlay } = useStoreState((state) => state.modal);
@@ -323,9 +339,8 @@ const SearchForm = () => {
                                                                 exactMatches={exactMatchAttributes}
                                                                 id={`entityHeader${idx}`}
                                                                 onClick={() => {
-                                                                    updateCurrentWorkspace(
-                                                                        entity?.path?.split('\\')[1],
-                                                                    );
+                                                                    historizeSearch();
+                                                                    updateCurrentWorkspace(entity.path.split('\\')[1]);
 
                                                                     updateIsLoaded(false);
                                                                     const URLLocation = entity.location.replace(
@@ -395,7 +410,26 @@ const SearchForm = () => {
                             {!hasSearchResults && !hasExactMatches && (
                                 // eslint-disable-next-line react/jsx-no-useless-fragment
                                 <>
-                                    {hasRecentlyAccessedObjects ? (
+                                    {hasRecentSearches && (
+                                        <SContainer>
+                                            <SResultsTitleContainerWrapper>
+                                                <Title>{chrome.i18n.getMessage('recent_searches')}</Title>
+                                            </SResultsTitleContainerWrapper>
+                                            <SSearchCardsResultWrapper>
+                                                {recentSearches?.map((recentSearch, idx, array) => (
+                                                    <SSearchCardResultContainer
+                                                        key={idx} // eslint-disable-line react/no-array-index-key
+                                                        isLastElement={idx === array.length - 1}
+                                                    >
+                                                        <SSearchCardResultWrapper>
+                                                            <RecentSearchCard recentSearch={recentSearch} />
+                                                        </SSearchCardResultWrapper>
+                                                    </SSearchCardResultContainer>
+                                                ))}
+                                            </SSearchCardsResultWrapper>
+                                        </SContainer>
+                                    )}
+                                    {hasRecentlyAccessedObjects && (
                                         <SContainer>
                                             <SResultsTitleContainerWrapper>
                                                 <Title>{chrome.i18n.getMessage('recently_accessed_objects')}</Title>
@@ -428,7 +462,8 @@ const SearchForm = () => {
                                                 ))}
                                             </SSearchCardsResultWrapper>
                                         </SContainer>
-                                    ) : (
+                                    )}
+                                    {!hasRecentlyAccessedObjects && !hasRecentSearches && (
                                         <SBlankSearch>
                                             <SBlankSearchImage alt="empty result" src={BlankSearch} />
                                         </SBlankSearch>
