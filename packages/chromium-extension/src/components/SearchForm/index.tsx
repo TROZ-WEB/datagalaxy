@@ -247,6 +247,10 @@ const SearchForm = () => {
         initialState: { value: searchedArgs.term },
     });
 
+    const searchFromRecentSearch = async (term: string, filters: Filter[]) => {
+        // HOW TO CAST FILTERS TO PICKED FILTERS ?
+        searchInputProps.searchFromPrevious(term, filters);
+    };
     const hasSearchResults = searchResults.result.entities.length !== 0;
     const hasExactMatches = filteredExactMatches?.result.entities.length !== 0;
     const hasRecentlyAccessedObjects = enhancedRecentlyAccessedObjects?.length !== 0;
@@ -426,7 +430,15 @@ const SearchForm = () => {
                                                         isLastElement={idx === array.length - 1}
                                                     >
                                                         <SSearchCardResultWrapper>
-                                                            <RecentSearchCard recentSearch={recentSearch} />
+                                                            <RecentSearchCard
+                                                                onClick={() => {
+                                                                    searchFromRecentSearch(
+                                                                        recentSearch.searchPayload.query,
+                                                                        recentSearch.searchPayload.filters,
+                                                                    );
+                                                                }}
+                                                                recentSearch={recentSearch}
+                                                            />
                                                         </SSearchCardResultWrapper>
                                                     </SSearchCardResultContainer>
                                                 ))}

@@ -27,13 +27,14 @@ const SQueryText = styled.span`
 
 interface Props {
     recentSearch: SearchHistoryType;
+    onClick: () => void;
 }
 
-const RecentSearchCard: FC<Props> = ({ recentSearch }) => {
+const RecentSearchCard: FC<Props> = ({ recentSearch, onClick }) => {
     const { searchPayload } = recentSearch;
 
     return (
-        <SRoot>
+        <SRoot onClick={() => onClick()}>
             <SQueryContainer>
                 <img alt="back" src={recentSearchs} />
                 <SQueryText>{searchPayload.query}</SQueryText>

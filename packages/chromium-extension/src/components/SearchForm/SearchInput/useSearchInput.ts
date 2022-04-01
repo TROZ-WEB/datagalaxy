@@ -58,8 +58,10 @@ export const useSearchInput = ({
     });
 
     const { pickedFilters, versionId } = useStoreState((state) => state.filters);
-    const [clearing, setClearing] = useState(false);
+
+    const [directSetting, setDirectSetting] = useState(false);
     const [alreadyDebounced, setAlreadyDebounced] = useState(false);
+    const [previousSearchedTerm, setPreviousSearchedTerm] = useState('');
 
     const debouncedvalue = useDebounce(value, debounceDuration);
 
@@ -83,21 +85,40 @@ export const useSearchInput = ({
     const onClearSearch = useCallback(async () => {
         updatePickedFilters([]);
         dispatch({ type: 'CHANGE', value: '' });
-        setClearing(true);
+        setDirectSetting(true);
     }, [dispatch]);
+
+    const searchFromPrevious = useCallback(
+        async (term, pf) => {
+            updatePickedFilters(pf);
+            dispatch({ type: 'CHANGE', value: term });
+            setDirectSetting(true);
+            setPreviousSearchedTerm(term);
+        },
+        [dispatch],
+    );
 
     useEffect(() => {
         if (debounceOnChange) {
-            if (clearing) {
+            if (directSetting) {
                 setAlreadyDebounced(true);
             }
             if (!alreadyDebounced) {
-                debounceOnChange({ value: clearing ? '' : debouncedvalue });
+                let term = '';
+                if (previousSearchedTerm) {
+                    term = previousSearchedTerm;
+                    setPreviousSearchedTerm(null);
+                } else if (directSetting) {
+                    term = '';
+                } else {
+                    term = debouncedvalue;
+                }
+                debounceOnChange({ value: term });
             } else {
                 setAlreadyDebounced(false);
             }
         }
-        setClearing(false);
+        setDirectSetting(false);
     }, [debouncedvalue, pickedFilters, versionId]);
 
     return {
@@ -108,5 +129,6 @@ export const useSearchInput = ({
         onChange,
         onClearSearch,
         debouncedvalue,
+        searchFromPrevious,
     };
 };
