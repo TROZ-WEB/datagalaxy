@@ -191,7 +191,9 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                     const tempEnhancedFilter = workspaces?.find((item) => item.defaultVersionId === value);
                     if (tempEnhancedFilter) {
                         if (tempEnhancedFilter?.imageHash) {
-                            enhancedFilter.icon = <FieldIcon hash={tempEnhancedFilter?.imageHash} />;
+                            enhancedFilter.icon = (
+                                <FieldIcon hash={tempEnhancedFilter?.imageHash} title={tempEnhancedFilter?.name} />
+                            );
                         }
                         enhancedFilter.label = tempEnhancedFilter?.name;
                         enhancedQuickFilters.push(enhancedFilter);
@@ -204,7 +206,12 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                     const tempEnhancedFilter = technologies?.find((item) => item.technologyCode === value);
                     if (tempEnhancedFilter) {
                         if (tempEnhancedFilter?.imageHash) {
-                            enhancedFilter.icon = <FieldIcon hash={tempEnhancedFilter?.imageHash} />;
+                            enhancedFilter.icon = (
+                                <FieldIcon
+                                    hash={tempEnhancedFilter?.imageHash}
+                                    title={tempEnhancedFilter?.displayName}
+                                />
+                            );
                         }
                         enhancedFilter.label = tempEnhancedFilter?.displayName;
                         enhancedQuickFilters.push(enhancedFilter);
@@ -229,6 +236,7 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                         <DGGlyph
                             icon={entitiesTypeRelatedInfos[value].glyph}
                             kind={entitiesTypeRelatedInfos[value].kind.toLocaleLowerCase()}
+                            title={chrome.i18n.getMessage(`entity_label_full_${value}`)}
                         />
                     );
                     enhancedFilter.label = chrome.i18n.getMessage(`entity_label_full_${value}`);
@@ -240,7 +248,9 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                 case 'Domains': {
                     const tempEnhancedFilter = domains?.find((item) => item.id === value);
                     if (tempEnhancedFilter) {
-                        enhancedFilter.icon = <ColorPoint color={tempEnhancedFilter?.color} />;
+                        enhancedFilter.icon = (
+                            <ColorPoint color={tempEnhancedFilter?.color} title={tempEnhancedFilter?.label} />
+                        );
                         enhancedFilter.label = tempEnhancedFilter?.label;
                         enhancedQuickFilters.push(enhancedFilter);
                     } else {

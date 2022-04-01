@@ -30,11 +30,12 @@ const SRoot = styled.div`
 interface GlyphProps {
     icon: string;
     className?: string;
+    title?: string;
 }
 
-const Glyph: FC<GlyphProps> = ({ icon, className }) => {
+const Glyph: FC<GlyphProps> = ({ icon, className, title }) => {
     return (
-        <SRoot className={className}>
+        <SRoot className={className} title={title}>
             <SGlyph icon={icon} />
         </SRoot>
     );

@@ -12,10 +12,10 @@ const SIcon = styled.img`
 
 /* ---------- COMPONENT ---------- */
 
-const WorkspaceIcon = ({ hash }) => {
+const WorkspaceIcon = ({ hash, title }) => {
     const url = useStoreState((state) => state.auth.pubapi);
 
-    return <SIcon src={`${url}/image?hash=${encodeURIComponent(hash)}`} />;
+    return <SIcon src={`${url}/image?hash=${encodeURIComponent(hash)}`} title={title} />;
 };
 
 export default WorkspaceIcon;

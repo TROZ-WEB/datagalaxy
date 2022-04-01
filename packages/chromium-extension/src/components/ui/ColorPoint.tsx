@@ -20,11 +20,17 @@ interface Props {
     color: string;
     defaultColor?: string;
     className?: string;
+    title?: string;
 }
 
-const ColorPoint: FC<Props> = ({ color, defaultColor, className }) => {
+const ColorPoint: FC<Props> = ({ color, title, defaultColor, className }) => {
     return (
-        <SColorPoint className={className} color={color} withBorder={color === 'white' || defaultColor === 'white'} />
+        <SColorPoint
+            className={className}
+            color={color}
+            title={title}
+            withBorder={color === 'white' || defaultColor === 'white'}
+        />
     );
 };
 

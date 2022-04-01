@@ -66,7 +66,7 @@ const Breadcrumb = ({ path, workspace }: { path: string[]; workspace: Workspace 
                             title={workspace?.name}
                         />
                     ) : (
-                        <WorkspaceIconPlaceholder workspaceTrigram={workspace?.trigram} />
+                        <WorkspaceIconPlaceholder title={workspace?.name} workspaceTrigram={workspace?.trigram} />
                     )}
                     {formattedPath && formattedPath.shorten.length !== 0 ? (
                         <SFormatted>

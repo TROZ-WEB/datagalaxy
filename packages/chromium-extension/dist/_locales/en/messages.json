@@ -1137,5 +1137,14 @@
     },
     "help_center_button": {
         "message": "Connect to online help"
+    },
+    "docking_panel_details": {
+        "message": "Details"
+    },
+    "docking_panel_descendants": {
+        "message": "Descendants"
+    },
+    "docking_panel_related": {
+        "message": "Related Objets"
     }
 }

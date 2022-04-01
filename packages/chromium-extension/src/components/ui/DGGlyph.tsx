@@ -47,11 +47,12 @@ interface DGGlyphProps {
     icon: string;
     kind: string;
     className?: string;
+    title?: string;
     size?: 'S' | 'M' | 'L' | 'XL';
 }
 
-const DGGlyph: FC<DGGlyphProps> = ({ size = 'S', className, icon, kind }) => {
-    return <SEntityDGGlyph className={className} icon={icon} kind={kind} size={size} />;
+const DGGlyph: FC<DGGlyphProps> = ({ size = 'S', className, title, icon, kind }) => {
+    return <SEntityDGGlyph className={className} icon={icon} kind={kind} size={size} title={title} />;
 };
 
 export default DGGlyph;

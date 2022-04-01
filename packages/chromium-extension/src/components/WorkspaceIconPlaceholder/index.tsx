@@ -130,7 +130,7 @@ const getBackgroundColor = (firstLetter) => {
     }
 };
 
-const WorkspaceIconPlaceHolder = ({ workspaceTrigram }: { workspaceTrigram: string }) => {
+const WorkspaceIconPlaceHolder = ({ workspaceTrigram, title }: { workspaceTrigram: string; title: string }) => {
     const [color, setColor] = useState<string>();
     const [formattedTrigram, setFormattedTrigram] = useState<string>();
 
@@ -146,7 +146,11 @@ const WorkspaceIconPlaceHolder = ({ workspaceTrigram }: { workspaceTrigram: stri
         }
     }, [workspaceTrigram]);
 
-    return <SWorkspacePlacerHolder color={CustomColors[color]}>{formattedTrigram}</SWorkspacePlacerHolder>;
+    return (
+        <SWorkspacePlacerHolder color={CustomColors[color]} title={title}>
+            {formattedTrigram}
+        </SWorkspacePlacerHolder>
+    );
 };
 
 export default WorkspaceIconPlaceHolder;

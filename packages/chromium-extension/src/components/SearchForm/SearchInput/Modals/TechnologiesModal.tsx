@@ -33,7 +33,7 @@ const TechnologiesModal: FC = () => {
         };
 
         if (technology.imageHash) {
-            const newIcon = <FieldIcon hash={technology.imageHash} />;
+            const newIcon = <FieldIcon hash={technology.imageHash} title={technology.displayName} />;
             t.icon = newIcon;
         }
 

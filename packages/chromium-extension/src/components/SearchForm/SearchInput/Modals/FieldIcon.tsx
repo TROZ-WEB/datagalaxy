@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import { useStoreState } from '../../../../store/hooks';
 
@@ -12,10 +12,15 @@ const SIcon = styled.img`
 
 /* ---------- COMPONENT ---------- */
 
-const FieldIcon = ({ hash }) => {
+interface Props {
+    hash: string;
+    title: string;
+}
+
+const FieldIcon: FC<Props> = ({ hash, title }) => {
     const url = useStoreState((state) => state.auth.pubapi);
 
-    return <SIcon src={`${url}/image?hash=${encodeURIComponent(hash)}`} />;
+    return <SIcon src={`${url}/image?hash=${encodeURIComponent(hash)}`} title={title} />;
 };
 
 export default FieldIcon;

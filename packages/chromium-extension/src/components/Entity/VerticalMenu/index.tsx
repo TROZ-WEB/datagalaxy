@@ -36,6 +36,7 @@ const VerticalMenu: FC<VerticalMenuProps> = ({ URLLocation, childrenObjectsNumbe
                 icon="Info"
                 id="infoButton1"
                 onClick={() => history.replace(`/app/entities/${URLLocation}/`)}
+                title={chrome.i18n.getMessage(`docking_panel_details`)}
                 variant={path === '' && 'active'}
             />
             <VerticalMenuButton
@@ -43,6 +44,7 @@ const VerticalMenu: FC<VerticalMenuProps> = ({ URLLocation, childrenObjectsNumbe
                 icon="Hierarchy"
                 id="infoButton2"
                 onClick={() => history.replace(`/app/entities/${URLLocation}/children-objects`)}
+                title={chrome.i18n.getMessage(`docking_panel_descendants`)}
                 variant={path === 'children-objects' && 'active'}
             />
             <VerticalMenuButton
@@ -50,6 +52,7 @@ const VerticalMenu: FC<VerticalMenuProps> = ({ URLLocation, childrenObjectsNumbe
                 icon="Mapping"
                 id="infoButton3"
                 onClick={() => history.replace(`/app/entities/${URLLocation}/linked-objects`)}
+                title={chrome.i18n.getMessage(`docking_panel_related`)}
                 variant={path === 'linked-objects' && 'active'}
             />
         </SRoot>

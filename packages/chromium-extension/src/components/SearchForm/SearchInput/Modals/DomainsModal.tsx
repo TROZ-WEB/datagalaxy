@@ -29,7 +29,7 @@ const DomainsModal: FC = () => {
             return {
                 id: item.id,
                 label: item.label,
-                icon: <ColorPoint color={item.color} />,
+                icon: <ColorPoint color={item.color} title={item.label} />,
                 checked: !!pickedFilters?.[index]?.filter?.values?.includes(item.id),
             };
         });
