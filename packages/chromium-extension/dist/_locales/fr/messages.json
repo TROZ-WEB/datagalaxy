@@ -865,6 +865,18 @@
     "attribute_key_IsPartitionKey": {
         "message": "Clé de partition"
     },
+    "attribute_key_IsMandatory": {
+        "message": "Obligatoire"
+    },
+    "attribute_key_IsPrimaryKey": {
+        "message": "Clé primaire"
+    },
+    "attribute_key_IsForeignKey": {
+        "message": "Clé étrangère"
+    },
+    "attribute_key_IsTechnicalData": {
+        "message": "Technique"
+    },
     "attribute_key_Technology_Code": {
         "message": "Technologie"
     },
