@@ -8,7 +8,12 @@ import {
     QuickFilters,
     AttributeDefinitionType,
 } from 'shared';
-import { enhancedEntitiesWithTechnologiesInfo, enhancedEntitiesWithAttributesInfo, resetModel } from './helper';
+import {
+    enhancedEntitiesWithTechnologiesInfo,
+    enhancedEntitiesWithAttributesInfo,
+    enhancedQuickFiltersWithAttributesInfo,
+    resetModel,
+} from './helper';
 
 const EMPTY_ARGS = {
     term: '',
@@ -22,6 +27,7 @@ const EMPTY_RESPONSE: SearchResponse = {
     result: {
         entities: [],
     },
+    quickFilters: [],
 };
 
 interface SearchedArgs {
@@ -44,7 +50,7 @@ const initialState = {
 
 export interface SearchModel {
     /* State */
-    quickFilters: QuickFilters;
+    quickFilters: SearchResponse;
     searchedArgs?: SearchedArgs;
     searchResults: SearchResponse;
     exactMatches: SearchResponse;
@@ -56,7 +62,7 @@ export interface SearchModel {
     updateSearchedArgs: Action<SearchModel, Partial<SearchedArgs>>;
     updateResults: Action<SearchModel, SearchResponse>;
     updateSelectedEntity: Action<SearchModel, EntityType>;
-    updateQuickFilters: Action<SearchModel, any>;
+    updateQuickFilters: Action<SearchModel, SearchResponse>;
     /* Thunks */
     search: Thunk<SearchModel, Partial<SearchedArgs>>;
 }
@@ -91,6 +97,10 @@ const search = thunk(async (actions: Actions<SearchModel>, searchedArgs: Searche
             enhancedResults.result.entities = await enhancedEntitiesWithAttributesInfo(
                 searchedArgs.attributes,
                 enhancedResults.result.entities,
+            );
+            enhancedResults.quickFilters = await enhancedQuickFiltersWithAttributesInfo(
+                searchedArgs.attributes,
+                enhancedResults.quickFilters,
             );
         }
     } catch (err) {

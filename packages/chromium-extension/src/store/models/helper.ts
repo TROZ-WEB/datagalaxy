@@ -1,6 +1,13 @@
 /* eslint-disable import/prefer-default-export */
 import { computed } from 'easy-peasy';
-import { AttributeDefinitionType, decodeJWT, EntityType, getUsersByEmailsAndRole, TechnologyType } from 'shared';
+import {
+    AttributeDefinitionType,
+    decodeJWT,
+    EntityType,
+    Filter,
+    getUsersByEmailsAndRole,
+    TechnologyType,
+} from 'shared';
 
 const resetModel = (initialState) => (state) => {
     /* eslint-disable-next-line no-restricted-syntax */
@@ -93,10 +100,32 @@ const enhancedEntitiesWithAttributesInfo = async (
     });
 };
 
+const enhancedQuickFiltersWithAttributesInfo = async (
+    attributes: AttributeDefinitionType[],
+    rawQuickFilters: { filter: Filter }[],
+): Promise<{ filter: Filter }[]> => {
+    console.log('attributes : ', attributes);
+
+    return rawQuickFilters?.map((rawQuickFilter) => {
+        const fullAttribute =
+            attributes?.find((a) => a.attributeKey === rawQuickFilter?.filter?.attributeKey && a.dataType === 'Common')
+                .attributeKey || rawQuickFilter?.filter?.attributeKey;
+
+        return {
+            filter: {
+                attributeKey: fullAttribute,
+                operator: rawQuickFilter?.filter?.operator,
+                values: rawQuickFilter?.filter?.values,
+            },
+        };
+    });
+};
+
 export {
     enhancedEntitiesWithUserInfo,
     enhancedEntitiesWithTechnologiesInfo,
     enhancedEntitiesWithAttributesInfo,
+    enhancedQuickFiltersWithAttributesInfo,
     resetModel,
     getDecodedPAT,
 };
