@@ -11,6 +11,7 @@ export interface EnhancedFilter {
     filter: Filter;
     icon?: any;
     content?: string;
+    label?: string;
     name?: string;
 }
 export interface PickedFilters {

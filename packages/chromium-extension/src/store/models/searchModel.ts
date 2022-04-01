@@ -63,6 +63,7 @@ export interface SearchModel {
     updateResults: Action<SearchModel, SearchResponse>;
     updateSelectedEntity: Action<SearchModel, EntityType>;
     updateQuickFilters: Action<SearchModel, SearchResponse>;
+    updateRecentSearches: Action<SearchModel, SearchHistoryType[]>;
     /* Thunks */
     search: Thunk<SearchModel, Partial<SearchedArgs>>;
     fetchRecentSearches: Thunk<SearchModel, null>;
@@ -104,7 +105,6 @@ const search = thunk(async (actions: Actions<SearchModel>, searchedArgs: Searche
     } catch (err) {
         console.error('error : ', err);
     }
-    console.info('FETCH RECENT SEARCHES 2');
     actions.fetchRecentSearches();
     actions.updateResults(enhancedResults);
     actions.updateQuickFilters(enhancedResults);

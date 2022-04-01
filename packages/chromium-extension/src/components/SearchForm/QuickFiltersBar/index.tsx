@@ -117,6 +117,17 @@ interface Props {
     pickedFilters: PickedFilters[];
 }
 
+const supportedAttributeKeys = [
+    'Workspace',
+    'TechnologyCode',
+    'Module',
+    'EntityType',
+    'Domains',
+    'DataOwners',
+    'DataStewards',
+    'EntityStatus',
+];
+
 const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
     const QuickFiltersArray = quickFilters?.quickFilters?.filter(
         (f) => !f?.filter?.attributeKey.includes('ObjectLinks'),
@@ -180,16 +191,6 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
         }
     };
 
-    const supportedAttributeKeys = [
-        'Workspace',
-        'TechnologyCode',
-        'Module',
-        'EntityType',
-        'Domains',
-        'DataOwners',
-        'DataStewards',
-        'EntityStatus',
-    ];
     const enhancedQuickFilters = [];
 
     QuickFiltersArray?.forEach(({ filter }) => {
@@ -350,8 +351,9 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                     });
                 }
             }
-        } else if (supportedAttributeKeys.includes(filter.attributeKey))
+        } else if (supportedAttributeKeys.includes(filter.attributeKey)) {
             enhancedQuickFilters.push({ name: chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`), filter });
+        }
     });
 
     const enhancedQuickFiltersArray = enhancedQuickFilters?.slice(0, 12);
