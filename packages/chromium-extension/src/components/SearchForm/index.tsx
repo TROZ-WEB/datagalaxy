@@ -237,6 +237,7 @@ const SearchForm = () => {
             attributes,
             saveSearchPayload: true,
         };
+
         await dispatch.search.search(payload);
     };
 
@@ -340,7 +341,9 @@ const SearchForm = () => {
                                                                 id={`entityHeader${idx}`}
                                                                 onClick={() => {
                                                                     historizeSearch();
-                                                                    updateCurrentWorkspace(entity.path.split('\\')[1]);
+                                                                    updateCurrentWorkspace(
+                                                                        entity?.path?.split('\\')[1],
+                                                                    );
 
                                                                     updateIsLoaded(false);
                                                                     const URLLocation = entity.location.replace(
@@ -390,6 +393,7 @@ const SearchForm = () => {
                                                         id={`entityHeader${idx}`}
                                                         onClick={() => {
                                                             updateCurrentWorkspace(entity?.path?.split('\\')[1]);
+                                                            historizeSearch();
 
                                                             updateIsLoaded(false);
                                                             const URLLocation = entity.location.replace(
@@ -446,7 +450,10 @@ const SearchForm = () => {
                                                                 entityPage={false}
                                                                 id={`entityHeader${idx}`}
                                                                 onClick={() => {
-                                                                    updateCurrentWorkspace(entity.path.split('\\')[1]);
+                                                                    historizeSearch();
+                                                                    updateCurrentWorkspace(
+                                                                        entity?.path?.split('\\')[1],
+                                                                    );
 
                                                                     updateIsLoaded(false);
                                                                     const URLLocation = entity.location.replace(
