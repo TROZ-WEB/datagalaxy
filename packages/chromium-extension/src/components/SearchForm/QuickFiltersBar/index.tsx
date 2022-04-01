@@ -118,9 +118,9 @@ interface Props {
 }
 
 const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
-    const QuickFiltersArray = quickFilters?.quickFilters
-        ?.filter((f) => !f?.filter?.attributeKey.includes('ObjectLinks'))
-        ?.slice(0, 12);
+    const QuickFiltersArray = quickFilters?.quickFilters?.filter(
+        (f) => !f?.filter?.attributeKey.includes('ObjectLinks'),
+    );
     const { technologies, domains, users, status, workspaces } = useStoreState((state) => state.filters);
 
     const [scrollValue, setScrollValue] = useState(0);
@@ -295,22 +295,34 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                     enhancedQuickFilters.push({ label: filter.values[0], filter });
             }
         } else {
-            enhancedQuickFilters.push({ filter });
+            const supportedAttributeKeys = [
+                'Workspace',
+                'TechnologyCode',
+                'Module',
+                'EntityType',
+                'Domains',
+                'DataOwners',
+                'DataStewards',
+                'EntityStatus',
+            ];
+            if (supportedAttributeKeys.includes(filter.attributeKey)) enhancedQuickFilters.push({ filter });
         }
     });
+
+    const enhancedQuickFiltersArray = enhancedQuickFilters?.slice(0, 12);
 
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
-            {(pickedFilters?.length > 0 || search?.length > 0 || enhancedQuickFilters?.length > 0) && (
+            {(pickedFilters?.length > 0 || search?.length > 0 || enhancedQuickFiltersArray?.length > 0) && (
                 <SRoot>
-                    {enhancedQuickFilters?.length > 0 ? (
+                    {enhancedQuickFiltersArray?.length > 0 ? (
                         <SScrollContainer id="quickFilters" onScroll={handleScroll}>
                             <SLeftButton disabled={scrollValue === 0} onClick={handleScrollLeft}>
                                 <SGlyph icon="ArrowDropRight" />
                             </SLeftButton>
                             <SQuickFiltersContainer>
-                                {enhancedQuickFilters?.map((filter, i) => (
+                                {enhancedQuickFiltersArray?.map((filter, i) => (
                                     <QuickFilter
                                         // eslint-disable-next-line react/no-array-index-key
                                         key={i}
