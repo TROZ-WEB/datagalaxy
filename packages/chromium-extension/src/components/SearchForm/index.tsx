@@ -209,9 +209,6 @@ const SearchForm = () => {
         resetModalState();
     };
 
-    console.log('search : ', searchResults);
-    console.log('qf : ', quickFilters);
-
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>

@@ -16,18 +16,20 @@ const EntityTypeModal: FC = () => {
     const fields = [];
 
     for (const [key, value] of Object.entries(entitiesTypeRelatedInfos)) {
-        fields.push({
-            id: key,
-            label: chrome.i18n.getMessage(`entity_label_full_${key}`),
-            icon: (
-                <DGGlyph
-                    icon={value?.glyph}
-                    kind={value?.kind.toLowerCase()}
-                    title={chrome.i18n.getMessage(`entity_label_full_${key}`)}
-                />
-            ),
-            checked: !!pickedFilters?.[index]?.filter?.values?.includes(key),
-        });
+        if (key !== 'Usage') {
+            fields.push({
+                id: key,
+                label: chrome.i18n.getMessage(`entity_label_full_${key}`),
+                icon: (
+                    <DGGlyph
+                        icon={value?.glyph}
+                        kind={value?.kind.toLowerCase()}
+                        title={chrome.i18n.getMessage(`entity_label_full_${key}`)}
+                    />
+                ),
+                checked: !!pickedFilters?.[index]?.filter?.values?.includes(key),
+            });
+        }
     }
 
     return (

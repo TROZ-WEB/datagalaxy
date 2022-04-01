@@ -5,7 +5,6 @@ import {
     SearchResponse,
     TechnologyType,
     Filter,
-    QuickFilters,
     AttributeDefinitionType,
 } from 'shared';
 import {
@@ -141,6 +140,7 @@ const searchModel = async (): Promise<SearchModel> => {
                 result: {
                     entities: exactMatches,
                 },
+                quickFilters: [],
             };
 
             state.searchResults = {
@@ -149,6 +149,7 @@ const searchModel = async (): Promise<SearchModel> => {
                 result: {
                     entities: searchResults,
                 },
+                quickFilters: [],
             };
         }),
         updateSelectedEntity: action((state, payload: EntityType) => {

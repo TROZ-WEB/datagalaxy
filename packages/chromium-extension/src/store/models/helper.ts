@@ -104,18 +104,26 @@ const enhancedQuickFiltersWithAttributesInfo = async (
     attributes: AttributeDefinitionType[],
     rawQuickFilters: { filter: Filter }[],
 ): Promise<{ filter: Filter }[]> => {
-    console.log('attributes : ', attributes);
-
-    return rawQuickFilters?.map((rawQuickFilter) => {
-        const fullAttribute =
-            attributes?.find((a) => a.attributeKey === rawQuickFilter?.filter?.attributeKey && a.dataType === 'Common')
-                .attributeKey || rawQuickFilter?.filter?.attributeKey;
+    return rawQuickFilters?.map(({ filter }) => {
+        const fullAttribute = attributes?.find((a) => a.attributeKey === filter?.attributeKey);
+        const supportedAttributeKeys = [
+            'Workspace',
+            'TechnologyCode',
+            'Module',
+            'EntityType',
+            'Domains',
+            'DataOwners',
+            'DataStewards',
+            'EntityStatus',
+        ];
 
         return {
             filter: {
-                attributeKey: fullAttribute,
-                operator: rawQuickFilter?.filter?.operator,
-                values: rawQuickFilter?.filter?.values,
+                attributeKey: supportedAttributeKeys.includes(filter?.attributeKey)
+                    ? filter?.attributeKey
+                    : fullAttribute?.name || filter?.attributeKey,
+                operator: filter?.operator,
+                values: filter?.values,
             },
         };
     });
