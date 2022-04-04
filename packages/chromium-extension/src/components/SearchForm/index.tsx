@@ -388,7 +388,7 @@ const SearchForm = () => {
                                                 ? chrome.i18n.getMessage('more_results')
                                                 : chrome.i18n.getMessage('search_results')}
                                         </Title>
-                                        <STagResultCount>{searchResults.total}</STagResultCount>
+                                        <STagResultCount>{searchResults?.result?.entities?.length}</STagResultCount>
                                     </SResultsTitleWrapper>
                                     <SSearchCardsResultWrapper>
                                         {searchResults?.result?.entities.map((entity, idx, array) => (

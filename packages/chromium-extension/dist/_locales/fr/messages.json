@@ -1177,6 +1177,9 @@
     "docking_panel_descendants": {
         "message": "Descendants"
     },
+    "docking_panel_no_descendants": {
+        "message": "Aucun descendant"
+    },
     "docking_panel_related": {
         "message": "Objets liés"
     },
@@ -1185,5 +1188,8 @@
     },
     "recent_searches": {
         "message": "Dernières recherches"
+    },
+    "docking_panel_no_related": {
+        "message": "Aucun objet lié"
     }
 }

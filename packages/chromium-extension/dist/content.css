@@ -2,13 +2,15 @@
     position: fixed;
     top: 0;
     bottom: 0;
-    right: 0;
+    right: -100%;
     width: 400px;
     box-shadow: 0px 0px 12px rgba(0, 16, 48, 0.14);
     z-index: 9999999999999999;
     opacity: 0;
+    transition: all .5s;
 }
 
 .datagalaxy_root--show {
+    right: 0 !important;
     opacity: 1 !important;
 }

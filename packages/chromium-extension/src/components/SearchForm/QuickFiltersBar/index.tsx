@@ -1,5 +1,5 @@
-import React, { FC, useState, useRef, useMemo, useEffect } from 'react';
-import { PickedFilter, SearchResponse } from 'shared';
+import React, { FC, useState, useRef, useEffect, useMemo } from 'react';
+import { EnhancedFilter, PickedFilter, SearchResponse } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/hooks';
 import Glyph from '../../ui/Glyph';
@@ -113,6 +113,8 @@ interface Props {
 }
 
 const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
+    const [enhancedQuickFilters, setEnhancedQuickFilters] = useState<EnhancedFilter[]>();
+
     const quickFiltersArray: any = useMemo(
         () => quickFilters?.quickFilters?.filter((f) => !f?.filter?.attributeKey.includes('ObjectLinks')),
         [quickFilters],
@@ -181,20 +183,22 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
 
     const { computeFilters } = useEnhancedFilters();
 
-    const enhancedQuickFiltersArray = computeFilters(quickFiltersArray)?.slice(0, 12);
+    useEffect(() => {
+        setEnhancedQuickFilters(computeFilters(quickFiltersArray)?.slice(0, 12));
+    }, [quickFiltersArray]);
 
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
-            {(pickedFilters?.length > 0 || search?.length > 0 || enhancedQuickFiltersArray?.length > 0) && (
+            {(pickedFilters?.length > 0 || search?.length > 0 || enhancedQuickFilters?.length > 0) && (
                 <SRoot>
-                    {enhancedQuickFiltersArray?.length > 0 ? (
+                    {enhancedQuickFilters?.length > 0 ? (
                         <SScrollContainer ref={ref} onScroll={handleScroll}>
                             <SLeftButton disabled={scrollValue === 0} onClick={handleScrollLeft}>
                                 <SGlyph icon="ArrowDropRight" />
                             </SLeftButton>
                             <SQuickFiltersContainer>
-                                {enhancedQuickFiltersArray?.map((filter, i) => (
+                                {enhancedQuickFilters?.map((filter, i) => (
                                     <QuickFilter
                                         // eslint-disable-next-line react/no-array-index-key
                                         key={i}

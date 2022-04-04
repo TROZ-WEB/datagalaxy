@@ -101,6 +101,9 @@ const search = thunk(async (actions: Actions<SearchModel>, searchedArgs: Searche
                 searchedArgs.attributes,
                 enhancedResults.result.entities,
             );
+            enhancedResults.result.entities = enhancedResults.result.entities.filter(
+                (result) => result.dataType !== 'DataProcessingItem',
+            );
         }
     } catch (err) {
         console.error('error : ', err);

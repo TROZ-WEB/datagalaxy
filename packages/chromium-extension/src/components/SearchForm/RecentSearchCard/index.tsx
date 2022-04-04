@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { SearchHistoryType } from 'shared';
+import React, { FC, useEffect, useState } from 'react';
+import { PickedFilter, SearchHistoryType } from 'shared';
 import styled from 'styled-components';
 import { formatFilters } from '../../../utils';
 import FiltersDisplay from '../FiltersDisplay';
@@ -37,7 +37,11 @@ const RecentSearchCard: FC<Props> = ({ recentSearch, onClick }) => {
     const { searchPayload } = recentSearch;
     const { computeFilters } = useEnhancedFilters();
 
-    const filters = formatFilters(searchPayload.filters, computeFilters);
+    const [enhancedFilters, setEnhancedFilters] = useState<PickedFilter[]>();
+
+    useEffect(() => {
+        setEnhancedFilters(formatFilters(searchPayload.filters, computeFilters));
+    }, [searchPayload.filters]);
 
     return (
         <SRoot onClick={() => onClick()}>
@@ -45,7 +49,7 @@ const RecentSearchCard: FC<Props> = ({ recentSearch, onClick }) => {
                 <img alt="back" src={recentSearchs} />
                 <SQueryText>{searchPayload.query}</SQueryText>
             </SQueryContainer>
-            {searchPayload.filters.length !== 0 && <FiltersDisplay filters={filters} />}
+            {searchPayload.filters.length !== 0 && <FiltersDisplay filters={enhancedFilters} />}
         </SRoot>
     );
 };

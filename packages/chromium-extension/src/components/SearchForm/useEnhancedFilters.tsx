@@ -33,10 +33,10 @@ const useEnhancedFilters = (): UseEnhancedFiltersResult => {
             if (!filter) {
                 return;
             }
+            const enhancedFilter: EnhancedFilter = {
+                filter,
+            };
             if (filter.values.length > 0) {
-                const enhancedFilter: EnhancedFilter = {
-                    filter,
-                };
                 const value = filter.values[0];
                 switch (filter.attributeKey) {
                     case 'Workspace': {
@@ -180,6 +180,13 @@ const useEnhancedFilters = (): UseEnhancedFiltersResult => {
                         }
                         break;
                     }
+                    case 'LastModificationTime': {
+                        enhancedFilter.content = chrome.i18n.getMessage(`last_modified_${filter.operator}`);
+                        enhancedFilter.name = chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`);
+                        enhancedQuickFilters.push(enhancedFilter);
+                        break;
+                    }
+
                     default: {
                         const fullAttribute = attributes?.find((a) => a.attributeKey === filter?.attributeKey);
 
@@ -190,6 +197,10 @@ const useEnhancedFilters = (): UseEnhancedFiltersResult => {
                         });
                     }
                 }
+            } else if (filter.attributeKey === 'LastModificationTime') {
+                enhancedFilter.content = chrome.i18n.getMessage(`last_modified_${filter.operator}`);
+                enhancedFilter.name = chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`);
+                enhancedQuickFilters.push(enhancedFilter);
             } else if (supportedAttributeKeys.includes(filter.attributeKey)) {
                 enhancedQuickFilters.push({
                     name: chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`),
