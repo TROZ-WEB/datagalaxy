@@ -391,6 +391,18 @@
     "filter_by": {
         "message": "Filtrer par"
     },
+    "attribute_key_cdo": {
+        "message": "CDO"
+    },
+    "attribute_key_ciso": {
+        "message": "CISO"
+    },
+    "attribute_key_dpo": {
+        "message": "DPO"
+    },
+    "attribute_key_expert": {
+        "message": "Expert"
+    },
     "attribute_key_DisplayName": {
         "message": "Libellé fonctionnel"
     },
@@ -398,7 +410,7 @@
         "message": "Espace"
     },
     "attribute_key_Name": {
-        "message": "Nom"
+        "message": "Libellé fonctionnel"
     },
     "attribute_key_TechnicalName": {
         "message": "Libellé technique"
@@ -517,6 +529,12 @@
     "attribute_key_GdprContainsPersonalData": {
         "message": "Contient des données personnelles"
     },
+    "attribute_key_containsPersonalData": {
+        "message": "Contient des données personnelles"
+    },
+    "attribute_key_containsSensitiveData": {
+        "message": "Contient des données sensibles"
+    },
     "attribute_key_GdprContainsSensitiveData": {
         "message": "Contient des données sensibles"
     },
@@ -592,7 +610,13 @@
     "attribute_key_LogicalChildrenCount": {
         "message": "Nombre d'enfants"
     },
+    "attribute_key_childrenCount": {
+        "message": "Nombre d'enfants"
+    },
     "attribute_key_LogicalAllLevelChildrenCount": {
+        "message": "Nombre de descendants"
+    },
+    "attribute_key_allLevelChildrenCount": {
         "message": "Nombre de descendants"
     },
     "attribute_key_LogicalPath": {

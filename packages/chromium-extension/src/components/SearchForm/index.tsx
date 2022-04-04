@@ -158,6 +158,7 @@ const SearchForm = () => {
     const { searchedArgs, searchResults, exactMatches, quickFilters, recentSearches } = useStoreState(
         (state) => state.search,
     );
+
     const { recentlyAccessedObjects } = useStoreState((state) => state.entity);
     const { updateIsLoaded, updateCurrentWorkspace } = useStoreActions((actions) => actions.entity);
     const { technologies, attributes } = useStoreState((state) => state.auth);
@@ -175,7 +176,7 @@ const SearchForm = () => {
                 const r = rao;
                 const vid = rao.versionId;
                 const linkedWorkspace = workspaces.find((workspace) => workspace.versions?.indexOf(vid) !== -1);
-                r.path = rao.path.replace(/^/, `\\${linkedWorkspace.name}`);
+                r.path = rao.path.replace(/^/, `\\${linkedWorkspace?.name}`);
 
                 return r;
             });

@@ -101,8 +101,8 @@ const useEnhancedFilters = (): UseEnhancedFiltersResult => {
                     case 'EntityType': {
                         enhancedFilter.icon = (
                             <DGGlyph
-                                icon={entitiesTypeRelatedInfos[value].glyph}
-                                kind={entitiesTypeRelatedInfos[value].kind.toLocaleLowerCase()}
+                                icon={entitiesTypeRelatedInfos[value]?.glyph}
+                                kind={entitiesTypeRelatedInfos[value]?.kind.toLocaleLowerCase()}
                                 title={chrome.i18n.getMessage(`entity_label_full_${value}`)}
                             />
                         );
