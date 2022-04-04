@@ -1,8 +1,7 @@
 import React, { FC, useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Glyph from '../../ui/Glyph';
-import QuickFilter from '../QuickFiltersBar/QuickFilter';
-import useEnhancedFilters from '../useEnhancedFilters';
+import FilterTag from '../SearchInput/FilterTag';
 
 /* ---------- STYLES ---------- */
 
@@ -100,16 +99,18 @@ const SScrollContainer = styled.div`
 /* ---------- COMPONENT ---------- */
 
 interface Props {
-    quickFilters: any;
+    filters: any;
 }
 
-const QuickFiltersDisplay: FC<Props> = ({ quickFilters }) => {
+const FiltersDisplay: FC<Props> = ({ filters }) => {
     const [scrollValue, setScrollValue] = useState(0);
     const [maxScroll, setMaxScroll] = useState(0);
 
     const ref = useRef<HTMLDivElement>();
     useEffect(() => {
-        setMaxScroll(ref.current.scrollWidth - ref.current.clientWidth);
+        if (ref.current) {
+            setMaxScroll(ref.current.scrollWidth - ref.current.clientWidth);
+        }
     }, [ref.current]);
 
     const handleScroll = () => {
@@ -128,35 +129,34 @@ const QuickFiltersDisplay: FC<Props> = ({ quickFilters }) => {
 
     const filtersModal = useRef(null);
 
-    const formattedQuickFilters = quickFilters.map((elt) => {
-        return { filter: elt };
-    });
-
-    const { computeFilters } = useEnhancedFilters();
-
-    const enhancedFilters = computeFilters(formattedQuickFilters);
-
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
-            {enhancedFilters?.length > 0 && (
+            {filters?.length > 0 && (
                 <SRoot>
-                    {enhancedFilters?.length > 0 ? (
+                    {filters?.length > 0 ? (
                         <SScrollContainer ref={ref} onScroll={handleScroll}>
                             <SLeftButton disabled={scrollValue === 0} onClick={handleScrollLeft}>
                                 <SGlyph icon="ArrowDropRight" />
                             </SLeftButton>
                             <SQuickFiltersContainer>
-                                {enhancedFilters?.map((filter, i) => (
-                                    <QuickFilter
-                                        // eslint-disable-next-line react/no-array-index-key
-                                        key={i}
-                                        ref={filtersModal}
-                                        filter={filter}
-                                        onClick={() => {}}
-                                        displayMode
-                                    />
-                                ))}
+                                {filters?.map((f) => {
+                                    const filter = {
+                                        icon: [f.icon],
+                                        name: f.name,
+                                        content: [f.content],
+                                        filter: f.filter,
+                                    };
+
+                                    return (
+                                        <FilterTag
+                                            key={filter?.filter?.attributeKey}
+                                            ref={filtersModal}
+                                            filter={filter}
+                                            displayMode
+                                        />
+                                    );
+                                })}
                             </SQuickFiltersContainer>
                             <SRightButton disabled={scrollValue === maxScroll} onClick={handleScrollRight}>
                                 <Glyph icon="ArrowDropRight" />
@@ -171,4 +171,4 @@ const QuickFiltersDisplay: FC<Props> = ({ quickFilters }) => {
     );
 };
 
-export default QuickFiltersDisplay;
+export default FiltersDisplay;

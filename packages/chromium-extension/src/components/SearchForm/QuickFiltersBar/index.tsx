@@ -1,5 +1,5 @@
 import React, { FC, useState, useRef, useMemo, useEffect } from 'react';
-import { PickedFilters, SearchResponse } from 'shared';
+import { PickedFilter, SearchResponse } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/hooks';
 import Glyph from '../../ui/Glyph';
@@ -109,11 +109,11 @@ const SScrollContainer = styled.div`
 interface Props {
     quickFilters: SearchResponse;
     search: string;
-    pickedFilters: PickedFilters[];
+    pickedFilters: PickedFilter[];
 }
 
 const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
-    const quickFiltersArray = useMemo(
+    const quickFiltersArray: any = useMemo(
         () => quickFilters?.quickFilters?.filter((f) => !f?.filter?.attributeKey.includes('ObjectLinks')),
         [quickFilters],
     );

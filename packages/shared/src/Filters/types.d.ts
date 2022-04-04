@@ -1,5 +1,3 @@
-import { EntityType } from '../Entities/types';
-
 /* eslint-disable camelcase */
 
 export interface Filter {
@@ -14,20 +12,11 @@ export interface EnhancedFilter {
     label?: string;
     name?: string;
 }
-export interface PickedFilters {
+export interface PickedFilter {
+    filter: Filter;
     icon?: any;
     content?: string[];
     name?: string;
-    filter: Filter;
-}
-export interface QuickFilters {
-    total: number;
-    total_sum: number;
-    result: {
-        filteredViews: any[]; // TODO
-        entities: EntityType[];
-    };
-    quickFilters: { filter: Filter }[];
 }
 export interface Domain {
     label: string;

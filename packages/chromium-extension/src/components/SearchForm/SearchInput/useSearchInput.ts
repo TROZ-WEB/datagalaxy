@@ -1,5 +1,5 @@
 import { useReducer, useCallback, ChangeEvent, useEffect, useState } from 'react';
-import { PickedFilters } from 'shared';
+import { PickedFilter } from 'shared';
 import useDebounce from '../../../hooks/useDebounce';
 import { useStoreActions, useStoreState } from '../../../store/hooks';
 
@@ -43,7 +43,7 @@ export const reducer = (state: IState = initialState, action: TActionsEnum) => {
 export interface IUseSearchInputParams {
     initialState?: Partial<IState>;
     debounceDuration?: number;
-    debounceOnChange?: (result: { value: string; pf?: PickedFilters[] }) => void;
+    debounceOnChange?: (result: { value: string; pf?: PickedFilter[] }) => void;
     isNewFilter?: boolean;
 }
 

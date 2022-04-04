@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { AttributeDefinitionType, EntityType, Filter, TechnologyType } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../store/hooks';
-import keyListener from '../../utils';
+import keyListener, { formatFilters } from '../../utils';
 import LoadingScreen from '../LoadingScreen';
 import EntityHeader from '../ui/EntityHeader';
 import Title from '../ui/Title';
@@ -250,50 +250,12 @@ const SearchForm = () => {
 
     const { computeFilters } = useEnhancedFilters();
 
-    const searchFromRecentSearch = async (term: string, filters: any[]) => {
-        const final = [];
-        filters.forEach((t) => {
-            // format raw filters to usable format
-
-            if (Array.isArray(t?.values)) {
-                t?.values?.forEach((x) => {
-                    const y = JSON.parse(JSON.stringify(t));
-                    y.values = [x];
-                    final.push({ filter: y });
-                });
-            } else {
-                const y = JSON.parse(JSON.stringify(t));
-                y.values = [y.values];
-                final.push({ filter: y });
-            }
-        });
-
-        const enhancedQuickFiltersArray = computeFilters(final);
-
-        const newPickedFilters = [];
-        enhancedQuickFiltersArray.forEach((f) => {
-            const filterIndex = newPickedFilters?.findIndex(
-                (item) => item?.filter?.attributeKey === f?.filter?.attributeKey,
-            );
-            if (filterIndex === -1) {
-                const filter = {
-                    icon: [f.icon],
-                    name: f.name,
-                    content: [f.content],
-                    filter: f.filter,
-                };
-
-                newPickedFilters.push(filter);
-            } else {
-                const { icon, content, filter } = newPickedFilters[filterIndex];
-                filter.values.push(f.id);
-                icon.push(f.icon);
-                content.push(f.content);
-            }
-        });
+    const searchFromRecentSearch = async (term: string, filters: Filter[]) => {
+        const newPickedFilters = formatFilters(filters, computeFilters);
 
         searchInputProps.searchFromPrevious(term, newPickedFilters);
     };
+
     const hasSearchResults = searchResults.result.entities.length !== 0;
     const hasExactMatches = filteredExactMatches?.result.entities.length !== 0;
     const hasRecentlyAccessedObjects = enhancedRecentlyAccessedObjects?.length !== 0;

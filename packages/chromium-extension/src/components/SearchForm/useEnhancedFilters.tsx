@@ -1,5 +1,5 @@
 import React from 'react';
-import { EnhancedFilter, entitiesTypeRelatedInfos } from 'shared';
+import { EnhancedFilter, entitiesTypeRelatedInfos, PickedFilter } from 'shared';
 import { useStoreState } from '../../store/hooks';
 import Avatar from '../Avatar';
 import Status from '../Entity/Status';
@@ -9,7 +9,7 @@ import FieldIcon from './SearchInput/Modals/FieldIcon';
 import { moduleFields } from './SearchInput/Modals/utils';
 
 type UseEnhancedFiltersResult = {
-    computeFilters: any; // TODO: type it
+    computeFilters: (filtersArray: PickedFilter[]) => EnhancedFilter[]; // TODO: type it
 };
 
 const supportedAttributeKeys = [
@@ -27,9 +27,9 @@ const useEnhancedFilters = (): UseEnhancedFiltersResult => {
     const { technologies, domains, users, status, workspaces } = useStoreState((state) => state.filters);
     const { attributes } = useStoreState((state) => state.auth);
 
-    const computeFilters = (quickFiltersArray) => {
-        const enhancedQuickFilters = [];
-        quickFiltersArray?.forEach(({ filter }) => {
+    const computeFilters = (filtersArray: PickedFilter[]) => {
+        const enhancedQuickFilters: EnhancedFilter[] = [];
+        filtersArray?.forEach(({ filter }) => {
             if (!filter) {
                 return;
             }
