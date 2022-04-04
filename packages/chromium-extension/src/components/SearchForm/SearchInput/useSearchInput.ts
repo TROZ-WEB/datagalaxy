@@ -85,7 +85,9 @@ export const useSearchInput = ({
     const onClearSearch = useCallback(async () => {
         updatePickedFilters([]);
         dispatch({ type: 'CHANGE', value: '' });
-        setDirectSetting(true);
+        if (value !== '') {
+            setDirectSetting(true);
+        }
     }, [dispatch]);
 
     const searchFromPrevious = useCallback(
