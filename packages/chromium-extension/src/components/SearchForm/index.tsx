@@ -20,6 +20,7 @@ import StewardsModal from './SearchInput/Modals/StewardsModal';
 import TechnologiesModal from './SearchInput/Modals/TechnologiesModal';
 import WorkspacesModal from './SearchInput/Modals/WorkspacesModal';
 import { useSearchInput } from './SearchInput/useSearchInput';
+import useEnhancedFilters from './useEnhancedFilters';
 import useExactMatches from './useExactMatches';
 import BlankSearch from '../../../assets/placeholder-plugin.svg';
 
@@ -247,9 +248,51 @@ const SearchForm = () => {
         initialState: { value: searchedArgs.term },
     });
 
-    const searchFromRecentSearch = async (term: string, filters: Filter[]) => {
-        // HOW TO CAST FILTERS TO PICKED FILTERS ?
-        searchInputProps.searchFromPrevious(term, filters);
+    const { computeFilters } = useEnhancedFilters();
+
+    const searchFromRecentSearch = async (term: string, filters: any[]) => {
+        const final = [];
+        filters.forEach((t) => {
+            // format raw filters to usable format
+
+            if (Array.isArray(t?.values)) {
+                t?.values?.forEach((x) => {
+                    const y = JSON.parse(JSON.stringify(t));
+                    y.values = [x];
+                    final.push({ filter: y });
+                });
+            } else {
+                const y = JSON.parse(JSON.stringify(t));
+                y.values = [y.values];
+                final.push({ filter: y });
+            }
+        });
+
+        const enhancedQuickFiltersArray = computeFilters(final);
+
+        const newPickedFilters = [];
+        enhancedQuickFiltersArray.forEach((f) => {
+            const filterIndex = newPickedFilters?.findIndex(
+                (item) => item?.filter?.attributeKey === f?.filter?.attributeKey,
+            );
+            if (filterIndex === -1) {
+                const filter = {
+                    icon: [f.icon],
+                    name: f.name,
+                    content: [f.content],
+                    filter: f.filter,
+                };
+
+                newPickedFilters.push(filter);
+            } else {
+                const { icon, content, filter } = newPickedFilters[filterIndex];
+                filter.values.push(f.id);
+                icon.push(f.icon);
+                content.push(f.content);
+            }
+        });
+
+        searchInputProps.searchFromPrevious(term, newPickedFilters);
     };
     const hasSearchResults = searchResults.result.entities.length !== 0;
     const hasExactMatches = filteredExactMatches?.result.entities.length !== 0;

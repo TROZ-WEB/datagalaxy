@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef } from 'react';
+import React, { FC, useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Glyph from '../../ui/Glyph';
 import QuickFilter from '../QuickFiltersBar/QuickFilter';
@@ -105,20 +105,25 @@ interface Props {
 
 const QuickFiltersDisplay: FC<Props> = ({ quickFilters }) => {
     const [scrollValue, setScrollValue] = useState(0);
-    const shadowRoot = document.getElementById('datagalaxy_shadow_root');
-    const scrollContainer = shadowRoot.shadowRoot.getElementById('quickFiltersSearchHistory');
-    const maxScroll = scrollContainer?.scrollWidth - scrollContainer?.clientWidth;
+    const [maxScroll, setMaxScroll] = useState(0);
+
+    const ref = useRef<HTMLDivElement>();
+    useEffect(() => {
+        setMaxScroll(ref.current.scrollWidth - ref.current.clientWidth);
+    }, [ref.current]);
 
     const handleScroll = () => {
-        setScrollValue(scrollContainer.scrollLeft);
+        setScrollValue(ref.current.scrollLeft);
     };
 
-    const handleScrollLeft = () => {
-        scrollContainer.scrollLeft -= 348;
+    const handleScrollLeft = (e) => {
+        e.stopPropagation();
+        ref.current.scrollLeft -= 348;
     };
 
-    const handleScrollRight = () => {
-        scrollContainer.scrollLeft += 348;
+    const handleScrollRight = (e) => {
+        e.stopPropagation();
+        ref.current.scrollLeft += 348;
     };
 
     const filtersModal = useRef(null);
@@ -137,7 +142,7 @@ const QuickFiltersDisplay: FC<Props> = ({ quickFilters }) => {
             {enhancedFilters?.length > 0 && (
                 <SRoot>
                     {enhancedFilters?.length > 0 ? (
-                        <SScrollContainer id="quickFiltersSearchHistory" onScroll={handleScroll}>
+                        <SScrollContainer ref={ref} onScroll={handleScroll}>
                             <SLeftButton disabled={scrollValue === 0} onClick={handleScrollLeft}>
                                 <SGlyph icon="ArrowDropRight" />
                             </SLeftButton>

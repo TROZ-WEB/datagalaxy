@@ -91,8 +91,10 @@ export const useSearchInput = ({
     const searchFromPrevious = useCallback(
         async (term, pf) => {
             updatePickedFilters(pf);
+            if (term !== value) {
+                setDirectSetting(true);
+            }
             dispatch({ type: 'CHANGE', value: term });
-            setDirectSetting(true);
             setPreviousSearchedTerm(term);
         },
         [dispatch],

@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef, useMemo } from 'react';
+import React, { FC, useState, useRef, useMemo, useEffect } from 'react';
 import { PickedFilters, SearchResponse } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/hooks';
@@ -117,23 +117,27 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
         () => quickFilters?.quickFilters?.filter((f) => !f?.filter?.attributeKey.includes('ObjectLinks')),
         [quickFilters],
     );
-    // const { technologies, domains, users, status, workspaces } = useStoreState((state) => state.filters);
 
     const [scrollValue, setScrollValue] = useState(0);
-    const shadowRoot = document.getElementById('datagalaxy_shadow_root');
-    const scrollContainer = shadowRoot.shadowRoot.getElementById('quickFilters');
-    const maxScroll = scrollContainer?.scrollWidth - scrollContainer?.clientWidth;
+    const [maxScroll, setMaxScroll] = useState(0);
+
+    const ref = useRef<HTMLDivElement>();
+    useEffect(() => {
+        if (ref.current) {
+            setMaxScroll(ref.current.scrollWidth - ref.current.clientWidth);
+        }
+    }, [ref.current]);
 
     const handleScroll = () => {
-        setScrollValue(scrollContainer.scrollLeft);
+        setScrollValue(ref.current.scrollLeft);
     };
 
     const handleScrollLeft = () => {
-        scrollContainer.scrollLeft -= 348;
+        ref.current.scrollLeft -= 348;
     };
 
     const handleScrollRight = () => {
-        scrollContainer.scrollLeft += 348;
+        ref.current.scrollLeft += 348;
     };
 
     const { pickedFilters } = useStoreState((state) => state.filters);
@@ -185,7 +189,7 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
             {(pickedFilters?.length > 0 || search?.length > 0 || enhancedQuickFiltersArray?.length > 0) && (
                 <SRoot>
                     {enhancedQuickFiltersArray?.length > 0 ? (
-                        <SScrollContainer id="quickFilters" onScroll={handleScroll}>
+                        <SScrollContainer ref={ref} onScroll={handleScroll}>
                             <SLeftButton disabled={scrollValue === 0} onClick={handleScrollLeft}>
                                 <SGlyph icon="ArrowDropRight" />
                             </SLeftButton>
