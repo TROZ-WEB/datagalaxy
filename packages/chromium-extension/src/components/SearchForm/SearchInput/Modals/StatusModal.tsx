@@ -31,6 +31,7 @@ const StatusModal: FC = () => {
                 label: chrome.i18n.getMessage(`entity_status_${item.value}`),
                 icon: <Status status={item.value} hideLabel />,
                 checked: !!pickedFilters?.[index]?.filter?.values?.includes(item.key),
+                name: chrome.i18n.getMessage(`attribute_key_Status`),
             };
         });
         setStatusFields(formatedStatusFields);

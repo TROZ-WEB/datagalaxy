@@ -35,12 +35,14 @@ const WorkspacesModal: FC = () => {
             label: string;
             icon?: React.ReactNode;
             checked: boolean;
+            name: string;
         }
 
         const w: field = {
             id: workspace.defaultVersionId,
             label: workspace.name,
             checked: !!pickedFilters?.[index]?.filter?.values?.includes(workspace.defaultVersionId),
+            name: chrome.i18n.getMessage(`attribute_key_Workspace`),
         };
 
         let newIcon;
@@ -66,7 +68,12 @@ const WorkspacesModal: FC = () => {
 
     sortArray(workspacesFields);
 
-    workspacesFields?.unshift({ id: null, label: chrome.i18n.getMessage(`all_workspaces`), checked: index === -1 });
+    workspacesFields?.unshift({
+        id: null,
+        label: chrome.i18n.getMessage(`all_workspaces`),
+        checked: index === -1,
+        name: '',
+    });
 
     const handleChange = (field) => {
         updateVersionId(field.id);

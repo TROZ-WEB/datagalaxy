@@ -31,6 +31,7 @@ const StewardsModal: FC = () => {
                 label: `${item.firstName} ${item.lastName}`,
                 icon: <Avatar size="mini" user={item} />,
                 checked: !!pickedFilters?.[index]?.filter?.values?.includes(item.userId),
+                name: chrome.i18n.getMessage(`attribute_key_DataStewards`),
             };
         });
         setUsersFields(formatedUsersFields);

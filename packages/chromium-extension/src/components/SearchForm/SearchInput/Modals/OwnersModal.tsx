@@ -25,12 +25,14 @@ const OwnersModal: FC = () => {
 
     useEffect(() => {
         const index = pickedFilters?.findIndex((item) => item?.filter?.attributeKey === 'DataOwners');
+
         const formatedUsersFields = users?.owners?.map((item) => {
             return {
                 id: item.userId,
                 label: `${item.firstName} ${item.lastName}`,
                 icon: <Avatar size="mini" user={item} />,
                 checked: !!pickedFilters?.[index]?.filter?.values?.includes(item.userId),
+                name: chrome.i18n.getMessage(`attribute_key_DataOwners`),
             };
         });
         setUsersFields(formatedUsersFields);

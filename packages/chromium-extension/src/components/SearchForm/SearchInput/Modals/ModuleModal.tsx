@@ -12,7 +12,11 @@ const ModuleModal: FC = () => {
 
     const index = pickedFilters?.findIndex((item) => item?.filter?.attributeKey === 'Module');
     const enhancedModuleFields = moduleFields.map((item) => {
-        return { ...item, checked: !!pickedFilters?.[index]?.filter?.values?.includes(item.id) };
+        return {
+            ...item,
+            checked: !!pickedFilters?.[index]?.filter?.values?.includes(item.id),
+            name: chrome.i18n.getMessage(`attribute_key_Module`),
+        };
     });
 
     return (
