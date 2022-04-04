@@ -28,6 +28,7 @@ const EntityTypeModal: FC = () => {
                     />
                 ),
                 checked: !!pickedFilters?.[index]?.filter?.values?.includes(key),
+                name: chrome.i18n.getMessage(`attribute_key_EntityType`),
             });
         }
     }

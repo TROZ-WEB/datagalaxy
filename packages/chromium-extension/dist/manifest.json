@@ -15,23 +15,13 @@
     },
     "content_scripts": [
         {
-            "matches": [
-                "<all_urls>"
-            ],
-            "css": [
-                "content.css"
-            ],
-            "js": [
-                "js/popup.js"
-            ]
+            "matches": ["<all_urls>"],
+            "css": ["content.css"],
+            "js": ["js/popup.js"]
         },
         {
-            "matches": [
-                "<all_urls>"
-            ],
-            "js": [
-                "pendo.js"
-            ]
+            "matches": ["<all_urls>"],
+            "js": ["pendo.js"]
         }
     ],
     "default_locale": "en",
@@ -43,14 +33,8 @@
     },
     "manifest_version": 3,
     "name": "__MSG_appName__",
-    "permissions": [
-        "webRequest",
-        "activeTab",
-        "scripting",
-        "storage",
-        "declarativeNetRequest"
-    ],
-    "version": "1.0.25",
+    "permissions": ["webRequest", "activeTab", "scripting", "storage", "declarativeNetRequest"],
+    "version": "1.0.26",
     "declarative_net_request": {
         "rule_resources": [
             {

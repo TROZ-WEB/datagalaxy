@@ -26,10 +26,12 @@ const TechnologiesModal: FC = () => {
             id: string;
             label: string;
             icon?: React.ReactNode;
+            name: string;
         }
         const t: field = {
             id: technology?.technologyCode,
             label: technology.displayName,
+            name: chrome.i18n.getMessage(`attribute_key_Technology`),
         };
 
         if (technology.imageHash) {
