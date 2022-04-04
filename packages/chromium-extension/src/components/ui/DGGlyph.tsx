@@ -52,7 +52,12 @@ interface DGGlyphProps {
 }
 
 const DGGlyph: FC<DGGlyphProps> = ({ size = 'S', className, title, icon, kind }) => {
-    return <SEntityDGGlyph className={className} icon={icon} kind={kind} size={size} title={title} />;
+    return (
+        // eslint-disable-next-line react/jsx-no-useless-fragment
+        <>
+            {kind && icon && <SEntityDGGlyph className={className} icon={icon} kind={kind} size={size} title={title} />}
+        </>
+    );
 };
 
 export default DGGlyph;

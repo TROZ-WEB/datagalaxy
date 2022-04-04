@@ -88,6 +88,11 @@ const EntityPage = () => {
                 });
             };
 
+            const fetchRecentlyAccessedObjects = async () => {
+                await dispatch.entity.fetchRecentlyAccessedObjects();
+            };
+
+            fetchRecentlyAccessedObjects();
             fetchChildrenObjects();
             fetchLinkedObjects();
         } else {

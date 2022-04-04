@@ -391,6 +391,18 @@
     "filter_by": {
         "message": "Filter by"
     },
+    "attribute_key_cdo": {
+        "message": "CDO"
+    },
+    "attribute_key_ciso": {
+        "message": "CISO"
+    },
+    "attribute_key_dpo": {
+        "message": "DPO"
+    },
+    "attribute_key_expert": {
+        "message": "Expert"
+    },
     "attribute_key_DisplayName": {
         "message": "Business Label"
     },
@@ -401,7 +413,7 @@
         "message": "Technical Label"
     },
     "attribute_key_Name": {
-        "message": "Name"
+        "message": "Functional Label"
     },
     "attribute_key_ShortName": {
         "message": "Alias"
@@ -520,6 +532,12 @@
     "attribute_key_GdprContainsPersonalData": {
         "message": "Contains Personal Data"
     },
+    "attribute_key_containsPersonalData": {
+        "message": "Contains Personal Data"
+    },
+    "attribute_key_containsSensitiveData": {
+        "message": "Contains Sensitive Data"
+    },
     "attribute_key_GdprContainsSensitiveData": {
         "message": "Contains Sensitive Data"
     },
@@ -598,7 +616,13 @@
     "attribute_key_LogicalChildrenCount": {
         "message": "Children Count"
     },
+    "attribute_key_childrenCount": {
+        "message": "Children Count"
+    },
     "attribute_key_LogicalAllLevelChildrenCount": {
+        "message": "Descendents Count"
+    },
+    "attribute_key_allLevelChildrenCount": {
         "message": "Descendents Count"
     },
     "attribute_key_LogicalPath": {
@@ -1158,5 +1182,11 @@
     },
     "docking_panel_related": {
         "message": "Related Objets"
+    },
+    "recently_accessed_objects": {
+        "message": "Recently viewed"
+    },
+    "recent_searches": {
+        "message": "Recent searches"
     }
 }

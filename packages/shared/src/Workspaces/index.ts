@@ -15,3 +15,15 @@ export const fetchWorkspaces = async (apiUrl: string): Promise<Workspace[]> => {
 
     return null;
 };
+
+export const fetchWorkspacesVersions = async (apiUrl: string, workspaceId: string): Promise<string[]> => {
+    try {
+        const response = await get<any>(`${apiUrl}/workspaces/${workspaceId}/versions`);
+
+        return response.parsedBody.results.map((result) => result.versionId);
+    } catch (error) {
+        console.error(error);
+    }
+
+    return null;
+};

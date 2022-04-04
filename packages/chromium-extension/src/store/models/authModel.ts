@@ -11,6 +11,7 @@ import {
     fetchWorkspaces as fetchWorkspacesApi,
     fetchTechnologies as fetchTechnologiesApi,
     fetchAttributes as fetchAttributesApi,
+    fetchWorkspacesVersions as fetchWorkspacesVersionAPI,
     UserType,
     getUserByEmail,
     DecodedJWT,
@@ -119,9 +120,33 @@ const fetchTags = thunk(async (actions: Actions<AuthModel>, _, { getStoreState }
     actions.updateTags(tags);
 });
 
+/* 
+API WORKAROUND 5 : Workspace is not present in path for lastAccessObjects and object page.
+So we need to ->
+1) Get all workspaces
+2) Get all workspaces version for each workspace
+3) Find, with versionId of an object, which workspace is linked to
+4) Reconstitute the object path with the worskpace name
+*/
+const fetchWorkspacesVersions = async (workspace, url) => {
+    let workspacesVersion = [];
+
+    try {
+        workspacesVersion = await fetchWorkspacesVersionAPI(url, workspace.id);
+    } catch (err) {
+        console.error('error : ', err);
+    }
+
+    return workspacesVersion;
+};
+
 const fetchWorkspaces = thunk(async (actions: Actions<AuthModel>, _, { getStoreState }) => {
     const url = (getStoreState() as any).auth.pubapi;
     const workspaces: Workspace[] = await fetchWorkspacesApi(url);
+    for (const workspace of workspaces) {
+        const versions = await fetchWorkspacesVersions(workspace, url); // eslint-disable-line no-await-in-loop
+        workspace.versions = versions;
+    }
 
     actions.updateWorkspaces(workspaces);
 });

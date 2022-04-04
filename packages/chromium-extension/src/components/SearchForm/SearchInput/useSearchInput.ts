@@ -1,5 +1,5 @@
 import { useReducer, useCallback, ChangeEvent, useEffect, useState } from 'react';
-import { PickedFilters } from 'shared';
+import { PickedFilter } from 'shared';
 import useDebounce from '../../../hooks/useDebounce';
 import { useStoreActions, useStoreState } from '../../../store/hooks';
 
@@ -43,7 +43,7 @@ export const reducer = (state: IState = initialState, action: TActionsEnum) => {
 export interface IUseSearchInputParams {
     initialState?: Partial<IState>;
     debounceDuration?: number;
-    debounceOnChange?: (result: { value: string; pf?: PickedFilters[] }) => void;
+    debounceOnChange?: (result: { value: string; pf?: PickedFilter[] }) => void;
     isNewFilter?: boolean;
 }
 
@@ -58,8 +58,10 @@ export const useSearchInput = ({
     });
 
     const { pickedFilters, versionId } = useStoreState((state) => state.filters);
-    const [clearing, setClearing] = useState(false);
+
+    const [directSetting, setDirectSetting] = useState(false);
     const [alreadyDebounced, setAlreadyDebounced] = useState(false);
+    const [previousSearchedTerm, setPreviousSearchedTerm] = useState('');
 
     const debouncedvalue = useDebounce(value, debounceDuration);
 
@@ -83,21 +85,44 @@ export const useSearchInput = ({
     const onClearSearch = useCallback(async () => {
         updatePickedFilters([]);
         dispatch({ type: 'CHANGE', value: '' });
-        setClearing(true);
+        if (value !== '') {
+            setDirectSetting(true);
+        }
     }, [dispatch]);
+
+    const searchFromPrevious = useCallback(
+        async (term, pf) => {
+            updatePickedFilters(pf);
+            if (term !== value) {
+                setDirectSetting(true);
+            }
+            dispatch({ type: 'CHANGE', value: term });
+            setPreviousSearchedTerm(term);
+        },
+        [dispatch],
+    );
 
     useEffect(() => {
         if (debounceOnChange) {
-            if (clearing) {
+            if (directSetting) {
                 setAlreadyDebounced(true);
             }
             if (!alreadyDebounced) {
-                debounceOnChange({ value: clearing ? '' : debouncedvalue });
+                let term = '';
+                if (previousSearchedTerm) {
+                    term = previousSearchedTerm;
+                    setPreviousSearchedTerm(null);
+                } else if (directSetting) {
+                    term = '';
+                } else {
+                    term = debouncedvalue;
+                }
+                debounceOnChange({ value: term });
             } else {
                 setAlreadyDebounced(false);
             }
         }
-        setClearing(false);
+        setDirectSetting(false);
     }, [debouncedvalue, pickedFilters, versionId]);
 
     return {
@@ -108,5 +133,6 @@ export const useSearchInput = ({
         onChange,
         onClearSearch,
         debouncedvalue,
+        searchFromPrevious,
     };
 };

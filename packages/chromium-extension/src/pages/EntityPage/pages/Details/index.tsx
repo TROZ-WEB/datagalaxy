@@ -203,14 +203,6 @@ const computeData = (data: any, i: number) => {
 };
 
 const computeTitle = (r: any, key: string) => {
-    if (key === 'childrenCount') {
-        return chrome.i18n.getMessage(`attribute_key_LogicalChildrenCount`);
-    }
-
-    if (key === 'allLevelChildrenCount') {
-        return chrome.i18n.getMessage(`attribute_key_LogicalAllLevelChildrenCount`);
-    }
-
     return chrome.i18n.getMessage(`attribute_key_${key}`) || r[key].name || key;
 };
 

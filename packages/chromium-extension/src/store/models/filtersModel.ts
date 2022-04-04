@@ -6,8 +6,7 @@ import {
     fetchDomains as fetchDomainsAPI,
     fetchStatus as fetchStatusAPI,
     Filter,
-    PickedFilters,
-    QuickFilters,
+    PickedFilter,
     Workspace,
     UsersByRoleResponse,
     Domain,
@@ -35,7 +34,7 @@ interface SearchedArgs {
 
 export interface FiltersModel {
     /* State */
-    pickedFilters: PickedFilters[];
+    pickedFilters: PickedFilter[];
     workspaces: Workspace[];
     versionId: string;
     users: UsersByRoleResponse;

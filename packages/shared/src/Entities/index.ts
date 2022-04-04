@@ -106,6 +106,7 @@ export const entitiesTypeRelatedInfos: customFieldAttr = {
     OpenDataSet: { glyph: 'Opendataset', kind: 'Usage' },
     Algorithm: { glyph: 'Algorithm', kind: 'Usage' },
     UsageComponent: { glyph: 'UsageComponent', kind: 'Usage' },
+    Diagram: { glyph: 'Diagram', kind: 'Usage' },
 };
 
 export const fetchEntity = async (apiUrl: string, location: string): Promise<any> => {

@@ -12,3 +12,4 @@ export * from './Workspaces';
 export * from './Technologies';
 export * from './Filters';
 export * from './Attributes';
+export * from './RecentlyAccessedObjects';

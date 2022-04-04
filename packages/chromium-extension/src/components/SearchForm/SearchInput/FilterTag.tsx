@@ -1,4 +1,5 @@
 import React from 'react';
+import { PickedFilter } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/hooks';
 import RoundButton from '../../ui/RoundButton';
@@ -27,7 +28,6 @@ const SRoot = styled.div`
     padding: 4px 8px;
     border: none;
     border-radius: 3px;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -35,6 +35,7 @@ const SRoot = styled.div`
     box-sizing: border-box;
     margin: 4px;
     box-shadow: 0px 0px 8px rgba(16, 53, 177, 0.14);
+    ${(props) => !props.displayMode && `cursor: pointer;`}
 `;
 
 const SRoundButton = styled(RoundButton)`
@@ -74,11 +75,12 @@ const SValue = styled.div`
 /* ---------- COMPONENT ---------- */
 
 interface Props {
-    filter: any;
-    onClick: () => void;
+    filter: PickedFilter;
+    onClick?: () => void;
+    displayMode?: boolean;
 }
 
-const FilterTag = React.forwardRef(({ filter, onClick }: Props, ref) => {
+const FilterTag = React.forwardRef(({ filter, onClick, displayMode = false }: Props, ref) => {
     const pickedFilters = useStoreState((state) => state.filters.pickedFilters);
     const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
     const { updateVersionId } = useStoreActions((actions) => actions.filters);
@@ -95,7 +97,12 @@ const FilterTag = React.forwardRef(({ filter, onClick }: Props, ref) => {
     return (
         <SRoot
             ref={ref}
-            onClick={onClick}
+            displayMode={displayMode}
+            onClick={() => {
+                if (!displayMode) {
+                    onClick();
+                }
+            }}
             title={filter?.content?.length < 3 ? `${filter?.name} : ${filter?.content?.join(', ')}` : undefined}
         >
             <SImageContainer>{filter?.icon?.slice(0, 2)?.map((icon) => icon)}</SImageContainer>
@@ -114,7 +121,7 @@ const FilterTag = React.forwardRef(({ filter, onClick }: Props, ref) => {
                     </SOperator>
                 )}
             </STextContainer>
-            <SRoundButton icon="Cancelsearch" onClick={(e) => handleDeleteFilter(e)} size="XS" />
+            {!displayMode && <SRoundButton icon="Cancelsearch" onClick={(e) => handleDeleteFilter(e)} size="XS" />}
         </SRoot>
     );
 });

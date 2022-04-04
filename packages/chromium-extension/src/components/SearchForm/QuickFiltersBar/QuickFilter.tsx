@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 /* ---------- STYLES ---------- */
 
@@ -24,7 +24,6 @@ const SRoot = styled.div`
     padding: 4px 8px;
     width: 108px;
     border-radius: 3px;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: start;
@@ -35,10 +34,17 @@ const SRoot = styled.div`
         margin-right: 8px;
     }
 
-    &:hover,
-    &:focus {
-        background-color: #004cff14;
-    }
+    ${(props) =>
+        !props.displayMode &&
+        css`
+            &:hover,
+            &:focus {
+                background-color: #004cff14;
+            }
+            cursor: pointer;
+        `}
+
+    ${(props) => props.displayMode && `box-shadow: 0px 0px 14px rgba(16, 53, 177, 0.12);`}
 `;
 
 const STextContainer = styled.div`
@@ -59,13 +65,15 @@ interface Props {
     filter: any;
     onClick: () => void;
     className?: string;
+    displayMode?: boolean;
 }
 
-const QuickFilter = React.forwardRef(({ filter, onClick, className }: Props, ref) => {
+const QuickFilter = React.forwardRef(({ filter, onClick, className, displayMode }: Props, ref) => {
     return (
         <SRoot
             ref={ref}
             className={className}
+            displayMode={displayMode}
             onClick={onClick}
             title={`${filter?.name}${filter?.content ? ` : ${filter?.content}` : ''}`}
         >

@@ -92,11 +92,12 @@ const EntityImage: FC<EntityImageProps> = ({ entity, entityPage }) => {
                         src={`${url}/image?hash=${encodeURIComponent(entity.technology.imageHash)}`}
                     />
                     <SEntityDGGlyphContainer>
-                        <DGGlyph icon={glyph} kind={kind?.toLowerCase()} size={entityPage ? 'M' : 'S'} />
+                        {glyph && <DGGlyph icon={glyph} kind={kind?.toLowerCase()} size={entityPage ? 'M' : 'S'} />}
                     </SEntityDGGlyphContainer>
                 </>
             ) : (
-                <DGGlyph icon={glyph} kind={kind?.toLowerCase()} size={entityPage ? 'XL' : 'L'} />
+                // eslint-disable-next-line react/jsx-no-useless-fragment
+                <>{glyph && <DGGlyph icon={glyph} kind={kind?.toLowerCase()} size={entityPage ? 'XL' : 'L'} />}</>
             )}
             {!entityPage && (
                 <SEntityTypeShortLabel>

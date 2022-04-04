@@ -56,7 +56,7 @@ type FormData = {
  */
 const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
     const { url } = useRouteMatch();
-    const { auth, onboarding } = useStoreActions((actions) => actions);
+    const { auth, onboarding, entity } = useStoreActions((actions) => actions);
     const { onboarding: onboardingState } = useStoreState((state) => state);
 
     // const user = useStoreState((s) => s.auth.user);
@@ -106,6 +106,7 @@ const StepLogin: React.FC<StepProps> = ({ goNextStep, currentStep, step }) => {
             auth.fetchTechnologies();
             auth.fetchUser();
             auth.fetchAttributes();
+            entity.fetchRecentlyAccessedObjects();
 
             onboarding.resetModel();
         } catch (error) {
