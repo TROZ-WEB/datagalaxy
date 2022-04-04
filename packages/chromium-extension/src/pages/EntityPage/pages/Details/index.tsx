@@ -216,10 +216,8 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
         return (
             attribute.name &&
             (rest[attribute.name] || rest[attribute.name] === false || rest[attribute.name] === 0) &&
-            !rest[attribute.name].trend &&
             !isEmptyObject(rest[attribute.name]) &&
-            reservedKeys.indexOf(attribute.name) === -1 &&
-            !rest[attribute.name].lastEntry
+            reservedKeys.indexOf(attribute.name) === -1
         );
     };
 
