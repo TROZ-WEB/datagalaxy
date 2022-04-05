@@ -16,7 +16,7 @@ const EntityTypeModal: FC = () => {
     const fields = [];
 
     for (const [key, value] of Object.entries(entitiesTypeRelatedInfos)) {
-        if (key !== 'Usage') {
+        if (key !== 'Usage' && key !== 'Diagram' && key !== 'DataProcessingItem') {
             fields.push({
                 id: key,
                 label: chrome.i18n.getMessage(`entity_label_full_${key}`),

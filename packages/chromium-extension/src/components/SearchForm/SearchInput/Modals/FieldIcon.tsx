@@ -20,7 +20,7 @@ interface Props {
 const FieldIcon: FC<Props> = ({ hash, tooltip }) => {
     const url = useStoreState((state) => state.auth.pubapi);
 
-    return <SIcon src={`${url}/image?hash=${encodeURIComponent(hash)}`} title={tooltip} />;
+    return <SIcon data-tip={tooltip} src={`${url}/image?hash=${encodeURIComponent(hash)}`} />;
 };
 
 export default FieldIcon;

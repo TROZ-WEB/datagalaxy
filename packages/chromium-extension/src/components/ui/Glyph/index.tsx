@@ -35,7 +35,7 @@ interface GlyphProps {
 
 const Glyph: FC<GlyphProps> = ({ icon, className, title }) => {
     return (
-        <SRoot className={className} title={title}>
+        <SRoot className={className} data-tip={title}>
             <SGlyph icon={icon} />
         </SRoot>
     );

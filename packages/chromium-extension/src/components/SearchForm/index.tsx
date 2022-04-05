@@ -153,6 +153,7 @@ interface Payload {
 
 const SearchForm = () => {
     const dispatch = useStoreDispatch();
+
     const history = useHistory();
     const { pickedFilters, versionId } = useStoreState((state) => state.filters);
     const { searchedArgs, searchResults, exactMatches, quickFilters, recentSearches } = useStoreState(
@@ -232,6 +233,9 @@ const SearchForm = () => {
     };
 
     const historizeSearch = async () => {
+        if (!searchedArgs.term && (!searchedArgs.filters || searchedArgs.filters.length === 0)) {
+            return;
+        }
         const payload: Payload = {
             term: searchedArgs.term,
             technologies,
