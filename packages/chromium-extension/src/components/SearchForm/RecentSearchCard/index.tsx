@@ -60,24 +60,23 @@ const RecentSearchCard: FC<Props> = ({ recentSearch, onClick }) => {
     const hasSearchQuery = searchPayload.query;
 
     return (
+        // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
             {hasSearchQuery ? (
                 <SRoot onClick={() => onClick()}>
                     <SQueryContainer hasSearchPayloadFilters={hasSearchPayloadFilters}>
-                        <SRecentSearches hasSearchQuery={hasSearchQuery} alt="recent-searches" src={recentSearchs} />
+                        <SRecentSearches alt="recent-searches" hasSearchQuery={hasSearchQuery} src={recentSearchs} />
                         <SQueryText>{searchPayload.query}</SQueryText>
                     </SQueryContainer>
                     {hasSearchPayloadFilters && <FiltersDisplay filters={enhancedFilters} />}
                 </SRoot>
             ) : (
-                <>
-                    <SRoot onClick={() => onClick()}>
-                        <SRecentSearches hasSearchQuery={hasSearchQuery} alt="recent-searches" src={recentSearchs} />
-                        <SFiltersDisplayContainer>
-                            {hasSearchPayloadFilters && <FiltersDisplay filters={enhancedFilters} />}
-                        </SFiltersDisplayContainer>
-                    </SRoot>
-                </>
+                <SRoot onClick={() => onClick()}>
+                    <SRecentSearches alt="recent-searches" hasSearchQuery={hasSearchQuery} src={recentSearchs} />
+                    <SFiltersDisplayContainer>
+                        {hasSearchPayloadFilters && <FiltersDisplay filters={enhancedFilters} />}
+                    </SFiltersDisplayContainer>
+                </SRoot>
             )}
         </>
     );
