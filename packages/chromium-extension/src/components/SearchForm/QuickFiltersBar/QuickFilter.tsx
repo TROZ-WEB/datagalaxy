@@ -75,7 +75,7 @@ const QuickFilter = React.forwardRef(({ filter, onClick, className, displayMode 
             className={className}
             displayMode={displayMode}
             onClick={onClick}
-            title={`${filter?.name}${filter?.content ? ` : ${filter?.content}` : ''}`}
+            data-tip={`${filter?.name}${filter?.content ? ` : ${filter?.content}` : ''}`}
         >
             {filter?.icon && <SImageContainer>{filter?.icon}</SImageContainer>}
             <STextContainer>

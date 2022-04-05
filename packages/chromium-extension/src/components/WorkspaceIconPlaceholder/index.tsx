@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-
 import styled from 'styled-components';
+import Tooltip, { rebuildTooltip } from '../ui/Tooltip';
 
 const SWorkspacePlacerHolder = styled.div`
     height: 16px;
@@ -130,7 +130,7 @@ const getBackgroundColor = (firstLetter) => {
     }
 };
 
-const WorkspaceIconPlaceHolder = ({ workspaceTrigram, title }: { workspaceTrigram: string; title: string }) => {
+const WorkspaceIconPlaceHolder = ({ workspaceTrigram, tooltip }: { workspaceTrigram: string; tooltip: string }) => {
     const [color, setColor] = useState<string>();
     const [formattedTrigram, setFormattedTrigram] = useState<string>();
 
@@ -144,12 +144,15 @@ const WorkspaceIconPlaceHolder = ({ workspaceTrigram, title }: { workspaceTrigra
 
             setFormattedTrigram(trigramSplitted.join(''));
         }
+        rebuildTooltip();
     }, [workspaceTrigram]);
 
     return (
-        <SWorkspacePlacerHolder color={CustomColors[color]} title={title}>
-            {formattedTrigram}
-        </SWorkspacePlacerHolder>
+        <>
+            <SWorkspacePlacerHolder color={CustomColors[color]} data-tip={tooltip}>
+                {formattedTrigram}
+            </SWorkspacePlacerHolder>
+        </>
     );
 };
 

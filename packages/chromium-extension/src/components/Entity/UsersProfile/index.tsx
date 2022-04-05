@@ -38,7 +38,7 @@ const UsersProfile = ({ governanceRole, users }: { governanceRole?: 'owner' | 's
 
     useEffect(() => {
         let informations = chrome.i18n.getMessage(`entity_${governanceRole}`);
-        informations += '\n';
+        informations += '</br>';
         otherUsers?.forEach((user, index, array) => {
             informations += `${user.firstName} ${user.lastName} ${index === array.length - 1 ? '' : ','} `;
         });
@@ -63,7 +63,7 @@ const UsersProfile = ({ governanceRole, users }: { governanceRole?: 'owner' | 's
             </SAvatarWrapper>
             {users?.length > LIMIT_AVATAR_ELLIPSE && (
                 <SNumberOfUsers>
-                    <span title={otherUsersInformations}>{`+${users.length - LIMIT_AVATAR_ELLIPSE}`}</span>
+                    <span data-tip={otherUsersInformations}>{`+${users.length - LIMIT_AVATAR_ELLIPSE}`}</span>
                 </SNumberOfUsers>
             )}
         </SRoot>

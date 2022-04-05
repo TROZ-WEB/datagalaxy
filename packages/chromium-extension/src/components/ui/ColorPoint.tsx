@@ -20,15 +20,15 @@ interface Props {
     color: string;
     defaultColor?: string;
     className?: string;
-    title?: string;
+    tooltip?: string;
 }
 
-const ColorPoint: FC<Props> = ({ color, title, defaultColor, className }) => {
+const ColorPoint: FC<Props> = ({ color, tooltip, defaultColor, className }) => {
     return (
         <SColorPoint
             className={className}
             color={color}
-            title={title}
+            title={tooltip}
             withBorder={color === 'white' || defaultColor === 'white'}
         />
     );

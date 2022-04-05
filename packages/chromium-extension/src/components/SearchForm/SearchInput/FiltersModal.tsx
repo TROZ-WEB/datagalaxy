@@ -73,7 +73,7 @@ const FiltersModal = () => {
                 ref={filtersModal}
                 icon="FilterEmpty"
                 onClick={handleOpen}
-                title={chrome.i18n.getMessage(`add_filter`)}
+                tooltip={chrome.i18n.getMessage(`add_filter`)}
             />
             {AllFilters && (
                 <SModal onClick={(e) => e.stopPropagation()}>

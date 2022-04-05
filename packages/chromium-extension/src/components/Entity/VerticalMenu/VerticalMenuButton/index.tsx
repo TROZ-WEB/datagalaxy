@@ -61,17 +61,17 @@ interface Props {
     icon: string;
     badgeCount?: number;
     id: string;
-    title?: string;
+    tooltip?: string;
 }
 
-const VerticalMenuButton: React.FC<Props> = ({ onClick, icon, variant, badgeCount, id, title, ...rest }) => {
+const VerticalMenuButton: React.FC<Props> = ({ onClick, icon, variant, badgeCount, id, tooltip, ...rest }) => {
     return (
         <SRoot
             active={variant === 'active'}
             disabled={badgeCount === 0}
             id={id}
             onClick={onClick}
-            title={title}
+            data-tip={tooltip}
             type="button"
             {...rest}
         >

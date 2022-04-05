@@ -250,7 +250,6 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                                 bold={entity.exactMatchOccuredOnName}
                                 onMouseEnter={() => setIsMoreActionsShown(true)}
                                 onMouseLeave={() => setIsMoreActionsShown(false)}
-                                title={entity.name}
                             >
                                 {entity.name}
                                 {isMoreActionShown && (
@@ -307,9 +306,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                                 <SInfosWrapper>
                                     {entity.type && (
                                         <>
-                                            <SType title={chrome.i18n.getMessage(`entity_label_full_${entity.type}`)}>
-                                                {chrome.i18n.getMessage(`entity_label_full_${entity.type}`)}
-                                            </SType>
+                                            <SType>{chrome.i18n.getMessage(`entity_label_full_${entity.type}`)}</SType>
                                             <VerticalSeparator />
                                         </>
                                     )}

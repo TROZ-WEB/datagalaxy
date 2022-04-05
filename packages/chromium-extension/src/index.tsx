@@ -4,6 +4,7 @@ import * as ReactDOM from 'react-dom';
 import { Helmet } from 'react-helmet';
 import root from 'react-shadow/styled-components';
 import LoadingScreen from './components/LoadingScreen';
+import Tooltip from './components/ui/Tooltip';
 import Popup from './pages/Popup';
 import AsyncStorageService from './Services/AsyncStorageService';
 import storeModel from './store/store';
@@ -50,6 +51,7 @@ storeModel().then((models) => {
                 <GlobalStyle />
                 <App />
             </root.div>
+            <Tooltip></Tooltip>
         </StoreProvider>,
         container,
     );

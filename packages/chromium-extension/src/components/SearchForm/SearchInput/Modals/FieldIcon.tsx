@@ -14,13 +14,13 @@ const SIcon = styled.img`
 
 interface Props {
     hash: string;
-    title: string;
+    tooltip: string;
 }
 
-const FieldIcon: FC<Props> = ({ hash, title }) => {
+const FieldIcon: FC<Props> = ({ hash, tooltip }) => {
     const url = useStoreState((state) => state.auth.pubapi);
 
-    return <SIcon src={`${url}/image?hash=${encodeURIComponent(hash)}`} title={title} />;
+    return <SIcon src={`${url}/image?hash=${encodeURIComponent(hash)}`} title={tooltip} />;
 };
 
 export default FieldIcon;

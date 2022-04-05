@@ -36,7 +36,7 @@ const PatFinder = () => {
                         frameBorder="0"
                         height="360"
                         src="https://player.vimeo.com/video/618892114?h=5a4697f7d5&color=ffffff&byline=0"
-                        title="Find PAT Video"
+                        data-tip="Find PAT Video"
                         allowFullScreen
                     />
                 ) : (
@@ -45,7 +45,7 @@ const PatFinder = () => {
                         frameBorder="0"
                         height="360"
                         src="https://player.vimeo.com/video/618892015?h=5a4697f7d5&color=ffffff&byline=0"
-                        title="Find PAT Video"
+                        data-tip="Find PAT Video"
                         allowFullScreen
                     />
                 )}

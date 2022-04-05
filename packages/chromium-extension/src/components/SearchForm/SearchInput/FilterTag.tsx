@@ -103,11 +103,11 @@ const FilterTag = React.forwardRef(({ filter, onClick, displayMode = false }: Pr
                     onClick();
                 }
             }}
-            title={filter?.content?.length < 3 ? `${filter?.name} : ${filter?.content?.join(', ')}` : undefined}
+            data-tip={filter?.content?.length < 3 ? `${filter?.name} : ${filter?.content?.join(', ')}` : undefined}
         >
             <SImageContainer>{filter?.icon?.slice(0, 2)?.map((icon) => icon)}</SImageContainer>
             {filter?.content?.length > 2 && (
-                <SEllipse title={`${filter?.name} : ${filter?.content?.join(', ')}`}>{`+ ${
+                <SEllipse data-tip={`${filter?.name} : ${filter?.content?.join(', ')}`}>{`+ ${
                     filter?.icon.length - 2
                 }`}</SEllipse>
             )}
