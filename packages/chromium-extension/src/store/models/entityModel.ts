@@ -180,6 +180,10 @@ const fetchLinkedObjects = thunk(
         try {
             const url = (getStoreState() as any).auth.pubapi;
             const linkedObjects = await fetchLinkedObjectsAPI(id, url, dataType, name, type, versionId);
+            Object.keys(linkedObjects)?.forEach((key) => {
+                linkedObjects[key] = linkedObjects[key].filter((lo) => lo.dataType !== 'DataProcessingItem');
+            });
+
             actions.updateLinkedObjects(linkedObjects);
         } catch (err) {
             console.error('error : ', err);
