@@ -15,7 +15,7 @@ const SIcon = styled.img`
 const WorkspaceIcon = ({ hash, tooltip }) => {
     const url = useStoreState((state) => state.auth.pubapi);
 
-    return <SIcon src={`${url}/image?hash=${encodeURIComponent(hash)}`} title={tooltip} />;
+    return <SIcon data-tip={tooltip} src={`${url}/image?hash=${encodeURIComponent(hash)}`} />;
 };
 
 export default WorkspaceIcon;

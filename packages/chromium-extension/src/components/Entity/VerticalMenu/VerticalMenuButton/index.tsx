@@ -66,18 +66,19 @@ interface Props {
 
 const VerticalMenuButton: React.FC<Props> = ({ onClick, icon, variant, badgeCount, id, tooltip, ...rest }) => {
     return (
-        <SRoot
-            active={variant === 'active'}
-            disabled={badgeCount === 0}
-            id={id}
-            onClick={onClick}
-            data-tip={tooltip}
-            type="button"
-            {...rest}
-        >
-            <Glyph icon={icon} />
-            {badgeCount > 0 && <SBadge>{badgeCount > 99 ? '99+' : badgeCount}</SBadge>}
-        </SRoot>
+        <div data-tip={tooltip}>
+            <SRoot
+                active={variant === 'active'}
+                disabled={badgeCount === 0}
+                id={id}
+                onClick={onClick}
+                type="button"
+                {...rest}
+            >
+                <Glyph icon={icon} />
+                {badgeCount > 0 && <SBadge>{badgeCount > 99 ? '99+' : badgeCount}</SBadge>}
+            </SRoot>
+        </div>
     );
 };
 

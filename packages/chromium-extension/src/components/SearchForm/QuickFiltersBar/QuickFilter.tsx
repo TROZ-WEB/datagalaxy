@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 /* ---------- STYLES ---------- */
@@ -69,18 +69,35 @@ interface Props {
 }
 
 const QuickFilter = React.forwardRef(({ filter, onClick, className, displayMode }: Props, ref) => {
+    const sValueRef = useRef<HTMLDivElement>();
+
+    const [showTooltip, setShowTooltip] = useState(false);
+
+    useEffect(() => {
+        if (sValueRef.current) {
+            if (sValueRef.current.offsetWidth < sValueRef.current.scrollWidth) {
+                setShowTooltip(true);
+            }
+        }
+    }, [sValueRef.current]);
+
+    const props = {
+        ref,
+        className,
+        displayMode,
+        onClick,
+    };
+
+    if (showTooltip) {
+        props['data-tip'] = `${filter?.name}${filter?.content ? ` : ${filter?.content}` : ''}`;
+    }
+
     return (
-        <SRoot
-            ref={ref}
-            className={className}
-            displayMode={displayMode}
-            onClick={onClick}
-            data-tip={`${filter?.name}${filter?.content ? ` : ${filter?.content}` : ''}`}
-        >
+        <SRoot {...props}>
             {filter?.icon && <SImageContainer>{filter?.icon}</SImageContainer>}
             <STextContainer>
                 <SLabel>{filter?.name}</SLabel>
-                <SValue>{filter?.content ? filter?.content : '...'}</SValue>
+                <SValue ref={sValueRef}>{filter?.content ? filter?.content : '...'}</SValue>
             </STextContainer>
         </SRoot>
     );

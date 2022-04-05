@@ -80,7 +80,7 @@ const EntityPage = () => {
             };
 
             const fetchChildrenObjects = async () => {
-                await dispatch.entity.fetchChildrenObjects({
+                dispatch.entity.fetchChildrenObjects({
                     parentId: displayedEntity.id,
                     dataType,
                     versionId: location.split('/')[1],
@@ -89,7 +89,10 @@ const EntityPage = () => {
             };
 
             const fetchRecentlyAccessedObjects = async () => {
-                await dispatch.entity.fetchRecentlyAccessedObjects();
+                setTimeout(() => {
+                    // Waiting for backend to get information about accessed object
+                    dispatch.entity.fetchRecentlyAccessedObjects();
+                }, 2000);
             };
 
             fetchRecentlyAccessedObjects();

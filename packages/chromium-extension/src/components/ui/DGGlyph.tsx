@@ -56,7 +56,7 @@ const DGGlyph: FC<DGGlyphProps> = ({ size = 'S', className, tooltip, icon, kind 
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
             {kind && icon && (
-                <SEntityDGGlyph className={className} icon={icon} kind={kind} size={size} title={tooltip} />
+                <SEntityDGGlyph className={className} data-tip={tooltip} icon={icon} kind={kind} size={size} />
             )}
         </>
     );

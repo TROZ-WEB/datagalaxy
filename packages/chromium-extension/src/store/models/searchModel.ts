@@ -149,6 +149,7 @@ const searchModel = async (): Promise<SearchModel> => {
             const searchResults = payload?.result
                 ? payload.result.entities.filter((entity) => !entity.isExactMatch)
                 : [];
+
             const exactMatches = payload?.result ? payload.result.entities.filter((entity) => entity.isExactMatch) : [];
 
             state.exactMatches = {

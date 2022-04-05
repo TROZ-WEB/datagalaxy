@@ -28,7 +28,7 @@ const ColorPoint: FC<Props> = ({ color, tooltip, defaultColor, className }) => {
         <SColorPoint
             className={className}
             color={color}
-            title={tooltip}
+            data-tip={tooltip}
             withBorder={color === 'white' || defaultColor === 'white'}
         />
     );
