@@ -1178,15 +1178,21 @@
         "message": "Details"
     },
     "docking_panel_descendants": {
-        "message": "Descendants"
+        "message": "Children"
+    },
+    "docking_panel_no_descendants": {
+        "message": "No child"
     },
     "docking_panel_related": {
-        "message": "Related Objets"
+        "message": "Linked objects"
     },
     "recently_accessed_objects": {
         "message": "Recently viewed"
     },
     "recent_searches": {
         "message": "Recent searches"
+    },
+    "docking_panel_no_related": {
+        "message": "No linked object"
     }
 }

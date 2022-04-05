@@ -29,7 +29,7 @@ const StewardsModal: FC = () => {
             return {
                 id: item.userId,
                 label: `${item.firstName} ${item.lastName}`,
-                icon: <Avatar size="mini" user={item} />,
+                icon: <Avatar role="steward" size="mini" user={item} />, // eslint-disable-line jsx-a11y/aria-role
                 checked: !!pickedFilters?.[index]?.filter?.values?.includes(item.userId),
                 name: chrome.i18n.getMessage(`attribute_key_DataStewards`),
             };
