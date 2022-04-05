@@ -47,15 +47,17 @@ interface DGGlyphProps {
     icon: string;
     kind: string;
     className?: string;
-    title?: string;
+    tooltip?: string;
     size?: 'S' | 'M' | 'L' | 'XL';
 }
 
-const DGGlyph: FC<DGGlyphProps> = ({ size = 'S', className, title, icon, kind }) => {
+const DGGlyph: FC<DGGlyphProps> = ({ size = 'S', className, tooltip, icon, kind }) => {
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
-            {kind && icon && <SEntityDGGlyph className={className} icon={icon} kind={kind} size={size} title={title} />}
+            {kind && icon && (
+                <SEntityDGGlyph className={className} icon={icon} kind={kind} size={size} title={tooltip} />
+            )}
         </>
     );
 };

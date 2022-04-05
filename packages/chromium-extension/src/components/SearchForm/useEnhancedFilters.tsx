@@ -44,7 +44,10 @@ const useEnhancedFilters = (): UseEnhancedFiltersResult => {
                         if (tempEnhancedFilter) {
                             if (tempEnhancedFilter?.imageHash) {
                                 enhancedFilter.icon = (
-                                    <FieldIcon hash={tempEnhancedFilter?.imageHash} title={tempEnhancedFilter?.name} />
+                                    <FieldIcon
+                                        hash={tempEnhancedFilter?.imageHash}
+                                        tooltip={tempEnhancedFilter?.name}
+                                    />
                                 );
                             }
                             enhancedFilter.content = tempEnhancedFilter?.name;
@@ -66,7 +69,7 @@ const useEnhancedFilters = (): UseEnhancedFiltersResult => {
                                 enhancedFilter.icon = (
                                     <FieldIcon
                                         hash={tempEnhancedFilter?.imageHash}
-                                        title={tempEnhancedFilter?.displayName}
+                                        tooltip={tempEnhancedFilter?.displayName}
                                     />
                                 );
                             }
@@ -103,7 +106,7 @@ const useEnhancedFilters = (): UseEnhancedFiltersResult => {
                             <DGGlyph
                                 icon={entitiesTypeRelatedInfos[value]?.glyph}
                                 kind={entitiesTypeRelatedInfos[value]?.kind.toLocaleLowerCase()}
-                                title={chrome.i18n.getMessage(`entity_label_full_${value}`)}
+                                tooltip={chrome.i18n.getMessage(`entity_label_full_${value}`)}
                             />
                         );
                         enhancedFilter.content = chrome.i18n.getMessage(`entity_label_full_${value}`);
@@ -116,7 +119,7 @@ const useEnhancedFilters = (): UseEnhancedFiltersResult => {
                         const tempEnhancedFilter = domains?.find((item) => item.id === value);
                         if (tempEnhancedFilter) {
                             enhancedFilter.icon = (
-                                <ColorPoint color={tempEnhancedFilter?.color} title={tempEnhancedFilter?.label} />
+                                <ColorPoint color={tempEnhancedFilter?.color} tooltip={tempEnhancedFilter?.label} />
                             );
                             enhancedFilter.content = tempEnhancedFilter?.label;
                             enhancedFilter.name = chrome.i18n.getMessage(`attribute_key_${filter.attributeKey}`);

@@ -81,7 +81,7 @@ const EntityImage: FC<EntityImageProps> = ({ entity, entityPage }) => {
     const [errorLoadingImage, setErrorLoadingImage] = useState(false);
 
     return (
-        <SRoot entityPage={entityPage} title={chrome.i18n.getMessage(`entity_label_full_${entity.type}`)}>
+        <SRoot entityPage={entityPage} data-tip={chrome.i18n.getMessage(`entity_label_full_${entity.type}`)}>
             {!errorLoadingImage && hasTechnicalLogo ? (
                 <>
                     <STechnicalLogo

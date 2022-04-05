@@ -37,7 +37,7 @@ const UserProfile = ({ user }: { user: UserType }) => {
     return (
         <SRoot>
             <SAvatarWrapper>
-                <Avatar key={user?.userId} grouped={false} showTitle={false} size="mini" user={user} />
+                <Avatar key={user?.userId} grouped={false} showTooltip={false} size="mini" user={user} />
             </SAvatarWrapper>
 
             <STextInfoWrapper>

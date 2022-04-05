@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useStoreState } from '../../../store/hooks';
+import Tooltip, { rebuildTooltip } from '../../ui/Tooltip';
 
 /* ---------- STYLES ---------- */
 
@@ -64,30 +65,38 @@ Tags.Item = ({
     const foundTag = tags?.find(({ label }) => label === t);
     const defaultColor = foundTag?.color;
 
+    useEffect(() => {
+        rebuildTooltip();
+    }, [title]);
+
     return title ? (
-        <SRootItem title={title}>
-            {(defaultColor || color) && (
-                <SColorPoint
-                    style={{
-                        backgroundColor: color || defaultColor,
-                    }}
-                    withBorder={color === 'white' || defaultColor === 'white'}
-                />
-            )}
-            {!hideLabel && <STagLabel>{tag}</STagLabel>}
-        </SRootItem>
+        <div data-tip={title}>
+            <SRootItem>
+                {(defaultColor || color) && (
+                    <SColorPoint
+                        style={{
+                            backgroundColor: color || defaultColor,
+                        }}
+                        withBorder={color === 'white' || defaultColor === 'white'}
+                    />
+                )}
+                {!hideLabel && <STagLabel>{tag}</STagLabel>}
+            </SRootItem>
+        </div>
     ) : (
-        <SRootItem>
-            {(defaultColor || color) && (
-                <SColorPoint
-                    style={{
-                        backgroundColor: color || defaultColor,
-                    }}
-                    withBorder={color === 'white' || defaultColor === 'white'}
-                />
-            )}
-            {!hideLabel && <STagLabel>{tag}</STagLabel>}
-        </SRootItem>
+        <div>
+            <SRootItem>
+                {(defaultColor || color) && (
+                    <SColorPoint
+                        style={{
+                            backgroundColor: color || defaultColor,
+                        }}
+                        withBorder={color === 'white' || defaultColor === 'white'}
+                    />
+                )}
+                {!hideLabel && <STagLabel>{tag}</STagLabel>}
+            </SRootItem>
+        </div>
     );
 };
 

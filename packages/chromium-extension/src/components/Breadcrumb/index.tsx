@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { formatBreadcrumb, Workspace } from 'shared';
 import styled from 'styled-components';
 import { useStoreState } from '../../store/hooks';
 import WorkspaceIconPlaceholder from '../WorkspaceIconPlaceholder';
+import Tooltip, { rebuildTooltip } from '../ui/Tooltip';
 
 /* ---------- STYLES ---------- */
 
@@ -55,18 +56,22 @@ const Breadcrumb = ({ path, workspace }: { path: string[]; workspace: Workspace 
     const formattedPath = useMemo(() => (path ? formatBreadcrumb(path) : null), [path]);
     const url = useStoreState((state) => state.auth.pubapi);
 
+    useEffect(() => {
+        rebuildTooltip();
+    }, [formattedPath]);
+
     return (
         <div>
             {formattedPath && (
-                <SRoot title={path.join(' > ')}>
+                <SRoot data-tip={path.join(' > ')}>
                     {workspace?.iconHash ? (
                         <SWorkspaceImage
                             alt="workspace-image"
                             src={`${url}/image?hash=${encodeURIComponent(workspace?.iconHash)}`}
-                            title={workspace?.name}
+                            data-tip={workspace?.name}
                         />
                     ) : (
-                        <WorkspaceIconPlaceholder title={workspace?.name} workspaceTrigram={workspace?.trigram} />
+                        <WorkspaceIconPlaceholder tooltip={workspace?.name} workspaceTrigram={workspace?.trigram} />
                     )}
                     {formattedPath && formattedPath.shorten.length !== 0 ? (
                         <SFormatted>

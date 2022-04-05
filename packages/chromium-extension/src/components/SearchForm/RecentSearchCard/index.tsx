@@ -12,18 +12,31 @@ const SRoot = styled.div`
     display: flex;
     flex-direction: column;
     cursor: pointer;
+    position: relative;
 `;
 
 const SQueryContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 8px;
-    margin-left: 4px;
+    margin-left: 20px;
+    ${(props) => props.hasSearchPayloadFilters && `margin-bottom: 8px;`}
 `;
 
 const SQueryText = styled.span`
     margin-left: 5px;
+`;
+
+const SRecentSearches = styled.img`
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    left: 0;
+    ${(props) => !props.hasSearchQuery && `top: 10px;`}
+`;
+
+const SFiltersDisplayContainer = styled.div`
+    margin-left: 20px;
 `;
 
 /* ---------- COMPONENT ---------- */
@@ -43,14 +56,30 @@ const RecentSearchCard: FC<Props> = ({ recentSearch, onClick }) => {
         setEnhancedFilters(formatFilters(searchPayload.filters, computeFilters));
     }, [searchPayload.filters]);
 
+    const hasSearchPayloadFilters = searchPayload.filters.length !== 0;
+    const hasSearchQuery = searchPayload.query;
+
     return (
-        <SRoot onClick={() => onClick()}>
-            <SQueryContainer>
-                <img alt="back" src={recentSearchs} />
-                <SQueryText>{searchPayload.query}</SQueryText>
-            </SQueryContainer>
-            {searchPayload.filters.length !== 0 && <FiltersDisplay filters={enhancedFilters} />}
-        </SRoot>
+        <>
+            {hasSearchQuery ? (
+                <SRoot onClick={() => onClick()}>
+                    <SQueryContainer hasSearchPayloadFilters={hasSearchPayloadFilters}>
+                        <SRecentSearches hasSearchQuery={hasSearchQuery} alt="recent-searches" src={recentSearchs} />
+                        <SQueryText>{searchPayload.query}</SQueryText>
+                    </SQueryContainer>
+                    {hasSearchPayloadFilters && <FiltersDisplay filters={enhancedFilters} />}
+                </SRoot>
+            ) : (
+                <>
+                    <SRoot onClick={() => onClick()}>
+                        <SRecentSearches hasSearchQuery={hasSearchQuery} alt="recent-searches" src={recentSearchs} />
+                        <SFiltersDisplayContainer>
+                            {hasSearchPayloadFilters && <FiltersDisplay filters={enhancedFilters} />}
+                        </SFiltersDisplayContainer>
+                    </SRoot>
+                </>
+            )}
+        </>
     );
 };
 

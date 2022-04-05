@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Glyph from './Glyph';
+import { rebuildTooltip } from './Tooltip';
 
 /* ---------- STYLES ---------- */
 
@@ -76,8 +77,11 @@ interface Props {
 }
 
 const Checkbox: React.FC<Props> = ({ field, className, onChange, ...props }) => {
+    useEffect(() => {
+        rebuildTooltip();
+    }, []);
     return (
-        <CheckboxContainer className={className} htmlFor={field?.id} title={field?.label}>
+        <CheckboxContainer className={className} htmlFor={field?.id} data-tip={field?.label}>
             <HiddenCheckbox checked={field?.checked} id={field?.id} onChange={onChange} type="checkbox" {...props} />
             <StyledCheckbox checked={field?.checked}>
                 <SGlyph icon="Check" />

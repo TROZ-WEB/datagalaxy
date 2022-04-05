@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { UserType } from 'shared';
 import styled, { css } from 'styled-components';
+import Tooltip from '../ui/Tooltip';
 
 /* ---------- STYLES ---------- */
 
@@ -97,13 +98,13 @@ const Avatar = ({
     grouped = false,
     user,
     size = 'normal',
-    showTitle = true,
+    showTooltip = true,
     role,
 }: {
     grouped?: boolean;
     user?: UserType;
     size?: 'normal' | 'mini';
-    showTitle?: boolean;
+    showTooltip?: boolean;
     role?: string;
 }) => {
     const translatedGovernanceRole = chrome.i18n.getMessage(`entity_${role}`);
@@ -174,9 +175,9 @@ const Avatar = ({
     }
 
     if (!user.profileThumbnailUrl) {
-        return showTitle ? (
+        return showTooltip ? (
             <div
-                title={`${translatedGovernanceRole ? `${translatedGovernanceRole}\n` : ''}${user.firstName} ${
+                data-tip={`${translatedGovernanceRole ? `${translatedGovernanceRole}\n : ` : ''}${user.firstName} ${
                     user.lastName
                 }`}
             >
@@ -199,9 +200,9 @@ const Avatar = ({
         );
     }
 
-    return showTitle ? (
+    return showTooltip ? (
         <div
-            title={`${translatedGovernanceRole ? `${translatedGovernanceRole}\n` : ''}${user.firstName} ${
+            data-tip={`${translatedGovernanceRole ? `${translatedGovernanceRole}\n : ` : ''}${user.firstName} ${
                 user.lastName
             }`}
         >

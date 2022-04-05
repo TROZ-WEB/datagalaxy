@@ -24,7 +24,7 @@ const EntityTypeModal: FC = () => {
                     <DGGlyph
                         icon={value?.glyph}
                         kind={value?.kind.toLowerCase()}
-                        title={chrome.i18n.getMessage(`entity_label_full_${key}`)}
+                        tooltip={chrome.i18n.getMessage(`entity_label_full_${key}`)}
                     />
                 ),
                 checked: !!pickedFilters?.[index]?.filter?.values?.includes(key),
