@@ -34,7 +34,7 @@
     "manifest_version": 3,
     "name": "__MSG_appName__",
     "permissions": ["webRequest", "activeTab", "scripting", "storage", "declarativeNetRequest"],
-    "version": "1.0.28",
+    "version": "1.0.29",
     "declarative_net_request": {
         "rule_resources": [
             {
