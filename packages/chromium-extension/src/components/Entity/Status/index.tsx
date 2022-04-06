@@ -35,7 +35,15 @@ const SGlyph = styled(Glyph)`
 
 /* ---------- COMPONENT ---------- */
 
-const Status = ({ status, hideLabel = false }: { status: string; hideLabel?: boolean }) => {
+const Status = ({
+    status,
+    hideLabel = false,
+    showTooltip = true,
+}: {
+    status: string;
+    hideLabel?: boolean;
+    showTooltip?: boolean;
+}) => {
     const iconForStatus = useMemo(() => {
         switch (status) {
             case 'Proposed':
@@ -53,9 +61,15 @@ const Status = ({ status, hideLabel = false }: { status: string; hideLabel?: boo
         return null;
     }, [status]);
 
+    const props = {};
+
+    if (showTooltip) {
+        props['data-tip'] = chrome.i18n.getMessage(`entity_status_${status}`);
+    }
+
     return (
         <SRoot>
-            <SIconWrapper data-tip={chrome.i18n.getMessage(`entity_status_${status}`)}>{iconForStatus}</SIconWrapper>
+            <SIconWrapper {...props}>{iconForStatus}</SIconWrapper>
             {!hideLabel && chrome.i18n.getMessage(`entity_status_${status}`)}
         </SRoot>
     );

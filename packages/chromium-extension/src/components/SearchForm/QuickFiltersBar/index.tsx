@@ -124,9 +124,13 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
     const [maxScroll, setMaxScroll] = useState(0);
 
     const ref = useRef<HTMLDivElement>();
+
     useEffect(() => {
         if (ref.current) {
             setMaxScroll(ref.current.scrollWidth - ref.current.clientWidth);
+        } else {
+            setScrollValue(0);
+            setMaxScroll(0);
         }
     }, [ref.current]);
 
