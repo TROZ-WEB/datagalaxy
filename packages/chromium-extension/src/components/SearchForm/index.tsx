@@ -188,7 +188,6 @@ const SearchForm = () => {
     };
 
     const clickOnEntity = (entity) => {
-        console.info('CALLING CLOSE TOOLTIP');
         closeTooltips();
         historizeSearch();
         updateCurrentWorkspace(entity?.path?.split('\\')[1]); // API WORKAROUND 6 : workspace not present in entity route
