@@ -119,7 +119,7 @@ const Radio: React.FC<Props> = ({ field, className, inline = false, onChange, se
     };
 
     return (
-        <RadioContainer className={className} htmlFor={field?.id} inline={inline} data-tip={field?.label}>
+        <RadioContainer className={className} data-tip={field?.label} htmlFor={field?.id} inline={inline}>
             <HiddenRadio
                 checked={field?.checked}
                 id={field?.id}

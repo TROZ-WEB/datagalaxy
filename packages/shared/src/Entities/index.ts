@@ -63,7 +63,7 @@ export const entitiesTypeRelatedInfos: customFieldAttr = {
     /* Glossaire (fonctionnel) */
     Universe: { glyph: 'Universe', kind: 'Glossary' },
     Concept: { glyph: 'Concept', kind: 'Glossary' },
-    ReferenceData: { glyph: 'Value', kind: 'Glossary' },
+    ReferenceData: { glyph: 'Rule', kind: 'Glossary' },
     IndicatorGroup: { glyph: 'IndicatorGroup', kind: 'Glossary' },
     ReferenceDataValue: { glyph: 'Value', kind: 'Glossary' },
     BusinessTerm: { glyph: 'Term', kind: 'Glossary' },
@@ -82,7 +82,7 @@ export const entitiesTypeRelatedInfos: customFieldAttr = {
     Table: { glyph: 'Table', kind: 'Catalog' },
     View: { glyph: 'View', kind: 'Catalog' },
     Column: { glyph: 'Columnview', kind: 'Catalog' },
-    Field: { glyph: 'UsageField', kind: 'Catalog' },
+    Field: { glyph: 'Datafield', kind: 'Catalog' },
     SubStructure: { glyph: 'SubStructure', kind: 'Catalog' },
     File: { glyph: 'File', kind: 'Catalog' },
     Document: { glyph: 'Document', kind: 'Catalog' },

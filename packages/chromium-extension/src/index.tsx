@@ -51,7 +51,7 @@ storeModel().then((models) => {
                 <GlobalStyle />
                 <App />
             </root.div>
-            <Tooltip></Tooltip>
+            <Tooltip />
         </StoreProvider>,
         container,
     );

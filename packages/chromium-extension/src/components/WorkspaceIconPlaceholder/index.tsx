@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Tooltip, { rebuildTooltip } from '../ui/Tooltip';
+import { rebuildTooltip } from '../ui/Tooltip';
 
 const SWorkspacePlacerHolder = styled.div`
     height: 16px;
@@ -148,11 +148,9 @@ const WorkspaceIconPlaceHolder = ({ workspaceTrigram, tooltip }: { workspaceTrig
     }, [workspaceTrigram]);
 
     return (
-        <>
-            <SWorkspacePlacerHolder color={CustomColors[color]} data-tip={tooltip}>
-                {formattedTrigram}
-            </SWorkspacePlacerHolder>
-        </>
+        <SWorkspacePlacerHolder color={CustomColors[color]} data-tip={tooltip}>
+            {formattedTrigram}
+        </SWorkspacePlacerHolder>
     );
 };
 

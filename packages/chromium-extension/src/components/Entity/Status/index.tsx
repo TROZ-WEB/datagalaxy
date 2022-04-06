@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import Glyph from '../../ui/Glyph';
-import Tooltip from '../../ui/Tooltip';
 
 /* ---------- STYLES ---------- */
 
