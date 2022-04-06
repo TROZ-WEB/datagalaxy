@@ -130,7 +130,7 @@ const getBackgroundColor = (firstLetter) => {
     }
 };
 
-const WorkspaceIconPlaceHolder = ({ workspaceTrigram, tooltip }: { workspaceTrigram: string; tooltip: string }) => {
+const WorkspaceIconPlaceHolder = ({ workspaceTrigram, tooltip }: { workspaceTrigram: string; tooltip?: string }) => {
     const [color, setColor] = useState<string>();
     const [formattedTrigram, setFormattedTrigram] = useState<string>();
 
@@ -147,11 +147,15 @@ const WorkspaceIconPlaceHolder = ({ workspaceTrigram, tooltip }: { workspaceTrig
         rebuildTooltip();
     }, [workspaceTrigram]);
 
-    return (
-        <SWorkspacePlacerHolder color={CustomColors[color]} data-tip={tooltip}>
-            {formattedTrigram}
-        </SWorkspacePlacerHolder>
-    );
+    const props = {
+        color: CustomColors[color],
+    };
+
+    if (tooltip) {
+        props['data-tip'] = tooltip;
+    }
+
+    return <SWorkspacePlacerHolder {...props}>{formattedTrigram}</SWorkspacePlacerHolder>;
 };
 
 export default WorkspaceIconPlaceHolder;

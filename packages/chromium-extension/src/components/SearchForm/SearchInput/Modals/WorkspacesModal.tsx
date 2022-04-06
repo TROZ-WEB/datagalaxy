@@ -50,13 +50,13 @@ const WorkspacesModal: FC = () => {
         if (workspace.iconHash) {
             newIcon = (
                 <SWorkspaceWrapper>
-                    <WorkspaceIcon hash={workspace.iconHash} tooltip={workspace.name} />
+                    <WorkspaceIcon hash={workspace.iconHash} />
                 </SWorkspaceWrapper>
             );
         } else {
             newIcon = (
                 <SWorkspaceWrapper>
-                    <WorkspaceIconPlaceholder tooltip={workspace.name} workspaceTrigram={workspace?.trigram} />
+                    <WorkspaceIconPlaceholder workspaceTrigram={workspace?.trigram} />
                 </SWorkspaceWrapper>
             );
         }

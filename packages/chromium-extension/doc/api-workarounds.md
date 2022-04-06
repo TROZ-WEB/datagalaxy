@@ -9,3 +9,4 @@
 2) Get all workspaces version for each workspace
 3) Find, with versionId of an object, which workspace is linked to
 4) Reconstitute the object path with the worskpace name |
+| API WORKAROUND 6 | Workspace is not in entity request response, so we need to get it from search and store it in model

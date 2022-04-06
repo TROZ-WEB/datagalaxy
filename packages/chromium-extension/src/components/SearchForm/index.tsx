@@ -7,6 +7,7 @@ import keyListener, { formatFilters } from '../../utils';
 import LoadingScreen from '../LoadingScreen';
 import EntityHeader from '../ui/EntityHeader';
 import Title from '../ui/Title';
+import { closeTooltips } from '../ui/Tooltip';
 import QuickFiltersBar from './QuickFiltersBar';
 import RecentSearchCard from './RecentSearchCard';
 import SearchInput from './SearchInput';
@@ -120,7 +121,7 @@ const SContainer = styled.div`
     border-radius: 6px;
     padding: 10px 16px 10px 16px;
     margin-top: 20px;
-    margin-bottom: 20px;
+    ${(props) => props.bottomMargin && `margin-bottom: 20px;`}
 `;
 
 /* ---------- COMPONENT ---------- */
@@ -170,6 +171,31 @@ const SearchForm = () => {
     const [displayMoreExactMatches, setDisplayMoreExactMatches] = useState(false);
     const [exactMatchesEntitiesToDisplay, setExactMatchesEntitiesToDisplay] = useState<EntityType[]>([]);
     const [enhancedRecentlyAccessedObjects, setEnhancedRecentlyAccessedObjects] = useState<EntityType[]>();
+
+    const historizeSearch = async () => {
+        if (!searchedArgs.term && (!searchedArgs.filters || searchedArgs.filters.length === 0)) {
+            return;
+        }
+        const payload: Payload = {
+            term: searchedArgs.term,
+            technologies,
+            filters: searchedArgs.filters,
+            attributes,
+            saveSearchPayload: true,
+        };
+
+        await dispatch.search.search(payload);
+    };
+
+    const clickOnEntity = (entity) => {
+        console.info('CALLING CLOSE TOOLTIP');
+        closeTooltips();
+        historizeSearch();
+        updateCurrentWorkspace(entity?.path?.split('\\')[1]); // API WORKAROUND 6 : workspace not present in entity route
+        updateIsLoaded(false);
+        const URLLocation = entity.location.replace(new RegExp('/', 'g'), '.'); // Replace "/" by "." in url
+        history.push(`/app/entities/${URLLocation}/`);
+    };
 
     useEffect(() => {
         if (recentlyAccessedObjects) {
@@ -230,21 +256,6 @@ const SearchForm = () => {
         if (value || pickedFilters.length > 0) {
             setSuccess(true);
         }
-    };
-
-    const historizeSearch = async () => {
-        if (!searchedArgs.term && (!searchedArgs.filters || searchedArgs.filters.length === 0)) {
-            return;
-        }
-        const payload: Payload = {
-            term: searchedArgs.term,
-            technologies,
-            filters: searchedArgs.filters,
-            attributes,
-            saveSearchPayload: true,
-        };
-
-        await dispatch.search.search(payload);
     };
 
     const searchInputProps = useSearchInput({
@@ -354,17 +365,7 @@ const SearchForm = () => {
                                                                 exactMatches={exactMatchAttributes}
                                                                 id={`entityHeader${idx}`}
                                                                 onClick={() => {
-                                                                    historizeSearch();
-                                                                    updateCurrentWorkspace(
-                                                                        entity?.path?.split('\\')[1],
-                                                                    );
-
-                                                                    updateIsLoaded(false);
-                                                                    const URLLocation = entity.location.replace(
-                                                                        new RegExp('/', 'g'),
-                                                                        '.',
-                                                                    ); // Replace "/" by "." in url
-                                                                    history.push(`/app/entities/${URLLocation}/`);
+                                                                    clickOnEntity(entity);
                                                                 }}
                                                                 searchQuery={searchedArgs.term}
                                                                 alwaysExpanded
@@ -406,15 +407,7 @@ const SearchForm = () => {
                                                         entityPage={false}
                                                         id={`entityHeader${idx}`}
                                                         onClick={() => {
-                                                            updateCurrentWorkspace(entity?.path?.split('\\')[1]);
-                                                            historizeSearch();
-
-                                                            updateIsLoaded(false);
-                                                            const URLLocation = entity.location.replace(
-                                                                new RegExp('/', 'g'),
-                                                                '.',
-                                                            ); // Replace "/" by "." in url
-                                                            history.push(`/app/entities/${URLLocation}/`);
+                                                            clickOnEntity(entity);
                                                         }}
                                                         alwaysExpanded
                                                     />
@@ -429,7 +422,7 @@ const SearchForm = () => {
                                 // eslint-disable-next-line react/jsx-no-useless-fragment
                                 <>
                                     {hasRecentSearches && (
-                                        <SContainer>
+                                        <SContainer bottomMargin={false}>
                                             <SResultsTitleContainerWrapper>
                                                 <Title>{chrome.i18n.getMessage('recent_searches')}</Title>
                                             </SResultsTitleContainerWrapper>
@@ -456,7 +449,7 @@ const SearchForm = () => {
                                         </SContainer>
                                     )}
                                     {hasRecentlyAccessedObjects && (
-                                        <SContainer>
+                                        <SContainer bottomMargin>
                                             <SResultsTitleContainerWrapper>
                                                 <Title>{chrome.i18n.getMessage('recently_accessed_objects')}</Title>
                                             </SResultsTitleContainerWrapper>
@@ -472,17 +465,7 @@ const SearchForm = () => {
                                                                 entityPage={false}
                                                                 id={`entityHeader${idx}`}
                                                                 onClick={() => {
-                                                                    historizeSearch();
-                                                                    updateCurrentWorkspace(
-                                                                        entity?.path?.split('\\')[1],
-                                                                    );
-
-                                                                    updateIsLoaded(false);
-                                                                    const URLLocation = entity.location.replace(
-                                                                        new RegExp('/', 'g'),
-                                                                        '.',
-                                                                    ); // Replace "/" by "." in url
-                                                                    history.push(`/app/entities/${URLLocation}/`);
+                                                                    clickOnEntity(entity);
                                                                 }}
                                                                 alwaysExpanded
                                                             />

@@ -35,7 +35,7 @@ const TechnologiesModal: FC = () => {
         };
 
         if (technology.imageHash) {
-            const newIcon = <FieldIcon hash={technology.imageHash} tooltip={technology.displayName} />;
+            const newIcon = <FieldIcon hash={technology.imageHash} />;
             t.icon = newIcon;
         }
 

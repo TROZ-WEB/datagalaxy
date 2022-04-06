@@ -25,6 +25,7 @@ const SQueryContainer = styled.div`
 
 const SQueryText = styled.span`
     margin-left: 5px;
+    font-size: 11px;
 `;
 
 const SRecentSearches = styled.img`
