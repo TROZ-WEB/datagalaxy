@@ -141,18 +141,11 @@ const FiltersDisplay: FC<Props> = ({ filters }) => {
                             </SLeftButton>
                             <SQuickFiltersContainer>
                                 {filters?.map((f) => {
-                                    const filter = {
-                                        icon: [f.icon],
-                                        name: f.name,
-                                        content: [f.content],
-                                        filter: f.filter,
-                                    };
-
                                     return (
                                         <FilterTag
-                                            key={filter?.filter?.attributeKey}
+                                            key={f?.filter?.attributeKey}
                                             ref={filtersModal}
-                                            filter={filter}
+                                            filter={f}
                                             displayMode
                                         />
                                     );

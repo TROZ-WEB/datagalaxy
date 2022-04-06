@@ -1,4 +1,4 @@
-import React, { useState, FC, useEffect } from 'react';
+import React, { useState, FC, useEffect, useRef } from 'react';
 import { AttributeDefinitionType, Workspace } from 'shared';
 import styled, { css } from 'styled-components';
 import { useStoreState } from '../../store/hooks';
@@ -221,6 +221,20 @@ const EntityHeader: FC<EntityHeaderProps> = ({
         }
     }, [entity, workspaces, displayPath]);
 
+    const sTypeRef = useRef<HTMLSpanElement>();
+
+    const [propsForType, setPropsForType] = useState({});
+
+    useEffect(() => {
+        if (sTypeRef.current) {
+            if (sTypeRef.current.offsetWidth < sTypeRef.current.scrollWidth) {
+                setPropsForType({ 'data-tip': chrome.i18n.getMessage(`entity_label_full_${entity.type}`) });
+            } else {
+                setPropsForType({});
+            }
+        }
+    }, [sTypeRef.current]);
+
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
@@ -238,7 +252,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                     tabIndex={0}
                 >
                     <SWrappedContainer>
-                        <EntityImage entity={entity} entityPage={entityPage} />
+                        <EntityImage entity={entity} entityPage={entityPage} showTooltip={!entityPage} />
 
                         <SRightSide>
                             {displayPath && (
@@ -306,7 +320,9 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                                 <SInfosWrapper>
                                     {entity.type && (
                                         <>
-                                            <SType>{chrome.i18n.getMessage(`entity_label_full_${entity.type}`)}</SType>
+                                            <SType {...propsForType} ref={sTypeRef}>
+                                                {chrome.i18n.getMessage(`entity_label_full_${entity.type}`)}
+                                            </SType>
                                             <VerticalSeparator />
                                         </>
                                     )}

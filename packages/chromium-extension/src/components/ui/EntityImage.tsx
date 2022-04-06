@@ -68,9 +68,10 @@ const SRoot = styled.div`
 interface EntityImageProps {
     entity: any;
     entityPage?: boolean;
+    showTooltip?: boolean;
 }
 
-const EntityImage: FC<EntityImageProps> = ({ entity, entityPage }) => {
+const EntityImage: FC<EntityImageProps> = ({ entity, entityPage, showTooltip = true }) => {
     const kind = entitiesTypeRelatedInfos?.[entity.type]?.kind;
     const glyph = entitiesTypeRelatedInfos?.[entity.type]?.glyph;
 
@@ -80,8 +81,16 @@ const EntityImage: FC<EntityImageProps> = ({ entity, entityPage }) => {
 
     const [errorLoadingImage, setErrorLoadingImage] = useState(false);
 
+    const props = {
+        entityPage,
+    };
+
+    if (showTooltip) {
+        props['data-tip'] = chrome.i18n.getMessage(`entity_label_full_${entity.type}`);
+    }
+
     return (
-        <SRoot data-tip={chrome.i18n.getMessage(`entity_label_full_${entity.type}`)} entityPage={entityPage}>
+        <SRoot {...props}>
             {!errorLoadingImage && hasTechnicalLogo ? (
                 <>
                     <STechnicalLogo
