@@ -81,12 +81,12 @@ const RoundButton = React.forwardRef(
             <SRoot
                 ref={ref}
                 className={className}
+                data-tip={tooltip}
                 id={id}
                 onBlur={onBlur}
-                onClick={onClick}
                 // eslint-disable-next-line react/button-has-type
+                onClick={onClick}
                 size={size}
-                data-tip={tooltip}
                 type={type}
                 variant={variant}
                 {...rest}

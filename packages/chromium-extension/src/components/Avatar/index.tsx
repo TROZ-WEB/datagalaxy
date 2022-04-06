@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { UserType } from 'shared';
 import styled, { css } from 'styled-components';
-import Tooltip from '../ui/Tooltip';
 
 /* ---------- STYLES ---------- */
 

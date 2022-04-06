@@ -80,8 +80,9 @@ const Checkbox: React.FC<Props> = ({ field, className, onChange, ...props }) => 
     useEffect(() => {
         rebuildTooltip();
     }, []);
+
     return (
-        <CheckboxContainer className={className} htmlFor={field?.id} data-tip={field?.label}>
+        <CheckboxContainer className={className} data-tip={field?.label} htmlFor={field?.id}>
             <HiddenCheckbox checked={field?.checked} id={field?.id} onChange={onChange} type="checkbox" {...props} />
             <StyledCheckbox checked={field?.checked}>
                 <SGlyph icon="Check" />

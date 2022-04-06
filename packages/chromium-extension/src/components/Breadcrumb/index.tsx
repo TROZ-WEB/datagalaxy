@@ -2,8 +2,8 @@ import React, { useEffect, useMemo } from 'react';
 import { formatBreadcrumb, Workspace } from 'shared';
 import styled from 'styled-components';
 import { useStoreState } from '../../store/hooks';
+import { rebuildTooltip } from '../ui/Tooltip';
 import WorkspaceIconPlaceholder from '../WorkspaceIconPlaceholder';
-import Tooltip, { rebuildTooltip } from '../ui/Tooltip';
 
 /* ---------- STYLES ---------- */
 
@@ -67,8 +67,8 @@ const Breadcrumb = ({ path, workspace }: { path: string[]; workspace: Workspace 
                     {workspace?.iconHash ? (
                         <SWorkspaceImage
                             alt="workspace-image"
-                            src={`${url}/image?hash=${encodeURIComponent(workspace?.iconHash)}`}
                             data-tip={workspace?.name}
+                            src={`${url}/image?hash=${encodeURIComponent(workspace?.iconHash)}`}
                         />
                     ) : (
                         <WorkspaceIconPlaceholder tooltip={workspace?.name} workspaceTrigram={workspace?.trigram} />

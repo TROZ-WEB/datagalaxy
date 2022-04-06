@@ -97,13 +97,13 @@ const FilterTag = React.forwardRef(({ filter, onClick, displayMode = false }: Pr
     return (
         <SRoot
             ref={ref}
+            data-tip={filter?.content?.length < 3 ? `${filter?.name} : ${filter?.content?.join(', ')}` : undefined}
             displayMode={displayMode}
             onClick={() => {
                 if (!displayMode) {
                     onClick();
                 }
             }}
-            data-tip={filter?.content?.length < 3 ? `${filter?.name} : ${filter?.content?.join(', ')}` : undefined}
         >
             <SImageContainer>{filter?.icon?.slice(0, 2)?.map((icon) => icon)}</SImageContainer>
             {filter?.content?.length > 2 && (

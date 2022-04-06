@@ -33,19 +33,21 @@ const PatFinder = () => {
                 {chrome.runtime.getManifest().current_locale.startsWith('en') ? (
                     <iframe
                         allow="autoplay; fullscreen; picture-in-picture"
+                        data-tip="Find PAT Video"
                         frameBorder="0"
                         height="360"
                         src="https://player.vimeo.com/video/618892114?h=5a4697f7d5&color=ffffff&byline=0"
-                        data-tip="Find PAT Video"
+                        title="iframe1"
                         allowFullScreen
                     />
                 ) : (
                     <iframe
                         allow="autoplay; fullscreen; picture-in-picture"
+                        data-tip="Find PAT Video"
                         frameBorder="0"
                         height="360"
                         src="https://player.vimeo.com/video/618892015?h=5a4697f7d5&color=ffffff&byline=0"
-                        data-tip="Find PAT Video"
+                        title="iframe2"
                         allowFullScreen
                     />
                 )}

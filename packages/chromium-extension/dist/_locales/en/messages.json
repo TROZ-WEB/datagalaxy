@@ -290,7 +290,7 @@
         "message": "Domain"
     },
     "entity_label_full_DimensionGroup": {
-        "message": "Indicator group"
+        "message": "Dimension group"
     },
     "entity_label_full_BusinessDomainGroup": {
         "message": "Domain group"
@@ -1160,7 +1160,7 @@
         "message": "Dictionary"
     },
     "module_processing": {
-        "message": "Dataprocessing"
+        "message": "Data processing"
     },
     "module_usage": {
         "message": "Uses"

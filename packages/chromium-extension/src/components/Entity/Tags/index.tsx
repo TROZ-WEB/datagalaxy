@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useStoreState } from '../../../store/hooks';
-import Tooltip, { rebuildTooltip } from '../../ui/Tooltip';
+import { rebuildTooltip } from '../../ui/Tooltip';
 
 /* ---------- STYLES ---------- */
 
