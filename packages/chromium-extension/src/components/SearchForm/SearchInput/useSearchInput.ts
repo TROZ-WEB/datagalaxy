@@ -82,25 +82,22 @@ export const useSearchInput = ({
 
     const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
 
-    const onClearSearch = useCallback(async () => {
+    const onClearSearch = () => {
         updatePickedFilters([]);
-        dispatch({ type: 'CHANGE', value: '' });
         if (value !== '') {
             setDirectSetting(true);
         }
-    }, [dispatch]);
+        dispatch({ type: 'CHANGE', value: '' });
+    };
 
-    const searchFromPrevious = useCallback(
-        async (term, pf) => {
-            updatePickedFilters(pf);
-            if (term !== value) {
-                setDirectSetting(true);
-            }
-            dispatch({ type: 'CHANGE', value: term });
-            setPreviousSearchedTerm(term);
-        },
-        [dispatch],
-    );
+    const searchFromPrevious = async (term, pf) => {
+        updatePickedFilters(pf);
+        if (term !== value) {
+            setDirectSetting(true);
+        }
+        dispatch({ type: 'CHANGE', value: term });
+        setPreviousSearchedTerm(term);
+    };
 
     useEffect(() => {
         if (debounceOnChange) {

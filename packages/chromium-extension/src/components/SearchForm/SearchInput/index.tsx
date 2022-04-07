@@ -126,7 +126,7 @@ const SearchInput = forwardRef<HTMLInputElement, IProps>(
                 </SIconLoadingWrapper>
             );
         } else if (success) {
-            rightElement = <RoundButton icon="Cancelsearch" onClick={onClearSearch} />;
+            rightElement = <RoundButton icon="Cancelsearch" onClick={() => onClearSearch()} />;
         } else {
             rightElement = <RoundButton icon="Search" />;
         }
