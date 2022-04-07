@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Redirect, Route, useRouteMatch } from 'react-router-dom';
 import ConnectedLayout from '../components/ConnectedLayout';
 import Account from '../pages/Account';
@@ -8,8 +8,18 @@ import Notifications from '../pages/Notifications';
 import Search from '../pages/Search';
 import Tasks from '../pages/Tasks';
 
+declare const Raven: any;
+
 const App = () => {
     const { path } = useRouteMatch();
+
+    useEffect(() => {
+        try {
+            Raven.config('https://983ee28827e840ac8d5a8de89de09f25@sentry.thetribe.io/128').install();
+        } catch (e) {
+            console.info('Error in Sentry init', e);
+        }
+    }, []);
 
     return (
         <ConnectedLayout>
