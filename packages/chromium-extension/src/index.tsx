@@ -3,12 +3,14 @@ import React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Helmet } from 'react-helmet';
 import root from 'react-shadow/styled-components';
+import ErrorBoundary from './components/ErrorBoundaries';
 import LoadingScreen from './components/LoadingScreen';
 import Tooltip from './components/ui/Tooltip';
 import Popup from './pages/Popup';
 import AsyncStorageService from './Services/AsyncStorageService';
 import storeModel from './store/store';
 import { Fonts, GlobalStyle } from './Theme';
+
 /**
  * Before displaying the app, we
  *  - re-hydrate our easy-peasy state from chrome.local.storage
@@ -38,21 +40,24 @@ storeModel().then((models) => {
         filters: models.filters,
         modal: models.modal,
     });
+
     ReactDOM.render(
-        <StoreProvider store={store}>
-            <Helmet>
-                <link
-                    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
-                    rel="stylesheet"
-                />
-            </Helmet>
-            <Fonts />
-            <root.div id="datagalaxy_shadow_root">
-                <GlobalStyle />
-                <App />
-            </root.div>
-            <Tooltip />
-        </StoreProvider>,
+        <ErrorBoundary>
+            <StoreProvider store={store}>
+                <Helmet>
+                    <link
+                        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+                        rel="stylesheet"
+                    />
+                </Helmet>
+                <Fonts />
+                <root.div id="datagalaxy_shadow_root">
+                    <GlobalStyle />
+                    <App />
+                </root.div>
+                <Tooltip />
+            </StoreProvider>
+        </ErrorBoundary>,
         container,
     );
 });
