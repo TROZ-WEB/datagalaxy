@@ -3,6 +3,7 @@ import { PickedFilter } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/hooks';
 import RoundButton from '../../ui/RoundButton';
+import { closeTooltips } from '../../ui/Tooltip';
 
 /* ---------- STYLES ---------- */
 
@@ -86,6 +87,7 @@ const FilterTag = React.forwardRef(({ filter, onClick, displayMode = false }: Pr
     const { updateVersionId } = useStoreActions((actions) => actions.filters);
 
     const handleDeleteFilter = (e) => {
+        closeTooltips();
         e.stopPropagation();
         if (filter?.filter?.attributeKey === 'Workspace') {
             updateVersionId(null);

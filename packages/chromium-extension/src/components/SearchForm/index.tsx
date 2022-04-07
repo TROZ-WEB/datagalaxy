@@ -417,7 +417,7 @@ const SearchForm = () => {
                                 </>
                             )}
 
-                            {!hasSearchResults && !hasExactMatches && (
+                            {!searchedArgs.term && searchedArgs?.filters?.length === 0 && (
                                 // eslint-disable-next-line react/jsx-no-useless-fragment
                                 <>
                                     {hasRecentSearches && (
@@ -474,13 +474,15 @@ const SearchForm = () => {
                                             </SSearchCardsResultWrapper>
                                         </SContainer>
                                     )}
-                                    {!hasRecentlyAccessedObjects && !hasRecentSearches && (
-                                        <SBlankSearch>
-                                            <SBlankSearchImage alt="empty result" src={BlankSearch} />
-                                        </SBlankSearch>
-                                    )}
                                 </>
                             )}
+                            {(searchedArgs?.filters?.length !== 0 || searchedArgs.term !== '') &&
+                                !hasSearchResults &&
+                                !hasExactMatches && (
+                                    <SBlankSearch>
+                                        <SBlankSearchImage alt="empty result" src={BlankSearch} />
+                                    </SBlankSearch>
+                                )}
                         </>
                     )}
                 </>
