@@ -110,10 +110,15 @@ const Accordion: FC<AccordionProps> = ({
 
     return (
         <SRoot className={className}>
-            <SHeader reversed={openButtonPosition === 'left'} sizeOfTitle={sizeOfTitle} type="button">
+            <SHeader
+                onClick={handleClick}
+                reversed={openButtonPosition === 'left'}
+                sizeOfTitle={sizeOfTitle}
+                type="button"
+            >
                 {header}
                 <SArrowButton disabled={disabled} type="button">
-                    <SArrowDrop alt="Arrow icon" arrowDropUp={!isOpen} onClick={handleClick} src={ArrowDrop} />
+                    <SArrowDrop alt="Arrow icon" arrowDropUp={!isOpen} src={ArrowDrop} />
                 </SArrowButton>
             </SHeader>
             <SContent collapsed={!isOpen}>{children}</SContent>

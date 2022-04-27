@@ -5,21 +5,11 @@ import Glyph from '../../ui/Glyph';
 /* ---------- STYLES ---------- */
 
 const SIconWrapper = styled.span`
-    width: 16px;
-    height: 16px;
-    margin-right: 5px;
-    margin-bottom: 2px;
+    width: 20px;
+    height: 20px;
 `;
 
-const SRoot = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    line-height: 15px;
-    font-size: 10px;
-    margin-left: 2px;
-    border-radius: 3px;
-`;
+const SRoot = styled.div``;
 
 const SGlyph = styled(Glyph)`
     ${(props) => props.icon === 'Help' && `color: #5a5e86`}

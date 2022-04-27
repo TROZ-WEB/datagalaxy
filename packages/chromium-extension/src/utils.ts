@@ -50,6 +50,10 @@ function formatFilters(filters: Filter[], computeFilters) {
     return newPickedFilters;
 }
 
+export function isEllipsis(domElement?: HTMLElement) {
+    return domElement?.offsetWidth < domElement?.scrollWidth;
+}
+
 export default keyListener;
 
 export { formatFilters };

@@ -62,7 +62,7 @@ const FiltersModal = () => {
         updateModalState({ modal: 'AllFilters', isOpen: true });
     };
 
-    const handleClick = (attributeKey) => {
+    const handleClick = (attributeKey: string) => () => {
         updateModalState({ modal: attributeKey, isOpen: true });
         updateModalState({ modal: 'AllFilters', isOpen: false });
     };
@@ -80,11 +80,7 @@ const FiltersModal = () => {
                     <STitle>{chrome.i18n.getMessage(`filter_by`)}</STitle>
                     <SFiltersContainer>
                         {filters?.map(({ label, attributeKey }) => (
-                            <FiltersModalTag
-                                key={attributeKey}
-                                label={label}
-                                onClick={() => handleClick(attributeKey)}
-                            />
+                            <FiltersModalTag key={attributeKey} label={label} onClick={handleClick(attributeKey)} />
                         ))}
                     </SFiltersContainer>
                 </SModal>

@@ -4,19 +4,24 @@ import styled, { css } from 'styled-components';
 
 /* ---------- STYLES ---------- */
 
-const SPictureRoot = styled.img`
+interface PictureRootProps {
+    $grouped: boolean;
+    $size: 'normal' | 'mini';
+}
+
+const SPictureRoot = styled.img<PictureRootProps>`
     border-radius: 50%;
     border: 1px solid #ffffff;
     vertical-align: middle;
 
     ${(props) =>
-        props.grouped &&
+        props.$grouped &&
         css`
             margin-right: -5px;
         `}
 
     ${(props) =>
-        props.size === 'normal' &&
+        props.$size === 'normal' &&
         css`
             width: 30px;
             height: 30px;
@@ -24,12 +29,12 @@ const SPictureRoot = styled.img`
         `}
 
     ${(props) =>
-        props.size === 'mini' &&
+        props.$size === 'mini' &&
         css`
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             border-width: 1px;
-            font-size: 10px !important;
+            font-size: 8px !important;
         `}
 `;
 
@@ -181,18 +186,18 @@ const Avatar = ({
                 }`}
             >
                 <SNoPictureRoot
+                    $grouped={grouped}
+                    $size={size}
                     as="div"
-                    grouped={grouped}
-                    size={size}
                     style={{ backgroundColor: getColor() }}
                 >{`${user.firstName[0]}${user.lastName[0]}`}</SNoPictureRoot>
             </div>
         ) : (
             <div>
                 <SNoPictureRoot
+                    $grouped={grouped}
+                    $size={size}
                     as="div"
-                    grouped={grouped}
-                    size={size}
                     style={{ backgroundColor: getColor() }}
                 >{`${user.firstName[0]}${user.lastName[0]}`}</SNoPictureRoot>
             </div>
@@ -206,18 +211,18 @@ const Avatar = ({
             }`}
         >
             <SPictureRoot
+                $grouped={grouped}
+                $size={size}
                 alt={`${user.firstName} ${user.lastName}`}
-                grouped={grouped}
-                size={size}
                 src={user.profileThumbnailUrl}
             />
         </div>
     ) : (
         <div>
             <SPictureRoot
+                $grouped={grouped}
+                $size={size}
                 alt={`${user.firstName}. ${user.lastName}`}
-                grouped={grouped}
-                size={size}
                 src={user.profileThumbnailUrl}
             />
         </div>

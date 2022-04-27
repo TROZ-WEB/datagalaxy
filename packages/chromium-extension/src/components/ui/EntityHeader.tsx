@@ -2,6 +2,7 @@ import React, { useState, FC, useEffect, useRef } from 'react';
 import { AttributeDefinitionType, Workspace } from 'shared';
 import styled, { css } from 'styled-components';
 import { useStoreState } from '../../store/hooks';
+import { isEllipsis } from '../../utils';
 import Breadcrumb from '../Breadcrumb';
 import Status from '../Entity/Status';
 import UsersProfile from '../Entity/UsersProfile';
@@ -18,12 +19,12 @@ const SAssociatedUsersWrapper = styled.div`
     align-items: center;
 `;
 
-const SBreadcrumbWrapper = styled.div`
+const SBreadcrumbWrapper = styled.div<{ $entityPage: boolean }>`
     display: flex;
     flex-direction: row;
     align-items: center;
     ${(props) =>
-        props.entityPage &&
+        props.$entityPage &&
         css`
             min-height: 19px;
         `}
@@ -36,19 +37,18 @@ const SInfosWrapper = styled.div`
     margin-top: 5px;
 `;
 
-const SEntityName = styled.span`
+const SEntityName = styled.span<{ $bold: boolean }>`
     font-size: 12px;
     color: #001030;
     text-decoration: none;
-    width: 80%;
-    max-width: 245px;
+    max-width: 280px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     margin-top: 4px;
 
     ${(props) =>
-        props.bold &&
+        props.$bold &&
         css`
             font-weight: bold;
         `}
@@ -73,7 +73,7 @@ const SWrappedContainer = styled.div`
     align-items: center;
 `;
 
-const SRoot = styled.div`
+const SRoot = styled.div<{ $entityPage: boolean; $cursorPointer: boolean }>`
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -85,13 +85,13 @@ const SRoot = styled.div`
     z-index: 15;
 
     ${(props) =>
-        props.cursorPointer &&
+        props.$cursorPointer &&
         css`
             cursor: pointer;
         `}
 
     ${(props) =>
-        props.entityPage &&
+        props.$entityPage &&
         css`
             padding: 0px 18px;
             box-shadow: 0px 0px 14px rgba(16, 53, 177, 0.1);
@@ -145,12 +145,12 @@ const SDisplayMoreAttributesButton = styled.button`
     box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
 `;
 
-const SDrop = styled.img`
+const SDrop = styled.img<{ $arrowDropDown: boolean }>`
     width: 10px;
     height: 10px;
 
     ${(props) =>
-        props.arrowDropDown &&
+        props.$arrowDropDown &&
         css`
             transform: rotate(180deg);
         `}
@@ -194,7 +194,6 @@ const EntityHeader: FC<EntityHeaderProps> = ({
     displayPath = true,
     currentWorkspace,
 }) => {
-    const [isCardExpanded, setIsCardExpanded] = useState(alwaysExpanded);
     const [isMoreActionShown, setIsMoreActionsShown] = useState(false);
     const [displayMoreAttributes, setDisplayMoreAttributes] = useState(false);
 
@@ -203,6 +202,8 @@ const EntityHeader: FC<EntityHeaderProps> = ({
     const workspaces = useStoreState((state) => state.auth.workspaces);
 
     const [workspace, setWorkspace] = useState<Workspace>();
+
+    const entityNameRef = useRef<HTMLSpanElement>(null);
 
     useEffect(() => {
         if (entity && displayPath && entity?.path) {
@@ -240,14 +241,14 @@ const EntityHeader: FC<EntityHeaderProps> = ({
         <>
             {entity && entity?.path && (
                 <SRoot
-                    cardExpanded={isCardExpanded}
-                    cursorPointer={!!onClick}
-                    entityPage={entityPage}
+                    $cursorPointer={!!onClick}
+                    $entityPage={entityPage}
+                    // cardExpanded={isCardExpanded}
                     id={id}
                     onClick={onClick}
                     onKeyPress={onClick}
-                    onMouseEnter={() => alwaysExpanded || setIsCardExpanded(true)}
-                    onMouseLeave={() => alwaysExpanded || setIsCardExpanded(false)}
+                    onMouseEnter={() => alwaysExpanded}
+                    onMouseLeave={() => alwaysExpanded}
                     role="button"
                     tabIndex={0}
                 >
@@ -256,12 +257,14 @@ const EntityHeader: FC<EntityHeaderProps> = ({
 
                         <SRightSide>
                             {displayPath && (
-                                <SBreadcrumbWrapper entityPage={entityPage}>
+                                <SBreadcrumbWrapper $entityPage={entityPage}>
                                     <Breadcrumb path={entityPathAsStringArray} workspace={workspace} />
                                 </SBreadcrumbWrapper>
                             )}
                             <SEntityName
-                                bold={entity.exactMatchOccuredOnName}
+                                ref={entityNameRef}
+                                $bold={entity.exactMatchOccuredOnName}
+                                data-tip={isEllipsis(entityNameRef.current) ? entity.name : undefined}
                                 onMouseEnter={() => setIsMoreActionsShown(true)}
                                 onMouseLeave={() => setIsMoreActionsShown(false)}
                             >
@@ -297,7 +300,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                                                     type="button"
                                                 >
                                                     {`+ ${exactMatches.length - 1 >= 2 ? 2 : exactMatches.length - 1}`}
-                                                    <SDrop alt="Arrow icon" src={ArrowDrop} arrowDropDown />
+                                                    <SDrop alt="Arrow icon" src={ArrowDrop} $arrowDropDown />
                                                 </SDisplayMoreAttributesButton>
                                             )}
                                             {index === array.length - 1 &&
@@ -310,7 +313,11 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                                                         }}
                                                         type="button"
                                                     >
-                                                        <SDrop alt="Arrow icon" arrowDropDown={false} src={ArrowDrop} />
+                                                        <SDrop
+                                                            $arrowDropDown={false}
+                                                            alt="Arrow icon"
+                                                            src={ArrowDrop}
+                                                        />
                                                     </SDisplayMoreAttributesButton>
                                                 )}
                                         </SAttributeContainer>

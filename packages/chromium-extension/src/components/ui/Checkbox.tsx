@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Glyph from './Glyph';
-import { rebuildTooltip } from './Tooltip';
+import Tooltip from './Tooltip';
 
 /* ---------- STYLES ---------- */
 
@@ -68,7 +68,7 @@ const SIconContainer = styled.span`
 interface Props {
     field: {
         label: string;
-        icon: React.ReactNode;
+        icon?: React.ReactNode;
         id: string;
         checked?: boolean;
     };
@@ -77,20 +77,25 @@ interface Props {
 }
 
 const Checkbox: React.FC<Props> = ({ field, className, onChange, ...props }) => {
-    useEffect(() => {
-        rebuildTooltip();
-    }, []);
-
     return (
-        <CheckboxContainer className={className} data-tip={field?.label} htmlFor={field?.id}>
-            <HiddenCheckbox checked={field?.checked} id={field?.id} onChange={onChange} type="checkbox" {...props} />
-            <StyledCheckbox checked={field?.checked}>
-                <SGlyph icon="Check" />
-            </StyledCheckbox>
-            <SLabel>
-                {field?.icon && <SIconContainer>{field?.icon}</SIconContainer>} {field?.label}
-            </SLabel>
-        </CheckboxContainer>
+        <>
+            <CheckboxContainer className={className} data-for={field?.id} data-tip={field?.label} htmlFor={field?.id}>
+                <HiddenCheckbox
+                    checked={field?.checked}
+                    id={field?.id}
+                    onChange={onChange}
+                    type="checkbox"
+                    {...props}
+                />
+                <StyledCheckbox checked={field?.checked}>
+                    <SGlyph icon="Check" />
+                </StyledCheckbox>
+                <SLabel>
+                    {field?.icon && <SIconContainer>{field?.icon}</SIconContainer>} {field?.label}
+                </SLabel>
+            </CheckboxContainer>
+            <Tooltip effect="float" id={field?.id} />
+        </>
     );
 };
 

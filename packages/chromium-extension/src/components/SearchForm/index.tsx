@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { AttributeDefinitionType, EntityType, Filter, TechnologyType } from 'shared';
+import { AttributeDefinitionType, EntityType, Filter, SearchHistoryType, TechnologyType } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../store/hooks';
 import keyListener, { formatFilters } from '../../utils';
@@ -283,6 +283,34 @@ const SearchForm = () => {
         resetModalState();
     };
 
+    const handleClickEntity = (entity: EntityType) => () => {
+        clickOnEntity(entity);
+    };
+
+    const handleClickMore = () => {
+        setDisplayMoreExactMatches(true);
+    };
+
+    const handleClickSearchMore = (recentSearch: SearchHistoryType) => () => {
+        searchFromRecentSearch(recentSearch.searchPayload.query, recentSearch.searchPayload.filters);
+    };
+
+    const sortExactMatchAttributes = (a, b) => {
+        if (AttributesWeight[a.attributeKey] && !AttributesWeight[b.attributeKey]) {
+            return 1;
+        }
+
+        if (!AttributesWeight[a.attributeKey] && AttributesWeight[b.attributeKey]) {
+            return -1;
+        }
+
+        if (!AttributesWeight[a.attributeKey] && !AttributesWeight[b.attributeKey]) {
+            return a.attributeKey.localeCompare(b.attributeKey);
+        }
+
+        return AttributesWeight[a.attributeKey] < AttributesWeight[b.attributeKey] ? -1 : 1;
+    };
+
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
@@ -321,62 +349,30 @@ const SearchForm = () => {
                                     </SResultsTitleWrapper>
                                     <SExactMatchsContainer>
                                         <SSearchCardsResultWrapper>
-                                            {exactMatchesEntitiesToDisplay.map((entity, idx, array) => {
-                                                const exactMatchAttributes = entity.exactMatchAttributes.sort(
-                                                    (a, b) => {
-                                                        if (
-                                                            AttributesWeight[a.attributeKey] &&
-                                                            !AttributesWeight[b.attributeKey]
-                                                        ) {
-                                                            return 1;
-                                                        }
-
-                                                        if (
-                                                            !AttributesWeight[a.attributeKey] &&
-                                                            AttributesWeight[b.attributeKey]
-                                                        ) {
-                                                            return -1;
-                                                        }
-
-                                                        if (
-                                                            !AttributesWeight[a.attributeKey] &&
-                                                            !AttributesWeight[b.attributeKey]
-                                                        ) {
-                                                            return a.attributeKey.localeCompare(b.attributeKey);
-                                                        }
-
-                                                        return AttributesWeight[a.attributeKey] <
-                                                            AttributesWeight[b.attributeKey]
-                                                            ? -1
-                                                            : 1;
-                                                    },
-                                                );
-
-                                                return (
-                                                    <SSearchCardResultContainer
-                                                        key={entity.id}
-                                                        isLastElement={idx === array.length - 1}
-                                                    >
-                                                        <SSearchCardResultWrapper>
-                                                            <EntityHeader
-                                                                entity={entity}
-                                                                entityPage={false}
-                                                                exactMatches={exactMatchAttributes}
-                                                                id={`entityHeader${idx}`}
-                                                                onClick={() => {
-                                                                    clickOnEntity(entity);
-                                                                }}
-                                                                searchQuery={searchedArgs.term}
-                                                                alwaysExpanded
-                                                            />
-                                                        </SSearchCardResultWrapper>
-                                                    </SSearchCardResultContainer>
-                                                );
-                                            })}
+                                            {exactMatchesEntitiesToDisplay.map((entity, idx, array) => (
+                                                <SSearchCardResultContainer
+                                                    key={entity.id}
+                                                    isLastElement={idx === array.length - 1}
+                                                >
+                                                    <SSearchCardResultWrapper>
+                                                        <EntityHeader
+                                                            entity={entity}
+                                                            entityPage={false}
+                                                            exactMatches={entity.exactMatchAttributes.sort(
+                                                                sortExactMatchAttributes,
+                                                            )}
+                                                            id={`entityHeader${idx}`}
+                                                            onClick={handleClickEntity(entity)}
+                                                            searchQuery={searchedArgs.term}
+                                                            alwaysExpanded
+                                                        />
+                                                    </SSearchCardResultWrapper>
+                                                </SSearchCardResultContainer>
+                                            ))}
                                         </SSearchCardsResultWrapper>
 
                                         {displayShowMoreButton && !displayMoreExactMatches && (
-                                            <SMore onClick={() => setDisplayMoreExactMatches(true)}>
+                                            <SMore onClick={handleClickMore}>
                                                 {chrome.i18n.getMessage('showMore')}
                                             </SMore>
                                         )}
@@ -405,9 +401,7 @@ const SearchForm = () => {
                                                         entity={entity}
                                                         entityPage={false}
                                                         id={`entityHeader${idx}`}
-                                                        onClick={() => {
-                                                            clickOnEntity(entity);
-                                                        }}
+                                                        onClick={handleClickEntity(entity)}
                                                         alwaysExpanded
                                                     />
                                                 </SSearchCardResultWrapper>
@@ -433,12 +427,7 @@ const SearchForm = () => {
                                                     >
                                                         <SSearchCardResultWrapper>
                                                             <RecentSearchCard
-                                                                onClick={() => {
-                                                                    searchFromRecentSearch(
-                                                                        recentSearch.searchPayload.query,
-                                                                        recentSearch.searchPayload.filters,
-                                                                    );
-                                                                }}
+                                                                onClick={handleClickSearchMore(recentSearch)}
                                                                 recentSearch={recentSearch}
                                                             />
                                                         </SSearchCardResultWrapper>
@@ -463,9 +452,7 @@ const SearchForm = () => {
                                                                 entity={entity}
                                                                 entityPage={false}
                                                                 id={`entityHeader${idx}`}
-                                                                onClick={() => {
-                                                                    clickOnEntity(entity);
-                                                                }}
+                                                                onClick={handleClickEntity(entity)}
                                                                 alwaysExpanded
                                                             />
                                                         </SSearchCardResultWrapper>

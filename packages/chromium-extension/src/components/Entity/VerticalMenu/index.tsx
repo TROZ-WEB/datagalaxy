@@ -9,7 +9,7 @@ const SRoot = styled.div`
     width: 46px;
     display: flex;
     flex-direction: column;
-    align-content: center;
+    align-items: center;
     background-color: #f3f6ff;
     height: 100%;
     padding: 16px 0px;

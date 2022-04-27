@@ -1,26 +1,31 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { PickedFilter } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/hooks';
 import RoundButton from '../../ui/RoundButton';
 import { closeTooltips } from '../../ui/Tooltip';
+import TooltipInformations from '../../ui/TooltipInformations';
 
 /* ---------- STYLES ---------- */
 
 const SEllipse = styled.span`
     color: #1035b1;
     font-size: 10px;
-    margin: 0px 2px;
+    margin-left: 3px;
     background: #f3f6ff;
     padding: 2px;
     border-radius: 3px;
     font-weight: bold;
-    width: 16px;
+    min-width: 16px;
+    text-align: center;
 `;
 
 const SImageContainer = styled.div`
     align-items: center;
     display: flex;
+    & > *:not(:last-child) {
+        margin-right: 3px;
+    }
 `;
 
 const SRoot = styled.div`
@@ -86,6 +91,12 @@ const FilterTag = React.forwardRef(({ filter, onClick, displayMode = false }: Pr
     const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
     const { updateVersionId } = useStoreActions((actions) => actions.filters);
 
+    const handleClick = () => {
+        if (!displayMode) {
+            onClick();
+        }
+    };
+
     const handleDeleteFilter = (e) => {
         closeTooltips();
         e.stopPropagation();
@@ -101,17 +112,22 @@ const FilterTag = React.forwardRef(({ filter, onClick, displayMode = false }: Pr
             ref={ref}
             data-tip={filter?.content?.length < 3 ? `${filter?.name} : ${filter?.content?.join(', ')}` : undefined}
             displayMode={displayMode}
-            onClick={() => {
-                if (!displayMode) {
-                    onClick();
-                }
-            }}
+            onClick={handleClick}
         >
-            <SImageContainer>{filter?.icon?.slice(0, 2)?.map((icon) => icon)}</SImageContainer>
+            <SImageContainer data-tip={filter.content}>
+                {filter?.icon?.slice(0, 2)?.map((icon: ReactNode, index) => (
+                    <span data-tip={filter.content[index]}>{icon}</span>
+                ))}
+            </SImageContainer>
             {filter?.content?.length > 2 && (
-                <SEllipse data-tip={`${filter?.name} : ${filter?.content?.join(', ')}`}>{`+ ${
-                    filter?.icon.length - 2
-                }`}</SEllipse>
+                <>
+                    <SEllipse data-for={`${filter.name}.ellipse`} data-tip>{`+ ${filter?.icon.length - 2}`}</SEllipse>
+                    <TooltipInformations
+                        header={filter?.name}
+                        id={`${filter.name}.ellipse`}
+                        informations={filter?.content?.join(', ')}
+                    />
+                </>
             )}
             <STextContainer>
                 {filter?.content?.length === 1 && <SValue>{filter?.content?.map((content) => content)}</SValue>}
@@ -123,7 +139,7 @@ const FilterTag = React.forwardRef(({ filter, onClick, displayMode = false }: Pr
                     </SOperator>
                 )}
             </STextContainer>
-            {!displayMode && <SRoundButton icon="Cancelsearch" onClick={(e) => handleDeleteFilter(e)} size="XS" />}
+            {!displayMode && <SRoundButton icon="Cancelsearch" onClick={handleDeleteFilter} size="XS" />}
         </SRoot>
     );
 });

@@ -101,11 +101,11 @@
     "entity_status_Obsolete": {
         "message": "Obsolète"
     },
-    "entity_owner": {
-        "message": "Propriétaire"
+    "entity_owners": {
+        "message": "Propriétaires"
     },
-    "entity_steward": {
-        "message": "Steward"
+    "entity_stewards": {
+        "message": "Stewards"
     },
     "entity_steward_multiple": {
         "message": "$COUNT$ utilisateurs",

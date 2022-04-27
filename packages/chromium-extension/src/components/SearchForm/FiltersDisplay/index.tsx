@@ -1,7 +1,9 @@
-import React, { FC, useState, useRef, useEffect } from 'react';
+/* eslint-disable prettier/prettier */
+import React, { FC, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Glyph from '../../ui/Glyph';
 import FilterTag from '../SearchInput/FilterTag';
+import recentSearchs from '../../../../assets/icons/recent-search.svg';
 
 /* ---------- STYLES ---------- */
 
@@ -95,14 +97,35 @@ const SScrollContainer = styled.div`
         }
     }
 `;
+const SQueryContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 3px;
+`;
+
+const SQueryText = styled.span`
+    margin-left: 5px;
+    font-size: 11px;
+`;
+
+const SRecentSearches = styled.img`
+    width: 15px;
+    height: 15px;
+    left: 0;
+    ${(props) => !props.hasSearchQuery && `top: 10px;`}
+`;
 
 /* ---------- COMPONENT ---------- */
 
 interface Props {
     filters: any;
+    hasSearchPayloadFilters: boolean;
+    hasSearchQuery: boolean;
+    searchQuery: string;
 }
 
-const FiltersDisplay: FC<Props> = ({ filters }) => {
+const FiltersDisplay: FC<Props> = ({ filters, hasSearchPayloadFilters, hasSearchQuery, searchQuery }) => {
     const [scrollValue, setScrollValue] = useState(0);
     const [maxScroll, setMaxScroll] = useState(0);
 
@@ -139,17 +162,23 @@ const FiltersDisplay: FC<Props> = ({ filters }) => {
                             <SLeftButton disabled={scrollValue === 0} onClick={handleScrollLeft}>
                                 <SGlyph icon="ArrowDropRight" />
                             </SLeftButton>
+                            <SQueryContainer hasSearchPayloadFilters={hasSearchPayloadFilters}>
+                                <SRecentSearches
+                                    alt="recent-searches"
+                                    hasSearchQuery={hasSearchQuery}
+                                    src={recentSearchs}
+                                />
+                                <SQueryText>{searchQuery}</SQueryText>
+                            </SQueryContainer>
                             <SQuickFiltersContainer>
-                                {filters?.map((f) => {
-                                    return (
-                                        <FilterTag
-                                            key={f?.filter?.attributeKey}
-                                            ref={filtersModal}
-                                            filter={f}
-                                            displayMode
-                                        />
-                                    );
-                                })}
+                                {filters?.map((f) => (
+                                    <FilterTag
+                                        key={f?.filter?.attributeKey}
+                                        ref={filtersModal}
+                                        filter={f}
+                                        displayMode
+                                    />
+                                ))}
                             </SQuickFiltersContainer>
                             <SRightButton disabled={scrollValue === maxScroll} onClick={handleScrollRight}>
                                 <Glyph icon="ArrowDropRight" />

@@ -21,7 +21,7 @@ const SGlyph = styled.span`
 
 const SRoot = styled.div`
     color: inherit;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 0%;
 `;
 

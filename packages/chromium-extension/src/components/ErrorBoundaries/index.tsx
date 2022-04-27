@@ -1,3 +1,6 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/jsx-no-useless-fragment */
 import React from 'react';
 
 declare const Raven: any;
@@ -13,8 +16,7 @@ class ErrorBoundary extends React.Component {
     }
 
     render() {
-        // eslint-disable-next-line react/destructuring-assignment
-        return this.props.children;
+        return <>{this.props.children}</>;
     }
 }
 

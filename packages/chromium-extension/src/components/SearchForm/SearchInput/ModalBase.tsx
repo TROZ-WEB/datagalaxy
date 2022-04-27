@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, Dispatch, SetStateAction } from 'react';
+import React, { FC, useState, useEffect, Dispatch, SetStateAction, ReactNode } from 'react';
 import styled from 'styled-components';
 import { useStoreActions, useStoreState } from '../../../store/hooks';
 import keyListener from '../../../utils';
@@ -85,12 +85,20 @@ const SFieldsContainer = styled.div`
 
 /* ---------- COMPONENT ---------- */
 
+export interface Field {
+    id: string;
+    label: string;
+    icon?: ReactNode;
+    name?: string;
+    checked?: boolean;
+}
+
 interface ModalBaseProps {
     multiselect?: boolean;
-    fields: any[];
+    fields: Field[];
     operator?: string;
     setOperator?: Dispatch<SetStateAction<string>>;
-    handleChange?: (field) => void;
+    handleChange?: (field: Field) => void;
     attributeKey: string;
     isOpen: boolean;
 }
@@ -129,7 +137,7 @@ const ModalBase: FC<ModalBaseProps> = ({
     const { pickedFilters } = useStoreState((state) => state.filters);
     const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
 
-    const handleToggleFilter = (field) => {
+    const handleToggleFilter = (field: Field) => {
         const newPickedFilters = [...pickedFilters];
         const filterIndex = newPickedFilters?.findIndex((item) => item?.filter?.attributeKey === attributeKey);
         const newOperator = operator === 'or' ? 'contains' : 'matchAll';

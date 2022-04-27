@@ -1,6 +1,6 @@
-import React, { useEffect, useState, FC } from 'react';
+import React, { useEffect, useState, FC, useMemo } from 'react';
 import { useStoreState, useStoreDispatch } from '../../../../store/hooks';
-import ModalBase from '../ModalBase';
+import ModalBase, { Field } from '../ModalBase';
 import FieldIcon from './FieldIcon';
 import { useSortArray } from './utils';
 
@@ -9,6 +9,7 @@ import { useSortArray } from './utils';
 const TechnologiesModal: FC = () => {
     const dispatch = useStoreDispatch();
     const { technologies } = useStoreState((state) => state.filters);
+    const pickedFilters = useStoreState((state) => state.filters.pickedFilters);
     const { TechnologyCode } = useStoreState((state) => state.modal);
     const { sortArray } = useSortArray();
     const [operator, setOperator] = useState('or');
@@ -21,26 +22,25 @@ const TechnologiesModal: FC = () => {
         fetchTechnologiesAPI();
     }, [dispatch]);
 
-    const technologiesFields = technologies?.map((technology) => {
-        interface field {
-            id: string;
-            label: string;
-            icon?: React.ReactNode;
-            name: string;
-        }
-        const t: field = {
-            id: technology?.technologyCode,
-            label: technology.displayName,
-            name: chrome.i18n.getMessage(`attribute_key_Technology`),
-        };
+    const technologiesFields = useMemo(() => {
+        const index = pickedFilters?.findIndex((item) => item?.filter?.attributeKey === 'TechnologyCode');
 
-        if (technology.imageHash) {
-            const newIcon = <FieldIcon hash={technology.imageHash} />;
-            t.icon = newIcon;
-        }
+        return technologies?.map((technology) => {
+            const t: Field = {
+                id: technology?.technologyCode,
+                label: technology.displayName,
+                name: chrome.i18n.getMessage(`attribute_key_Technology`),
+                checked: Boolean(pickedFilters?.[index]?.filter?.values?.includes(technology.technologyCode)),
+            };
 
-        return t;
-    });
+            if (technology.imageHash) {
+                const newIcon = <FieldIcon hash={technology.imageHash} />;
+                t.icon = newIcon;
+            }
+
+            return t;
+        });
+    }, [technologies, pickedFilters]);
 
     sortArray(technologiesFields);
 
