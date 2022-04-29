@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useStoreState } from '../../../store/hooks';
 import { rebuildTooltip } from '../../ui/Tooltip';
+import TooltipInformations from '../../ui/TooltipInformations';
 
 /* ---------- STYLES ---------- */
 
@@ -41,9 +42,9 @@ const STagLabel = styled.span`
 
 /* ---------- COMPONENT ---------- */
 
-const Tags = ({ children, className }: { children: React.ReactNode; className?: string }) => {
-    return <SRoot className={className}>{children}</SRoot>;
-};
+const Tags = ({ children, className }: { children: React.ReactNode; className?: string }) => (
+    <SRoot className={className}>{children}</SRoot>
+);
 
 Tags.Item = ({
     tag,
@@ -69,9 +70,9 @@ Tags.Item = ({
         rebuildTooltip();
     }, [title]);
 
-    return title ? (
-        <div data-tip={title}>
-            <SRootItem>
+    return (
+        <>
+            <SRootItem data-for={tag} data-tip={title}>
                 {(defaultColor || color) && (
                     <SColorPoint
                         style={{
@@ -82,21 +83,8 @@ Tags.Item = ({
                 )}
                 {!hideLabel && <STagLabel>{tag}</STagLabel>}
             </SRootItem>
-        </div>
-    ) : (
-        <div>
-            <SRootItem>
-                {(defaultColor || color) && (
-                    <SColorPoint
-                        style={{
-                            backgroundColor: color || defaultColor,
-                        }}
-                        withBorder={color === 'white' || defaultColor === 'white'}
-                    />
-                )}
-                {!hideLabel && <STagLabel>{tag}</STagLabel>}
-            </SRootItem>
-        </div>
+            <TooltipInformations header={chrome.i18n.getMessage('attribute_key_Tag')} id={tag} informations={tag} />
+        </>
     );
 };
 

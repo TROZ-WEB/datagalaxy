@@ -11,12 +11,14 @@ export interface EnhancedFilter {
     content?: string;
     label?: string;
     name?: string;
+    nameUnit?: string;
 }
 export interface PickedFilter {
     filter: Filter;
     icon?: any;
     content?: string[];
     name?: string;
+    nameUnit?: string;
 }
 export interface Domain {
     label: string;

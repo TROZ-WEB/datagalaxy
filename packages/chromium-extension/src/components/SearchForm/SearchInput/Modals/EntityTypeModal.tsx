@@ -17,6 +17,7 @@ const EntityTypeModal: FC = () => {
 
     for (const [key, value] of Object.entries(entitiesTypeRelatedInfos)) {
         if (key !== 'Usage' && key !== 'Diagram' && key !== 'DataProcessingItem') {
+            const name = chrome.i18n.getMessage(`attribute_key_EntityType`);
             fields.push({
                 id: key,
                 label: chrome.i18n.getMessage(`entity_label_full_${key}`),
@@ -28,7 +29,8 @@ const EntityTypeModal: FC = () => {
                     />
                 ),
                 checked: !!pickedFilters?.[index]?.filter?.values?.includes(key),
-                name: chrome.i18n.getMessage(`attribute_key_EntityType`),
+                name,
+                nameUnit: name,
             });
         }
     }

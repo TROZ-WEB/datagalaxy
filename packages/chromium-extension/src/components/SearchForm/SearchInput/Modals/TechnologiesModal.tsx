@@ -26,10 +26,12 @@ const TechnologiesModal: FC = () => {
         const index = pickedFilters?.findIndex((item) => item?.filter?.attributeKey === 'TechnologyCode');
 
         return technologies?.map((technology) => {
+            const name = chrome.i18n.getMessage(`attribute_key_Technology`);
             const t: Field = {
                 id: technology?.technologyCode,
                 label: technology.displayName,
-                name: chrome.i18n.getMessage(`attribute_key_Technology`),
+                name,
+                nameUnit: name,
                 checked: Boolean(pickedFilters?.[index]?.filter?.values?.includes(technology.technologyCode)),
             };
 

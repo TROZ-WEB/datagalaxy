@@ -5,22 +5,22 @@ export const moduleFields = [
     {
         id: 'Glossary',
         label: chrome.i18n.getMessage(`module_glossary`),
-        icon: <DGGlyph icon="Glossary" kind="glossary" tooltip={chrome.i18n.getMessage(`module_glossary`)} />,
+        icon: <DGGlyph icon="Glossary" kind="glossary" margin={1} />,
     },
     {
         id: 'Catalog',
         label: chrome.i18n.getMessage(`module_catalog`),
-        icon: <DGGlyph icon="Catalog" kind="catalog" tooltip={chrome.i18n.getMessage(`module_catalog`)} />,
+        icon: <DGGlyph icon="Catalog" kind="catalog" margin={1} />,
     },
     {
         id: 'Processing',
         label: chrome.i18n.getMessage(`module_processing`),
-        icon: <DGGlyph icon="Processing" kind="processing" tooltip={chrome.i18n.getMessage(`module_processing`)} />,
+        icon: <DGGlyph icon="Processing" kind="processing" margin={1} />,
     },
     {
         id: 'Usage',
         label: chrome.i18n.getMessage(`module_usage`),
-        icon: <DGGlyph icon="Software" kind="usage" tooltip={chrome.i18n.getMessage(`module_usage`)} />,
+        icon: <DGGlyph icon="Software" kind="usage" margin={1} />,
     },
 ];
 

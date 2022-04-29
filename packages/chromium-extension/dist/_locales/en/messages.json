@@ -101,8 +101,14 @@
     "entity_status_Obsolete": {
         "message": "Obsolete"
     },
+    "entity_owner": {
+        "message": "Owner"
+    },
     "entity_owners": {
         "message": "Owners"
+    },
+    "entity_steward": {
+        "message": "Steward"
     },
     "entity_stewards": {
         "message": "Stewards"
@@ -430,6 +436,9 @@
     "attribute_key_Tags": {
         "message": "Tags"
     },
+    "attribute_key_unit_Domains": {
+        "message": "Tag"
+    },
     "attribute_key_Domains": {
         "message": "Tags"
     },
@@ -437,9 +446,6 @@
         "message": "@:DgServerTypes.BaseData.fields.Domains"
     },
     "attribute_key_EntityStatus": {
-        "message": "Status"
-    },
-    "attribute_key_Status": {
         "message": "Status"
     },
     "attribute_key_Type": {
@@ -451,7 +457,7 @@
     "attribute_key_Format": {
         "message": "Format"
     },
-    "attribute_key_Owner": {
+    "attribute_key_unit_DataOwners": {
         "message": "Owner"
     },
     "attribute_key_DataOwners": {
@@ -462,6 +468,9 @@
     },
     "attribute_key_Technology_Code": {
         "message": "Technology"
+    },
+    "attribute_key_unit_DataStewards": {
+        "message": "Steward"
     },
     "attribute_key_DataStewards": {
         "message": "Stewards"

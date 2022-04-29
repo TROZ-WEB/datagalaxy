@@ -243,7 +243,6 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                 <SRoot
                     $cursorPointer={!!onClick}
                     $entityPage={entityPage}
-                    // cardExpanded={isCardExpanded}
                     id={id}
                     onClick={onClick}
                     onKeyPress={onClick}
@@ -279,50 +278,44 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                                 )}
                             </SEntityName>
                             {exactMatches?.length !== 0 &&
-                                exactMatches?.map((exactMatch, index, array) => {
-                                    return (
-                                        /* eslint-disable-next-line react/no-array-index-key */
-                                        <SAttributeContainer key={index} hidden={index !== 0 && !displayMoreAttributes}>
-                                            <SAttributeKey>
-                                                {chrome.i18n.getMessage(`attribute_key_${exactMatch.attributeKey}`)
-                                                    ? `${chrome.i18n.getMessage(
-                                                          `attribute_key_${exactMatch.attributeKey}`,
-                                                      )} : `
-                                                    : `${exactMatch.name || exactMatch.attributeKey} : `}
-                                            </SAttributeKey>
-                                            <SMatchString>{searchQuery}</SMatchString>
-                                            {index === 0 && exactMatches.length > 1 && !displayMoreAttributes && (
+                                exactMatches?.map((exactMatch, index, array) => (
+                                    /* eslint-disable-next-line react/no-array-index-key */
+                                    <SAttributeContainer key={index} hidden={index !== 0 && !displayMoreAttributes}>
+                                        <SAttributeKey>
+                                            {chrome.i18n.getMessage(`attribute_key_${exactMatch.attributeKey}`)
+                                                ? `${chrome.i18n.getMessage(
+                                                      `attribute_key_${exactMatch.attributeKey}`,
+                                                  )} : `
+                                                : `${exactMatch.name || exactMatch.attributeKey} : `}
+                                        </SAttributeKey>
+                                        <SMatchString>{searchQuery}</SMatchString>
+                                        {index === 0 && exactMatches.length > 1 && !displayMoreAttributes && (
+                                            <SDisplayMoreAttributesButton
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setDisplayMoreAttributes(true);
+                                                }}
+                                                type="button"
+                                            >
+                                                {`+ ${exactMatches.length - 1 >= 2 ? 2 : exactMatches.length - 1}`}
+                                                <SDrop alt="Arrow icon" src={ArrowDrop} $arrowDropDown />
+                                            </SDisplayMoreAttributesButton>
+                                        )}
+                                        {index === array.length - 1 &&
+                                            exactMatches.length > 1 &&
+                                            displayMoreAttributes && (
                                                 <SDisplayMoreAttributesButton
                                                     onClick={(e) => {
                                                         e.stopPropagation();
-                                                        setDisplayMoreAttributes(true);
+                                                        setDisplayMoreAttributes(false);
                                                     }}
                                                     type="button"
                                                 >
-                                                    {`+ ${exactMatches.length - 1 >= 2 ? 2 : exactMatches.length - 1}`}
-                                                    <SDrop alt="Arrow icon" src={ArrowDrop} $arrowDropDown />
+                                                    <SDrop $arrowDropDown={false} alt="Arrow icon" src={ArrowDrop} />
                                                 </SDisplayMoreAttributesButton>
                                             )}
-                                            {index === array.length - 1 &&
-                                                exactMatches.length > 1 &&
-                                                displayMoreAttributes && (
-                                                    <SDisplayMoreAttributesButton
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            setDisplayMoreAttributes(false);
-                                                        }}
-                                                        type="button"
-                                                    >
-                                                        <SDrop
-                                                            $arrowDropDown={false}
-                                                            alt="Arrow icon"
-                                                            src={ArrowDrop}
-                                                        />
-                                                    </SDisplayMoreAttributesButton>
-                                                )}
-                                        </SAttributeContainer>
-                                    );
-                                })}
+                                    </SAttributeContainer>
+                                ))}
                             {entityPage && (
                                 <SInfosWrapper>
                                     {entity.type && (

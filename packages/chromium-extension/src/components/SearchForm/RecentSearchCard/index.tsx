@@ -31,17 +31,9 @@ const RecentSearchCard: FC<Props> = ({ recentSearch, onClick }) => {
         setEnhancedFilters(formatFilters(searchPayload.filters, computeFilters));
     }, [searchPayload.filters]);
 
-    const hasSearchPayloadFilters = searchPayload.filters.length !== 0;
-    const hasSearchQuery = searchPayload.query;
-
     return (
         <SRoot onClick={onClick}>
-            <FiltersDisplay
-                filters={enhancedFilters}
-                hasSearchPayloadFilters={hasSearchPayloadFilters}
-                hasSearchQuery={Boolean(hasSearchQuery)}
-                searchQuery={searchPayload.query}
-            />
+            <FiltersDisplay filters={enhancedFilters} searchQuery={searchPayload.query} />
         </SRoot>
     );
 };

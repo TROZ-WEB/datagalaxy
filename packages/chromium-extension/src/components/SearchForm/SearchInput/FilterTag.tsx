@@ -1,4 +1,5 @@
-import React, { ReactNode } from 'react';
+import { nanoid } from 'nanoid';
+import React, { ReactNode, useMemo } from 'react';
 import { PickedFilter } from 'shared';
 import styled from 'styled-components';
 import { useStoreState, useStoreActions } from '../../../store/hooks';
@@ -10,7 +11,7 @@ import TooltipInformations from '../../ui/TooltipInformations';
 
 const SEllipse = styled.span`
     color: #1035b1;
-    font-size: 10px;
+    font-size: 8px;
     margin-left: 3px;
     background: #f3f6ff;
     padding: 2px;
@@ -91,13 +92,22 @@ const FilterTag = React.forwardRef(({ filter, onClick, displayMode = false }: Pr
     const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
     const { updateVersionId } = useStoreActions((actions) => actions.filters);
 
+    const tooltipIds = useMemo(
+        () => ({
+            root: nanoid(),
+            icon: nanoid(),
+            ellipsis: nanoid(),
+        }),
+        [],
+    );
+
     const handleClick = () => {
         if (!displayMode) {
             onClick();
         }
     };
 
-    const handleDeleteFilter = (e) => {
+    const handleDeleteFilter = (e: Event) => {
         closeTooltips();
         e.stopPropagation();
         if (filter?.filter?.attributeKey === 'Workspace') {
@@ -108,39 +118,53 @@ const FilterTag = React.forwardRef(({ filter, onClick, displayMode = false }: Pr
     };
 
     return (
-        <SRoot
-            ref={ref}
-            data-tip={filter?.content?.length < 3 ? `${filter?.name} : ${filter?.content?.join(', ')}` : undefined}
-            displayMode={displayMode}
-            onClick={handleClick}
-        >
-            <SImageContainer data-tip={filter.content}>
-                {filter?.icon?.slice(0, 2)?.map((icon: ReactNode, index) => (
-                    <span data-tip={filter.content[index]}>{icon}</span>
-                ))}
-            </SImageContainer>
-            {filter?.content?.length > 2 && (
-                <>
-                    <SEllipse data-for={`${filter.name}.ellipse`} data-tip>{`+ ${filter?.icon.length - 2}`}</SEllipse>
-                    <TooltipInformations
-                        header={filter?.name}
-                        id={`${filter.name}.ellipse`}
-                        informations={filter?.content?.join(', ')}
-                    />
-                </>
-            )}
-            <STextContainer>
-                {filter?.content?.length === 1 && <SValue>{filter?.content?.map((content) => content)}</SValue>}
-                {filter?.content?.length > 1 && (
-                    <SOperator>
-                        {filter?.filter?.operator === 'contains'
-                            ? chrome.i18n.getMessage(`operator_or`)
-                            : chrome.i18n.getMessage(`operator_and`)}
-                    </SOperator>
+        <>
+            <SRoot ref={ref} data-for={tooltipIds.root} displayMode={displayMode} onClick={handleClick} data-tip>
+                <SImageContainer>
+                    {filter?.icon?.slice(0, 2)?.map((icon: ReactNode, index: number) => (
+                        <>
+                            <div
+                                data-for={`${tooltipIds.icon}-${index}`}
+                                data-tip={filter?.content?.length > 1 ? true : undefined}
+                            >
+                                {icon}
+                            </div>
+                            {filter?.content?.length > 1 && (
+                                <TooltipInformations
+                                    header={filter.nameUnit}
+                                    id={`${tooltipIds.icon}-${index}`}
+                                    informations={filter.content[index]}
+                                />
+                            )}
+                        </>
+                    ))}
+                </SImageContainer>
+                {filter?.content?.length > 2 && (
+                    <>
+                        <SEllipse data-for={tooltipIds.ellipsis} data-tip>{`+ ${filter?.icon.length - 2}`}</SEllipse>
+                        <TooltipInformations
+                            header={filter?.content?.length === 3 ? filter?.nameUnit : filter?.name}
+                            id={tooltipIds.ellipsis}
+                            informations={filter?.content?.slice(2, filter?.content!.length).join(', ')}
+                        />
+                    </>
                 )}
-            </STextContainer>
-            {!displayMode && <SRoundButton icon="Cancelsearch" onClick={handleDeleteFilter} size="XS" />}
-        </SRoot>
+                <STextContainer>
+                    {filter?.content?.length === 1 && <SValue>{filter?.content?.map((content) => content)}</SValue>}
+                    {filter?.content?.length > 1 && (
+                        <SOperator>
+                            {filter?.filter?.operator === 'contains'
+                                ? chrome.i18n.getMessage(`operator_or`)
+                                : chrome.i18n.getMessage(`operator_and`)}
+                        </SOperator>
+                    )}
+                </STextContainer>
+                {!displayMode && <SRoundButton icon="Cancelsearch" onClick={handleDeleteFilter} size="XS" />}
+            </SRoot>
+            {filter?.content?.length === 1 && (
+                <TooltipInformations header={filter?.nameUnit} id={tooltipIds.root} informations={filter?.content[0]} />
+            )}
+        </>
     );
 });
 

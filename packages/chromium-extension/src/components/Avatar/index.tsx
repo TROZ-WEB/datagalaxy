@@ -1,8 +1,13 @@
 import React, { useCallback } from 'react';
 import { UserType } from 'shared';
 import styled, { css } from 'styled-components';
+import TooltipInformations from '../ui/TooltipInformations';
 
 /* ---------- STYLES ---------- */
+
+const SRoot = styled.div`
+    display: flex;
+`;
 
 interface PictureRootProps {
     $grouped: boolean;
@@ -178,54 +183,30 @@ const Avatar = ({
         return null;
     }
 
-    if (!user.profileThumbnailUrl) {
-        return showTooltip ? (
-            <div
-                data-tip={`${translatedGovernanceRole ? `${translatedGovernanceRole}\n : ` : ''}${user.firstName} ${
-                    user.lastName
-                }`}
-            >
-                <SNoPictureRoot
-                    $grouped={grouped}
-                    $size={size}
-                    as="div"
-                    style={{ backgroundColor: getColor() }}
-                >{`${user.firstName[0]}${user.lastName[0]}`}</SNoPictureRoot>
-            </div>
-        ) : (
-            <div>
-                <SNoPictureRoot
-                    $grouped={grouped}
-                    $size={size}
-                    as="div"
-                    style={{ backgroundColor: getColor() }}
-                >{`${user.firstName[0]}${user.lastName[0]}`}</SNoPictureRoot>
-            </div>
-        );
-    }
-
-    return showTooltip ? (
-        <div
-            data-tip={`${translatedGovernanceRole ? `${translatedGovernanceRole}\n : ` : ''}${user.firstName} ${
-                user.lastName
-            }`}
-        >
-            <SPictureRoot
-                $grouped={grouped}
-                $size={size}
-                alt={`${user.firstName} ${user.lastName}`}
-                src={user.profileThumbnailUrl}
-            />
-        </div>
-    ) : (
-        <div>
-            <SPictureRoot
-                $grouped={grouped}
-                $size={size}
-                alt={`${user.firstName}. ${user.lastName}`}
-                src={user.profileThumbnailUrl}
-            />
-        </div>
+    return (
+        <>
+            <SRoot data-for={user.userId} data-tip={showTooltip || undefined}>
+                {user.profileThumbnailUrl ? (
+                    <SPictureRoot
+                        $grouped={grouped}
+                        $size={size}
+                        alt={`${user.firstName} ${user.lastName}`}
+                        src={user.profileThumbnailUrl}
+                    />
+                ) : (
+                    <SNoPictureRoot $grouped={grouped} $size={size} as="div" style={{ backgroundColor: getColor() }}>
+                        {`${user.firstName[0]}${user.lastName[0]}`}
+                    </SNoPictureRoot>
+                )}
+            </SRoot>
+            {showTooltip && (
+                <TooltipInformations
+                    header={translatedGovernanceRole}
+                    id={user.userId}
+                    informations={`${user.firstName} ${user.lastName}`}
+                />
+            )}
+        </>
     );
 };
 

@@ -12,16 +12,12 @@ const SIcon = styled.img`
 
 /* ---------- COMPONENT ---------- */
 
-const WorkspaceIcon = ({ hash, tooltip }: { hash: string; tooltip?: string }) => {
+const WorkspaceIcon = ({ hash }: { hash: string }) => {
     const url = useStoreState((state) => state.auth.pubapi);
 
     const props = {
         src: `${url}/image?hash=${encodeURIComponent(hash)}`,
     };
-
-    if (tooltip) {
-        props['data-tip'] = tooltip;
-    }
 
     return <SIcon {...props} />;
 };

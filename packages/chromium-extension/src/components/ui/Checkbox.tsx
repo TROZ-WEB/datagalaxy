@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
+import { isEllipsis } from '../../utils';
 import Glyph from './Glyph';
 import Tooltip from './Tooltip';
 
@@ -77,9 +78,17 @@ interface Props {
 }
 
 const Checkbox: React.FC<Props> = ({ field, className, onChange, ...props }) => {
+    const checkboxContainerRef = useRef<HTMLLabelElement>(null);
+
     return (
         <>
-            <CheckboxContainer className={className} data-for={field?.id} data-tip={field?.label} htmlFor={field?.id}>
+            <CheckboxContainer
+                ref={checkboxContainerRef}
+                className={className}
+                data-for={field?.id}
+                data-tip={isEllipsis(checkboxContainerRef.current) ? field?.label : undefined}
+                htmlFor={field?.id}
+            >
                 <HiddenCheckbox
                     checked={field?.checked}
                     id={field?.id}

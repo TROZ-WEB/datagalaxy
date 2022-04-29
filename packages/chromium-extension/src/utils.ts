@@ -35,13 +35,14 @@ function formatFilters(filters: Filter[], computeFilters) {
             const filter = {
                 icon: [f.icon],
                 name: f.name,
+                nameUnit: f.nameUnit,
                 content: [f.content],
                 filter: f.filter,
             };
-
             newPickedFilters.push(filter);
         } else {
-            const { icon, content } = newPickedFilters[filterIndex];
+            const { icon, content, filter } = newPickedFilters[filterIndex];
+            filter.values.push(f.filter.values[0]);
             icon.push(f.icon);
             content.push(f.content);
         }

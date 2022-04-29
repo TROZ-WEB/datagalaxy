@@ -6,6 +6,18 @@ import { AttributeDefinitionType } from './types';
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-await-in-loop */
 
+export enum AttributeKey {
+    TAGS = 'Domains',
+    ENTITY_STATUS = 'EntityStatus',
+    ENTITY_TYPE = 'EntityType',
+    LAST_MODIFICATION = 'LastModificationTime',
+    MODULE = 'Module',
+    OWNERS = 'DataOwners',
+    STEWARDS = 'DataStewards',
+    TECHNOLOGY = 'TechnologyCode',
+    WORSPACE = 'Workspace',
+}
+
 export const fetchAttributes = async (apiUrl: string): Promise<AttributeDefinitionType[]> => {
     const dataTypes = DataTypeMapping;
     let attributes = [];

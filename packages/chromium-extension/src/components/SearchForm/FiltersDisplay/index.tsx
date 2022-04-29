@@ -66,9 +66,10 @@ const SText = styled.p`
 `;
 
 const SScrollContainer = styled.div`
-    overflow-x: scroll;
+    overflow-x: hidden;
     scroll-behavior: smooth;
     display: flex;
+    align-items: center;
 
     &::-webkit-scrollbar-track {
         display: none;
@@ -97,35 +98,27 @@ const SScrollContainer = styled.div`
         }
     }
 `;
-const SQueryContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-right: 3px;
-`;
 
 const SQueryText = styled.span`
-    margin-left: 5px;
-    font-size: 11px;
+    font-size: 12px;
+    margin-inline: 4px;
 `;
 
 const SRecentSearches = styled.img`
+    margin-right: 15px;
     width: 15px;
     height: 15px;
     left: 0;
-    ${(props) => !props.hasSearchQuery && `top: 10px;`}
 `;
 
 /* ---------- COMPONENT ---------- */
 
 interface Props {
     filters: any;
-    hasSearchPayloadFilters: boolean;
-    hasSearchQuery: boolean;
     searchQuery: string;
 }
 
-const FiltersDisplay: FC<Props> = ({ filters, hasSearchPayloadFilters, hasSearchQuery, searchQuery }) => {
+const FiltersDisplay: FC<Props> = ({ filters, searchQuery }) => {
     const [scrollValue, setScrollValue] = useState(0);
     const [maxScroll, setMaxScroll] = useState(0);
 
@@ -154,42 +147,27 @@ const FiltersDisplay: FC<Props> = ({ filters, hasSearchPayloadFilters, hasSearch
 
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
-        <>
-            {filters?.length > 0 && (
-                <SRoot>
-                    {filters?.length > 0 ? (
-                        <SScrollContainer ref={ref} onScroll={handleScroll}>
-                            <SLeftButton disabled={scrollValue === 0} onClick={handleScrollLeft}>
-                                <SGlyph icon="ArrowDropRight" />
-                            </SLeftButton>
-                            <SQueryContainer hasSearchPayloadFilters={hasSearchPayloadFilters}>
-                                <SRecentSearches
-                                    alt="recent-searches"
-                                    hasSearchQuery={hasSearchQuery}
-                                    src={recentSearchs}
-                                />
-                                <SQueryText>{searchQuery}</SQueryText>
-                            </SQueryContainer>
-                            <SQuickFiltersContainer>
-                                {filters?.map((f) => (
-                                    <FilterTag
-                                        key={f?.filter?.attributeKey}
-                                        ref={filtersModal}
-                                        filter={f}
-                                        displayMode
-                                    />
-                                ))}
-                            </SQuickFiltersContainer>
-                            <SRightButton disabled={scrollValue === maxScroll} onClick={handleScrollRight}>
-                                <Glyph icon="ArrowDropRight" />
-                            </SRightButton>
-                        </SScrollContainer>
-                    ) : (
-                        <SText>{chrome.i18n.getMessage(`no_quick_filters`)}</SText>
-                    )}
-                </SRoot>
+        <SRoot>
+            {filters?.length > 0 || searchQuery ? (
+                <SScrollContainer ref={ref} onScroll={handleScroll}>
+                    <SLeftButton disabled={scrollValue === 0} onClick={handleScrollLeft}>
+                        <SGlyph icon="ArrowDropRight" />
+                    </SLeftButton>
+                    <SRecentSearches alt="recent-searches" src={recentSearchs} />
+                    {searchQuery && <SQueryText>{searchQuery}</SQueryText>}
+                    <SQuickFiltersContainer>
+                        {filters?.map((f) => (
+                            <FilterTag key={f?.filter?.attributeKey} ref={filtersModal} filter={f} displayMode />
+                        ))}
+                    </SQuickFiltersContainer>
+                    <SRightButton disabled={scrollValue === maxScroll} onClick={handleScrollRight}>
+                        <Glyph icon="ArrowDropRight" />
+                    </SRightButton>
+                </SScrollContainer>
+            ) : (
+                <SText>{chrome.i18n.getMessage(`no_quick_filters`)}</SText>
             )}
-        </>
+        </SRoot>
     );
 };
 

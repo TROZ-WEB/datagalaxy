@@ -101,8 +101,14 @@
     "entity_status_Obsolete": {
         "message": "Obsolète"
     },
+    "entity_owner": {
+        "message": "Propriétaire"
+    },
     "entity_owners": {
         "message": "Propriétaires"
+    },
+    "entity_steward": {
+        "message": "Steward"
     },
     "entity_stewards": {
         "message": "Stewards"
@@ -427,8 +433,14 @@
     "attribute_key_LongDescriptionRaw": {
         "message": "Description"
     },
+    "attribute_key_Tag": {
+        "message": "Étiquette"
+    },
     "attribute_key_Tags": {
         "message": "Étiquettes"
+    },
+    "attribute_key_unit_Domains": {
+        "message": "Étiquette"
     },
     "attribute_key_Domains": {
         "message": "Étiquettes"
@@ -437,9 +449,6 @@
         "message": "@:DgServerTypes.BaseData.fields.Domains"
     },
     "attribute_key_EntityStatus": {
-        "message": "Statut"
-    },
-    "attribute_key_Status": {
         "message": "Statut"
     },
     "attribute_key_Type": {
@@ -454,8 +463,14 @@
     "attribute_key_Owner": {
         "message": "Propriétaire"
     },
+    "attribute_key_unit_DataStewards": {
+        "message": "Steward"
+    },
     "attribute_key_DataStewards": {
         "message": "Stewards"
+    },
+    "attribute_key_unit_DataOwners": {
+        "message": "Propriétaire"
     },
     "attribute_key_DataOwners": {
         "message": "Propriétaires"

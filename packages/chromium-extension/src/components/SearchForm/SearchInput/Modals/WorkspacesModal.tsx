@@ -2,7 +2,7 @@ import React, { useEffect, FC } from 'react';
 import styled from 'styled-components';
 import { useStoreState, useStoreDispatch, useStoreActions } from '../../../../store/hooks';
 import WorkspaceIconPlaceholder from '../../../WorkspaceIconPlaceholder';
-import ModalBase from '../ModalBase';
+import ModalBase, { Field } from '../ModalBase';
 import { useSortArray } from './utils';
 import WorkspaceIcon from './WorkspaceIcon';
 
@@ -30,19 +30,13 @@ const WorkspacesModal: FC = () => {
     const index = pickedFilters?.findIndex((item) => item?.filter?.attributeKey === 'Workspace');
 
     const workspacesFields = workspaces?.map((workspace) => {
-        interface field {
-            id: string;
-            label: string;
-            icon?: React.ReactNode;
-            checked: boolean;
-            name: string;
-        }
-
-        const w: field = {
+        const name = chrome.i18n.getMessage(`attribute_key_Workspace`);
+        const w: Field = {
             id: workspace.defaultVersionId,
             label: workspace.name,
             checked: !!pickedFilters?.[index]?.filter?.values?.includes(workspace.defaultVersionId),
-            name: chrome.i18n.getMessage(`attribute_key_Workspace`),
+            name,
+            nameUnit: name,
         };
 
         let newIcon;
@@ -84,11 +78,13 @@ const WorkspacesModal: FC = () => {
             newPickedFilters.splice(filterIndex, 1);
         }
 
+        const name = chrome.i18n.getMessage(`attribute_key_Workspace`);
         if (field.id) {
             const filter = {
                 icon: [workspacesFields.find((item) => item.id === field.id).icon],
                 content: [field.label],
-                name: chrome.i18n.getMessage(`attribute_key_Workspace`),
+                name,
+                nameUnit: name,
                 filter: { attributeKey: 'Workspace', operator: 'contains', values: [field.id] },
             };
             newPickedFilters.push(filter);

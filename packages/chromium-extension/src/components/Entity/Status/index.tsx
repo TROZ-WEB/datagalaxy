@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import Glyph from '../../ui/Glyph';
+import TooltipInformations from '../../ui/TooltipInformations';
 
 /* ---------- STYLES ---------- */
 
@@ -51,15 +52,18 @@ const Status = ({
         return null;
     }, [status]);
 
-    const props = {};
-
-    if (showTooltip) {
-        props['data-tip'] = chrome.i18n.getMessage(`entity_status_${status}`);
-    }
-
     return (
         <SRoot>
-            <SIconWrapper {...props}>{iconForStatus}</SIconWrapper>
+            <SIconWrapper data-for={status} data-tip={showTooltip || undefined}>
+                {iconForStatus}
+            </SIconWrapper>
+            {showTooltip && (
+                <TooltipInformations
+                    header={chrome.i18n.getMessage('entity_details_sections_general_status')}
+                    id={status}
+                    informations={chrome.i18n.getMessage(`entity_status_${status}`)}
+                />
+            )}
             {!hideLabel && chrome.i18n.getMessage(`entity_status_${status}`)}
         </SRoot>
     );

@@ -135,7 +135,7 @@ const SearchInput = forwardRef<HTMLInputElement, IProps>(
         const filtersModal = useRef(null);
         const modalTop = filtersModal?.current?.getBoundingClientRect()?.bottom;
 
-        const handleClick = (attributeKey) => {
+        const handleClickFilterTag = (attributeKey: string) => () => {
             updateModalTop(modalTop);
             updateModalState({ modal: 'Overlay', isOpen: true });
             updateModalState({ modal: attributeKey, isOpen: true });
@@ -144,16 +144,14 @@ const SearchInput = forwardRef<HTMLInputElement, IProps>(
         return (
             <SRoot>
                 <SFilterTagsContainer>
-                    {pickedFilters?.map((filter) => {
-                        return (
-                            <FilterTag
-                                key={filter?.filter?.attributeKey}
-                                ref={filtersModal}
-                                filter={filter}
-                                onClick={() => handleClick(filter?.filter?.attributeKey)}
-                            />
-                        );
-                    })}
+                    {pickedFilters?.map((filter) => (
+                        <FilterTag
+                            key={filter?.filter?.attributeKey}
+                            ref={filtersModal}
+                            filter={filter}
+                            onClick={handleClickFilterTag(filter?.filter?.attributeKey)}
+                        />
+                    ))}
                 </SFilterTagsContainer>
 
                 <SSearchInputContainer>

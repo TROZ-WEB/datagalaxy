@@ -1,5 +1,7 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useRef } from 'react';
 import styled, { css } from 'styled-components';
+import { isEllipsis } from '../../utils';
+import Tooltip from './Tooltip';
 
 /* ---------- STYLES ---------- */
 
@@ -112,6 +114,7 @@ interface Props {
 }
 
 const Radio: React.FC<Props> = ({ field, className, inline = false, onChange, setIsOpen, name, ...props }) => {
+    const checkboxContainerRef = useRef<HTMLInputElement>(null);
     const handleChange = () => {
         onChange();
         // eslint-disable-next-line no-unused-expressions
@@ -119,24 +122,33 @@ const Radio: React.FC<Props> = ({ field, className, inline = false, onChange, se
     };
 
     return (
-        <RadioContainer className={className} data-tip={field?.label} htmlFor={field?.id} inline={inline}>
-            <HiddenRadio
-                checked={field?.checked}
-                id={field?.id}
-                name={name}
-                onChange={handleChange}
-                type="radio"
-                {...props}
-            />
-            <SStyledRadioWrapper>
-                <StyledRadio checked={field?.checked}>
-                    <SCheck />
-                </StyledRadio>
-            </SStyledRadioWrapper>
-            <SLabel>
-                {field?.icon && <SIconContainer>{field?.icon}</SIconContainer>} {field?.label}
-            </SLabel>
-        </RadioContainer>
+        <>
+            <RadioContainer
+                className={className}
+                data-for={field?.id}
+                data-tip={isEllipsis(checkboxContainerRef.current) ? field?.label : undefined}
+                htmlFor={field?.id}
+                inline={inline}
+            >
+                <HiddenRadio
+                    checked={field?.checked}
+                    id={field?.id}
+                    name={name}
+                    onChange={handleChange}
+                    type="radio"
+                    {...props}
+                />
+                <SStyledRadioWrapper>
+                    <StyledRadio checked={field?.checked}>
+                        <SCheck />
+                    </StyledRadio>
+                </SStyledRadioWrapper>
+                <SLabel>
+                    {field?.icon && <SIconContainer>{field?.icon}</SIconContainer>} {field?.label}
+                </SLabel>
+            </RadioContainer>
+            <Tooltip effect="float" id={field?.id} />
+        </>
     );
 };
 

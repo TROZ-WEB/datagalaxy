@@ -90,6 +90,7 @@ export interface Field {
     label: string;
     icon?: ReactNode;
     name?: string;
+    nameUnit?: string;
     checked?: boolean;
 }
 
@@ -146,6 +147,7 @@ const ModalBase: FC<ModalBaseProps> = ({
                 icon: [field.icon],
                 content: [field.label],
                 name: field.name,
+                nameUnit: field.nameUnit,
                 filter: { attributeKey, operator: newOperator, values: [field.id] },
             };
             newPickedFilters.push(filter);
