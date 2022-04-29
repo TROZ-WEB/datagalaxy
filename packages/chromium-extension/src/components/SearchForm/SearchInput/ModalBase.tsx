@@ -1,4 +1,6 @@
-import React, { FC, useState, useEffect, Dispatch, SetStateAction, ReactNode } from 'react';
+import React, { FC, useState, useEffect, Dispatch, SetStateAction, ReactNode, useCallback } from 'react';
+import AutoSizer from 'react-virtualized-auto-sizer';
+import { VariableSizeList as List, ListChildComponentProps } from 'react-window';
 import styled from 'styled-components';
 import { useStoreActions, useStoreState } from '../../../store/hooks';
 import keyListener from '../../../utils';
@@ -186,6 +188,31 @@ const ModalBase: FC<ModalBaseProps> = ({
         updatePickedFilters(newPickedFilters);
     };
 
+    const renderRow = useCallback(
+        ({ style, index }: ListChildComponentProps<Field>) => {
+            const field = filteredFields[index];
+
+            const onChange = handleChange ? () => handleChange(field) : () => handleToggleFilter(field);
+
+            return (
+                <div style={style}>
+                    {multiselect ? (
+                        <Checkbox key={field.id} field={field} onChange={onChange} />
+                    ) : (
+                        <Radio
+                            key={field.id}
+                            field={field}
+                            name={attributeKey}
+                            onChange={onChange}
+                            setIsOpen={handleClose}
+                        />
+                    )}
+                </div>
+            );
+        },
+        [filteredFields],
+    );
+
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
@@ -236,42 +263,24 @@ const ModalBase: FC<ModalBaseProps> = ({
                             </SOperator>
                         )}
                         <SFieldsContainer>
-                            {
-                                // eslint-disable-next-line no-nested-ternary
-                                filteredFields?.length > 0 ? (
-                                    multiselect ? (
-                                        filteredFields?.map((field) => (
-                                            <Checkbox
-                                                key={field.id}
-                                                field={field}
-                                                onChange={
-                                                    handleChange
-                                                        ? () => handleChange(field)
-                                                        : () => handleToggleFilter(field)
-                                                }
-                                            />
-                                        ))
-                                    ) : (
-                                        filteredFields?.map((field) => (
-                                            <Radio
-                                                key={field.id}
-                                                field={field}
-                                                name={attributeKey}
-                                                onChange={
-                                                    handleChange
-                                                        ? () => handleChange(field)
-                                                        : () => handleToggleFilter(field)
-                                                }
-                                                setIsOpen={handleClose}
-                                            />
-                                        ))
-                                    )
-                                ) : (
-                                    <SFullScreen>
-                                        <SText>{chrome.i18n.getMessage(`no_filters`)}</SText>
-                                    </SFullScreen>
-                                )
-                            }
+                            {filteredFields?.length > 0 ? (
+                                <AutoSizer>
+                                    {({ height, width }) => (
+                                        <List
+                                            height={height}
+                                            itemCount={filteredFields?.length}
+                                            itemSize={() => 36}
+                                            width={width}
+                                        >
+                                            {renderRow}
+                                        </List>
+                                    )}
+                                </AutoSizer>
+                            ) : (
+                                <SFullScreen>
+                                    <SText>{chrome.i18n.getMessage(`no_filters`)}</SText>
+                                </SFullScreen>
+                            )}
                         </SFieldsContainer>
                     </SForm>
                 </SModal>
