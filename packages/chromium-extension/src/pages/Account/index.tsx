@@ -146,6 +146,24 @@ const Account: FC = () => {
         }
     });
 
+    const handleClickHelp = () => {
+        if (chrome.runtime.getManifest().current_locale.startsWith('fr')) {
+            window.open('https://datagalaxy.freshdesk.com/fr/support/home');
+        } else {
+            window.open('https://datagalaxy.freshdesk.com/en/support/home');
+        }
+    };
+
+    const handleClickLogout = async () => {
+        await dispatch.auth.logout(store);
+
+        history.push('/onboarding');
+    };
+
+    const handleButtonHover = (isHovered: boolean) => () => {
+        setButtonHovered(isHovered);
+    };
+
     return (
         <SRoot>
             <form onSubmit={onSubmit}>
@@ -184,28 +202,11 @@ const Account: FC = () => {
                 <br />
                 <STitle>{chrome.i18n.getMessage('help_center')}</STitle>
                 <div
-                    onFocus={() => {
-                        setButtonHovered(true);
-                    }}
-                    onMouseLeave={() => {
-                        setButtonHovered(false);
-                    }}
-                    onMouseOver={() => {
-                        setButtonHovered(true);
-                    }}
+                    onFocus={handleButtonHover(true)}
+                    onMouseLeave={handleButtonHover(false)}
+                    onMouseOver={handleButtonHover(true)}
                 >
-                    <Button
-                        id="helpCenterButton"
-                        onClick={() => {
-                            if (chrome.runtime.getManifest().current_locale.startsWith('fr')) {
-                                window.open('https://datagalaxy.freshdesk.com/fr/support/home');
-                            } else {
-                                window.open('https://datagalaxy.freshdesk.com/en/support/home');
-                            }
-                        }}
-                        type="button"
-                        variant="outlined"
-                    >
+                    <Button id="helpCenterButton" onClick={handleClickHelp} type="button" variant="outlined">
                         <SHelpCenterIcon
                             alt="Help center icon"
                             src={buttonHovered ? HelpCenterWhiteButton : HelpCenterButton}
@@ -217,15 +218,7 @@ const Account: FC = () => {
             <SSignoutDiv>
                 <SVersionWrapper>v{chrome.runtime.getManifest().version} - beta</SVersionWrapper>
                 <SLogoutButton>
-                    <Button
-                        id="logoutButton"
-                        onClick={async () => {
-                            await dispatch.auth.logout(store);
-
-                            history.push('/onboarding');
-                        }}
-                        type="button"
-                    >
+                    <Button id="logoutButton" onClick={handleClickLogout} type="button">
                         <SLogoutIcon alt="Logout icon" src={LogoutIcon} />
                         <span>{chrome.i18n.getMessage('account_logout')}</span>
                     </Button>

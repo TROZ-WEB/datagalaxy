@@ -37,11 +37,11 @@ const SInfosWrapper = styled.div`
     margin-top: 5px;
 `;
 
-const SEntityName = styled.span<{ $bold: boolean }>`
+const SEntityName = styled.span<{ $bold: boolean; $maxWidth: number }>`
     font-size: 12px;
     color: #001030;
     text-decoration: none;
-    max-width: 280px;
+    max-width: ${(props) => props.$maxWidth}px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -181,6 +181,7 @@ interface EntityHeaderProps {
     searchQuery?: string;
     displayPath?: boolean;
     currentWorkspace?: string;
+    maxWidth?: number;
 }
 
 const EntityHeader: FC<EntityHeaderProps> = ({
@@ -193,6 +194,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
     searchQuery,
     displayPath = true,
     currentWorkspace,
+    maxWidth = 280,
 }) => {
     const [isMoreActionShown, setIsMoreActionsShown] = useState(false);
     const [displayMoreAttributes, setDisplayMoreAttributes] = useState(false);
@@ -263,6 +265,7 @@ const EntityHeader: FC<EntityHeaderProps> = ({
                             <SEntityName
                                 ref={entityNameRef}
                                 $bold={entity.exactMatchOccuredOnName}
+                                $maxWidth={maxWidth}
                                 data-tip={isEllipsis(entityNameRef.current) ? entity.name : undefined}
                                 onMouseEnter={() => setIsMoreActionsShown(true)}
                                 onMouseLeave={() => setIsMoreActionsShown(false)}

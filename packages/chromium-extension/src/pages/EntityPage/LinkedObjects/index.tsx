@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { EntityType } from 'shared';
 import styled from 'styled-components';
 import Accordion from '../../../components/ui/Accordion';
 import EntityHeader from '../../../components/ui/EntityHeader';
@@ -42,9 +43,9 @@ const LinkedObjects = () => {
     const linkedObjects = useStoreState((state) => state.entity.linkedObjects);
     const { updateEntity } = useStoreActions((actions) => actions.entity);
 
-    const handleClick = (e) => {
+    const handleClick = (entityType: EntityType) => () => {
         updateEntity(null);
-        const URLLocation = e.location.replace(new RegExp('/', 'g'), '.'); // Replace "/" by "." in url
+        const URLLocation = entityType.location.replace(new RegExp('/', 'g'), '.'); // Replace "/" by "." in url
         history.push(`/app/entities/${URLLocation}/`);
     };
 
@@ -60,14 +61,14 @@ const LinkedObjects = () => {
                         openButtonPosition="left"
                         initialOpen
                     >
-                        {linkedObjects[key].map((linkedObject, idx, array) => (
+                        {linkedObjects[key].map((linkedObject: EntityType, index: number, array: EntityType[]) => (
                             <div key={linkedObject.id}>
-                                <SCardResultContainer isLastElement={idx === array.length - 1}>
-                                    <SEntityWrapper onClick={() => handleClick(linkedObject)}>
+                                <SCardResultContainer isLastElement={index === array.length - 1}>
+                                    <SEntityWrapper onClick={handleClick(linkedObject)}>
                                         <EntityHeader
                                             currentWorkspace={currentWorkspace}
                                             entity={linkedObject}
-                                            id={`entityHeader${idx}`}
+                                            id={`entityHeader${index}`}
                                             alwaysExpanded
                                         />
                                     </SEntityWrapper>

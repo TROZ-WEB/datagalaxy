@@ -1,22 +1,9 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { isEllipsis } from '../../utils';
+import type { Field } from '../SearchForm/SearchInput/ModalBase';
 import Glyph from './Glyph';
-import Tooltip from './Tooltip';
 
 /* ---------- STYLES ---------- */
-
-const HiddenCheckbox = styled.input`
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
-`;
 
 const SGlyph = styled(Glyph)`
     color: #ffffff;
@@ -43,6 +30,7 @@ const CheckboxContainer = styled.label`
     align-items: center;
     cursor: pointer;
     padding: 8px;
+    box-sizing: border-box;
 
     &:hover,
     &:focus {
@@ -50,14 +38,19 @@ const CheckboxContainer = styled.label`
     }
 `;
 
-const SLabel = styled.span`
+const SLabeLWrapper = styled.div`
+    display: flex;
+    align-items: center;
     margin-left: 13px;
     font-size: 13px;
+    width: 100%;
+    overflow: hidden;
+`;
+
+const SLabel = styled.span`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: flex;
-    align-items: center;
 `;
 
 const SIconContainer = styled.span`
@@ -67,44 +60,26 @@ const SIconContainer = styled.span`
 /* ---------- COMPONENT ---------- */
 
 interface Props {
-    field: {
-        label: string;
-        icon?: React.ReactNode;
-        id: string;
-        checked?: boolean;
-    };
+    field: Field;
     className?: string;
-    onChange?: (params) => void;
+    onChange?: (field: Field) => void;
 }
 
-const Checkbox: React.FC<Props> = ({ field, className, onChange, ...props }) => {
-    const checkboxContainerRef = useRef<HTMLLabelElement>(null);
+const Checkbox: React.FC<Props> = ({ field, className, onChange }) => {
+    const handleClick = () => {
+        onChange(field);
+    };
 
     return (
-        <>
-            <CheckboxContainer
-                ref={checkboxContainerRef}
-                className={className}
-                data-for={field?.id}
-                data-tip={isEllipsis(checkboxContainerRef.current) ? field?.label : undefined}
-                htmlFor={field?.id}
-            >
-                <HiddenCheckbox
-                    checked={field?.checked}
-                    id={field?.id}
-                    onChange={onChange}
-                    type="checkbox"
-                    {...props}
-                />
-                <StyledCheckbox checked={field?.checked}>
-                    <SGlyph icon="Check" />
-                </StyledCheckbox>
-                <SLabel>
-                    {field?.icon && <SIconContainer>{field?.icon}</SIconContainer>} {field?.label}
-                </SLabel>
-            </CheckboxContainer>
-            <Tooltip effect="float" id={field?.id} />
-        </>
+        <CheckboxContainer className={className} htmlFor={field?.id} onClick={handleClick}>
+            <StyledCheckbox checked={field?.checked}>
+                <SGlyph icon="Check" />
+            </StyledCheckbox>
+            <SLabeLWrapper>
+                {field?.icon && <SIconContainer>{field?.icon}</SIconContainer>}
+                <SLabel>{field?.label}</SLabel>
+            </SLabeLWrapper>
+        </CheckboxContainer>
     );
 };
 

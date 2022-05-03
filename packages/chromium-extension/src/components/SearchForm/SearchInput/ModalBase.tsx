@@ -1,4 +1,14 @@
-import React, { FC, useState, useEffect, Dispatch, SetStateAction, ReactNode, useCallback } from 'react';
+import React, {
+    FC,
+    useState,
+    useEffect,
+    Dispatch,
+    SetStateAction,
+    ReactNode,
+    useCallback,
+    useRef,
+    useLayoutEffect,
+} from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { VariableSizeList as List, ListChildComponentProps } from 'react-window';
 import styled from 'styled-components';
@@ -7,7 +17,7 @@ import keyListener from '../../../utils';
 import Checkbox from '../../ui/Checkbox';
 import Glyph from '../../ui/Glyph';
 import Radio from '../../ui/Radio';
-// import { handleToggleFilter } from './Modals/utils';
+import Tooltip from '../../ui/Tooltip';
 
 /* ---------- STYLES ---------- */
 
@@ -82,7 +92,7 @@ const SText = styled.p`
 const SFieldsContainer = styled.div`
     overflow-x: hidden;
     height: 100%;
-    width: 103%;
+    width: 100%;
 `;
 
 /* ---------- COMPONENT ---------- */
@@ -115,30 +125,38 @@ const ModalBase: FC<ModalBaseProps> = ({
     attributeKey,
     isOpen,
 }) => {
-    const [searchValue, setsearchValue] = useState('');
+    const [searchValue, setSearchValue] = useState('');
     const [fieldsCopy, setFieldsCopy] = useState(fields);
     const [filteredFields, setFiteredFields] = useState(fields);
     const { Top } = useStoreState((state) => state.modal);
+    const { resetModalState } = useStoreActions((actions) => actions.modal);
+    const { pickedFilters } = useStoreState((state) => state.filters);
+    const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
+    const inputRef = useRef<HTMLInputElement>();
 
     useEffect(() => {
         setFieldsCopy(fields);
         setFiteredFields(fields);
+        setSearchValue('');
     }, [fields]);
+
+    useLayoutEffect(() => {
+        if (isOpen === true) {
+            setSearchValue('');
+            inputRef.current?.focus();
+        }
+    }, [isOpen]);
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         const newFields = fieldsCopy.filter((item) => item.label.toLowerCase().includes(value.toLowerCase()));
-        setsearchValue(value);
+        setSearchValue(value);
         setFiteredFields(newFields);
     };
-    const { resetModalState } = useStoreActions((actions) => actions.modal);
 
     const handleClose = () => {
         resetModalState();
     };
-
-    const { pickedFilters } = useStoreState((state) => state.filters);
-    const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
 
     const handleToggleFilter = (field: Field) => {
         const newPickedFilters = [...pickedFilters];
@@ -176,7 +194,7 @@ const ModalBase: FC<ModalBaseProps> = ({
         updatePickedFilters(newPickedFilters);
     };
 
-    const handleChangeOperator = (params) => {
+    const handleChangeOperator = (params: 'or' | 'and') => () => {
         setOperator(params);
         const newPickedFilters = [...pickedFilters];
         const filterIndex = newPickedFilters?.findIndex((item) => item?.filter?.attributeKey === attributeKey);
@@ -195,7 +213,7 @@ const ModalBase: FC<ModalBaseProps> = ({
             const onChange = handleChange ? () => handleChange(field) : () => handleToggleFilter(field);
 
             return (
-                <div style={style}>
+                <div data-for={field.id} data-tip={field?.label} style={style}>
                     {multiselect ? (
                         <Checkbox key={field.id} field={field} onChange={onChange} />
                     ) : (
@@ -207,6 +225,7 @@ const ModalBase: FC<ModalBaseProps> = ({
                             setIsOpen={handleClose}
                         />
                     )}
+                    <Tooltip effect="float" id={field.id} />
                 </div>
             );
         },
@@ -221,6 +240,7 @@ const ModalBase: FC<ModalBaseProps> = ({
                     <SInputContainer>
                         <Glyph icon="Search" />
                         <SInput
+                            ref={inputRef}
                             onBlur={() => {
                                 window.removeEventListener('keypress', keyListener, true);
                                 window.removeEventListener('keydown', keyListener, true);
@@ -247,7 +267,7 @@ const ModalBase: FC<ModalBaseProps> = ({
                                         checked: operator === 'or',
                                     }}
                                     name="operator"
-                                    onChange={() => handleChangeOperator('or')}
+                                    onChange={handleChangeOperator('or')}
                                     inline
                                 />
                                 <SRadio
@@ -257,7 +277,7 @@ const ModalBase: FC<ModalBaseProps> = ({
                                         checked: operator === 'and',
                                     }}
                                     name="operator"
-                                    onChange={() => handleChangeOperator('and')}
+                                    onChange={handleChangeOperator('and')}
                                     inline
                                 />
                             </SOperator>

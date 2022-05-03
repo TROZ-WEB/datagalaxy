@@ -59,7 +59,6 @@ const SResultsTitleContainerWrapper = styled.div`
 const SSearchCardResultContainer = styled.div`
     ${(props) => !props.isLastElement && `border-bottom: 1px solid rgba(0, 76, 255, 0.08);`}
     border-top: 1px solid transparent;
-    padding-bottom: 3px;
 
     &:hover,
     &:focus {
@@ -452,6 +451,7 @@ const SearchForm = () => {
                                                                 entity={entity}
                                                                 entityPage={false}
                                                                 id={`entityHeader${idx}`}
+                                                                maxWidth={240}
                                                                 onClick={handleClickEntity(entity)}
                                                                 alwaysExpanded
                                                             />

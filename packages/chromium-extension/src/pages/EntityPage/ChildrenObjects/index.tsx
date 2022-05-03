@@ -1,4 +1,4 @@
-import React, { useEffect, FC, useState, useMemo } from 'react';
+import React, { useEffect, FC, useState, useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { EntityType } from 'shared';
 import styled from 'styled-components';
@@ -87,72 +87,61 @@ const ChildrenObjects: FC<ChildrenObjectsProps> = ({ entity }) => {
         setGrandChildren(gc);
     }, [childrenObjects]);
 
-    const handleClick = (childrenEntity) => {
+    const handleClick = (childrenEntity) => () => {
         updateEntity(null);
         const URLLocation = childrenEntity.location.replace(new RegExp('/', 'g'), '.'); // Replace "/" by "." in url
         history.push(`/app/entities/${URLLocation}/`);
     };
 
-    return (
-        // eslint-disable-next-line react/jsx-no-useless-fragment
-        <SRoot>
-            {children && children.length !== 0 ? (
-                children?.map((childrenEntity, idx, array) => {
-                    const myGrandChildren = grandChildren.filter((gc) => {
-                        const childrenPathSplitted = childrenEntity?.path?.split('\\');
-                        const childrenPath = childrenPathSplitted[childrenPathSplitted.length - 1].toString();
-                        const grandChildrenPathSplited = gc?.path?.split('\\');
-
-                        return grandChildrenPathSplited[grandChildrenPathSplited.length - 2] === childrenPath;
-                    });
-
-                    return (
-                        <SCardResultContainer key={childrenEntity.id} isLastElement={idx === array.length - 1}>
-                            <Accordion
-                                key={childrenEntity.id}
-                                disabled={myGrandChildren.length === 0}
-                                header={
-                                    <SEntityWrapper onClick={() => handleClick(childrenEntity)}>
-                                        <EntityHeader
-                                            displayPath={false}
-                                            entity={childrenEntity}
-                                            id={`entityHeader${childrenEntity.id}`}
-                                        />
-                                    </SEntityWrapper>
-                                }
-                                openButtonPosition="left"
-                            >
-                                {myGrandChildren.length !== 0 &&
-                                    myGrandChildren.map((grandChildrenEntity, idx2, array2) => {
-                                        return (
-                                            <SCardResultContainer
-                                                key={grandChildrenEntity.id}
-                                                isLastElement={idx2 === array2.length - 1}
-                                                tabindex="-1"
-                                            >
-                                                <SSubEntityWrapper
-                                                    key={grandChildrenEntity.id}
-                                                    onClick={() => handleClick(grandChildrenEntity)}
-                                                    tabindex="-1"
-                                                >
-                                                    <EntityHeader
-                                                        displayPath={false}
-                                                        entity={grandChildrenEntity}
-                                                        id={`entityHeader${grandChildrenEntity.id}`}
-                                                    />
-                                                </SSubEntityWrapper>
-                                            </SCardResultContainer>
-                                        );
-                                    })}
-                            </Accordion>
-                        </SCardResultContainer>
-                    );
-                })
-            ) : (
-                <LoadingScreen />
-            )}
-        </SRoot>
+    const renderGrandChildren = (grandChildrenEntity: EntityType, index: number, entities: EntityType[]) => (
+        <SCardResultContainer key={grandChildrenEntity.id} isLastElement={index === entities.length - 1} tabindex="-1">
+            <SSubEntityWrapper key={grandChildrenEntity.id} onClick={handleClick(grandChildrenEntity)} tabindex="-1">
+                <EntityHeader
+                    displayPath={false}
+                    entity={grandChildrenEntity}
+                    id={`entityHeader${grandChildrenEntity.id}`}
+                    maxWidth={190}
+                />
+            </SSubEntityWrapper>
+        </SCardResultContainer>
     );
+
+    const renderChildren = useCallback(
+        (childrenEntity: EntityType, index: number, entities: EntityType[]) => {
+            const myGrandChildren = grandChildren.filter((gc) => {
+                const childrenPathSplitted = childrenEntity?.path?.split('\\');
+                const childrenPath = childrenPathSplitted[childrenPathSplitted.length - 1].toString();
+                const grandChildrenPathSplited = gc?.path?.split('\\');
+
+                return grandChildrenPathSplited[grandChildrenPathSplited.length - 2] === childrenPath;
+            });
+
+            return (
+                <SCardResultContainer key={childrenEntity.id} isLastElement={index === entities.length - 1}>
+                    <Accordion
+                        key={childrenEntity.id}
+                        disabled={myGrandChildren.length === 0}
+                        header={
+                            <SEntityWrapper onClick={handleClick(childrenEntity)}>
+                                <EntityHeader
+                                    displayPath={false}
+                                    entity={childrenEntity}
+                                    id={`entityHeader${childrenEntity.id}`}
+                                    maxWidth={215}
+                                />
+                            </SEntityWrapper>
+                        }
+                        openButtonPosition="left"
+                    >
+                        {myGrandChildren.length !== 0 && myGrandChildren.map(renderGrandChildren)}
+                    </Accordion>
+                </SCardResultContainer>
+            );
+        },
+        [grandChildren],
+    );
+
+    return <SRoot>{children && children.length !== 0 ? children?.map(renderChildren) : <LoadingScreen />}</SRoot>;
 };
 
 export default ChildrenObjects;

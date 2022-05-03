@@ -122,7 +122,8 @@ const FilterTag = React.forwardRef(({ filter, onClick, displayMode = false }: Pr
             <SRoot ref={ref} data-for={tooltipIds.root} displayMode={displayMode} onClick={handleClick} data-tip>
                 <SImageContainer>
                     {filter?.icon?.slice(0, 2)?.map((icon: ReactNode, index: number) => (
-                        <>
+                        // eslint-disable-next-line react/no-array-index-key
+                        <React.Fragment key={`${tooltipIds.icon}-${index}`}>
                             <div
                                 data-for={`${tooltipIds.icon}-${index}`}
                                 data-tip={filter?.content?.length > 1 ? true : undefined}
@@ -136,16 +137,16 @@ const FilterTag = React.forwardRef(({ filter, onClick, displayMode = false }: Pr
                                     informations={filter.content[index]}
                                 />
                             )}
-                        </>
+                        </React.Fragment>
                     ))}
                 </SImageContainer>
                 {filter?.content?.length > 2 && (
                     <>
                         <SEllipse data-for={tooltipIds.ellipsis} data-tip>{`+ ${filter?.icon.length - 2}`}</SEllipse>
                         <TooltipInformations
-                            header={filter?.content?.length === 3 ? filter?.nameUnit : filter?.name}
+                            header={filter?.name}
                             id={tooltipIds.ellipsis}
-                            informations={filter?.content?.slice(2, filter?.content!.length).join(', ')}
+                            informations={filter?.content?.join(', ')}
                         />
                     </>
                 )}

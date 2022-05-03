@@ -10,8 +10,10 @@ import useEnhancedFilters from '../useEnhancedFilters';
 const SRoot = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: center;
     cursor: pointer;
     position: relative;
+    height: 34px;
 `;
 
 /* ---------- COMPONENT ---------- */

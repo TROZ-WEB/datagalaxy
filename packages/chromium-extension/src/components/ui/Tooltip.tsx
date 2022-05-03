@@ -1,3 +1,4 @@
+import debounce from 'lodash.debounce';
 import React from 'react';
 import ReactTooltip, { TooltipProps } from 'react-tooltip';
 import styled from 'styled-components';
@@ -8,9 +9,10 @@ export const ReactTooltipStyled = styled(ReactTooltip)`
     font-family: 'Montserrat', sans-serif;
 `;
 
-export const rebuildTooltip = () => {
-    ReactTooltip.rebuild();
-};
+export const rebuildTooltip = debounce(() => ReactTooltip.rebuild(), 200, {
+    leading: false,
+    trailing: true,
+});
 
 export const closeTooltips = () => {
     ReactTooltip.hide();
@@ -27,7 +29,7 @@ const overridePosition = (
     left = Math.max(0, left);
     let top: number;
     if (currentTarget instanceof HTMLElement) {
-        top = currentTarget.offsetTop - 25;
+        top = currentTarget.offsetTop - 30;
     }
     top = Math.max(0, top);
 
@@ -44,11 +46,10 @@ const Tooltip = ({
         <ReactTooltipStyled
             arrowColor="transparent"
             backgroundColor="#001030"
-            delayShow={500}
+            delayShow={200}
             effect={effect}
             html={html}
             id={id}
-            offset={-10}
             overridePosition={effect === 'float' ? overridePosition : undefined}
             place="top"
             type="dark"

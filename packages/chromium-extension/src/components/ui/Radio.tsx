@@ -44,12 +44,10 @@ const StyledRadio = styled.div`
     }
 `;
 
-const SLabel = styled.span`
+const SLabelWrapper = styled.span`
     margin-left: 9px;
     font-size: 13px;
-    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
     display: flex;
     align-items: center;
 `;
@@ -64,6 +62,7 @@ const SStyledRadioWrapper = styled.div`
 `;
 
 const RadioContainer = styled.label`
+    box-sizing: border-box;
     width: 100%;
     display: flex;
     align-items: center;
@@ -78,7 +77,7 @@ const RadioContainer = styled.label`
     ${(props) =>
         props.inline &&
         css`
-            ${SLabel} {
+            ${SLabelWrapper} {
                 font-weight: 700;
             }
 
@@ -95,6 +94,12 @@ const RadioContainer = styled.label`
 
 const SIconContainer = styled.span`
     margin-right: 8px;
+`;
+
+const SLabel = styled.span`
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 /* ---------- COMPONENT ---------- */
@@ -143,9 +148,9 @@ const Radio: React.FC<Props> = ({ field, className, inline = false, onChange, se
                         <SCheck />
                     </StyledRadio>
                 </SStyledRadioWrapper>
-                <SLabel>
-                    {field?.icon && <SIconContainer>{field?.icon}</SIconContainer>} {field?.label}
-                </SLabel>
+                <SLabelWrapper>
+                    {field?.icon && <SIconContainer>{field?.icon}</SIconContainer>} <SLabel>{field?.label}</SLabel>
+                </SLabelWrapper>
             </RadioContainer>
             <Tooltip effect="float" id={field?.id} />
         </>

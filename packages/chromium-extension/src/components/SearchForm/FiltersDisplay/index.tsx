@@ -101,7 +101,7 @@ const SScrollContainer = styled.div`
 
 const SQueryText = styled.span`
     font-size: 12px;
-    margin-inline: 4px;
+    margin-inline: 6px;
 `;
 
 const SRecentSearches = styled.img`

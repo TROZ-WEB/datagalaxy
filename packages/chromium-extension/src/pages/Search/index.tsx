@@ -5,6 +5,7 @@ import SearchForm from '../../components/SearchForm';
 /* ---------- STYLES ---------- */
 
 const SRoot = styled.div`
+    box-sizing: border-box;
     padding: 20px 11px 18px 20px;
     overflow: scroll;
     height: 90%;
