@@ -2,8 +2,11 @@
     "appName": {
         "message": "DataGalaxy"
     },
-    "appDesc": {
+    "appTooltip": {
         "message": "Extension Chromium de DataGalaxy"
+    },
+    "appDesc": {
+        "message": "Accédez rapidement à votre catalogue de données grâce au plugin DataGalaxy"
     },
     "welcomeMessage": {
         "message": "Bienvenue sur l'extension DataGalaxy !"

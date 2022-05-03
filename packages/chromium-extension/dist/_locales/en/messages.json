@@ -2,8 +2,11 @@
     "appName": {
         "message": "DataGalaxy"
     },
-    "appDesc": {
+    "appTooltip": {
         "message": "Chromium extension of DataGalaxy"
+    },
+    "appDesc": {
+        "message": "Quickly access your datacatalog with the DataGalaxy Plugin"
     },
     "welcomeMessage": {
         "message": "Welcome to DataGalaxy Extension !"
