@@ -72,9 +72,7 @@ const SScrollContainer = styled.div`
     overflow-x: scroll;
     scroll-behavior: smooth;
     display: flex;
-    padding: 12px;
-    padding-left: 8px;
-    padding-right: 8px;
+    padding: 12px 8px;
 
     &::-webkit-scrollbar-track {
         display: none;
@@ -114,25 +112,14 @@ interface Props {
 
 const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
     const [enhancedQuickFilters, setEnhancedQuickFilters] = useState<EnhancedFilter[]>();
+    const filtersModalRef = useRef(null);
+    const [scrollValue, setScrollValue] = useState(0);
+    const ref = useRef<HTMLDivElement>();
 
     const quickFiltersArray: any = useMemo(
         () => quickFilters?.quickFilters?.filter((f) => !f?.filter?.attributeKey.includes('ObjectLinks')),
         [quickFilters],
     );
-
-    const [scrollValue, setScrollValue] = useState(0);
-    const [maxScroll, setMaxScroll] = useState(0);
-
-    const ref = useRef<HTMLDivElement>();
-
-    useEffect(() => {
-        if (ref.current) {
-            setMaxScroll(ref.current.scrollWidth - ref.current.clientWidth);
-        } else {
-            setScrollValue(0);
-            setMaxScroll(0);
-        }
-    }, [ref.current]);
 
     const handleScroll = () => {
         setScrollValue(ref.current.scrollLeft);
@@ -151,10 +138,9 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
 
     const { updateModalState, updateModalTop } = useStoreActions((actions) => actions.modal);
 
-    const filtersModal = useRef(null);
-    const modalTop = filtersModal?.current?.getBoundingClientRect()?.bottom;
+    const modalTop = filtersModalRef?.current?.getBoundingClientRect()?.bottom;
 
-    const handleAddFilter = (f) => {
+    const handleAddFilter = (f) => () => {
         if (f?.filter?.values?.length === 1) {
             // Closed filter
             const newPickedFilters = [...pickedFilters];
@@ -191,6 +177,8 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
         setEnhancedQuickFilters(computeFilters(quickFiltersArray)?.slice(0, 12));
     }, [quickFiltersArray]);
 
+    const maxScroll = ref.current?.scrollWidth - ref.current?.clientWidth;
+
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
@@ -206,13 +194,16 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                                     <QuickFilter
                                         // eslint-disable-next-line react/no-array-index-key
                                         key={i}
-                                        ref={filtersModal}
+                                        ref={filtersModalRef}
                                         filter={filter}
-                                        onClick={() => handleAddFilter(filter)}
+                                        onClick={handleAddFilter(filter)}
                                     />
                                 ))}
                             </SQuickFiltersContainer>
-                            <SRightButton disabled={scrollValue === maxScroll} onClick={handleScrollRight}>
+                            <SRightButton
+                                disabled={Math.ceil(scrollValue) === maxScroll || enhancedQuickFilters.length < 3}
+                                onClick={handleScrollRight}
+                            >
                                 <Glyph icon="ArrowDropRight" />
                             </SRightButton>
                         </SScrollContainer>
