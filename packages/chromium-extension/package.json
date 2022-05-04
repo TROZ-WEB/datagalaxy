@@ -1,6 +1,6 @@
 {
     "name": "chromium-extension",
-    "version": "1.3.0.3",
+    "version": "1.3.0.4",
     "description": "Chromium extension for Datagalaxy",
     "main": "index.js",
     "repository": "git@ssh.dev.azure.com:v3/datagalaxy/Plugins%20Externes/Plugins%20Externes",
