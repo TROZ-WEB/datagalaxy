@@ -18,6 +18,7 @@ const SPictureRoot = styled.img<PictureRootProps>`
     border-radius: 50%;
     border: 1px solid #ffffff;
     vertical-align: middle;
+    box-sizing: border-box;
 
     ${(props) =>
         props.$grouped &&
@@ -28,8 +29,8 @@ const SPictureRoot = styled.img<PictureRootProps>`
     ${(props) =>
         props.$size === 'normal' &&
         css`
-            width: 30px;
-            height: 30px;
+            width: 26px;
+            height: 26px;
             border-width: 2px;
         `}
 
@@ -38,17 +39,17 @@ const SPictureRoot = styled.img<PictureRootProps>`
         css`
             width: 16px;
             height: 16px;
-            border-width: 1px;
             font-size: 8px !important;
         `}
 `;
 
 const SNoPictureRoot = styled(SPictureRoot)`
-    font-size: 14px;
+    font-size: 12px;
     color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: default;
 `;
 
 /* ---------- COMPONENT ---------- */
