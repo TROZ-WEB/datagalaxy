@@ -67,8 +67,8 @@ const SSearchCardResultContainer = styled.div`
 `;
 
 const SSearchCardResultWrapper = styled.div`
-    margin: 8px auto;
-    margin-left: 6px;
+    padding: 8px 0 8px 6px;
+    margin-right: auto;
 `;
 
 const SSearchCardsResultWrapper = styled.div`
