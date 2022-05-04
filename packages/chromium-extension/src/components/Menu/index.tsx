@@ -137,7 +137,7 @@ const Menu = () => {
         {
             icon: (
                 <SWrapper>
-                    <Avatar size="mini" user={user} />
+                    <Avatar user={user} />
                 </SWrapper>
             ),
             path: '/app/account',
