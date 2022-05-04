@@ -69,6 +69,7 @@ const LinkedObjects = () => {
                                             currentWorkspace={currentWorkspace}
                                             entity={linkedObject}
                                             id={`entityHeader${index}`}
+                                            maxWidth={240}
                                             alwaysExpanded
                                         />
                                     </SEntityWrapper>
