@@ -1,15 +1,16 @@
-import { useReducer, useCallback, ChangeEvent, useEffect } from 'react';
-
+import { useReducer, useCallback, ChangeEvent, useEffect, useState } from 'react';
+import { PickedFilter } from 'shared';
 import useDebounce from '../../../hooks/useDebounce';
+import { useStoreActions, useStoreState } from '../../../store/hooks';
 
 interface IState {
     value: string;
-    focused: boolean;
+    focused: string;
 }
 
 export const initialState = {
     value: '',
-    focused: false,
+    focused: 'false',
 };
 
 export type TActionsEnum = { type: 'CHANGE'; value: string } | { type: 'FOCUS' } | { type: 'BLUR' };
@@ -25,13 +26,13 @@ export const reducer = (state: IState = initialState, action: TActionsEnum) => {
         case 'BLUR': {
             return {
                 ...state,
-                focused: false,
+                focused: 'false',
             };
         }
         case 'FOCUS': {
             return {
                 ...state,
-                focused: true,
+                focused: 'true',
             };
         }
         default:
@@ -42,7 +43,8 @@ export const reducer = (state: IState = initialState, action: TActionsEnum) => {
 export interface IUseSearchInputParams {
     initialState?: Partial<IState>;
     debounceDuration?: number;
-    debounceOnChange?: (result: { value: string }) => void;
+    debounceOnChange?: (result: { value: string; pf?: PickedFilter[] }) => void;
+    isNewFilter?: boolean;
 }
 
 export const useSearchInput = ({
@@ -55,7 +57,13 @@ export const useSearchInput = ({
         ...partialInitialState,
     });
 
-    const debouncedValue = useDebounce(value, debounceDuration);
+    const { pickedFilters, versionId } = useStoreState((state) => state.filters);
+
+    const [directSetting, setDirectSetting] = useState(false);
+    const [alreadyDebounced, setAlreadyDebounced] = useState(false);
+    const [previousSearchedTerm, setPreviousSearchedTerm] = useState('');
+
+    const debouncedvalue = useDebounce(value, debounceDuration);
 
     const onBlur = useCallback(() => {
         dispatch({ type: 'BLUR' });
@@ -72,19 +80,47 @@ export const useSearchInput = ({
         [dispatch],
     );
 
-    const onClearSearch = useCallback(() => {
-        dispatch({ type: 'CHANGE', value: '' });
+    const { updatePickedFilters } = useStoreActions((actions) => actions.filters);
 
-        if (debounceOnChange) {
-            debounceOnChange({ value: '' });
+    const onClearSearch = () => {
+        updatePickedFilters([]);
+        if (value !== '') {
+            setDirectSetting(true);
         }
-    }, [dispatch, debounceOnChange]);
+        dispatch({ type: 'CHANGE', value: '' });
+    };
+
+    const searchFromPrevious = async (term, pf) => {
+        updatePickedFilters(pf);
+        if (term !== value) {
+            setDirectSetting(true);
+        }
+        dispatch({ type: 'CHANGE', value: term });
+        setPreviousSearchedTerm(term);
+    };
 
     useEffect(() => {
         if (debounceOnChange) {
-            debounceOnChange({ value: debouncedValue });
+            if (directSetting) {
+                setAlreadyDebounced(true);
+            }
+            if (!alreadyDebounced) {
+                let term = '';
+                if (previousSearchedTerm) {
+                    term = previousSearchedTerm;
+                    setPreviousSearchedTerm(null);
+                } else if (directSetting) {
+                    term = '';
+                } else {
+                    term = debouncedvalue;
+                }
+                debounceOnChange({ value: term });
+            } else {
+                setAlreadyDebounced(false);
+            }
         }
-    }, [debouncedValue]);
+        setDirectSetting(false);
+    }, [debouncedvalue, pickedFilters, versionId]);
 
     return {
         focused,
@@ -93,6 +129,7 @@ export const useSearchInput = ({
         onFocus,
         onChange,
         onClearSearch,
-        debouncedValue,
+        debouncedvalue,
+        searchFromPrevious,
     };
 };

@@ -1,43 +1,69 @@
-import cx from 'clsx';
-import React from 'react';
-import { useHistory, useRouteMatch } from 'react-router-dom';
-import ArrowLeft from '../../../icons/ArrowLeft';
-// import CommentDuo from '../../../icons/CommentDuo';
-// import FileTasksCheck from '../../../icons/FileTasksCheck';
-import Info from '../../../icons/Info';
-// import Insight from '../../../icons/Insight';
-// import Mapping from '../../../icons/Mapping';
-import styles from './index.css';
+import React, { FC } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import styled from 'styled-components';
+import VerticalMenuButton from './VerticalMenuButton';
 
-const VerticalMenu = () => {
-    const { path } = useRouteMatch();
+/* ---------- STYLES ---------- */
+
+const SRoot = styled.div`
+    width: 46px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f3f6ff;
+    height: 100%;
+    padding: 16px 0px;
+    box-sizing: border-box;
+    position: fixed;
+    z-index: 10;
+`;
+
+/* ---------- COMPONENT ---------- */
+
+interface VerticalMenuProps {
+    URLLocation: string;
+    childrenObjectsNumber: number;
+    linkedObjectsNumber: number;
+}
+
+const VerticalMenu: FC<VerticalMenuProps> = ({ URLLocation, childrenObjectsNumber, linkedObjectsNumber }) => {
     const history = useHistory();
+    const path = useLocation().pathname.split('/').pop();
 
     return (
-        <div className={styles.Root}>
-            <button className={cx(styles.MenuItem, styles.BackButton)} onClick={() => history.goBack()} type="button">
-                <ArrowLeft className={styles.BackButtonIcon} />
-            </button>
-            <button
-                className={cx(styles.MenuItem, styles.MenuItemActiv)}
-                onClick={() => history.replace(`${path}/`)}
-                type="button"
-            >
-                <Info className={styles.MenuItemIcon} />
-            </button>
-            {/* <button className={styles.MenuItem} onClick={() => history.replace(`${path}/insights`)} type="button">
-                <Insight className={styles.MenuItemIcon} />
-            </button>
-            <button className={styles.MenuItem} type="button">
-                <Mapping className={styles.MenuItemIcon} />
-            </button>
-            <button className={styles.MenuItem} type="button">
-                <CommentDuo className={styles.MenuItemIcon} />
-            </button>
-            <button className={styles.MenuItem} type="button">
-                <FileTasksCheck className={styles.MenuItemIcon} />
-            </button> */}
-        </div>
+        <SRoot>
+            <VerticalMenuButton
+                icon="Info"
+                id="infoButton1"
+                onClick={() => history.replace(`/app/entities/${URLLocation}/`)}
+                tooltip={chrome.i18n.getMessage(`docking_panel_details`)}
+                variant={path === '' && 'active'}
+            />
+            <VerticalMenuButton
+                badgeCount={childrenObjectsNumber}
+                icon="Hierarchy"
+                id="infoButton2"
+                onClick={() => history.replace(`/app/entities/${URLLocation}/children-objects`)}
+                tooltip={
+                    childrenObjectsNumber === 0
+                        ? chrome.i18n.getMessage(`docking_panel_no_descendants`)
+                        : chrome.i18n.getMessage(`docking_panel_descendants`)
+                }
+                variant={path === 'children-objects' && 'active'}
+            />
+            <VerticalMenuButton
+                badgeCount={linkedObjectsNumber}
+                icon="Mapping"
+                id="infoButton3"
+                onClick={() => history.replace(`/app/entities/${URLLocation}/linked-objects`)}
+                tooltip={
+                    linkedObjectsNumber === 0
+                        ? chrome.i18n.getMessage(`docking_panel_no_related`)
+                        : chrome.i18n.getMessage(`docking_panel_related`)
+                }
+                variant={path === 'linked-objects' && 'active'}
+            />
+        </SRoot>
     );
 };
 

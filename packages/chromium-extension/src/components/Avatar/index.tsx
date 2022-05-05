@@ -1,7 +1,58 @@
-import cx from 'clsx';
 import React, { useCallback } from 'react';
 import { UserType } from 'shared';
-import styles from './index.css';
+import styled, { css } from 'styled-components';
+import TooltipInformations from '../ui/TooltipInformations';
+
+/* ---------- STYLES ---------- */
+
+const SRoot = styled.div`
+    display: flex;
+`;
+
+interface PictureRootProps {
+    $grouped: boolean;
+    $size: 'normal' | 'mini';
+}
+
+const SPictureRoot = styled.img<PictureRootProps>`
+    border-radius: 50%;
+    border: 1px solid #ffffff;
+    vertical-align: middle;
+    box-sizing: border-box;
+
+    ${(props) =>
+        props.$grouped &&
+        css`
+            margin-right: -5px;
+        `}
+
+    ${(props) =>
+        props.$size === 'normal' &&
+        css`
+            width: 26px;
+            height: 26px;
+            border-width: 2px;
+        `}
+
+    ${(props) =>
+        props.$size === 'mini' &&
+        css`
+            width: 16px;
+            height: 16px;
+            font-size: 8px !important;
+        `}
+`;
+
+const SNoPictureRoot = styled(SPictureRoot)`
+    font-size: 12px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: default;
+`;
+
+/* ---------- COMPONENT ---------- */
 
 export enum CustomColors {
     White = 'white',
@@ -57,11 +108,17 @@ const Avatar = ({
     grouped = false,
     user,
     size = 'normal',
+    showTooltip = true,
+    role,
 }: {
     grouped?: boolean;
     user?: UserType;
     size?: 'normal' | 'mini';
+    showTooltip?: boolean;
+    role?: string;
 }) => {
+    const translatedGovernanceRole = chrome.i18n.getMessage(`entity_${role}`);
+
     const getColor = useCallback(() => {
         switch (user.firstName[0]) {
             case 'a':
@@ -127,23 +184,30 @@ const Avatar = ({
         return null;
     }
 
-    if (!user.profileThumbnailUrl) {
-        return (
-            <span
-                className={cx(styles.Root, styles[size], styles.FakeAvatar, { [styles.GroupedAvatar]: grouped })}
-                style={{ backgroundColor: getColor() }}
-            >{`${user.firstName[0]}${user.lastName[0]}`}</span>
-        );
-    }
-
     return (
-        <div title={`${user.firstName}. ${user.lastName}`}>
-            <img
-                alt={`${user.firstName}. ${user.lastName}`}
-                className={cx(styles.Root, styles[size], { [styles.GroupedAvatar]: grouped })}
-                src={user.profileThumbnailUrl}
-            />
-        </div>
+        <>
+            <SRoot data-for={user.userId} data-tip={showTooltip || undefined}>
+                {user.profileThumbnailUrl ? (
+                    <SPictureRoot
+                        $grouped={grouped}
+                        $size={size}
+                        alt={`${user.firstName} ${user.lastName}`}
+                        src={user.profileThumbnailUrl}
+                    />
+                ) : (
+                    <SNoPictureRoot $grouped={grouped} $size={size} as="div" style={{ backgroundColor: getColor() }}>
+                        {`${user.firstName[0]}${user.lastName[0]}`}
+                    </SNoPictureRoot>
+                )}
+            </SRoot>
+            {showTooltip && (
+                <TooltipInformations
+                    header={translatedGovernanceRole}
+                    id={user.userId}
+                    informations={`${user.firstName} ${user.lastName}`}
+                />
+            )}
+        </>
     );
 };
 

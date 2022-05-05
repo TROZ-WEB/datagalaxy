@@ -1,9 +1,31 @@
-import cx from 'clsx';
 import React from 'react';
-import styles from './index.css';
+import styled from 'styled-components';
+
+/* ---------- STYLES ---------- */
+
+const SRoot = styled.div`
+    display: flex;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 10px auto 0;
+
+    ${(props) =>
+        props.type === 'success' &&
+        `color: #155724;
+        background-color: #d4edda;
+        border: 1px solid #c3e6cb;`}
+
+    ${(props) =>
+        props.type === 'warning' &&
+        `color: #cd3835;
+        background-color: #f2dede;
+        border: 1px solid #ebccd1;`}
+`;
+
+/* ---------- COMPONENT ---------- */
 
 const Alert = ({ type, children }: { type: 'success' | 'warning'; children: React.ReactNode }) => {
-    return <div className={cx(styles.Root, styles[type])}>{children}</div>;
+    return <SRoot type={type}>{children}</SRoot>;
 };
 
 export default Alert;

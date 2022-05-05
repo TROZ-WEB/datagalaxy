@@ -24,7 +24,7 @@ Remember to update the app version in manifest.json before merging
 ## Install a new dependency
 
 ```
-rush add <dependency>
+rush add -p <dependency>
 ```
 
 ## Build
@@ -58,7 +58,7 @@ Then :
 
 -   zip the `dist` folder
 -   Go to [Chrome Web Store Developer Dashboard](https://chrome.google.com/u/1/webstore/devconsole/484e7c1a-5608-4422-9cc8-32041026e836?hl=fr)
--   Connect with cws-dev@datagalaxy.com account (Password pinned in Slack : `#datagalaxy-thetribe`)
+-   Connect with cws-dev@datagalaxy.com account (Password in DG Dashlane, ask DG member if needed)
 -   Click on `DataGalaxy`
 -   Go to `Package`
 -   Click on `Import a new package` on the top right of the screen

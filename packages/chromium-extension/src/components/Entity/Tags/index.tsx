@@ -1,30 +1,90 @@
-import cx from 'clsx';
-import React from 'react';
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
 import { useStoreState } from '../../../store/hooks';
-import styles from './index.css';
+import { rebuildTooltip } from '../../ui/Tooltip';
+import TooltipInformations from '../../ui/TooltipInformations';
 
-const Tags = ({ children, className }: { children: React.ReactNode; className?: string }) => {
-    return <div className={cx(styles.Root, className)}>{children}</div>;
-};
+/* ---------- STYLES ---------- */
 
-Tags.Item = ({ tag, hideLabel = false }: { tag: string; hideLabel?: boolean }) => {
+const SColorPoint = styled.span`
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+    box-sizing: border-box;
+
+    ${(props) => props.withBorder && `border: 1px solid #001030;`}
+`;
+
+const SRoot = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+`;
+
+const SRootItem = styled.span`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 8px;
+    margin-top: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    padding-right: 4px;
+    padding-left: 2px;
+    border-radius: 12px 3px 3px 12px;
+`;
+
+const STagLabel = styled.span`
+    font-size: 12px;
+`;
+
+/* ---------- COMPONENT ---------- */
+
+const Tags = ({ children, className }: { children: React.ReactNode; className?: string }) => (
+    <SRoot className={className}>{children}</SRoot>
+);
+
+Tags.Item = ({
+    tag,
+    hideLabel = false,
+    color,
+    title,
+}: {
+    tag: string;
+    hideLabel?: boolean;
+    color?: string;
+    title?: string;
+}) => {
+    let t = tag;
+    if (t === 'Finance') {
+        // API WORKAROUND 2 : Api return 'Finance' tag in entities, but 'FINANCE' in tags list
+        t = 'FINANCE';
+    }
     const tags = useStoreState((state) => state.auth.tags);
+    const foundTag = tags?.find(({ label }) => label === t);
+    const defaultColor = foundTag?.color;
 
-    const { color } = tags.find(({ label }) => label === tag);
+    useEffect(() => {
+        rebuildTooltip();
+    }, [title]);
 
     return (
-        <div className={styles.RootItem}>
-            <span
-                className={cx(styles.ColorPoint, {
-                    [styles.WithBorder]: color === 'white',
-                })}
-                style={{
-                    backgroundColor: color,
-                }}
-                title={tag}
-            />
-            {!hideLabel && <span className={styles.TagLabel}>{tag}</span>}
-        </div>
+        <>
+            <SRootItem data-for={tag} data-tip={title}>
+                {(defaultColor || color) && (
+                    <SColorPoint
+                        style={{
+                            backgroundColor: color || defaultColor,
+                        }}
+                        withBorder={color === 'white' || defaultColor === 'white'}
+                    />
+                )}
+                {!hideLabel && <STagLabel>{tag}</STagLabel>}
+            </SRootItem>
+            <TooltipInformations header={chrome.i18n.getMessage('attribute_key_Tag')} id={tag} informations={tag} />
+        </>
     );
 };
 

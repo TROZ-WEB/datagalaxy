@@ -15,25 +15,25 @@ export async function http<T>(request: Request): Promise<HttpResponse<T>> {
     request.headers.set('authorization', `Bearer ${await AccessToken.getInstance().getAccessToken()}`);
     const response: HttpResponse<T> = await fetch(request);
 
-    response.parsedBody = await response.json();
-
+    try {
+        response.parsedBody = await response.json();
+    } catch (error) {
+        response.parsedBody = null;
+    }
+    // Trigger custom error for unauthorized error (accessToken no more valid)
     if (!response.ok) {
-        // Trigger custom error for unauthorized error (accessToken no more valid)
         if (response.status === 401) {
-            clonedRequest.headers.set(
-                'authorization',
-                `Bearer ${await AccessToken.getInstance().refreshAccessToken()}`,
-            );
-            const clonedResponse: HttpResponse<T> = await fetch(request);
-
+            const newToken = await AccessToken.getInstance().refreshAccessToken();
+            clonedRequest.headers.set('authorization', `Bearer ${newToken}`);
+            const clonedResponse: HttpResponse<T> = await fetch(clonedRequest);
             clonedResponse.parsedBody = await clonedResponse.json();
-
             if (!clonedResponse.ok) {
                 throw new Error(clonedResponse.statusText);
             }
-        } else {
-            throw new Error(response.statusText);
+
+            return clonedResponse;
         }
+        throw new Error(response.statusText);
     }
 
     return response;

@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { computed } from 'easy-peasy';
-import { decodeJWT, EntityType, getUsersByEmailsAndRole } from 'shared';
+import { AttributeDefinitionType, decodeJWT, EntityType, getUsersByEmailsAndRole, TechnologyType } from 'shared';
 
 const resetModel = (initialState) => (state) => {
     /* eslint-disable-next-line no-restricted-syntax */
@@ -23,14 +23,19 @@ const getDecodedPAT = (patAttributeName: string) =>
  * From array of entities it will enhanced each one with owner/steward information
  */
 const enhancedEntitiesWithUserInfo = async (rawEntities: EntityType[], url): Promise<EntityType[]> => {
-    const emails: { owners: string[]; stewards: string[] } = rawEntities.reduce(
-        (acc, { attributes: { owners, stewards } }) => ({
-            owners: Array.from(new Set([...acc.owners, ...owners])),
-            stewards: Array.from(new Set([...acc.stewards, ...stewards])),
-        }),
+    const emails: { owners: string[]; stewards: string[] } = rawEntities?.reduce(
+        (acc, rawEntity) => {
+            return {
+                owners: rawEntity?.attributes?.owners
+                    ? Array.from(new Set([...acc.owners, ...rawEntity?.attributes?.owners]))
+                    : Array.from(new Set([...acc.owners])),
+                stewards: rawEntity?.attributes?.stewards
+                    ? Array.from(new Set([...acc.stewards, ...rawEntity?.attributes?.stewards]))
+                    : Array.from(new Set([...acc.stewards])),
+            };
+        },
         { owners: [], stewards: [] },
     );
-
     const usersInfos = {
         owners: (await getUsersByEmailsAndRole(url, emails.owners, 'owner')).owners,
         stewards: (await getUsersByEmailsAndRole(url, emails.stewards, 'steward')).stewards,
@@ -39,14 +44,59 @@ const enhancedEntitiesWithUserInfo = async (rawEntities: EntityType[], url): Pro
     return rawEntities.map((result) => {
         return {
             ...result,
-            owners: result.attributes.owners.map((email) => {
-                return usersInfos.owners.find(({ email: emailToFind }) => emailToFind === email);
+            owners: result?.attributes?.owners?.map((email) => {
+                return usersInfos.owners?.find(({ email: emailToFind }) => emailToFind === email);
             }),
-            stewards: result.attributes.stewards.map((email) => {
-                return usersInfos.stewards.find(({ email: emailToFind }) => emailToFind === email);
+            stewards: result?.attributes?.stewards?.map((email) => {
+                return usersInfos.stewards?.find(({ email: emailToFind }) => emailToFind === email);
             }),
         };
     });
 };
 
-export { enhancedEntitiesWithUserInfo, resetModel, getDecodedPAT };
+const enhancedEntitiesWithTechnologiesInfo = async (
+    technologies: TechnologyType[],
+    rawEntities: EntityType[],
+): Promise<EntityType[]> => {
+    return rawEntities?.map((rawEntity) => {
+        const { technologyCode } = rawEntity?.attributes;
+        const fullTechnology = technologies?.find((t) => t.technologyCode === technologyCode);
+
+        return {
+            ...rawEntity,
+            technology: fullTechnology,
+        };
+    });
+};
+
+const enhancedEntitiesWithAttributesInfo = async (
+    attributes: AttributeDefinitionType[],
+    rawEntities: EntityType[],
+): Promise<EntityType[]> => {
+    return rawEntities?.map((rawEntity) => {
+        if (rawEntity.exactMatchAttributes) {
+            const newExactMatches = rawEntity.exactMatchAttributes.map((ema) => {
+                const fullAttribute =
+                    attributes?.find((a) => a.attributeKey === ema.attributeKey && a.dataType === rawEntity.dataType) ||
+                    attributes?.find((a) => a.attributeKey === ema.attributeKey && a.dataType === 'Common') ||
+                    ema;
+
+                return {
+                    ...fullAttribute,
+                    value: ema.value,
+                };
+            });
+            rawEntity.exactMatchAttributes = newExactMatches;
+        }
+
+        return rawEntity;
+    });
+};
+
+export {
+    enhancedEntitiesWithUserInfo,
+    enhancedEntitiesWithTechnologiesInfo,
+    enhancedEntitiesWithAttributesInfo,
+    resetModel,
+    getDecodedPAT,
+};

@@ -1,40 +1,25 @@
 import React, { useEffect } from 'react';
-import { Switch, Redirect, Route, useRouteMatch, useHistory } from 'react-router-dom';
+import { Switch, Redirect, Route, useRouteMatch } from 'react-router-dom';
 import ConnectedLayout from '../components/ConnectedLayout';
 import Account from '../pages/Account';
 import Comments from '../pages/Comments';
-import EntityDetails from '../pages/EntityDetails';
+import EntityPage from '../pages/EntityPage';
 import Notifications from '../pages/Notifications';
 import Search from '../pages/Search';
 import Tasks from '../pages/Tasks';
-import { useStoreActions, useStoreState } from '../store/hooks';
+
+declare const Raven: any;
 
 const App = () => {
     const { path } = useRouteMatch();
-    const history = useHistory();
 
-    const { historyLocation } = useStoreState((state) => state.auth);
-    const updateHistoryLocation = useStoreActions((state) => state.auth.updateHistoryLocation);
-
-    /**
-     * Reopen the extension where we left it
-     */
     useEffect(() => {
-        if (historyLocation && historyLocation.startsWith('/app')) {
-            history.push(historyLocation);
+        try {
+            Raven.config('https://983ee28827e840ac8d5a8de89de09f25@sentry.thetribe.io/128').install();
+        } catch (e) {
+            console.info('Error in Sentry init', e);
         }
     }, []);
-
-    /**
-     * Save history changes to allow reopening the extension where we left it
-     */
-    useEffect(() => {
-        return history.listen((location) => {
-            if ((location.pathname as string).startsWith('/app')) {
-                updateHistoryLocation(location.pathname);
-            }
-        });
-    }, [history]);
 
     return (
         <ConnectedLayout>
@@ -42,8 +27,8 @@ const App = () => {
                 <Route path={`${path}/search`}>
                     <Search />
                 </Route>
-                <Route path={`${path}/entities/:id`}>
-                    <EntityDetails />
+                <Route path={`${path}/entities/:URLLocation`}>
+                    <EntityPage />
                 </Route>
                 <Route path={`${path}/comments`}>
                     <Comments />

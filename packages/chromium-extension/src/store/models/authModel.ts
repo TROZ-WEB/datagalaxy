@@ -1,14 +1,21 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-param-reassign */
-import { Action, Actions, Thunk, thunk, action, computed, Computed, Store } from 'easy-peasy';
+import { Action, Actions, Thunk, thunk, action, Computed, Store } from 'easy-peasy';
 import {
     AccessToken,
     decodeJWT,
     TagType,
+    TechnologyType,
+    Workspace,
     fetchTags as fetchTagsApi,
+    fetchWorkspaces as fetchWorkspacesApi,
+    fetchTechnologies as fetchTechnologiesApi,
+    fetchAttributes as fetchAttributesApi,
+    fetchWorkspacesVersions as fetchWorkspacesVersionAPI,
     UserType,
     getUserByEmail,
     DecodedJWT,
+    AttributeDefinitionType,
 } from 'shared';
 import { StoreModel } from '../types';
 import { getDecodedPAT, resetModel } from './helper';
@@ -20,7 +27,11 @@ const initialState = {
     dgapi: '',
     historyLocation: null,
     tags: [],
+    workspaces: [],
+    technologies: [],
     user: null,
+    showMoreDetails: false,
+    attributes: [],
 };
 export interface AuthModel {
     /* State */
@@ -30,7 +41,11 @@ export interface AuthModel {
     dgapi: string;
     historyLocation?: string;
     tags: TagType[];
+    workspaces: Workspace[];
+    technologies: TechnologyType[];
     user: UserType;
+    showMoreDetails: boolean;
+    attributes: AttributeDefinitionType[];
     /* Computed properties */
     getDecodedPat: Computed<AuthModel, DecodedJWT>;
     /* Actions */
@@ -41,11 +56,18 @@ export interface AuthModel {
     updateDgapi: Action<AuthModel, string>;
     updateHistoryLocation: Action<AuthModel, string>;
     updateTags: Action<AuthModel, TagType[]>;
+    updateWorkspaces: Action<AuthModel, Workspace[]>;
+    updateTechnologies: Action<AuthModel, TechnologyType[]>;
     updateUser: Action<AuthModel, UserType>;
+    updateShowMoreDetails: Action<AuthModel, boolean>;
+    updateAttributes: Action<AuthModel, AttributeDefinitionType[]>;
     /* Thunks */
     loginWithPAT: Thunk<AuthModel, { pat: string; email: string }>;
     fetchTags: Thunk<AuthModel>;
+    fetchTechnologies: Thunk<AuthModel>;
+    fetchWorkspaces: Thunk<AuthModel>;
     fetchUser: Thunk<AuthModel>;
+    fetchAttributes: Thunk<AuthModel>;
     logout: Thunk<AuthModel, Store>;
     updatePATThunk: Thunk<AuthModel, string>;
 }
@@ -84,11 +106,56 @@ const loginWithPAT = thunk(async (actions: Actions<AuthModel>, payload: { pat: s
     await accessTokenHandler.init(btoa(payload.pat));
 });
 
+const fetchAttributes = thunk(async (actions: Actions<AuthModel>, _, { getStoreState }) => {
+    const url = (getStoreState() as any).auth.pubapi;
+    const attributes: AttributeDefinitionType[] = await fetchAttributesApi(url);
+
+    actions.updateAttributes(attributes);
+});
+
 const fetchTags = thunk(async (actions: Actions<AuthModel>, _, { getStoreState }) => {
     const url = (getStoreState() as any).auth.pubapi;
     const tags: TagType[] = await fetchTagsApi(url);
 
     actions.updateTags(tags);
+});
+
+/* 
+API WORKAROUND 5 : Workspace is not present in path for lastAccessObjects and object page.
+So we need to ->
+1) Get all workspaces
+2) Get all workspaces version for each workspace
+3) Find, with versionId of an object, which workspace is linked to
+4) Reconstitute the object path with the worskpace name
+*/
+const fetchWorkspacesVersions = async (workspace, url) => {
+    let workspacesVersion = [];
+
+    try {
+        workspacesVersion = await fetchWorkspacesVersionAPI(url, workspace.id);
+    } catch (err) {
+        console.error('error : ', err);
+    }
+
+    return workspacesVersion;
+};
+
+const fetchWorkspaces = thunk(async (actions: Actions<AuthModel>, _, { getStoreState }) => {
+    const url = (getStoreState() as any).auth.pubapi;
+    const workspaces: Workspace[] = await fetchWorkspacesApi(url);
+    for (const workspace of workspaces) {
+        const versions = await fetchWorkspacesVersions(workspace, url); // eslint-disable-line no-await-in-loop
+        workspace.versions = versions;
+    }
+
+    actions.updateWorkspaces(workspaces);
+});
+
+const fetchTechnologies = thunk(async (actions: Actions<AuthModel>, _, { getStoreState }) => {
+    const url = (getStoreState() as any).auth.pubapi;
+    const technologies: TechnologyType[] = await fetchTechnologiesApi(url);
+
+    actions.updateTechnologies(technologies);
 });
 
 const fetchUser = thunk(async (actions: Actions<AuthModel>, _, { getStoreState }) => {
@@ -190,8 +257,20 @@ const authModel = async (): Promise<AuthModel> => {
         updateTags: action((state, payload: TagType[]) => {
             state.tags = payload;
         }),
+        updateTechnologies: action((state, payload: TechnologyType[]) => {
+            state.technologies = payload;
+        }),
+        updateWorkspaces: action((state, payload: Workspace[]) => {
+            state.workspaces = payload;
+        }),
         updateUser: action((state, payload: UserType) => {
             state.user = payload;
+        }),
+        updateAttributes: action((state, payload: AttributeDefinitionType[]) => {
+            state.attributes = payload;
+        }),
+        updateShowMoreDetails: action((state, payload: boolean) => {
+            state.showMoreDetails = payload;
         }),
         /* Computed properties */
         getDecodedPat: getDecodedPAT('pat'),
@@ -199,6 +278,9 @@ const authModel = async (): Promise<AuthModel> => {
         loginWithPAT,
         fetchTags,
         fetchUser,
+        fetchWorkspaces,
+        fetchTechnologies,
+        fetchAttributes,
         logout,
         updatePATThunk,
     };

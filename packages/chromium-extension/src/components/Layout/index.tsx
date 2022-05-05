@@ -1,8 +1,22 @@
 import React, { ReactNode } from 'react';
-import styles from './index.css';
+import styled from 'styled-components';
+
+/* ---------- STYLES ---------- */
+
+const SRoot = styled.div`
+    all: initial;
+    width: 100%;
+    height: 100vh;
+    background: #ffffff;
+    color: #333333;
+    position: absolute;
+    font-family: 'Montserrat', sans-serif;
+`;
+
+/* ---------- COMPONENT ---------- */
 
 const Layout = ({ children }: { children?: ReactNode }) => {
-    return <div className={styles.Root}>{children}</div>;
+    return <SRoot>{children}</SRoot>;
 };
 
 export default Layout;

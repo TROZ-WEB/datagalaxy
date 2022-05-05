@@ -1,15 +1,24 @@
 import React from 'react';
-import Layout from '../Layout';
+import styled from 'styled-components';
 import Spinner from '../ui/Spinner';
-import styles from './index.css';
+
+/* ---------- STYLES ---------- */
+
+const SCenter = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+/* ---------- COMPONENT ---------- */
 
 const LoadingScreen = () => {
     return (
-        <Layout>
-            <div className={styles.Center}>
-                <Spinner size="xl" />
-            </div>
-        </Layout>
+        <SCenter>
+            <Spinner size="xl" />
+        </SCenter>
     );
 };
 

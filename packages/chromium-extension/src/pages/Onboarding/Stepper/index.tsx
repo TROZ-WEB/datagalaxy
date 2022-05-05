@@ -1,7 +1,18 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import OnboardingLayout from '../Layout';
 import StepperProgress from './StepperProgress';
-import styles from './index.css';
+
+/* ---------- STYLES ---------- */
+
+const STitle = styled.h1`
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    text-align: center;
+`;
+
+/* ---------- COMPONENT ---------- */
 
 interface StepperProps {
     steps: React.FC<StepProps>[];
@@ -34,7 +45,7 @@ export const Stepper: React.FC<StepperProps> = ({ steps }) => {
 
     return (
         <OnboardingLayout>
-            <h1 className={styles.Title}>{chrome.i18n.getMessage('onboarding_title')}</h1>
+            <STitle>{chrome.i18n.getMessage('onboarding_title')}</STitle>
             <StepperProgress currentStep={currentStep} nbSteps={steps.length} />
             <div className="stepper-selector">
                 {steps.map((Step: React.FC<StepProps>, index) => (

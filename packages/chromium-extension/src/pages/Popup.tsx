@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { MemoryRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import { AccessToken } from '../../../shared/dist/shared';
+import { AccessToken } from 'shared';
 import App from '../App';
 import Layout from '../components/Layout';
 import LoadingScreen from '../components/LoadingScreen';
 import { useStoreDispatch, useStoreState } from '../store/hooks';
 import Onboarding from './Onboarding';
+
+// declare const pendo: any;
 
 enum AppInitialLoadingStatus {
     Loading,
@@ -35,16 +37,23 @@ const Popup = () => {
     const [isAppReady, setIsAppReady] = useState<boolean>(false);
     const [globalError, setGlobalError] = useState<boolean>(null);
 
+    // const user = useStoreState((s) => s.auth.user);
+    // const aT = useStoreState((s) => s.auth.getDecodedPat);
+
     useEffect(() => {
         const initApp = async () => {
             try {
                 // Refresh accessToken at the extension launch
                 const accessTokenSingleton = AccessToken.getInstance();
                 await accessTokenSingleton.init(pat);
-
-                // Fetch all available tags
-                await dispatch.auth.fetchTags();
-                await dispatch.auth.fetchUser();
+                // Fetch all available
+                dispatch.auth.fetchAttributes();
+                dispatch.auth.fetchTags();
+                dispatch.auth.fetchWorkspaces();
+                dispatch.auth.fetchUser();
+                dispatch.auth.fetchTechnologies();
+                dispatch.entity.fetchRecentlyAccessedObjects();
+                dispatch.search.fetchRecentSearches();
 
                 setIsAppReady(true);
             } catch (error) {
@@ -56,6 +65,20 @@ const Popup = () => {
             initApp();
         }
     }, []);
+
+    /* useEffect(() => {
+        if (user?.userId && aT?.uid) {
+            pendo.initialize({
+                visitor: {
+                    id: aT.uid,
+                },
+
+                account: {
+                    id: aT.cid,
+                },
+            });
+        }
+    }, [user, aT]); */
 
     const renderBootingExtension = () => {
         if (globalError) {
