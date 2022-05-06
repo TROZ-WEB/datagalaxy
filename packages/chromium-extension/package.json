@@ -19,6 +19,7 @@
         "@thetribe/eslint-config-react-typescript": "~0.2.0",
         "@thetribe/eslint-config-typescript": "~0.3.0",
         "@types/chrome": "^0.0.145",
+        "@types/node": "^17.0.31",
         "@types/react": "^17.0.13",
         "@types/react-dom": "^17.0.8",
         "@types/react-virtualized-auto-sizer": "^1.0.1",
@@ -26,6 +27,7 @@
         "@typescript-eslint/eslint-plugin": "~4.28.2",
         "@typescript-eslint/parser": "~4.28.2",
         "css-loader": "^5.2.6",
+        "dotenv-webpack": "^7.1.0",
         "eslint": "^7.30.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-import": "~2.23.4",
@@ -39,7 +41,8 @@
         "typings-for-css-modules-loader": "^1.7.0",
         "url-loader": "~4.1.1",
         "webpack": "^5.42.0",
-        "webpack-cli": "^4.7.2"
+        "webpack-cli": "^4.7.2",
+        "webpack-merge": "^5.8.0"
     },
     "dependencies": {
         "clsx": "~1.1.1",
@@ -60,7 +63,6 @@
         "react-window": "^1.8.7",
         "reactjs-popup": "~2.0.5",
         "shared": "~1.0.0",
-        "styled-components": "~5.3.3",
-        "webpack-merge": "^5.8.0"
+        "styled-components": "~5.3.3"
     }
 }
