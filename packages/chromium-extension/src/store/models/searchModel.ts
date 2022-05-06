@@ -108,7 +108,6 @@ const search = thunk(async (actions: Actions<SearchModel>, searchedArgs: Searche
     } catch (err) {
         console.error('error : ', err);
     }
-    actions.fetchRecentSearches();
     actions.updateResults(enhancedResults);
     actions.updateQuickFilters(enhancedResults);
 });
