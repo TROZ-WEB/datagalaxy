@@ -1,4 +1,6 @@
 const path = require('path');
+const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack')
 
 module.exports = {
     entry: {
@@ -36,6 +38,11 @@ module.exports = {
             },
         ],
     },
+    plugins: [
+        new Dotenv({
+            silent: true,
+        }),
+    ],
     resolve: {
         extensions: ['.ts', '.tsx', '.js'],
     },
