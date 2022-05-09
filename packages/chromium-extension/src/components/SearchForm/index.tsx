@@ -171,6 +171,11 @@ const SearchForm = () => {
     const [exactMatchesEntitiesToDisplay, setExactMatchesEntitiesToDisplay] = useState<EntityType[]>([]);
     const [enhancedRecentlyAccessedObjects, setEnhancedRecentlyAccessedObjects] = useState<EntityType[]>();
 
+    useEffect(() => {
+        dispatch.entity.fetchRecentlyAccessedObjects();
+        dispatch.search.fetchRecentSearches();
+    }, []);
+
     const historizeSearch = async () => {
         if (!searchedArgs.term && (!searchedArgs.filters || searchedArgs.filters.length === 0)) {
             return;
