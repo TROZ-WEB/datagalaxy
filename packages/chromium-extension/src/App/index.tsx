@@ -16,6 +16,9 @@ const App = () => {
     useEffect(() => {
         try {
             Raven.config('https://983ee28827e840ac8d5a8de89de09f25@sentry.thetribe.io/128').install();
+            Raven.setUserContext({
+                version: chrome.runtime.getManifest().version,
+            });
         } catch (e) {
             console.info('Error in Sentry init', e);
         }
