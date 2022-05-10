@@ -25,7 +25,7 @@ const SScrollButton = styled.button`
     cursor: pointer;
 
     &:disabled {
-        opacity: 0 !important;
+        display: none;
     }
 `;
 
@@ -186,7 +186,10 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                 <SRoot>
                     {enhancedQuickFilters?.length > 0 ? (
                         <SScrollContainer ref={ref} onScroll={handleScroll}>
-                            <SLeftButton disabled={scrollValue === 0} onClick={handleScrollLeft}>
+                            <SLeftButton
+                                disabled={scrollValue === 0 || enhancedQuickFilters.length <= 3}
+                                onClick={handleScrollLeft}
+                            >
                                 <SGlyph icon="ArrowDropRight" />
                             </SLeftButton>
                             <SQuickFiltersContainer>
@@ -201,7 +204,7 @@ const QuickFiltersBar: FC<Props> = ({ quickFilters, search }) => {
                                 ))}
                             </SQuickFiltersContainer>
                             <SRightButton
-                                disabled={Math.ceil(scrollValue) === maxScroll || enhancedQuickFilters.length < 3}
+                                disabled={Math.ceil(scrollValue) === maxScroll || enhancedQuickFilters.length <= 3}
                                 onClick={handleScrollRight}
                             >
                                 <Glyph icon="ArrowDropRight" />
