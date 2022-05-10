@@ -184,9 +184,11 @@ const Avatar = ({
         return null;
     }
 
+    const tooltipId = translatedGovernanceRole + user.userId;
+
     return (
         <>
-            <SRoot data-for={user.userId} data-tip={showTooltip || undefined}>
+            <SRoot data-for={tooltipId} data-tip={showTooltip || undefined}>
                 {user.profileThumbnailUrl ? (
                     <SPictureRoot
                         $grouped={grouped}
@@ -203,7 +205,7 @@ const Avatar = ({
             {showTooltip && (
                 <TooltipInformations
                     header={translatedGovernanceRole}
-                    id={user.userId}
+                    id={tooltipId}
                     informations={`${user.firstName} ${user.lastName}`}
                 />
             )}
