@@ -24,18 +24,23 @@ interface VerticalMenuProps {
     URLLocation: string;
     childrenObjectsNumber: number;
     linkedObjectsNumber: number;
+    commentsNumber: number;
 }
 
 const VerticalMenu: FC<VerticalMenuProps> = ({ URLLocation, childrenObjectsNumber, linkedObjectsNumber }) => {
     const history = useHistory();
     const path = useLocation().pathname.split('/').pop();
 
+    const handleClickButton = (nextPath: string) => () => {
+        history.replace(nextPath);
+    };
+
     return (
         <SRoot>
             <VerticalMenuButton
                 icon="Info"
                 id="infoButton1"
-                onClick={() => history.replace(`/app/entities/${URLLocation}/`)}
+                onClick={handleClickButton(history.replace(`/app/entities/${URLLocation}/`))}
                 tooltip={chrome.i18n.getMessage(`docking_panel_details`)}
                 variant={path === '' && 'active'}
             />
@@ -43,7 +48,7 @@ const VerticalMenu: FC<VerticalMenuProps> = ({ URLLocation, childrenObjectsNumbe
                 badgeCount={childrenObjectsNumber}
                 icon="Hierarchy"
                 id="infoButton2"
-                onClick={() => history.replace(`/app/entities/${URLLocation}/children-objects`)}
+                onClick={handleClickButton(history.replace(`/app/entities/${URLLocation}/children-objects`))}
                 tooltip={
                     childrenObjectsNumber === 0
                         ? chrome.i18n.getMessage(`docking_panel_no_descendants`)
@@ -55,7 +60,19 @@ const VerticalMenu: FC<VerticalMenuProps> = ({ URLLocation, childrenObjectsNumbe
                 badgeCount={linkedObjectsNumber}
                 icon="Mapping"
                 id="infoButton3"
-                onClick={() => history.replace(`/app/entities/${URLLocation}/linked-objects`)}
+                onClick={handleClickButton(history.replace(`/app/entities/${URLLocation}/linked-objects`))}
+                tooltip={
+                    linkedObjectsNumber === 0
+                        ? chrome.i18n.getMessage(`docking_panel_no_related`)
+                        : chrome.i18n.getMessage(`docking_panel_related`)
+                }
+                variant={path === 'linked-objects' && 'active'}
+            />
+            <VerticalMenuButton
+                badgeCount={linkedObjectsNumber}
+                icon="Mapping"
+                id="infoButton4"
+                onClick={handleClickButton(history.replace(`/app/entities/${URLLocation}/comments`))}
                 tooltip={
                     linkedObjectsNumber === 0
                         ? chrome.i18n.getMessage(`docking_panel_no_related`)

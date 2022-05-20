@@ -45,6 +45,7 @@ const EntityPage = () => {
     const linkedObjects = useStoreState((state) => state.entity.linkedObjects);
     const childrenObjects = useStoreState((state) => state.entity.childrenObjects);
     const technologies = useStoreState((state) => state.auth.technologies);
+    const comments = useStoreState((state) => state.entity.comments);
 
     const [childrenObjectsNumber, setChildrenObjectsNumber] = useState(0);
     const [linkedObjectsNumber, setLinkedObjectsNumber] = useState(0);
@@ -79,12 +80,21 @@ const EntityPage = () => {
                 });
             };
 
+            const versionId = location.split('/')[1];
+
             const fetchChildrenObjects = async () => {
                 dispatch.entity.fetchChildrenObjects({
                     parentId: displayedEntity.id,
                     dataType,
-                    versionId: location.split('/')[1],
+                    versionId,
                     technology: displayedEntity.technology,
+                });
+            };
+
+            const fetchComments = async () => {
+                dispatch.entity.fetchComments({
+                    versionId,
+                    entityId: displayedEntity.id,
                 });
             };
 
@@ -98,6 +108,7 @@ const EntityPage = () => {
             fetchRecentlyAccessedObjects();
             fetchChildrenObjects();
             fetchLinkedObjects();
+            fetchComments();
         } else {
             setEntity(null);
         }
@@ -155,6 +166,7 @@ const EntityPage = () => {
                         <VerticalMenu
                             URLLocation={URLLocation}
                             childrenObjectsNumber={childrenObjectsNumber}
+                            commentsNumber={comments.length}
                             linkedObjectsNumber={linkedObjectsNumber}
                         />
                         <SContent>
