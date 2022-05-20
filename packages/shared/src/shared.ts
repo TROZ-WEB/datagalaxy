@@ -13,3 +13,4 @@ export * from './Technologies';
 export * from './Filters';
 export * from './Attributes';
 export * from './RecentlyAccessedObjects';
+export * from './EntityComments';
