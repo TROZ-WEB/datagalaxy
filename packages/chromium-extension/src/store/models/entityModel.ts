@@ -5,7 +5,9 @@ import {
     fetchChildrenObjects as fetchChildrenObjectsAPI,
     fetchScreenConfiguration as fetchScreenConfigurationAPI,
     fetchRecentlyAccessedObjects as fetchRecentlyAccessedObjectsAPI,
+    fetchComments as fetchEntityCommentsAPI,
     EntityType,
+    EntityComment,
     LinkedObjectsType,
     getUserByEmail,
     getAttributesValues,
@@ -25,6 +27,7 @@ import { enhancedEntitiesWithTechnologiesInfo, enhancedEntitiesWithUserInfo, res
 const initialState = {
     isLoaded: false,
     displayedEntity: null,
+    comments: null,
     linkedObjects: null,
     childrenObjects: null,
     screenConfiguration: null,
@@ -36,6 +39,7 @@ export interface EntityModel {
     /* State */
     isLoaded: boolean;
     displayedEntity: EntityType;
+    comments: EntityComment[];
     linkedObjects: LinkedObjectsType;
     childrenObjects: EntityType[];
     screenConfiguration: ScreenConfiguration;
@@ -45,6 +49,7 @@ export interface EntityModel {
     resetModel: Action<EntityModel>;
     updateIsLoaded: Action<EntityModel, boolean>;
     updateEntity: Action<EntityModel, EntityType>;
+    updateComments: Action<EntityModel, EntityComment[]>;
     updateLinkedObjects: Action<EntityModel, LinkedObjectsType>;
     updateChildrenObjects: Action<EntityModel, EntityType[]>;
     updateScreenConfiguration: Action<EntityModel, ScreenConfiguration>;
@@ -52,6 +57,7 @@ export interface EntityModel {
     updateRecentlyAccessedObjects: Action<EntityModel, EntityType[]>;
     /* Thunks */
     fetchEntity: Thunk<EntityModel, FetchEntityArgs>;
+    fetchComments: Thunk<EntityModel, FetchEntityCommentsParams>;
     fetchLinkedObjects: Thunk<EntityModel, FetchLinkedObjectsParams>;
     fetchChildrenObjects: Thunk<EntityModel, FetchChildrenObjectsParams>;
     fetchScreenConfiguration: Thunk<EntityModel, FetchScreenConfigurationParams>;
@@ -77,6 +83,11 @@ interface FetchScreenConfigurationParams {
     dataType: string;
     versionId: string;
     type: string;
+}
+
+interface FetchEntityCommentsParams {
+    versionId: string;
+    entityId: string;
 }
 
 interface FetchEntityArgs {
@@ -258,6 +269,19 @@ const fetchScreenConfiguration = thunk(
     },
 );
 
+const fetchComments = thunk(
+    async (actions: Actions<EntityModel>, payload: FetchEntityCommentsParams, { getStoreState }) => {
+        const { versionId, entityId } = payload;
+        try {
+            const url = (getStoreState() as any).auth.pubapi;
+            const entityComments = await fetchEntityCommentsAPI(url, versionId, entityId);
+            actions.updateComments(entityComments);
+        } catch (err) {
+            console.error('error : ', err);
+        }
+    },
+);
+
 /**
  * Entity Model Instance
  */
@@ -274,6 +298,9 @@ const entityModel = async (): Promise<EntityModel> => {
         updateEntity: action((state, payload: EntityType) => {
             state.displayedEntity = payload;
             state.isLoaded = true;
+        }),
+        updateComments: action((state, payload: EntityComment[]) => {
+            state.comments = payload;
         }),
         updateLinkedObjects: action((state, payload: any) => {
             state.linkedObjects = payload;
@@ -292,6 +319,7 @@ const entityModel = async (): Promise<EntityModel> => {
         }),
         /* Thunks */
         fetchEntity,
+        fetchComments,
         fetchLinkedObjects,
         fetchChildrenObjects,
         fetchScreenConfiguration,
