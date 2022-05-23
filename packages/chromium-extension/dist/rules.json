@@ -6,6 +6,8 @@
             "type": "modifyHeaders",
             "requestHeaders": [{ "header": "User-Agent", "operation": "set", "value": "chrome-plugin" }]
         },
-        "condition": {}
+        "condition": {
+            "requestDomains": ["api.datagalaxy.com"]
+        }
     }
 ]
