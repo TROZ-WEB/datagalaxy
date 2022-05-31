@@ -5,12 +5,14 @@ import { FiltersModel } from './models/filtersModel';
 import { ModalModel } from './models/modalModel';
 import { OnboardingModel } from './models/onboardingModel';
 import { SearchModel } from './models/searchModel';
+import { UsersModel } from './models/usersModel';
 
 export interface StoreModel {
     auth: AuthModel;
     search: SearchModel;
     filters: FiltersModel;
-    entity: EntityModel;
+    entity?: EntityModel;
     onboarding: OnboardingModel;
     modal: ModalModel;
+    users: UsersModel;
 }

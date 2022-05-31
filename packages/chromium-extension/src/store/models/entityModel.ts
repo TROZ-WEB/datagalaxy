@@ -17,6 +17,7 @@ import {
     ScreenConfiguration,
     DataTypeMapping,
     TechnologyType,
+    UserType,
 } from 'shared';
 import { enhancedEntitiesWithTechnologiesInfo, enhancedEntitiesWithUserInfo, resetModel } from './helper';
 
@@ -35,21 +36,25 @@ const initialState = {
     recentlyAccessedObjects: null,
 };
 
+export interface Comment extends Omit<EntityComment, 'creationUser'> {
+    creationUser: UserType;
+}
+
 export interface EntityModel {
     /* State */
     isLoaded: boolean;
-    displayedEntity: EntityType;
-    comments: EntityComment[];
-    linkedObjects: LinkedObjectsType;
-    childrenObjects: EntityType[];
-    screenConfiguration: ScreenConfiguration;
-    currentWorkspace: string;
-    recentlyAccessedObjects: EntityType[];
+    displayedEntity?: EntityType;
+    comments?: Comment[];
+    linkedObjects?: LinkedObjectsType;
+    childrenObjects?: EntityType[];
+    screenConfiguration?: ScreenConfiguration;
+    currentWorkspace?: string;
+    recentlyAccessedObjects?: EntityType[];
     /* Actions */
     resetModel: Action<EntityModel>;
     updateIsLoaded: Action<EntityModel, boolean>;
     updateEntity: Action<EntityModel, EntityType>;
-    updateComments: Action<EntityModel, EntityComment[]>;
+    updateComments: Action<EntityModel, Comment[]>;
     updateLinkedObjects: Action<EntityModel, LinkedObjectsType>;
     updateChildrenObjects: Action<EntityModel, EntityType[]>;
     updateScreenConfiguration: Action<EntityModel, ScreenConfiguration>;
@@ -275,7 +280,15 @@ const fetchComments = thunk(
         try {
             const url = (getStoreState() as any).auth.pubapi;
             const entityComments = await fetchEntityCommentsAPI(url, versionId, entityId);
-            actions.updateComments(entityComments);
+            const comments: Comment[] = [];
+            for (const comment of entityComments) {
+                const user = await getUserByEmail(url, comment.creationUser);
+                comments.push({
+                    ...comment,
+                    creationUser: user,
+                });
+            }
+            actions.updateComments(comments);
         } catch (err) {
             console.error('error : ', err);
         }
@@ -299,7 +312,7 @@ const entityModel = async (): Promise<EntityModel> => {
             state.displayedEntity = payload;
             state.isLoaded = true;
         }),
-        updateComments: action((state, payload: EntityComment[]) => {
+        updateComments: action((state, payload: Comment[]) => {
             state.comments = payload;
         }),
         updateLinkedObjects: action((state, payload: any) => {

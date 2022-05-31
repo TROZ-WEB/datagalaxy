@@ -397,6 +397,9 @@
     "entity_label_full_UsageComponent": {
         "message": "Usage Component"
     },
+    "entity_label_full_Comments": {
+        "message": "Comments"
+    },
     "filter_by": {
         "message": "Filter by"
     },
@@ -1206,5 +1209,8 @@
     },
     "docking_panel_no_related": {
         "message": "No linked object"
+    },
+    "docking_panel_comments": {
+        "message": "Comments"
     }
 }

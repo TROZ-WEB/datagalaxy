@@ -19,6 +19,22 @@ export const getUserByEmail = async (apiUrl: string, email: string): Promise<Use
     return null;
 };
 
+export const getUserById = async (apiUrl: string, userId: string): Promise<UserType> => {
+    try {
+        const response = await get<UsersResponse>(`${apiUrl}/users?userId=${userId}`);
+
+        if (response.parsedBody.total === 0) {
+            return null;
+        }
+
+        return response.parsedBody.results.pop();
+    } catch (error) {
+        console.error(error);
+    }
+
+    return null;
+};
+
 export const getUsersByEmailsAndRole = async (
     apiUrl: string,
     emails: string[],

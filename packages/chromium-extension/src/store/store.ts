@@ -4,6 +4,7 @@ import filtersModel from './models/filtersModel';
 import modalModel from './models/modalModel';
 import onboardingModel from './models/onboardingModel';
 import searchModel from './models/searchModel';
+import usersModel from './models/usersModel';
 import { StoreModel } from './types';
 
 const storeModel = async (): Promise<StoreModel> => {
@@ -14,6 +15,7 @@ const storeModel = async (): Promise<StoreModel> => {
         filters: await filtersModel(),
         onboarding: await onboardingModel(),
         modal: await modalModel(),
+        users: await usersModel(),
     };
 };
 

@@ -7,6 +7,7 @@ import LoadingScreen from '../../components/LoadingScreen';
 import EntityHeader from '../../components/ui/EntityHeader';
 import { useStoreActions, useStoreDispatch, useStoreState } from '../../store/hooks';
 import ChildrenObjects from './ChildrenObjects';
+import Comments from './Comments';
 import LinkedObjects from './LinkedObjects';
 import Details from './pages/Details';
 
@@ -16,14 +17,12 @@ const SContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    height: calc(100% - 100px);
 `;
 
 const SContent = styled.div`
-    overflow-y: scroll;
-    position: absolute;
-    height: 80%;
+    height: 100%;
     width: 100%;
-    padding: 0px 8px 0px 66px;
     box-sizing: border-box;
 `;
 
@@ -166,7 +165,7 @@ const EntityPage = () => {
                         <VerticalMenu
                             URLLocation={URLLocation}
                             childrenObjectsNumber={childrenObjectsNumber}
-                            commentsNumber={comments.length}
+                            commentsNumber={comments?.length ?? 0}
                             linkedObjectsNumber={linkedObjectsNumber}
                         />
                         <SContent>
@@ -179,6 +178,9 @@ const EntityPage = () => {
                                 </Route>
                                 <Route path={`/app/entities/${URLLocation}/children-objects`} exact>
                                     <ChildrenObjects entity={entity} />
+                                </Route>
+                                <Route path={`/app/entities/${URLLocation}/comments`} exact>
+                                    <Comments />
                                 </Route>
                             </Switch>
                         </SContent>

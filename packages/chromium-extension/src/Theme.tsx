@@ -5,6 +5,8 @@ import DatagalaxyGlyphWOFF from '../assets/fonts/datagalaxy.woff';
 import DatagalaxyGlyphSVG from '../assets/fonts/datagalaxy.svg';
 
 export const Theme = {
+    menuBarHeight: '63px',
+
     white: '#ffffff',
     black: '#001030',
     grey: '#6D6F88',
@@ -28,7 +30,7 @@ export const Theme = {
     linearGradient: 'linear-gradient(71.97deg, #001aff 11.94%, #084eff 37.82%, #17aeff 85.88%)',
     linearGradientHover: 'linear-gradient(90deg, #0016d7, #0297e6)',
 
-    boxShadow: '0px 0px 2px 2px rgba(0, 76, 255, 0.08)',
+    boxShadow: '0px 0px 14px rgb(16 53 177 / 12%)',
 
     mediumGrayColor: '#5a5e86',
     orangeColor: '#ff811a',
