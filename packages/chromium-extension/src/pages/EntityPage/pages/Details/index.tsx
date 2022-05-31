@@ -64,6 +64,7 @@ const SBasicFieldsContainer = styled.div`
     box-shadow: 0px 0px 14px rgba(16, 53, 177, 0.12);
     border-radius: 6px;
     padding: 10px 16px;
+    margin-inline: 13px;
     margin-top: 20px;
     margin-bottom: 14px;
 `;

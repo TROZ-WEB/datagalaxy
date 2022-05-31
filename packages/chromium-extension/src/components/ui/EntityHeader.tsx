@@ -2,6 +2,7 @@ import React, { useState, FC, useEffect, useRef } from 'react';
 import { AttributeDefinitionType, Workspace } from 'shared';
 import styled, { css } from 'styled-components';
 import { useStoreState } from '../../store/hooks';
+import { Theme } from '../../Theme';
 import { isEllipsis } from '../../utils';
 import Breadcrumb from '../Breadcrumb';
 import Status from '../Entity/Status';
@@ -78,7 +79,7 @@ const SRoot = styled.div<{ $entityPage: boolean; $cursorPointer: boolean }>`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    color: #001030;
+    color: ${Theme.black};
     overflow: hidden;
     transition: max-height 0.15s ease-out;
     position: relative;
@@ -94,7 +95,7 @@ const SRoot = styled.div<{ $entityPage: boolean; $cursorPointer: boolean }>`
         props.$entityPage &&
         css`
             padding: 0px 18px;
-            box-shadow: 0px 0px 14px rgba(16, 53, 177, 0.1);
+            box-shadow: ${Theme.boxShadow};
             height: 100px;
             box-sizing: border-box;
 
@@ -137,7 +138,7 @@ const SDisplayMoreAttributesButton = styled.button`
     font-size: 8px;
     background: white;
     margin-left: 8px;
-    color: #1035b1;
+    color: ${Theme.reflex};
     min-width: 30px;
     cursor: pointer;
     display: flex;

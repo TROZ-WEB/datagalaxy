@@ -11,7 +11,7 @@ const SRoot = styled.div`
     overflow: scroll;
     display: flex;
     flex-direction: column;
-    height: calc(100% - 60px);
+    height: 100%;
 `;
 
 /* ---------- COMPONENT ---------- */

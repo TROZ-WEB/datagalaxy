@@ -10,6 +10,7 @@ import Avatar from '../Avatar';
 import SelectedMenu from '../../../assets/anchor-selected-menu.svg';
 import Back from '../../../assets/icons/back.svg';
 import GreyLogo from '../../../assets/logo-icon.svg';
+import { Theme } from '../../Theme';
 
 /* ---------- STYLES ---------- */
 
@@ -69,7 +70,7 @@ const SRoot = styled.div`
     position: fixed;
     z-index: 2;
     top: 0;
-    height: 63px;
+    height: ${Theme.menuBarHeight};
     width: 400px;
     background: linear-gradient(90deg, rgba(119, 94, 243, 1) 0%, rgba(122, 172, 238, 1) 100%);
     color: #ffffff;
