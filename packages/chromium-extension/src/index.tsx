@@ -10,7 +10,6 @@ import Popup from './pages/Popup';
 import AsyncStorageService from './Services/AsyncStorageService';
 import storeModel from './store/store';
 import { Fonts, GlobalStyle } from './Theme';
-import "quill/dist/quill.snow.css";
 
 /**
  * Before displaying the app, we
