@@ -191,7 +191,7 @@ const SearchForm = () => {
         await dispatch.search.search(payload);
     };
 
-    const clickOnEntity = (entity) => {
+    const clickOnEntity = (entity: EntityType) => {
         closeTooltips();
         historizeSearch();
         updateCurrentWorkspace(entity?.path?.split('\\')[1]); // API WORKAROUND 6 : workspace not present in entity route
@@ -201,18 +201,18 @@ const SearchForm = () => {
     };
 
     useEffect(() => {
-        if (recentlyAccessedObjects) {
-            const enhanced = recentlyAccessedObjects.map((rao) => {
-                const r = rao;
+        if (recentlyAccessedObjects && workspaces.length > 0) {
+            const newEnhancedRecentlyAccessedObjects = recentlyAccessedObjects.map((rao) => {
+                const obj = rao;
                 const vid = rao.versionId;
                 const linkedWorkspace = workspaces.find((workspace) => workspace.versions?.indexOf(vid) !== -1);
-                r.path = rao.path.replace(/^/, `\\${linkedWorkspace?.name}`);
+                obj.path = rao.path.replace(/^/, `\\${linkedWorkspace?.name}`);
 
-                return r;
+                return obj;
             });
-            setEnhancedRecentlyAccessedObjects(enhanced);
+            setEnhancedRecentlyAccessedObjects(newEnhancedRecentlyAccessedObjects);
         }
-    }, [recentlyAccessedObjects]);
+    }, [recentlyAccessedObjects, workspaces]);
 
     useEffect(() => {
         if (filteredExactMatches) {
