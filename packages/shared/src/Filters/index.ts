@@ -8,7 +8,7 @@ export const fetchDomains = async (apiUrl: string): Promise<Domain[]> => {
     try {
         const response = await get<Domain[]>(`${apiUrl}/attributes/values?dataType=common&attributeKey=Domains`);
 
-        return response.parsedBody;
+        return response.parsedBody.filter((domain) => domain.isActive);
     } catch (error) {
         console.error(error);
     }
