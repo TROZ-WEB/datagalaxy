@@ -1,3 +1,4 @@
+import { enGB, enUS, fr } from 'date-fns/locale';
 import { EnhancedFilter, Filter, PickedFilter } from 'shared';
 
 function keyListener(event) {
@@ -53,6 +54,17 @@ function formatFilters(filters: Filter[], computeFilters) {
 
 export function isEllipsis(domElement?: HTMLElement) {
     return domElement?.offsetWidth < domElement?.scrollWidth;
+}
+
+export function getLocale() {
+    switch (chrome.runtime.getManifest().current_locale) {
+        case 'en_US':
+            return enUS;
+        case 'fr':
+            return fr;
+        default:
+            return enGB;
+    }
 }
 
 export default keyListener;

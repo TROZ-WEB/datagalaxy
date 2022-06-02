@@ -6,16 +6,14 @@ import VerticalMenuButton from './VerticalMenuButton';
 /* ---------- STYLES ---------- */
 
 const SRoot = styled.div`
-    width: 46px;
+    width: 52px;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: #f3f6ff;
     height: 100%;
-    padding: 16px 0px;
+    padding-top: 16px;
     box-sizing: border-box;
-    position: fixed;
-    z-index: 10;
 `;
 
 /* ---------- COMPONENT ---------- */
@@ -24,18 +22,28 @@ interface VerticalMenuProps {
     URLLocation: string;
     childrenObjectsNumber: number;
     linkedObjectsNumber: number;
+    commentsNumber: number;
 }
 
-const VerticalMenu: FC<VerticalMenuProps> = ({ URLLocation, childrenObjectsNumber, linkedObjectsNumber }) => {
+const VerticalMenu: FC<VerticalMenuProps> = ({
+    URLLocation,
+    childrenObjectsNumber,
+    linkedObjectsNumber,
+    commentsNumber,
+}) => {
     const history = useHistory();
     const path = useLocation().pathname.split('/').pop();
+
+    const handleClickButton = (nextPath: string) => () => {
+        history.replace(nextPath);
+    };
 
     return (
         <SRoot>
             <VerticalMenuButton
                 icon="Info"
                 id="infoButton1"
-                onClick={() => history.replace(`/app/entities/${URLLocation}/`)}
+                onClick={handleClickButton(`/app/entities/${URLLocation}/`)}
                 tooltip={chrome.i18n.getMessage(`docking_panel_details`)}
                 variant={path === '' && 'active'}
             />
@@ -43,7 +51,7 @@ const VerticalMenu: FC<VerticalMenuProps> = ({ URLLocation, childrenObjectsNumbe
                 badgeCount={childrenObjectsNumber}
                 icon="Hierarchy"
                 id="infoButton2"
-                onClick={() => history.replace(`/app/entities/${URLLocation}/children-objects`)}
+                onClick={handleClickButton(`/app/entities/${URLLocation}/children-objects`)}
                 tooltip={
                     childrenObjectsNumber === 0
                         ? chrome.i18n.getMessage(`docking_panel_no_descendants`)
@@ -55,13 +63,21 @@ const VerticalMenu: FC<VerticalMenuProps> = ({ URLLocation, childrenObjectsNumbe
                 badgeCount={linkedObjectsNumber}
                 icon="Mapping"
                 id="infoButton3"
-                onClick={() => history.replace(`/app/entities/${URLLocation}/linked-objects`)}
+                onClick={handleClickButton(`/app/entities/${URLLocation}/linked-objects`)}
                 tooltip={
                     linkedObjectsNumber === 0
                         ? chrome.i18n.getMessage(`docking_panel_no_related`)
                         : chrome.i18n.getMessage(`docking_panel_related`)
                 }
                 variant={path === 'linked-objects' && 'active'}
+            />
+            <VerticalMenuButton
+                badgeCount={commentsNumber}
+                icon="CommentDuo"
+                id="infoButton4"
+                onClick={handleClickButton(`/app/entities/${URLLocation}/comments`)}
+                tooltip={chrome.i18n.getMessage(`docking_panel_comments`)}
+                variant={path === 'comments' && 'active'}
             />
         </SRoot>
     );

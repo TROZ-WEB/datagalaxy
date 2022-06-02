@@ -1,15 +1,16 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
+import { Theme } from '../../Theme';
 import Menu from '../Menu';
 
 /* ---------- STYLES ---------- */
 
 const SContent = styled.div`
-    height: 100%;
+    height: calc(100% - ${Theme.menuBarHeight});
 `;
 
 const SRoot = styled.div`
-    padding-top: 63px;
+    padding-top: ${Theme.menuBarHeight};
     height: 100%;
 `;
 

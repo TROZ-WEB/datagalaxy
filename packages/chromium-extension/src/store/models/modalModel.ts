@@ -1,4 +1,4 @@
-import { Action, action, debug } from 'easy-peasy';
+import { Action, action } from 'easy-peasy';
 import { resetModel } from './helper';
 
 const initialState = {

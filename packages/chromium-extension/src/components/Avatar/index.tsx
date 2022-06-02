@@ -11,7 +11,7 @@ const SRoot = styled.div`
 
 interface PictureRootProps {
     $grouped: boolean;
-    $size: 'normal' | 'mini';
+    $size: 'large' | 'normal' | 'mini';
 }
 
 const SPictureRoot = styled.img<PictureRootProps>`
@@ -27,11 +27,19 @@ const SPictureRoot = styled.img<PictureRootProps>`
         `}
 
     ${(props) =>
-        props.$size === 'normal' &&
+        props.$size === 'large' &&
         css`
             width: 26px;
             height: 26px;
             border-width: 2px;
+        `}
+
+    ${(props) =>
+        props.$size === 'normal' &&
+        css`
+            width: 20px;
+            height: 20px;
+            font-size: 10px !important;
         `}
 
     ${(props) =>
@@ -104,19 +112,15 @@ export enum CustomColors {
     GrayL = '#90A4AE',
 }
 
-const Avatar = ({
-    grouped = false,
-    user,
-    size = 'normal',
-    showTooltip = true,
-    role,
-}: {
+interface AvatarProps {
     grouped?: boolean;
     user?: UserType;
-    size?: 'normal' | 'mini';
+    size?: 'large' | 'normal' | 'mini';
     showTooltip?: boolean;
     role?: string;
-}) => {
+}
+
+const Avatar = ({ grouped = false, user, size = 'large', showTooltip = true, role }: AvatarProps) => {
     const translatedGovernanceRole = chrome.i18n.getMessage(`entity_${role}`);
 
     const getColor = useCallback(() => {

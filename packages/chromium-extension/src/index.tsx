@@ -39,6 +39,7 @@ storeModel().then((models) => {
         search: models.search,
         filters: models.filters,
         modal: models.modal,
+        users: models.users,
     });
 
     ReactDOM.render(
@@ -53,6 +54,7 @@ storeModel().then((models) => {
                 <Fonts />
                 <root.div id="datagalaxy_shadow_root">
                     <GlobalStyle />
+                    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
                     <App />
                 </root.div>
                 <Tooltip />

@@ -11,6 +11,7 @@ import { useStoreState, useStoreActions } from '../../../store/hooks';
 
 const SRoot = styled.div`
     margin-top: 15px;
+    padding-inline: 7px;
 `;
 
 const SEntityWrapper = styled.span`

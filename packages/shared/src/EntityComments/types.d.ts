@@ -1,5 +1,4 @@
-/* eslint-disable camelcase */
-export interface CommentEntity {
+export interface EntityComment {
     message: string;
     commentId: string;
     creationTime: string;
@@ -7,5 +6,3 @@ export interface CommentEntity {
     lastModificationTime: string;
     lastModificationUser: string;
 }
-
-export interface CommentsResponse extends Array<CommentEntity> {}

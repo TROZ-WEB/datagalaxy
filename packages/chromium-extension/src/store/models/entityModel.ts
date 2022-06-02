@@ -5,7 +5,9 @@ import {
     fetchChildrenObjects as fetchChildrenObjectsAPI,
     fetchScreenConfiguration as fetchScreenConfigurationAPI,
     fetchRecentlyAccessedObjects as fetchRecentlyAccessedObjectsAPI,
+    fetchComments as fetchEntityCommentsAPI,
     EntityType,
+    EntityComment,
     LinkedObjectsType,
     getUserByEmail,
     getAttributesValues,
@@ -15,6 +17,7 @@ import {
     ScreenConfiguration,
     DataTypeMapping,
     TechnologyType,
+    UserType,
 } from 'shared';
 import { enhancedEntitiesWithTechnologiesInfo, enhancedEntitiesWithUserInfo, resetModel } from './helper';
 
@@ -25,6 +28,7 @@ import { enhancedEntitiesWithTechnologiesInfo, enhancedEntitiesWithUserInfo, res
 const initialState = {
     isLoaded: false,
     displayedEntity: null,
+    comments: null,
     linkedObjects: null,
     childrenObjects: null,
     screenConfiguration: null,
@@ -32,19 +36,25 @@ const initialState = {
     recentlyAccessedObjects: null,
 };
 
+export interface Comment extends Omit<EntityComment, 'creationUser'> {
+    creationUser: UserType;
+}
+
 export interface EntityModel {
     /* State */
     isLoaded: boolean;
-    displayedEntity: EntityType;
-    linkedObjects: LinkedObjectsType;
-    childrenObjects: EntityType[];
-    screenConfiguration: ScreenConfiguration;
-    currentWorkspace: string;
-    recentlyAccessedObjects: EntityType[];
+    displayedEntity?: EntityType;
+    comments?: Comment[];
+    linkedObjects?: LinkedObjectsType;
+    childrenObjects?: EntityType[];
+    screenConfiguration?: ScreenConfiguration;
+    currentWorkspace?: string;
+    recentlyAccessedObjects?: EntityType[];
     /* Actions */
     resetModel: Action<EntityModel>;
     updateIsLoaded: Action<EntityModel, boolean>;
     updateEntity: Action<EntityModel, EntityType>;
+    updateComments: Action<EntityModel, Comment[]>;
     updateLinkedObjects: Action<EntityModel, LinkedObjectsType>;
     updateChildrenObjects: Action<EntityModel, EntityType[]>;
     updateScreenConfiguration: Action<EntityModel, ScreenConfiguration>;
@@ -52,6 +62,7 @@ export interface EntityModel {
     updateRecentlyAccessedObjects: Action<EntityModel, EntityType[]>;
     /* Thunks */
     fetchEntity: Thunk<EntityModel, FetchEntityArgs>;
+    fetchComments: Thunk<EntityModel, FetchEntityCommentsParams>;
     fetchLinkedObjects: Thunk<EntityModel, FetchLinkedObjectsParams>;
     fetchChildrenObjects: Thunk<EntityModel, FetchChildrenObjectsParams>;
     fetchScreenConfiguration: Thunk<EntityModel, FetchScreenConfigurationParams>;
@@ -77,6 +88,11 @@ interface FetchScreenConfigurationParams {
     dataType: string;
     versionId: string;
     type: string;
+}
+
+interface FetchEntityCommentsParams {
+    versionId: string;
+    entityId: string;
 }
 
 interface FetchEntityArgs {
@@ -258,6 +274,27 @@ const fetchScreenConfiguration = thunk(
     },
 );
 
+const fetchComments = thunk(
+    async (actions: Actions<EntityModel>, payload: FetchEntityCommentsParams, { getStoreState }) => {
+        const { versionId, entityId } = payload;
+        try {
+            const url = (getStoreState() as any).auth.pubapi;
+            const entityComments = await fetchEntityCommentsAPI(url, versionId, entityId);
+            const comments: Comment[] = [];
+            for (const comment of entityComments) {
+                const user = await getUserByEmail(url, comment.creationUser);
+                comments.push({
+                    ...comment,
+                    creationUser: user,
+                });
+            }
+            actions.updateComments(comments);
+        } catch (err) {
+            console.error('error : ', err);
+        }
+    },
+);
+
 /**
  * Entity Model Instance
  */
@@ -274,6 +311,9 @@ const entityModel = async (): Promise<EntityModel> => {
         updateEntity: action((state, payload: EntityType) => {
             state.displayedEntity = payload;
             state.isLoaded = true;
+        }),
+        updateComments: action((state, payload: Comment[]) => {
+            state.comments = payload;
         }),
         updateLinkedObjects: action((state, payload: any) => {
             state.linkedObjects = payload;
@@ -292,6 +332,7 @@ const entityModel = async (): Promise<EntityModel> => {
         }),
         /* Thunks */
         fetchEntity,
+        fetchComments,
         fetchLinkedObjects,
         fetchChildrenObjects,
         fetchScreenConfiguration,

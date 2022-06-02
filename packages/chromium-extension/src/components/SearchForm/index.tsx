@@ -120,7 +120,7 @@ const SContainer = styled.div`
     border-radius: 6px;
     padding: 10px 16px 10px 16px;
     margin-top: 20px;
-    ${(props) => props.bottomMargin && `margin-bottom: 20px;`}
+    ${(props) => props.bottomMargin && `margin-bottom: 10px;`}
 `;
 
 /* ---------- COMPONENT ---------- */

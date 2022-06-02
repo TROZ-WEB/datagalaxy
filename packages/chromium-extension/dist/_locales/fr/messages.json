@@ -397,6 +397,9 @@
     "entity_label_full_UsageComponent": {
         "message": "Composant usage"
     },
+    "entity_label_full_Comments": {
+        "message": "Commentaires"
+    },
     "filter_by": {
         "message": "Filtrer par"
     },
@@ -1209,5 +1212,8 @@
     },
     "docking_panel_no_related": {
         "message": "Aucun objet lié"
+    },
+    "docking_panel_comments": {
+        "message": "Commentaires"
     }
 }

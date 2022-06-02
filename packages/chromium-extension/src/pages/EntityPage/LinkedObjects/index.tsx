@@ -9,6 +9,7 @@ import { useStoreActions, useStoreState } from '../../../store/hooks';
 /* ---------- STYLES ---------- */
 
 const SAccordion = styled(Accordion)`
+    padding-inline: 7px;
     margin-top: 8px;
 `;
 
@@ -40,6 +41,7 @@ const SCardResultContainer = styled.div`
 const LinkedObjects = () => {
     const history = useHistory();
 
+    const currentWorkspace = useStoreState((state) => state.entity.currentWorkspace);
     const linkedObjects = useStoreState((state) => state.entity.linkedObjects);
     const { updateEntity } = useStoreActions((actions) => actions.entity);
 
@@ -48,8 +50,6 @@ const LinkedObjects = () => {
         const URLLocation = entityType.location.replace(new RegExp('/', 'g'), '.'); // Replace "/" by "." in url
         history.push(`/app/entities/${URLLocation}/`);
     };
-
-    const currentWorkspace = useStoreState((state) => state.entity.currentWorkspace);
 
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
