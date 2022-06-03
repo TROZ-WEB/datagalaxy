@@ -14,6 +14,12 @@ import ArrowDrop from '../../../../../assets/icons/arrow-drop-up.svg';
 
 /* ---------- STYLES ---------- */
 
+const SRoot = styled.div`
+    margin-top: 20px;
+    margin-inline: 13px;
+    margin-bottom: 14px;
+`;
+
 const SSeparator = styled.div`
     height: 1px;
     background-color: #f3f6ff;
@@ -64,9 +70,6 @@ const SBasicFieldsContainer = styled.div`
     box-shadow: 0px 0px 14px rgba(16, 53, 177, 0.12);
     border-radius: 6px;
     padding: 10px 16px;
-    margin-inline: 13px;
-    margin-top: 20px;
-    margin-bottom: 14px;
 `;
 
 const SFieldsContainer = styled.div`
@@ -117,6 +120,7 @@ const SDrop = styled.img`
 `;
 
 const SDisplayMoreButtonContainer = styled.div`
+    margin-top: 15px;
     position: relative;
     height: 15px;
 `;
@@ -244,9 +248,12 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
         setShouldDisplayMoreDetailsButton(filteredAttributes.length !== 0);
     }, [screenConfiguration]);
 
+    const handleClickMoreDetail = () => {
+        updateShowMoreDetails(!showMoreDetails);
+    };
+
     return (
-        // eslint-disable-next-line react/jsx-no-useless-fragment
-        <>
+        <SRoot>
             {entity && screenConfiguration && (
                 <>
                     <SBasicFieldsContainer>
@@ -300,12 +307,7 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                     </SBasicFieldsContainer>
                     {shouldDisplayMoreDetailsButton && (
                         <SDisplayMoreButtonContainer>
-                            <SDisplayMoreDetailsButton
-                                onClick={() => {
-                                    updateShowMoreDetails(!showMoreDetails);
-                                }}
-                                type="button"
-                            >
+                            <SDisplayMoreDetailsButton onClick={handleClickMoreDetail} type="button">
                                 <SMoreDetailsText>{chrome.i18n.getMessage(`moreDetails`)}</SMoreDetailsText>
                                 <SDrop alt="Arrow icon" arrowDropDown={displayMoreDetails} src={ArrowDrop} />
                             </SDisplayMoreDetailsButton>
@@ -318,56 +320,45 @@ const Details = ({ entity, screenConfiguration }: DetailsProps) => {
                             const filteredAttributes = category.attributes.filter((att) => shouldDisplayAttribute(att));
 
                             return (
-                                /* eslint-disable-next-line react/jsx-no-useless-fragment */
-                                <>
-                                    {filteredAttributes.length !== 0 && (
-                                        <SFieldsContainer>
-                                            <Accordion
-                                                header={<STitle>{category.name}</STitle>}
-                                                openButtonPosition="left"
-                                                initialOpen
-                                            >
-                                                {filteredAttributes.map((attribute, i) => {
-                                                    return (
-                                                        <>
-                                                            <Details.SubInfo title={computeTitle(rest, attribute.name)}>
-                                                                {attribute.format === 'TimeSeriesObject' ? (
-                                                                    <SPreviewEmptyField>
-                                                                        {chrome.i18n.getMessage(
-                                                                            `attribute_not_supported`,
-                                                                        )}
-                                                                    </SPreviewEmptyField>
-                                                                ) : (
-                                                                    computeData(rest[attribute.name], i)
-                                                                )}
-                                                            </Details.SubInfo>
-                                                            <Details.Separator />
-                                                        </>
-                                                    );
-                                                })}
-                                            </Accordion>
-                                        </SFieldsContainer>
-                                    )}
-                                </>
+                                filteredAttributes.length !== 0 && (
+                                    <SFieldsContainer>
+                                        <Accordion
+                                            header={<STitle>{category.name}</STitle>}
+                                            openButtonPosition="left"
+                                            initialOpen
+                                        >
+                                            {filteredAttributes.map((attribute, i) => (
+                                                <>
+                                                    <Details.SubInfo title={computeTitle(rest, attribute.name)}>
+                                                        {attribute.format === 'TimeSeriesObject' ? (
+                                                            <SPreviewEmptyField>
+                                                                {chrome.i18n.getMessage(`attribute_not_supported`)}
+                                                            </SPreviewEmptyField>
+                                                        ) : (
+                                                            computeData(rest[attribute.name], i)
+                                                        )}
+                                                    </Details.SubInfo>
+                                                    <Details.Separator />
+                                                </>
+                                            ))}
+                                        </Accordion>
+                                    </SFieldsContainer>
+                                )
                             );
                         })}
                 </>
             )}
-        </>
+        </SRoot>
     );
 };
 
-Details.SubInfo = ({ title, children }: { title: string; children: React.ReactNode }) => {
-    return (
-        <SSubInfoWrapper>
-            {title && <SSubInfoTitle>{title}</SSubInfoTitle>}
-            <SSubInfoContent>{children}</SSubInfoContent>
-        </SSubInfoWrapper>
-    );
-};
+Details.SubInfo = ({ title, children }: { title: string; children: React.ReactNode }) => (
+    <SSubInfoWrapper>
+        {title && <SSubInfoTitle>{title}</SSubInfoTitle>}
+        <SSubInfoContent>{children}</SSubInfoContent>
+    </SSubInfoWrapper>
+);
 
-Details.Separator = () => {
-    return <SSeparator />;
-};
+Details.Separator = () => <SSeparator />;
 
 export default Details;
